@@ -1,11 +1,12 @@
 /** Curated pairs that produce interesting connection stories. */
 export const INSPIRATION_PAIRS: Array<{ from: string; to: string; label?: string }> = [
   { from: "aatrox", to: "pantheon" },
-  { from: "jinx", to: "swain" },
-  { from: "yasuo", to: "viego" },
+  { from: "yasuo", to: "yone" },
+  { from: "thresh", to: "senna" },
+  { from: "lux", to: "sylas" },
+  { from: "jinx", to: "vi" },
+  { from: "aatrox", to: "kaisa" },
   { from: "lux", to: "mordekaiser" },
-  { from: "yone", to: "aatrox" },
-  { from: "vi", to: "jinx" },
 ];
 
 export function connectShareUrl(from: string, to: string, base = ""): string {

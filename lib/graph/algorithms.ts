@@ -6,45 +6,53 @@ import type {
   PathStep,
   PathStrategy,
 } from "@/types";
+import { CATEGORY_PATH_COST, edgeCategory } from "@/lib/truth/layer";
 import { buildLoreGraph, otherEnd } from "./build";
 
-/**
- * Two objective functions over the same graph.
- *
- * - `shortest` minimises the number of connections. Ties are broken toward
- *   more important edges so we never surface a technically-shorter route made
- *   of trivia.
- * - `narrative` minimises a story-quality cost: important, direct, canonical
- *   relationships are cheap; generic region hops and weak edges are expensive.
- */
-
-/** Large enough that hop count always dominates the importance tiebreak. */
 const HOP_UNIT = 1000;
 
 function shortestCost(edge: GraphEdge): number {
   return HOP_UNIT + (100 - edge.importance);
 }
 
-function narrativeCost(edge: GraphEdge, graph: LoreGraph): number {
-  let cost = edge.weight;
+interface PathQuery {
+  start: string;
+  end: string;
+}
 
-  if (edge.connectionKind === "direct") {
-    const bothCharacters =
-      graph.nodes.get(edge.source)?.type === "character" &&
-      graph.nodes.get(edge.target)?.type === "character";
-    if (bothCharacters) cost *= 0.75;
+function narrativeCost(
+  edge: GraphEdge,
+  graph: LoreGraph,
+  query?: PathQuery,
+): number {
+  const category = edgeCategory(edge);
+  let cost = edge.weight * (CATEGORY_PATH_COST[category] ?? 8);
+
+  const sourceNode = graph.nodes.get(edge.source);
+  const targetNode = graph.nodes.get(edge.target);
+  const bothCharacters =
+    sourceNode?.type === "character" && targetNode?.type === "character";
+
+  if (bothCharacters && category === "DIRECT_CANON" && query) {
+    const connectsQueryPair =
+      (edge.source === query.start && edge.target === query.end) ||
+      (edge.source === query.end && edge.target === query.start);
+    if (!connectsQueryPair) {
+      cost += 18;
+    }
   }
 
-  // Penalise weak links hard: a 20-importance edge should almost never beat a
-  // 90-importance one, even if it saves a hop.
-  if (edge.importance < 40) cost += 2.2;
-  else if (edge.importance < 60) cost += 0.8;
+  if (category === "THEMATIC_PARALLEL" || category === "LEGACY_LORE") cost += 6;
+  if (category === "AMBIGUOUS") cost += 4;
+  if (category === "SHARED_REGION") cost += 2;
 
-  if (edge.importance >= 85) cost -= 0.35;
+  if (edge.importance < 40) cost += 2.5;
+  else if (edge.importance < 60) cost += 0.9;
+  if (edge.importance >= 85 && category === "DIRECT_CANON") cost -= 0.4;
 
   switch (edge.canonStatus) {
     case "AMBIGUOUS":
-      cost += 0.6;
+      cost += 0.8;
       break;
     case "OLD_LORE":
     case "RETCONNED":
@@ -57,21 +65,16 @@ function narrativeCost(edge: GraphEdge, graph: LoreGraph): number {
       break;
   }
 
-  if (!edge.verified) cost += 0.25;
+  if (!edge.verified) cost += 1.2;
 
-  // Hub penalty on endpoints: generic entities must not become highways.
   const far = graph.nodes.get(edge.target);
   const near = graph.nodes.get(edge.source);
   for (const node of [far, near]) {
     if (!node) continue;
     if (node.type === "region" && node.slug === "runeterra") cost += 12;
-    else if (node.type === "region") cost += 1.2;
+    else if (node.type === "region") cost += 1.5;
     else if (node.type === "faction" && node.importance < 60) cost += 0.8;
-    else if (node.type === "concept") cost += 8;
   }
-
-  // Weak contextual direct links should lose to a slightly longer story route.
-  if (edge.connectionKind === "direct" && edge.importance < 35) cost += 10;
 
   return Math.max(0.2, cost);
 }
@@ -86,15 +89,16 @@ function dijkstra(
   graph: LoreGraph,
   start: string,
   cost: (edge: GraphEdge) => number,
-  options: { blockedEdgeIds?: Set<string>; nodePenalty?: Map<string, number> } = {},
+  options: {
+    blockedEdgeIds?: Set<string>;
+    nodePenalty?: Map<string, number>;
+    end?: string;
+  } = {},
 ): DijkstraResult {
   const dist = new Map<string, number>([[start, 0]]);
   const prevNode = new Map<string, string>();
   const prevEdge = new Map<string, GraphEdge>();
   const visited = new Set<string>();
-
-  // Small graph (hundreds of nodes): a linear-scan frontier is plenty and
-  // keeps the implementation dependency-free.
   const frontier = new Set<string>([start]);
 
   while (frontier.size > 0) {
@@ -114,6 +118,7 @@ function dijkstra(
 
     for (const edge of graph.adjacency.get(current) ?? []) {
       if (options.blockedEdgeIds?.has(edge.id)) continue;
+      if (edgeCategory(edge) === "THEMATIC_PARALLEL") continue;
       const next = otherEnd(edge, current);
       if (visited.has(next)) continue;
       const penalty = options.nodePenalty?.get(next) ?? 0;
@@ -143,7 +148,6 @@ function reconstruct(
   const nodes: GraphNode[] = [];
   const steps: PathStep[] = [];
   let cursor = end;
-
   const guard = graph.nodes.size + 2;
   let iterations = 0;
 
@@ -170,22 +174,23 @@ function reconstruct(
     steps,
     length: steps.length,
     score: scorePath(steps),
-    directOnly: steps.every((s) => s.edge.connectionKind === "direct"),
+    directOnly: steps.every(
+      (s) => edgeCategory(s.edge) === "DIRECT_CANON" && s.edge.connectionKind === "direct",
+    ),
   };
 }
 
-/** 0–100 narrative quality. Rewards importance and direct links, punishes length. */
 export function scorePath(steps: PathStep[]): number {
   if (steps.length === 0) return 0;
   const avgImportance =
     steps.reduce((sum, s) => sum + s.edge.importance, 0) / steps.length;
   const directRatio =
-    steps.filter((s) => s.edge.connectionKind === "direct").length / steps.length;
+    steps.filter((s) => edgeCategory(s.edge) === "DIRECT_CANON").length / steps.length;
   const canonRatio =
     steps.filter((s) => s.edge.canonStatus === "CANON").length / steps.length;
-  const lengthPenalty = Math.max(0, steps.length - 2) * 6;
+  const lengthPenalty = Math.max(0, steps.length - 2) * 5;
   const raw =
-    avgImportance * 0.6 + directRatio * 28 + canonRatio * 12 - lengthPenalty;
+    avgImportance * 0.55 + directRatio * 30 + canonRatio * 12 - lengthPenalty;
   return Math.max(0, Math.min(100, Math.round(raw)));
 }
 
@@ -203,7 +208,13 @@ export function findNarrativePath(
   end: string,
   graph: LoreGraph = buildLoreGraph(),
 ): GraphPath | null {
-  const result = dijkstra(graph, start, (edge) => narrativeCost(edge, graph));
+  const query: PathQuery = { start, end };
+  const result = dijkstra(
+    graph,
+    start,
+    (edge) => narrativeCost(edge, graph, query),
+    { end },
+  );
   return reconstruct(graph, result, start, end, "narrative");
 }
 
@@ -211,11 +222,6 @@ function pathKey(path: GraphPath): string {
   return path.nodes.map((n) => n.id).join(">");
 }
 
-/**
- * Returns up to three meaningfully different routes: the shortest, the best
- * narrative route, and one alternative produced by penalising the intermediate
- * nodes already used.
- */
 export function findPaths(
   start: string,
   end: string,
@@ -247,11 +253,14 @@ export function findPaths(
   }
 
   if (usedIntermediates.size > 0) {
-    const result = dijkstra(graph, start, (edge) => narrativeCost(edge, graph), {
-      nodePenalty: usedIntermediates,
-    });
-    const alternative = reconstruct(graph, result, start, end, "alternative");
-    add(alternative);
+    const query: PathQuery = { start, end };
+    const result = dijkstra(
+      graph,
+      start,
+      (edge) => narrativeCost(edge, graph, query),
+      { nodePenalty: usedIntermediates, end },
+    );
+    add(reconstruct(graph, result, start, end, "alternative"));
   }
 
   return found.slice(0, 3);

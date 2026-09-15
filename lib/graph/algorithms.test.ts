@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { buildLoreGraph } from "./build";
+import { buildLoreGraph, resetLoreGraphCache } from "./build";
+
+resetLoreGraphCache();
 import {
   findNarrativePath,
   findPaths,
@@ -50,6 +52,18 @@ describe("findPaths", () => {
     const direct = findNarrativePath(id("yasuo"), id("yone"), graph);
     expect(direct).not.toBeNull();
     expect(scorePath(direct!.steps)).toBeGreaterThan(40);
+  });
+
+  it("finds structural path for Aatrox to Kai'Sa without direct canon", () => {
+    const path = findNarrativePath(id("aatrox"), id("kaisa"), graph);
+    expect(path).not.toBeNull();
+    const directCharEdge = path!.steps.some(
+      (s) =>
+        s.from.type === "character" &&
+        s.to.type === "character" &&
+        s.edge.connectionCategory === "DIRECT_CANON",
+    );
+    expect(directCharEdge).toBe(false);
   });
 
   it("terminates without infinite loop on cyclic graph", () => {

@@ -3,13 +3,14 @@
 import { ArrowRight, Route, Search, Share2, Shuffle, Sparkles } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import * as React from "react";
-import { characterBySlug, characters } from "@/data";
+import { characterBySlug, characters, regionBySlug } from "@/data";
 import { useProgress } from "@/components/providers";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ConnectResultSkeleton } from "@/components/ui/screen-skeletons";
 import { GraphLegend } from "@/components/graph/graph-legend";
 import { INSPIRATION_PAIRS } from "@/lib/connect/inspiration";
+import { EntityPortrait } from "@/components/entity-portrait";
 import { ChampionSelect } from "./champion-select";
 import { ConnectionGraph } from "./connection-graph";
 import { ConnectionStep } from "./connection-step";
@@ -17,8 +18,9 @@ import { DailyConnection } from "./daily-connection";
 import { ShareCardDialog } from "./share-card";
 import { track } from "@/lib/analytics";
 import { findPaths, pathNarrative } from "@/lib/graph";
+import { indirectPathDisclaimer } from "@/lib/truth/layer";
 import { absoluteUrl } from "@/lib/seo";
-import { cn } from "@/lib/utils";
+import { cn, hexToRgba } from "@/lib/utils";
 import type { Character, GraphPath, PathStrategy } from "@/types";
 
 const STRATEGY_COPY: Record<PathStrategy, { label: string; hint: string }> = {
@@ -192,6 +194,11 @@ export function ConnectExperience({
       </header>
 
       <div className="panel mt-8 p-4 sm:mt-10 sm:p-6">
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:gap-6">
+          <ChampionSlot label="From" character={a} />
+          <ChampionSlot label="To" character={b} />
+        </div>
+
         <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-end sm:gap-4">
           <ChampionSelect
             label="From"
@@ -336,6 +343,24 @@ export function ConnectExperience({
 
             <GraphLegend className="mt-4" />
 
+            {!revealing && active && a && b ? (
+              (() => {
+                const disclaimer = indirectPathDisclaimer(
+                  a.name,
+                  b.name,
+                  active.steps.map((s) => s.edge),
+                );
+                return disclaimer ? (
+                  <p className="text-muted mt-6 rounded-[var(--radius-card)] border border-line bg-white/[0.02] p-4 text-sm leading-relaxed">
+                    <span className="text-eyebrow text-gold block mb-1">
+                      Indirect lore connection
+                    </span>
+                    {disclaimer}
+                  </p>
+                ) : null;
+              })()
+            ) : null}
+
             <ol className="mt-8 space-y-2.5">
               {partialPath.steps.map((step, index) => (
                 <ConnectionStep
@@ -404,7 +429,7 @@ export function ConnectExperience({
             <EmptyState
               icon={Route}
               title="No meaningful path has been mapped yet."
-              description={`Nothing in the current archive links ${a.name} and ${b.name}. Try another pair.`}
+              description={`Nothing in the current archive connects ${a.name} and ${b.name}. Try another pair.`}
               action={
                 <Button variant="outline" onClick={tryAnother}>
                   Try another pair
@@ -443,6 +468,55 @@ export function ConnectExperience({
           accentTo={active.nodes[active.nodes.length - 1].metadata.accentColor}
         />
       ) : null}
+    </div>
+  );
+}
+
+function ChampionSlot({
+  label,
+  character,
+}: {
+  label: string;
+  character: Character | null;
+}) {
+  const region = character ? regionBySlug.get(character.region) : undefined;
+
+  return (
+    <div
+      className={cn(
+        "flex min-h-[9.5rem] flex-col items-center justify-center rounded-[var(--radius-card)] border p-4 text-center transition-colors sm:min-h-[11rem]",
+        character
+          ? "border-line-strong bg-white/[0.03]"
+          : "border-dashed border-line bg-white/[0.02]",
+      )}
+      style={
+        character
+          ? {
+              background: `linear-gradient(180deg, ${hexToRgba(character.accentColor, 0.12)} 0%, rgba(16,21,33,0.5) 100%)`,
+            }
+          : undefined
+      }
+    >
+      <span className="text-eyebrow text-muted">{label}</span>
+      {character ? (
+        <>
+          <EntityPortrait
+            assetKey={character.assetKey}
+            name={character.name}
+            accentColor={character.accentColor}
+            className="mt-3 size-20 sm:size-24"
+            sizes="96px"
+          />
+          <p className="text-monument text-parchment mt-3 truncate text-xl sm:text-2xl">
+            {character.name}
+          </p>
+          <p className="text-muted mt-1 truncate text-xs">
+            {region?.name ?? character.title}
+          </p>
+        </>
+      ) : (
+        <p className="text-muted mt-4 text-sm">Select champion</p>
+      )}
     </div>
   );
 }

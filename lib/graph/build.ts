@@ -2,34 +2,28 @@ import {
   characters,
   events,
   factions,
+  loreEntities,
   regions,
   relationships,
 } from "@/data";
-import type { GraphEdge, GraphNode, LoreGraph } from "@/types";
+import { CATEGORY_PATH_COST } from "@/lib/truth/layer";
+import type {
+  ConnectionCategory,
+  GraphEdge,
+  GraphNode,
+  LoreGraph,
+} from "@/types";
 
-/**
- * Edge cost model.
- *
- * Direct character relationships are cheap and get cheaper the more important
- * they are. Indirect connections (shared faction / region / event) are
- * deliberately expensive so a path never prefers "both are technically people
- * from Runeterra" over an actual documented relationship.
- */
 const COST = {
-  /** Multiplier applied to (100 - importance)/100 for direct edges. */
   directSpread: 1.4,
   directBase: 1.0,
-  /** Indirect hops — tuned so paths tell stories, not geography trivia. */
-  faction: 6,
-  event: 4,
-  region: 8,
-  /** The catch-all "Runeterra" region must never be a useful shortcut. */
   genericRegion: 100,
 } as const;
 
-function directWeight(importance: number): number {
+function directWeight(importance: number, category: ConnectionCategory): number {
   const normalised = Math.min(100, Math.max(0, importance)) / 100;
-  return COST.directBase + (1 - normalised) * COST.directSpread;
+  const base = COST.directBase + (1 - normalised) * COST.directSpread;
+  return base * (CATEGORY_PATH_COST[category] / CATEGORY_PATH_COST.DIRECT_CANON);
 }
 
 function characterNode(id: string): GraphNode | null {
@@ -54,15 +48,10 @@ function characterNode(id: string): GraphNode | null {
 
 let cached: LoreGraph | null = null;
 
-/** Clears memoised graph (for tests or hot reload). */
 export function resetLoreGraphCache(): void {
   cached = null;
 }
 
-/**
- * Builds the full universe graph. Pure and memoised — safe to call from server
- * components, route handlers and the client bundle alike.
- */
 export function buildLoreGraph(): LoreGraph {
   if (cached) return cached;
 
@@ -118,11 +107,24 @@ export function buildLoreGraph(): LoreGraph {
     });
   }
 
+  for (const entity of loreEntities) {
+    nodes.set(entity.id, {
+      id: entity.id,
+      type: "concept",
+      name: entity.name,
+      slug: entity.slug,
+      importance: entity.importance,
+      metadata: {
+        accentColor: entity.accentColor,
+        description: entity.shortDescription,
+      },
+    });
+  }
+
   const edges: GraphEdge[] = [];
   const seen = new Set<string>();
 
   const pushEdge = (edge: GraphEdge) => {
-    // Undirected graph: one edge per unordered pair + relationship kind.
     const key = [edge.source, edge.target].sort().join("::") + "::" + edge.label;
     if (seen.has(key)) return;
     if (!nodes.has(edge.source) || !nodes.has(edge.target)) return;
@@ -131,19 +133,23 @@ export function buildLoreGraph(): LoreGraph {
   };
 
   for (const rel of relationships) {
+    const isDirectCanon = rel.connectionType === "DIRECT_CANON" && rel.verified;
     pushEdge({
       id: rel.id,
       source: rel.sourceCharacterId,
       target: rel.targetCharacterId,
       relationship: rel.type,
-      weight: directWeight(rel.importanceScore),
+      connectionCategory: rel.connectionType,
+      confidence: rel.confidence,
+      weight: directWeight(rel.importanceScore, rel.connectionType),
       importance: rel.importanceScore,
       description: rel.shortExplanation,
-      connectionKind: "direct",
+      connectionKind: isDirectCanon ? "direct" : "indirect",
       label: rel.label,
       canonStatus: rel.canonStatus,
       relationshipId: rel.id,
       verified: rel.verified,
+      sourceIds: rel.sourceIds,
     });
   }
 
@@ -156,7 +162,9 @@ export function buildLoreGraph(): LoreGraph {
         source: character.id,
         target: faction.id,
         relationship: "faction",
-        weight: COST.faction,
+        connectionCategory: "SHARED_FACTION",
+        confidence: "DERIVED",
+        weight: CATEGORY_PATH_COST.SHARED_FACTION,
         importance: Math.round(faction.importance * 0.6),
         description: `${character.name} is associated with ${faction.name}.`,
         connectionKind: "indirect",
@@ -173,7 +181,12 @@ export function buildLoreGraph(): LoreGraph {
         source: character.id,
         target: regionNodeId,
         relationship: "related",
-        weight: character.region === "runeterra" ? COST.genericRegion : COST.region,
+        connectionCategory: "SHARED_REGION",
+        confidence: "DERIVED",
+        weight:
+          character.region === "runeterra"
+            ? COST.genericRegion
+            : CATEGORY_PATH_COST.SHARED_REGION,
         importance: 30,
         description: `${character.name} is tied to ${
           regions.find((r) => r.slug === character.region)?.name ?? character.region
@@ -188,21 +201,62 @@ export function buildLoreGraph(): LoreGraph {
 
   for (const event of events) {
     for (const characterId of event.characterIds) {
-      // Events intentionally name figures outside the 50-champion seed; those
-      // references are skipped rather than creating dangling nodes.
       if (!nodes.has(characterId)) continue;
       pushEdge({
         id: `edge:event-${event.slug}-${characterId}`,
         source: characterId,
         target: event.id,
         relationship: "related",
-        weight: COST.event,
+        connectionCategory: "SHARED_EVENT",
+        confidence: "STRONG",
+        weight: CATEGORY_PATH_COST.SHARED_EVENT,
         importance: Math.round(event.importance * 0.7),
-        description: `Present in ${event.title}.`,
+        description: event.description,
         connectionKind: "indirect",
         label: "Event",
         canonStatus: event.canonStatus,
         verified: event.verified,
+      });
+    }
+  }
+
+  for (const entity of loreEntities) {
+    for (const slug of entity.characterSlugs) {
+      const charId = `char:${slug}`;
+      if (!nodes.has(charId)) continue;
+      pushEdge({
+        id: `edge:concept-${entity.slug}-${slug}`,
+        source: charId,
+        target: entity.id,
+        relationship: "related",
+        connectionCategory: "STRUCTURAL_LORE",
+        confidence: "STRONG",
+        weight: CATEGORY_PATH_COST.STRUCTURAL_LORE,
+        importance: Math.round(entity.importance * 0.75),
+        description: entity.shortDescription,
+        connectionKind: "indirect",
+        label: entity.name,
+        canonStatus: "CANON",
+        verified: true,
+      });
+    }
+    for (const eventSlug of entity.eventSlugs) {
+      const eventId = `event:${eventSlug}`;
+      if (!nodes.has(eventId)) continue;
+      pushEdge({
+        id: `edge:concept-event-${entity.slug}-${eventSlug}`,
+        source: entity.id,
+        target: eventId,
+        relationship: "related",
+        connectionCategory: "STRUCTURAL_LORE",
+        confidence: "DERIVED",
+        weight: CATEGORY_PATH_COST.STRUCTURAL_LORE * 0.85,
+        importance: Math.round(entity.importance * 0.6),
+        description: `${entity.name} is central to ${events.find((e) => e.slug === eventSlug)?.title ?? eventSlug}.`,
+        connectionKind: "indirect",
+        label: "Lore",
+        canonStatus: "CANON",
+        verified: true,
       });
     }
   }

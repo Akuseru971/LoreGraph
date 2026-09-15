@@ -75,7 +75,8 @@ export const loreRepository: LoreRepository = {
    * and the answer cannot be rerolled by refreshing.
    */
   dailyQuestions: (date = todayKey(), count = 5) => {
-    const shuffled = seededShuffle(quizQuestions, `daily:${date}`);
+    const eligible = quizQuestions.filter((q) => q.verified);
+    const shuffled = seededShuffle(eligible, `daily:${date}`);
     const picked: QuizQuestion[] = [];
     const usedKinds = new Set<string>();
     for (const question of shuffled) {

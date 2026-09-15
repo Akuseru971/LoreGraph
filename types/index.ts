@@ -86,6 +86,24 @@ export type CharacterStatus =
 
 export type LoreComplexity = 1 | 2 | 3 | 4 | 5;
 
+/** Truth Layer — how a connection should be interpreted in UI and pathfinding. */
+export type ConnectionCategory =
+  | "DIRECT_CANON"
+  | "SHARED_EVENT"
+  | "SHARED_FACTION"
+  | "SHARED_REGION"
+  | "STRUCTURAL_LORE"
+  | "THEMATIC_PARALLEL"
+  | "AMBIGUOUS"
+  | "LEGACY_LORE";
+
+export type ConnectionConfidence =
+  | "DOCUMENTED"
+  | "STRONG"
+  | "DERIVED"
+  | "INTERPRETIVE"
+  | "UNCERTAIN";
+
 /* -------------------------------------------------------------------------- */
 /* Lore content                                                               */
 /* -------------------------------------------------------------------------- */
@@ -196,6 +214,9 @@ export interface Relationship {
   sourceCharacterId: string;
   targetCharacterId: string;
   type: RelationshipType;
+  /** Truth Layer category — never present direct canon without documentation. */
+  connectionType: ConnectionCategory;
+  confidence: ConnectionConfidence;
   label: string;
   shortExplanation: string;
   longExplanation: string;
@@ -204,7 +225,11 @@ export interface Relationship {
   canonStatus: CanonStatus;
   sourceIds: string[];
   eventIds: string[];
+  factionIds: string[];
+  regionIds: string[];
   verified: boolean;
+  needsReview: boolean;
+  editorialNote?: string;
 }
 
 export interface LoreEvent extends Entity {
@@ -397,6 +422,8 @@ export interface GraphEdge {
   source: string;
   target: string;
   relationship: RelationshipType;
+  connectionCategory: ConnectionCategory;
+  confidence: ConnectionConfidence;
   /** Lower = closer. Derived from importance. */
   weight: number;
   importance: number;
@@ -407,6 +434,7 @@ export interface GraphEdge {
   canonStatus: CanonStatus;
   relationshipId?: string;
   verified: boolean;
+  sourceIds?: string[];
 }
 
 export type ConnectionKind = "direct" | "indirect";

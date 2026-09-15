@@ -1,5 +1,5 @@
 export { explainNode, explainStep, pathNarrative } from "./explanations";
-export { buildLoreGraph, otherEnd } from "./build";
+export { buildLoreGraph, otherEnd, resetLoreGraphCache } from "./build";
 export {
   findNarrativePath,
   findPaths,

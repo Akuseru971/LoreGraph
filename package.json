@@ -10,6 +10,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "check:seed": "tsx scripts/check-seed.ts",
     "db:seed": "tsx scripts/seed-supabase.ts",
+    "validate:lore": "tsx scripts/validate-lore.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },

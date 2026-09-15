@@ -12,6 +12,7 @@ import {
   trendingCharacterSlugs,
 } from "@/data";
 import { CharacterCard } from "@/components/character-card";
+import { ConnectHeroDemo } from "@/components/discover/connect-hero-demo";
 import { HeroConstellation } from "@/components/discover/hero-constellation";
 import { useSearchDialog } from "@/components/providers";
 import { StoryPathCard } from "@/components/story/story-path-card";
@@ -148,6 +149,8 @@ export function DiscoverScreen({
             </Button>
           </div>
         </div>
+
+        <ConnectHeroDemo />
       </section>
 
       {/* --------------------------------------------------------- trending */}

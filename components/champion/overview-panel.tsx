@@ -7,6 +7,7 @@ import { regionBySlug, sourceById } from "@/data";
 import { EntityPortrait } from "@/components/entity-portrait";
 import { FactionBadge } from "@/components/region-badge";
 import { CanonBadge } from "@/components/ui/badge";
+import { CONNECTION_CATEGORY_LABEL } from "@/lib/truth/layer";
 import { GROUP_COLOR, RELATIONSHIP_LABEL, relationshipGroup } from "@/lib/graph/style";
 import { hexToRgba } from "@/lib/utils";
 import type { Character, Relationship } from "@/types";
@@ -203,6 +204,9 @@ function CoreRelationshipCard({
               color,
             }}
           >
+            {CONNECTION_CATEGORY_LABEL[relationship.connectionType]}
+          </span>
+          <span className="text-muted-dim text-[0.625rem]">
             {relationship.label || RELATIONSHIP_LABEL[relationship.type]}
           </span>
         </p>

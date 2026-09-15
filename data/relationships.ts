@@ -1,4 +1,10 @@
-import type { CanonStatus, Relationship, RelationshipType } from "@/types";
+import type {
+  CanonStatus,
+  ConnectionCategory,
+  Relationship,
+  RelationshipType,
+} from "@/types";
+import { inferConfidence, inferConnectionCategory } from "@/lib/truth/layer";
 import { bioSourceId } from "./sources";
 import { RUNETERRA_ID } from "./universes";
 
@@ -15,6 +21,10 @@ interface RelSeed {
   events?: string[];
   sources?: string[];
   verified?: boolean;
+  /** Explicit Truth Layer override when auto-classification is insufficient. */
+  connectionType?: ConnectionCategory;
+  needsReview?: boolean;
+  editorialNote?: string;
 }
 
 /**
@@ -70,6 +80,7 @@ const seeds: RelSeed[] = [
     long: "Azir's empire built the Ascended, and Aatrox was among the first and greatest of them. By the time Azir came to the throne the Darkin problem had already reshaped Shurima's relationship to its own gods. They are connected through the institution rather than through personal history, but that institution is the single most consequential thing either of them belongs to.",
     importance: 68,
     events: ["ascension-ritual", "darkin-war"],
+    connectionType: "STRUCTURAL_LORE",
   },
   {
     a: "aatrox",
@@ -145,8 +156,9 @@ const seeds: RelSeed[] = [
     label: "Fellow Aspect Hosts",
     short: "Two mortals who carried celestial Aspects, and both survived the experience differently.",
     long: "Leona still carries the Aspect of the Sun. Pantheon's Aspect of War was destroyed, and he continues with only a fragment of it. That difference makes him uniquely qualified to tell her something no other Targonian can: that the celestials are not guaranteed, and the mortal underneath matters.",
-    importance: 70,
-    events: ["targon-aurelion-loose"],
+    importance: 72,
+    events: ["targon-aurelion-loose", "ascension-ritual"],
+    verified: true,
   },
   {
     a: "pantheon",
@@ -257,6 +269,8 @@ const seeds: RelSeed[] = [
     long: "Aatrox exists because the empire decided to manufacture gods to fight the Void, and that decision eventually cost it everything. Kai'Sa exists because the Void came back and one child refused to stop moving. Setting them beside each other is the clearest way to understand what Shurima gained and lost by answering the Void with power rather than survival.",
     importance: 50,
     events: ["void-incursion", "void-breach-icathia"],
+    connectionType: "THEMATIC_PARALLEL",
+    editorialNote: "Editorial comparison — no documented direct relationship.",
   },
   {
     a: "kaisa",
@@ -1838,18 +1852,6 @@ const seeds: RelSeed[] = [
   /* ------------------------------------------------------- V1 enrichment */
   {
     a: "leona",
-    b: "pantheon",
-    type: "ally",
-    label: "Aspects of Targon",
-    short:
-      "Both carry fragments of Targonian power — Leona the sun, Pantheon the war that was broken and remade.",
-    long: "Leona and Pantheon are the two most visible mortal faces of Targon's intervention in Runeterra. They did not choose each other, but they answer the same mountain and fight the same class of threats.",
-    importance: 72,
-    events: ["ascension-ritual"],
-    verified: true,
-  },
-  {
-    a: "leona",
     b: "kayle",
     type: "ally",
     label: "Aspects of Targon",
@@ -1879,41 +1881,6 @@ const seeds: RelSeed[] = [
       "Diana's Aspect draws her into the same cosmic order Aurelion Sol was chained to serve.",
     long: "The Lunari faith Diana carries points toward celestial mechanics far older than Runeterra. Aurelion Sol is one of the beings those mechanics were built to control.",
     importance: 62,
-    verified: true,
-  },
-  {
-    a: "ekko",
-    b: "jinx",
-    type: "rival",
-    label: "Zaun's Two Futures",
-    short:
-      "Ekko rebuilds what Jinx breaks — they grew up in the same city and chose opposite answers to its cruelty.",
-    long: "Both are products of Zaun's neglect. Ekko's Firelights try to protect the people the city forgot; Jinx makes the city's chaos literal. Their rivalry is personal because the wound is shared.",
-    importance: 78,
-    events: ["piltover-zaun-crisis"],
-    verified: true,
-  },
-  {
-    a: "ekko",
-    b: "viktor",
-    type: "enemy",
-    label: "Progress at Whose Cost",
-    short:
-      "Viktor's vision of glorious evolution treats people like Ekko protects as acceptable losses.",
-    long: "Ekko's time device is a tool for saving his community. Viktor's evolution is a doctrine that would overwrite that community. They represent Zaun's two most dangerous answers to suffering.",
-    importance: 70,
-    verified: true,
-  },
-  {
-    a: "yone",
-    b: "yasuo",
-    type: "family",
-    label: "Brothers Divided",
-    short:
-      "Yone died believing Yasuo murdered their master; returning from the spirit realm did not simplify the grief.",
-    long: "Their story is Ionia's most intimate tragedy: duty, guilt, and the gap between what we think we know about the people we love and what actually happened.",
-    importance: 92,
-    events: ["elder-killing", "brothers-duel"],
     verified: true,
   },
   {
@@ -1999,20 +1966,41 @@ const seeds: RelSeed[] = [
 export const relationships: Relationship[] = seeds
   // Placeholder rows document known gaps without polluting the live graph.
   .filter((s) => !s.a.endsWith("-placeholder") && !s.b.endsWith("-placeholder"))
-  .map((s, index) => ({
-    id: `rel:${s.a}-${s.b}-${index}`,
-    universeId: RUNETERRA_ID,
-    sourceCharacterId: `char:${s.a}`,
-    targetCharacterId: `char:${s.b}`,
-    type: s.type,
-    label: s.label,
-    shortExplanation: s.short,
-    longExplanation: s.long,
-    importanceScore: s.importance,
-    canonStatus: s.canon ?? "CANON",
-    sourceIds: s.sources ?? [bioSourceId(s.a), bioSourceId(s.b)],
-    eventIds: (s.events ?? []).map((e) => `event:${e}`),
-    verified: s.verified ?? false,
-  }));
+  .map((s, index) => {
+    const verified = s.verified ?? false;
+    let connectionType = inferConnectionCategory(s);
+    if (connectionType === "DIRECT_CANON" && !verified) {
+      connectionType =
+        s.type === "faction" ||
+        s.type === "political" ||
+        s.type === "formerAlly"
+          ? "STRUCTURAL_LORE"
+          : "AMBIGUOUS";
+    }
+    const sourceIds = s.sources ?? [bioSourceId(s.a), bioSourceId(s.b)];
+    const confidence = inferConfidence(connectionType, verified, sourceIds.length > 0);
+
+    return {
+      id: `rel:${s.a}-${s.b}-${index}`,
+      universeId: RUNETERRA_ID,
+      sourceCharacterId: `char:${s.a}`,
+      targetCharacterId: `char:${s.b}`,
+      type: s.type,
+      connectionType,
+      confidence,
+      label: s.label,
+      shortExplanation: s.short,
+      longExplanation: s.long,
+      importanceScore: s.importance,
+      canonStatus: s.canon ?? "CANON",
+      sourceIds,
+      eventIds: (s.events ?? []).map((e) => `event:${e}`),
+      factionIds: [],
+      regionIds: [],
+      verified,
+      needsReview: s.needsReview ?? (connectionType === "DIRECT_CANON" && !verified),
+      editorialNote: s.editorialNote,
+    };
+  });
 
 export const relationshipById = new Map(relationships.map((r) => [r.id, r]));

@@ -1,4 +1,5 @@
-import type { GraphEdge, RelationshipType } from "@/types";
+import { edgeCategory } from "@/lib/truth/layer";
+import type { ConnectionCategory, GraphEdge, RelationshipType } from "@/types";
 import { hexToRgba } from "@/lib/utils";
 
 /**
@@ -80,8 +81,20 @@ export const RELATIONSHIP_CATEGORY: Record<
   unknown: "concept",
 };
 
+const CATEGORY_COLOR: Partial<Record<ConnectionCategory, string>> = {
+  DIRECT_CANON: GROUP_COLOR.allied,
+  SHARED_EVENT: "#C9A96E",
+  STRUCTURAL_LORE: "#8B7FC7",
+  SHARED_FACTION: GROUP_COLOR.structural,
+  SHARED_REGION: "#647085",
+  THEMATIC_PARALLEL: "#8F9AAD",
+  AMBIGUOUS: GROUP_COLOR.hostile,
+  LEGACY_LORE: "#8C7748",
+};
+
 export function edgeStroke(edge: GraphEdge): string {
-  return GROUP_COLOR[relationshipGroup(edge.relationship)];
+  const category = edgeCategory(edge);
+  return CATEGORY_COLOR[category] ?? GROUP_COLOR[relationshipGroup(edge.relationship)];
 }
 
 export function edgeStyle(edge: GraphEdge, selected: boolean) {
