@@ -1,0 +1,289 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------- tokens */
+
+@theme {
+  --color-ink: #080b12;
+  --color-ink-deep: #05070c;
+  --color-surface: #101521;
+  --color-surface-2: #161c29;
+  --color-surface-3: #1d2434;
+  --color-parchment: #f5f2e8;
+  --color-muted: #8f9aad;
+  --color-muted-dim: #64708550;
+  --color-gold: #c9a96e;
+  --color-gold-bright: #e3caa0;
+  --color-gold-dim: #8c7748;
+
+  --color-line: rgba(245, 242, 232, 0.08);
+  --color-line-strong: rgba(245, 242, 232, 0.16);
+
+  --font-display: var(--font-serif-display), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-ui-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ui-mono), ui-monospace, monospace;
+
+  --radius-card: 14px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Region accents. Kept in one place so data-driven styling stays subdued. */
+:root {
+  --region-demacia: #d8b978;
+  --region-noxus: #a03041;
+  --region-ionia: #c77fa8;
+  --region-piltover: #c9a34e;
+  --region-zaun: #5fa86b;
+  --region-shurima: #d1a65c;
+  --region-targon: #8b7fc7;
+  --region-freljord: #7fa8c7;
+  --region-shadow-isles: #4fa88c;
+  --region-void: #8a5fc9;
+  --region-ixtal: #6fa85c;
+  --region-bilgewater: #c98a4e;
+  --region-bandle-city: #b98fc7;
+  --region-runeterra: #c9a96e;
+
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ base */
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  background-color: var(--color-ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-parchment);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
+  color: var(--color-parchment);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Scrollbars: present but quiet. */
+@media (pointer: fine) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(245, 242, 232, 0.14) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(245, 242, 232, 0.14);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+/* ------------------------------------------------------------ typography */
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+@utility text-monument {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+@utility text-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+@utility text-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------- panels */
+
+@utility panel {
+  background: linear-gradient(
+    160deg,
+    rgba(22, 28, 41, 0.92) 0%,
+    rgba(16, 21, 33, 0.92) 100%
+  );
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(14px);
+}
+
+@utility panel-flat {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+}
+
+@utility hairline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-line-strong),
+    transparent
+  );
+  height: 1px;
+}
+
+@utility gold-underline {
+  background: linear-gradient(90deg, var(--color-gold), transparent);
+  height: 1px;
+}
+
+/* --------------------------------------------------------------- effects */
+
+@utility noise {
+  position: relative;
+}
+
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@utility vignette {
+  background: radial-gradient(
+    120% 90% at 50% 0%,
+    transparent 40%,
+    rgba(5, 7, 12, 0.85) 100%
+  );
+}
+
+/* ------------------------------------------------------------ animations */
+
+@keyframes lg-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes lg-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes lg-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes lg-pulse-ring {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.06);
+  }
+}
+
+@utility animate-fade-up {
+  animation: lg-fade-up 0.5s var(--ease-out-expo) both;
+}
+
+@utility skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(245, 242, 232, 0.04) 25%,
+    rgba(245, 242, 232, 0.1) 37%,
+    rgba(245, 242, 232, 0.04) 63%
+  );
+  background-size: 200% 100%;
+  animation: lg-shimmer 1.6s linear infinite;
+  border-radius: 8px;
+}
+
+.edge-flow {
+  stroke-dasharray: 4 8;
+  animation: lg-dash 1.6s linear infinite;
+}
+
+/* -------------------------------------------------- reduced motion first */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* React Flow theming — keep it inside our palette. */
+.react-flow {
+  --xy-background-color: transparent;
+  --xy-edge-stroke-default: rgba(245, 242, 232, 0.22);
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__handle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.react-flow__node {
+  cursor: pointer;
+}
+
+.react-flow__controls-button {
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-parchment);
+  fill: currentColor;
+}
+
+.react-flow__controls-button:hover {
+  background: var(--color-surface-3);
+}

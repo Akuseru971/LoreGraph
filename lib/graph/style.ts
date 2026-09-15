@@ -1,0 +1,77 @@
+import type { GraphEdge, RelationshipType } from "@/types";
+import { hexToRgba } from "@/lib/utils";
+
+/**
+ * Edge semantics are carried by three independent channels — line style,
+ * colour and an always-present text label — so colour is never the only cue.
+ */
+export const RELATIONSHIP_GROUPS = {
+  hostile: ["enemy", "rival", "fought", "killed", "killedBy", "betrayed"],
+  family: ["family", "lover"],
+  allied: ["ally", "mentor", "student", "served", "formerAlly"],
+  structural: ["faction", "political", "related", "creator", "createdBy", "imprisoned", "unknown"],
+} as const satisfies Record<string, readonly RelationshipType[]>;
+
+export type RelationshipGroup = keyof typeof RELATIONSHIP_GROUPS;
+
+export function relationshipGroup(type: RelationshipType): RelationshipGroup {
+  for (const [group, members] of Object.entries(RELATIONSHIP_GROUPS)) {
+    if ((members as readonly RelationshipType[]).includes(type)) {
+      return group as RelationshipGroup;
+    }
+  }
+  return "structural";
+}
+
+export const GROUP_COLOR: Record<RelationshipGroup, string> = {
+  hostile: "#A85059",
+  family: "#C9A96E",
+  allied: "#6FA88C",
+  structural: "#6E82A8",
+};
+
+export const RELATIONSHIP_LABEL: Record<RelationshipType, string> = {
+  ally: "Ally",
+  enemy: "Enemy",
+  rival: "Rival",
+  family: "Family",
+  mentor: "Mentor",
+  student: "Student",
+  lover: "Lover",
+  formerAlly: "Former ally",
+  faction: "Faction",
+  fought: "Fought",
+  killed: "Killed",
+  killedBy: "Killed by",
+  related: "Related",
+  political: "Political",
+  creator: "Creator",
+  createdBy: "Created by",
+  imprisoned: "Imprisoned",
+  betrayed: "Betrayed",
+  served: "Served",
+  unknown: "Unclear",
+};
+
+export function edgeStroke(edge: GraphEdge): string {
+  return GROUP_COLOR[relationshipGroup(edge.relationship)];
+}
+
+export function edgeStyle(edge: GraphEdge, selected: boolean) {
+  const color = edgeStroke(edge);
+  const strength = 0.22 + (edge.importance / 100) * 0.45;
+  return {
+    stroke: selected ? "#C9A96E" : hexToRgba(color, strength),
+    strokeWidth: selected ? 2.4 : 1 + (edge.importance / 100) * 1.4,
+    strokeDasharray: edge.connectionKind === "indirect" ? "5 7" : undefined,
+  };
+}
+
+export const NODE_SHAPE_HINT = {
+  character: "Circle",
+  region: "Hexagon",
+  faction: "Crest",
+  event: "Diamond",
+  location: "Square",
+  concept: "Circle",
+} as const;
