@@ -31,10 +31,7 @@ export function SessionProvider({
 
   React.useEffect(() => {
     const supabase = getSupabaseBrowserClient();
-    if (!supabase) {
-      setLoading(false);
-      return;
-    }
+    if (!supabase) return;
     void supabase.auth.getUser().then(({ data }) => {
       setUser(data.user ?? null);
       setLoading(false);

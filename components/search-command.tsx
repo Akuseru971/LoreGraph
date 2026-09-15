@@ -41,18 +41,20 @@ export function SearchCommand() {
     [],
   );
 
-  React.useEffect(() => {
-    if (!open) setQuery("");
-  }, [open]);
-
   const onSelect = (result: { href: string; id: string }) => {
     track({ name: "search_result_click", query, resultId: result.id });
+    setQuery("");
     setOpen(false);
     router.push(result.href);
   };
 
+  const handleOpenChange = (next: boolean) => {
+    if (!next) setQuery("");
+    setOpen(next);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-ink-deep/80 backdrop-blur-md" />
         <DialogPrimitive.Content className="fixed top-[12vh] left-1/2 z-50 w-[calc(100vw-1.5rem)] max-w-xl -translate-x-1/2 focus:outline-none">

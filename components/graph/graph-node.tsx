@@ -1,9 +1,10 @@
 "use client";
 
 import { Handle, Position, type NodeProps, type Node } from "@xyflow/react";
+import * as React from "react";
 import { regionBySlug } from "@/data";
 import { EntityPortrait } from "@/components/entity-portrait";
-import { regionIconFor } from "@/components/region-badge";
+import { RegionIcon } from "@/components/region-badge";
 import { cn, hexToRgba, initials } from "@/lib/utils";
 import type { GraphNode } from "@/types";
 
@@ -38,10 +39,29 @@ export function LoreGraphNode({ data }: NodeProps<LoreFlowNode>) {
     dimmed ? "opacity-25" : "opacity-100",
   );
 
+  // Both handles sit at the centre of the shape so edges are drawn
+  // centre-to-centre in every direction — a radial layout has no meaningful
+  // "top" or "bottom" side to anchor to.
+  const handleStyle: React.CSSProperties = {
+    left: size / 2,
+    top: size / 2,
+    transform: "translate(-50%, -50%)",
+  };
+
   return (
     <div className="flex flex-col items-center" style={{ width: size }}>
-      <Handle type="target" position={Position.Top} isConnectable={false} />
-      <Handle type="source" position={Position.Bottom} isConnectable={false} />
+      <Handle
+        type="target"
+        position={Position.Top}
+        isConnectable={false}
+        style={handleStyle}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        isConnectable={false}
+        style={handleStyle}
+      />
 
       {entity.type === "character" ? (
         <div
@@ -119,10 +139,8 @@ function NonCharacterNode({
         ? CLIP.faction
         : CLIP.event;
 
-  const Icon =
-    entity.type === "region" && entity.metadata.region
-      ? regionIconFor(entity.metadata.region)
-      : null;
+  const regionSlug =
+    entity.type === "region" ? entity.metadata.region : undefined;
 
   return (
     <div
@@ -159,8 +177,8 @@ function NonCharacterNode({
         className="relative"
         style={{ color: accent, fontSize: Math.max(9, size * 0.22) }}
       >
-        {Icon ? (
-          <Icon style={{ width: size * 0.32, height: size * 0.32 }} aria-hidden />
+        {regionSlug ? (
+          <RegionIcon slug={regionSlug} size={size * 0.32} />
         ) : (
           <span className="font-mono text-[0.625rem] font-medium">
             {initials(entity.name)}

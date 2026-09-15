@@ -264,8 +264,15 @@ body {
   --xy-edge-stroke-default: rgba(245, 242, 232, 0.22);
 }
 
+/* React Flow asks that its attribution stays visible; keep it, quietly. */
 .react-flow__attribution {
-  display: none;
+  background: transparent;
+  font-size: 9px;
+  padding: 2px 4px;
+}
+
+.react-flow__attribution a {
+  color: rgba(245, 242, 232, 0.28);
 }
 
 .react-flow__handle {

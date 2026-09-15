@@ -142,7 +142,7 @@ export function universeKnowledge(progress: UserProgress): number {
 }
 
 export function knowledgeTier(percent: number): string {
-  let name = knowledgeTiers[0].name;
+  let name: string = knowledgeTiers[0].name;
   for (const tier of knowledgeTiers) {
     if (percent >= tier.min) name = tier.name;
   }

@@ -88,7 +88,6 @@ export function track(event: AnalyticsEvent): void {
 /** Dev sink: prints events so the funnel is inspectable without a vendor. */
 export const consoleSink: AnalyticsSink = (event, context) => {
   if (process.env.NODE_ENV === "production") return;
-  // eslint-disable-next-line no-console
   console.debug(`[analytics] ${event.name}`, { ...event, path: context.path });
 };
 

@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Anchor,
   Eye,
@@ -36,6 +37,26 @@ const REGION_ICONS: Record<RegionIconKind, LucideIcon> = {
 export function regionIconFor(slug: RegionSlug): LucideIcon {
   const region = regionBySlug.get(slug);
   return region ? REGION_ICONS[region.icon] : Gem;
+}
+
+/** Renders a region icon without dynamic component assignment (eslint-safe). */
+export function RegionIcon({
+  slug,
+  size,
+  className,
+}: {
+  slug: RegionSlug;
+  size?: number;
+  className?: string;
+}) {
+  const region = regionBySlug.get(slug);
+  const kind = region?.icon ?? "shield";
+  const props = {
+    className,
+    style: size ? { width: size, height: size } : undefined,
+    "aria-hidden": true as const,
+  };
+  return React.createElement(REGION_ICONS[kind], props);
 }
 
 export function RegionBadge({
