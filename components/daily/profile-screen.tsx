@@ -124,13 +124,13 @@ export function ProfileScreen({
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 id="knowledge-heading" className="text-eyebrow text-muted">
-              Runeterra knowledge
+              LoreGraph completion
             </h2>
             <p className="font-display text-parchment mt-2 text-5xl tabular-nums sm:text-6xl">
               {formatPercent(stats.knowledge)}
             </p>
             <p className="text-muted mt-2 text-sm">
-              Level {level.level} · {level.name} · {tier}
+              Level {level.level} · {level.name} · {tier} · based on {stats.charactersExplored} champions explored in this archive
             </p>
             {upcoming ? (
               <div className="mt-4 max-w-xs">

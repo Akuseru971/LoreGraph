@@ -1,6 +1,7 @@
 "use client";
 
-import { BookOpen, Bookmark, BookmarkCheck, GitFork } from "lucide-react";
+import { BookOpen, Bookmark, BookmarkCheck, GitFork, Route } from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 import { factionBySlug, regionBySlug } from "@/data";
 import { useProgress } from "@/components/providers";
@@ -89,8 +90,14 @@ export function CharacterHero({
                 Explore connections
                 <span className="text-ink/60 ml-1 tabular-nums">{connections}</span>
               </Button>
+              <Button variant="secondary" size="lg" asChild>
+                <Link href={`/connect?from=${character.slug}`}>
+                  <Route aria-hidden />
+                  Connect to another champion
+                </Link>
+              </Button>
               {hasStory ? (
-                <Button variant="secondary" size="lg" onClick={onStartStory}>
+                <Button variant="ghost" size="lg" onClick={onStartStory}>
                   <BookOpen aria-hidden />
                   Start story
                 </Button>

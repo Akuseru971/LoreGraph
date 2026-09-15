@@ -19,11 +19,12 @@ const COST = {
   /** Multiplier applied to (100 - importance)/100 for direct edges. */
   directSpread: 1.4,
   directBase: 1.0,
-  faction: 3.2,
-  event: 2.6,
-  region: 4.2,
+  /** Indirect hops — tuned so paths tell stories, not geography trivia. */
+  faction: 6,
+  event: 4,
+  region: 8,
   /** The catch-all "Runeterra" region must never be a useful shortcut. */
-  genericRegion: 9,
+  genericRegion: 100,
 } as const;
 
 function directWeight(importance: number): number {
@@ -52,6 +53,11 @@ function characterNode(id: string): GraphNode | null {
 }
 
 let cached: LoreGraph | null = null;
+
+/** Clears memoised graph (for tests or hot reload). */
+export function resetLoreGraphCache(): void {
+  cached = null;
+}
 
 /**
  * Builds the full universe graph. Pure and memoised — safe to call from server

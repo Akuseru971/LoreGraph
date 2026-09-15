@@ -59,16 +59,19 @@ function narrativeCost(edge: GraphEdge, graph: LoreGraph): number {
 
   if (!edge.verified) cost += 0.25;
 
-  // Hub penalty on the far node: low-importance generic entities should not
-  // become highways.
+  // Hub penalty on endpoints: generic entities must not become highways.
   const far = graph.nodes.get(edge.target);
   const near = graph.nodes.get(edge.source);
   for (const node of [far, near]) {
     if (!node) continue;
-    if (node.type === "region" && node.slug === "runeterra") cost += 4;
-    else if (node.type === "region") cost += 0.9;
-    else if (node.type === "faction" && node.importance < 60) cost += 0.6;
+    if (node.type === "region" && node.slug === "runeterra") cost += 12;
+    else if (node.type === "region") cost += 1.2;
+    else if (node.type === "faction" && node.importance < 60) cost += 0.8;
+    else if (node.type === "concept") cost += 8;
   }
+
+  // Weak contextual direct links should lose to a slightly longer story route.
+  if (edge.connectionKind === "direct" && edge.importance < 35) cost += 10;
 
   return Math.max(0.2, cost);
 }

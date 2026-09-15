@@ -8,8 +8,9 @@ import { GraphLegend } from "@/components/graph/graph-legend";
 import { RelationshipDrawer, type RelationshipSelection } from "@/components/graph/relationship-drawer";
 import { RelationshipList } from "@/components/graph/relationship-list";
 import { characterById } from "@/data";
+import { OnboardingHint } from "@/components/onboarding-hint";
 import { EmptyState } from "@/components/ui/empty-state";
-import { Skeleton } from "@/components/ui/skeleton";
+import { GraphSkeleton } from "@/components/ui/screen-skeletons";
 import { track } from "@/lib/analytics";
 import { RELATIONSHIP_GROUPS } from "@/lib/graph/style";
 import type { Neighbor } from "@/lib/graph";
@@ -21,7 +22,7 @@ const KnowledgeGraph = dynamic(
   () => import("@/components/graph/knowledge-graph").then((m) => m.KnowledgeGraph),
   {
     ssr: false,
-    loading: () => <Skeleton className="size-full rounded-none" />,
+    loading: () => <GraphSkeleton className="rounded-none border-0" />,
   },
 );
 
@@ -84,6 +85,10 @@ export function ConnectionsPanel({
   const router = useRouter();
   const [filter, setFilter] = React.useState<FilterId>("all");
   const [selection, setSelection] = React.useState<RelationshipSelection | null>(null);
+
+  React.useEffect(() => {
+    track({ name: "graph_open", characterSlug: character.slug });
+  }, [character.slug]);
 
   const visible = React.useMemo(
     () => neighbors.filter((neighbor) => matches(filter, neighbor)),
@@ -165,6 +170,13 @@ export function ConnectionsPanel({
           )}
         </div>
       </div>
+
+      <OnboardingHint
+        id="graphExplore"
+        className="mt-6"
+        title="Follow the threads"
+        body="Select any connected character to follow their story through the graph."
+      />
 
       {visible.length === 0 ? (
         <div className="panel mt-6">

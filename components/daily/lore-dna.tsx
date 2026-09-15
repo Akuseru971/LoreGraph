@@ -23,6 +23,10 @@ export function LoreDNA({ progress }: { progress: UserProgress }) {
   const max = Math.max(...entries.map((e) => e.percent), 1);
 
   return (
+    <div>
+      <p className="text-muted mb-5 text-sm leading-relaxed">
+        Based on the stories and characters you&apos;ve explored.
+      </p>
     <ul className="space-y-4">
       {entries.map((entry, index) => (
         <motion.li
@@ -54,5 +58,6 @@ export function LoreDNA({ progress }: { progress: UserProgress }) {
         </motion.li>
       ))}
     </ul>
+    </div>
   );
 }

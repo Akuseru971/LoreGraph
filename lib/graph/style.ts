@@ -30,6 +30,7 @@ export const GROUP_COLOR: Record<RelationshipGroup, string> = {
   structural: "#6E82A8",
 };
 
+/** Human-readable labels — never expose camelCase in the UI. */
 export const RELATIONSHIP_LABEL: Record<RelationshipType, string> = {
   ally: "Ally",
   enemy: "Enemy",
@@ -38,19 +39,45 @@ export const RELATIONSHIP_LABEL: Record<RelationshipType, string> = {
   mentor: "Mentor",
   student: "Student",
   lover: "Lover",
-  formerAlly: "Former ally",
+  formerAlly: "Former member of",
   faction: "Faction",
   fought: "Fought",
   killed: "Killed",
   killedBy: "Killed by",
-  related: "Related",
-  political: "Political",
+  related: "Connected to",
+  political: "Political tie",
   creator: "Creator",
   createdBy: "Created by",
   imprisoned: "Imprisoned",
   betrayed: "Betrayed",
   served: "Served",
-  unknown: "Unclear",
+  unknown: "Unclear link",
+};
+
+export const RELATIONSHIP_CATEGORY: Record<
+  RelationshipType,
+  "personal" | "conflict" | "organizational" | "origin" | "event" | "concept"
+> = {
+  ally: "personal",
+  enemy: "conflict",
+  rival: "conflict",
+  family: "personal",
+  mentor: "personal",
+  student: "personal",
+  lover: "personal",
+  formerAlly: "origin",
+  faction: "organizational",
+  fought: "conflict",
+  killed: "conflict",
+  killedBy: "conflict",
+  related: "concept",
+  political: "organizational",
+  creator: "origin",
+  createdBy: "origin",
+  imprisoned: "conflict",
+  betrayed: "conflict",
+  served: "organizational",
+  unknown: "concept",
 };
 
 export function edgeStroke(edge: GraphEdge): string {
