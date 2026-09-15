@@ -1,36 +1,66 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+function supabaseEnabled(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+  if (!url || !key || key.length < 20) return false;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      return false;
+    }
+    // Skip refresh when env vars are still placeholders from a template.
+    if (
+      url.includes("your-project") ||
+      url.includes("example.supabase") ||
+      key === "your-anon-key"
+    ) {
+      return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /**
- * Keeps the Supabase auth session fresh across server components and route
- * handlers. No-op when env vars are absent (demo mode).
+ * Refreshes the Supabase auth session when properly configured.
+ *
+ * LoreGraph must never crash in demo mode: if Supabase is missing, misconfigured,
+ * or throws on the Edge runtime, we fall through to a normal response.
  */
 export async function middleware(request: NextRequest) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return NextResponse.next();
+  if (!supabaseEnabled()) {
+    return NextResponse.next();
+  }
 
-  let response = NextResponse.next({ request });
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!.trim();
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!.trim();
 
-  const supabase = createServerClient(url, key, {
-    cookies: {
-      getAll() {
-        return request.cookies.getAll();
+  try {
+    let response = NextResponse.next({ request });
+
+    const supabase = createServerClient(url, key, {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          // Edge middleware: only mutate the response cookies, not the request.
+          response = NextResponse.next({ request });
+          for (const { name, value, options } of cookiesToSet) {
+            response.cookies.set(name, value, options);
+          }
+        },
       },
-      setAll(cookiesToSet) {
-        for (const { name, value } of cookiesToSet) {
-          request.cookies.set(name, value);
-        }
-        response = NextResponse.next({ request });
-        for (const { name, value, options } of cookiesToSet) {
-          response.cookies.set(name, value, options);
-        }
-      },
-    },
-  });
+    });
 
-  await supabase.auth.getUser();
-  return response;
+    await supabase.auth.getUser();
+    return response;
+  } catch {
+    return NextResponse.next();
+  }
 }
 
 export const config = {
