@@ -3,7 +3,11 @@ import type {
   ConnectionCategory,
   ConnectionConfidence,
   GraphEdge,
+  LoreGraph,
+  PathStep,
 } from "@/types";
+import { isConnectBridgeNode } from "@/lib/graph/connect-eligibility";
+import { edgeCategory } from "@/lib/truth/layer";
 
 /** Map legacy seed values to Canon Model V3. */
 const CANON_MIGRATION: Record<string, CanonStatus> = {
@@ -67,8 +71,6 @@ export function isDailyEligibleCanon(status?: string | CanonStatus | null): bool
 const DAILY_EDGE_CATEGORIES = new Set<ConnectionCategory>([
   "DIRECT_CANON",
   "SHARED_EVENT",
-  "SHARED_FACTION",
-  "SHARED_REGION",
   "STRUCTURAL_LORE",
 ]);
 
@@ -85,6 +87,25 @@ export function isDailyEligibleEdge(edge: GraphEdge): boolean {
 }
 
 /** Whether every step in a path is safe for Daily Connection. */
-export function isDailyEligiblePath(edges: GraphEdge[]): boolean {
+export function isDailyEligiblePath(
+  steps: PathStep[],
+  graph: LoreGraph,
+  endpoints: { start: string; end: string },
+): boolean {
+  if (steps.length === 0) return false;
+
+  for (const step of steps) {
+    if (!isDailyEligibleEdge(step.edge)) return false;
+    if (!isConnectBridgeNode(graph, step.from.id, endpoints)) return false;
+    if (!isConnectBridgeNode(graph, step.to.id, endpoints)) return false;
+    if (edgeCategory(step.edge) === "SHARED_REGION") return false;
+    if (edgeCategory(step.edge) === "SHARED_FACTION") return false;
+  }
+
+  return true;
+}
+
+/** @deprecated Pass full path steps and graph */
+export function isDailyEligiblePathEdges(edges: GraphEdge[]): boolean {
   return edges.length > 0 && edges.every(isDailyEligibleEdge);
 }

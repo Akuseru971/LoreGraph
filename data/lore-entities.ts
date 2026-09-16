@@ -10,6 +10,7 @@ export interface LoreEntity extends Entity {
   /** Optional event slugs that anchor this concept. */
   eventSlugs: string[];
   accentColor: string;
+  connectEligible?: boolean;
 }
 
 const entitySeeds: Array<Omit<LoreEntity, "type" | "universeId" | "verified">> = [
@@ -85,6 +86,7 @@ export const loreEntities: LoreEntity[] = entitySeeds.map((e) => ({
   type: "concept" as const,
   universeId: RUNETERRA_ID,
   verified: true,
+  connectEligible: e.connectEligible ?? true,
 }));
 
 export const loreEntityById = new Map(loreEntities.map((e) => [e.id, e]));

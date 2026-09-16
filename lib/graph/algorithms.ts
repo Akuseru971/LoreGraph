@@ -8,6 +8,7 @@ import type {
 } from "@/types";
 import { isCurrentCanon, normalizeConfidence } from "@/lib/canon/model";
 import { CATEGORY_PATH_COST, edgeCategory } from "@/lib/truth/layer";
+import { isConnectBridgeNode } from "./connect-eligibility";
 import { buildLoreGraph, otherEnd } from "./build";
 
 const HOP_UNIT = 1000;
@@ -80,6 +81,7 @@ function dijkstra(
   options: {
     blockedEdgeIds?: Set<string>;
     nodePenalty?: Map<string, number>;
+    start?: string;
     end?: string;
   } = {},
 ): DijkstraResult {
@@ -112,6 +114,16 @@ function dijkstra(
       }
       const next = otherEnd(edge, current);
       if (visited.has(next)) continue;
+      if (
+        options.start &&
+        options.end &&
+        !isConnectBridgeNode(graph, next, {
+          start: options.start,
+          end: options.end,
+        })
+      ) {
+        continue;
+      }
       const penalty = options.nodePenalty?.get(next) ?? 0;
       const candidate = best + cost(edge) + penalty;
       if (candidate < (dist.get(next) ?? Infinity)) {
@@ -190,7 +202,7 @@ export function findShortestPath(
   end: string,
   graph: LoreGraph = buildLoreGraph(),
 ): GraphPath | null {
-  const result = dijkstra(graph, start, shortestCost);
+  const result = dijkstra(graph, start, shortestCost, { start, end });
   return reconstruct(graph, result, start, end, "shortest");
 }
 
@@ -204,7 +216,7 @@ export function findNarrativePath(
     graph,
     start,
     (edge) => narrativeCost(edge, graph, query),
-    { end },
+    { start, end },
   );
   return reconstruct(graph, result, start, end, "narrative");
 }
@@ -249,7 +261,7 @@ export function findPaths(
       graph,
       start,
       (edge) => narrativeCost(edge, graph, query),
-      { nodePenalty: usedIntermediates, end },
+      { nodePenalty: usedIntermediates, start, end },
     );
     add(reconstruct(graph, result, start, end, "alternative"));
   }

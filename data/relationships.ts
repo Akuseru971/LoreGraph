@@ -5,6 +5,7 @@ import type {
 } from "@/types";
 import { normalizeCanonStatus } from "@/lib/canon/model";
 import { inferConfidence, inferConnectionCategory } from "@/lib/truth/layer";
+import { deriveNeedsReview, deriveReviewStatus } from "@/lib/truth/review";
 import { bioSourceId } from "./sources";
 import { RUNETERRA_ID } from "./universes";
 
@@ -24,6 +25,8 @@ interface RelSeed {
   /** Explicit Truth Layer override when auto-classification is insufficient. */
   connectionType?: ConnectionCategory;
   needsReview?: boolean;
+  reviewed?: boolean;
+  reviewStatus?: import("@/types").ReviewStatus;
   editorialNote?: string;
 }
 
@@ -270,6 +273,8 @@ const seeds: RelSeed[] = [
     importance: 50,
     events: ["void-incursion", "void-breach-icathia"],
     connectionType: "THEMATIC_PARALLEL",
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
     editorialNote: "Editorial comparison — no documented direct relationship.",
   },
   {
@@ -1928,7 +1933,8 @@ const seeds: RelSeed[] = [
     long: "Kai'Sa comes from the Shuriman desert and Azir leads a restored Shuriman empire, but no official source documents a direct political or personal relationship between them. LoreGraph records this as structural context through Shurima and the Void, not as a verified encounter.",
     importance: 52,
     connectionType: "STRUCTURAL_LORE",
-    needsReview: true,
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
     editorialNote: "Geographic and thematic overlap only — not a documented direct relationship.",
   },
   {
@@ -1982,7 +1988,7 @@ export const relationships: Relationship[] = seeds
     const sourceIds = s.sources ?? [bioSourceId(s.a), bioSourceId(s.b)];
     const confidence = inferConfidence(connectionType, verified, sourceIds.length > 0);
 
-    return {
+    const base = {
       id: `rel:${s.a}-${s.b}-${index}`,
       universeId: RUNETERRA_ID,
       sourceCharacterId: `char:${s.a}`,
@@ -2000,8 +2006,21 @@ export const relationships: Relationship[] = seeds
       factionIds: [],
       regionIds: [],
       verified,
-      needsReview: s.needsReview ?? (connectionType === "DIRECT_CANON" && !verified),
+      reviewed: s.reviewed ?? false,
+      reviewStatus: s.reviewStatus,
       editorialNote: s.editorialNote,
+    };
+
+    const reviewStatus = deriveReviewStatus(base);
+    const relationship = {
+      ...base,
+      reviewStatus,
+      needsReview: false,
+    };
+
+    return {
+      ...relationship,
+      needsReview: deriveNeedsReview(relationship),
     };
   });
 

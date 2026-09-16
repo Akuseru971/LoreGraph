@@ -1,12 +1,13 @@
 import { notFound } from "next/navigation";
 import { characters, relationships } from "@/data";
-import { CONNECTION_CATEGORY_LABEL, needsReview, reviewReason } from "@/lib/truth/layer";
+import { CONNECTION_EVIDENCE_LABEL } from "@/lib/truth/evidence";
+import { deriveNeedsReview, reviewReason } from "@/lib/truth/review";
 
 export default function LoreReviewPage() {
   if (process.env.NODE_ENV === "production") notFound();
 
   const flagged = relationships
-    .filter((r) => needsReview(r))
+    .filter((r) => deriveNeedsReview(r))
     .map((r) => {
       const a = characters.find((c) => c.id === r.sourceCharacterId);
       const b = characters.find((c) => c.id === r.targetCharacterId);
@@ -14,8 +15,10 @@ export default function LoreReviewPage() {
         id: r.id,
         from: a?.name ?? r.sourceCharacterId,
         to: b?.name ?? r.targetCharacterId,
-        type: CONNECTION_CATEGORY_LABEL[r.connectionType],
+        type: CONNECTION_EVIDENCE_LABEL[r.connectionType],
         verified: r.verified,
+        reviewed: r.reviewed,
+        reviewStatus: r.reviewStatus,
         confidence: r.confidence,
         sources: r.sourceIds.length,
         reason: reviewReason(r),
@@ -23,7 +26,7 @@ export default function LoreReviewPage() {
     });
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <h1 className="text-monument text-3xl">Lore review (dev only)</h1>
       <p className="text-muted mt-2 text-sm">
         {flagged.length} relationships flagged for review.
@@ -35,6 +38,8 @@ export default function LoreReviewPage() {
             <th className="py-2 pr-4">To</th>
             <th className="py-2 pr-4">Type</th>
             <th className="py-2 pr-4">Verified</th>
+            <th className="py-2 pr-4">Reviewed</th>
+            <th className="py-2 pr-4">Status</th>
             <th className="py-2 pr-4">Sources</th>
             <th className="py-2">Reason</th>
           </tr>
@@ -46,6 +51,8 @@ export default function LoreReviewPage() {
               <td className="py-3 pr-4">{row.to}</td>
               <td className="py-3 pr-4">{row.type}</td>
               <td className="py-3 pr-4">{row.verified ? "yes" : "no"}</td>
+              <td className="py-3 pr-4">{row.reviewed ? "yes" : "no"}</td>
+              <td className="py-3 pr-4">{row.reviewStatus}</td>
               <td className="py-3 pr-4">{row.sources}</td>
               <td className="text-muted py-3">{row.reason}</td>
             </tr>

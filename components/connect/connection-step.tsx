@@ -4,18 +4,13 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import * as React from "react";
 import { relationshipById, sourceById } from "@/data";
-import { CanonBadge } from "@/components/ui/badge";
 import { explainStep } from "@/lib/graph/explanations";
 import { edgeStroke } from "@/lib/graph/style";
-import { isCurrentCanon } from "@/lib/canon/model";
-import {
-  CONFIDENCE_LABEL,
-  CONNECTION_CATEGORY_LABEL,
-  edgeCategory,
-} from "@/lib/truth/layer";
+import { edgeEvidencePresentation } from "@/lib/truth/evidence";
+import { edgeCategory } from "@/lib/truth/layer";
 import { cn, hexToRgba } from "@/lib/utils";
 import type { PathStep } from "@/types";
-import { ConnectionCategoryBadge, ConfidenceBadge } from "./connection-category-badge";
+import { ConnectionCategoryBadge } from "./connection-category-badge";
 
 export function ConnectionStep({
   step,
@@ -35,6 +30,7 @@ export function ConnectionStep({
     ? relationshipById.get(step.edge.relationshipId)
     : undefined;
   const narrative = explainStep(step);
+  const evidence = edgeEvidencePresentation(step.edge);
 
   const label =
     step.edge.connectionKind === "direct" && relationship
@@ -88,20 +84,21 @@ export function ConnectionStep({
 
           <p className="text-muted mt-2 text-sm leading-relaxed">{narrative.body}</p>
 
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <ConnectionCategoryBadge edge={step.edge} />
-            <ConfidenceBadge edge={step.edge} />
-            <span
-              className="text-eyebrow rounded-full border px-2 py-1"
-              style={{
-                borderColor: hexToRgba(color, 0.35),
-                backgroundColor: hexToRgba(color, 0.1),
-                color,
-              }}
-            >
-              {label}
-            </span>
-            <CanonBadge status={step.edge.canonStatus} />
+          <div className="mt-3 space-y-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <ConnectionCategoryBadge edge={step.edge} />
+              <span
+                className="text-eyebrow rounded-full border px-2 py-1"
+                style={{
+                  borderColor: hexToRgba(color, 0.35),
+                  backgroundColor: hexToRgba(color, 0.1),
+                  color,
+                }}
+              >
+                {label}
+              </span>
+            </div>
+            <p className="text-muted text-xs">{evidence.evidenceLine}</p>
           </div>
 
           <button
@@ -121,12 +118,9 @@ export function ConnectionStep({
             <div className="text-parchment/80 mt-2 space-y-2 border-l border-line pl-3 text-sm leading-relaxed">
               <p>{relationship?.longExplanation ?? step.edge.description}</p>
               <p className="text-muted text-xs">
-                Type: {CONNECTION_CATEGORY_LABEL[edgeCategory(step.edge)]} ·{" "}
-                Confidence: {CONFIDENCE_LABEL[step.edge.confidence]} · Canon:{" "}
-                {isCurrentCanon(step.edge.canonStatus)
-                  ? "Current canon"
-                  : "Not current canon"}
+                Connection: {evidence.connectionLabel} · {evidence.evidenceLine}
               </p>
+              <p className="text-muted text-xs">{evidence.sourceLine}</p>
               {relationship?.editorialNote ? (
                 <p className="text-muted text-xs italic">{relationship.editorialNote}</p>
               ) : null}

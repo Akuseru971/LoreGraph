@@ -16,6 +16,7 @@ interface EventSeed {
   regions: RegionSlug[];
   canonStatus?: LoreEvent["canonStatus"];
   verified?: boolean;
+  connectEligible?: boolean;
 }
 
 /**
@@ -33,6 +34,7 @@ const seeds: EventSeed[] = [
     importance: 70,
     characters: ["aurelion-sol", "kayle", "morgana"],
     regions: ["targon", "runeterra"],
+    connectEligible: false,
   },
   {
     slug: "star-forger-bound",
@@ -526,6 +528,7 @@ export const events: LoreEvent[] = seeds.map((s) => ({
   regionSlugs: s.regions,
   canonStatus: normalizeCanonStatus(s.canonStatus),
   verified: s.verified ?? true,
+  connectEligible: s.connectEligible ?? s.slug !== "celestial-age",
 }));
 
 export const eventById = new Map(events.map((e) => [e.id, e]));

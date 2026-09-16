@@ -7,20 +7,20 @@ import type {
   ConnectionCategory,
   ConnectionConfidence,
   GraphEdge,
-  Relationship,
   RelationshipType,
 } from "@/types";
 
 /** Consumer-facing badge labels — never expose internal enum names. */
+/** @deprecated Prefer CONNECTION_EVIDENCE_LABEL from lib/truth/evidence */
 export const CONNECTION_CATEGORY_LABEL: Record<ConnectionCategory, string> = {
   DIRECT_CANON: "Direct canon",
   SHARED_EVENT: "Shared event",
   SHARED_FACTION: "Shared faction",
   SHARED_REGION: "Shared region",
-  STRUCTURAL_LORE: "Lore connection",
-  THEMATIC_PARALLEL: "Thematic parallel",
-  AMBIGUOUS: "Ambiguous",
-  LEGACY_CONNECTION: "Old lore",
+  STRUCTURAL_LORE: "Structural connection",
+  THEMATIC_PARALLEL: "Thematic connection",
+  AMBIGUOUS: "Ambiguous connection",
+  LEGACY_CONNECTION: "Legacy connection",
 };
 
 export const CONFIDENCE_LABEL: Record<ConnectionConfidence, string> = {
@@ -96,36 +96,7 @@ export function inferConfidence(
   return "DERIVED";
 }
 
-export function needsReview(rel: Relationship): boolean {
-  if (rel.connectionType === "DIRECT_CANON" && !rel.verified) return true;
-  if (rel.connectionType === "DIRECT_CANON" && rel.sourceIds.length === 0) {
-    return true;
-  }
-  if (
-    rel.connectionType === "DIRECT_CANON" &&
-    rel.confidence === "UNCERTAIN"
-  ) {
-    return true;
-  }
-  if (rel.needsReview) return true;
-  if (!rel.shortExplanation || rel.shortExplanation.length < 12) return true;
-  return false;
-}
-
-export function reviewReason(rel: Relationship): string | null {
-  if (rel.connectionType === "DIRECT_CANON" && !rel.verified) {
-    return "Marked DIRECT_CANON but verified is false";
-  }
-  if (rel.connectionType === "DIRECT_CANON" && rel.sourceIds.length === 0) {
-    return "DIRECT_CANON without source references";
-  }
-  if (rel.connectionType === "THEMATIC_PARALLEL" && rel.verified) {
-    return "Thematic edge should not be verified as canon";
-  }
-  if (!rel.shortExplanation) return "Missing summary";
-  if (rel.needsReview) return rel.editorialNote ?? "Flagged for review";
-  return null;
-}
+export { deriveNeedsReview, needsReview, reviewReason } from "./review";
 
 export function edgeCategory(edge: GraphEdge): ConnectionCategory {
   const raw =

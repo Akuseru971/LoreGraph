@@ -56,13 +56,18 @@ export function buildLoreGraph(): LoreGraph {
   if (cached) return cached;
 
   const nodes = new Map<string, GraphNode>();
+  const connectEligible = new Map<string, boolean>();
 
   for (const character of characters) {
     const node = characterNode(character.id);
-    if (node) nodes.set(node.id, node);
+    if (node) {
+      nodes.set(node.id, node);
+      connectEligible.set(node.id, true);
+    }
   }
 
   for (const region of regions) {
+    const eligible = region.connectEligible ?? false;
     nodes.set(region.id, {
       id: region.id,
       type: "region",
@@ -73,11 +78,14 @@ export function buildLoreGraph(): LoreGraph {
         accentColor: region.accentColor,
         description: region.shortDescription,
         region: region.slug,
+        connectEligible: eligible,
       },
     });
+    connectEligible.set(region.id, eligible);
   }
 
   for (const faction of factions) {
+    const eligible = faction.connectEligible ?? faction.importance >= 65;
     nodes.set(faction.id, {
       id: faction.id,
       type: "faction",
@@ -88,11 +96,14 @@ export function buildLoreGraph(): LoreGraph {
         accentColor: faction.accentColor,
         description: faction.shortDescription,
         region: faction.regionSlug ?? undefined,
+        connectEligible: eligible,
       },
     });
+    connectEligible.set(faction.id, eligible);
   }
 
   for (const event of events) {
+    const eligible = event.connectEligible ?? true;
     nodes.set(event.id, {
       id: event.id,
       type: "event",
@@ -103,11 +114,14 @@ export function buildLoreGraph(): LoreGraph {
         accentColor: "#C9A96E",
         description: event.description,
         era: event.era,
+        connectEligible: eligible,
       },
     });
+    connectEligible.set(event.id, eligible);
   }
 
   for (const entity of loreEntities) {
+    const eligible = entity.connectEligible ?? true;
     nodes.set(entity.id, {
       id: entity.id,
       type: "concept",
@@ -117,8 +131,10 @@ export function buildLoreGraph(): LoreGraph {
       metadata: {
         accentColor: entity.accentColor,
         description: entity.shortDescription,
+        connectEligible: eligible,
       },
     });
+    connectEligible.set(entity.id, eligible);
   }
 
   const edges: GraphEdge[] = [];
@@ -269,7 +285,7 @@ export function buildLoreGraph(): LoreGraph {
     adjacency.get(edge.target)!.push(edge);
   }
 
-  cached = { nodes, edges, adjacency };
+  cached = { nodes, edges, adjacency, connectEligible };
   return cached;
 }
 

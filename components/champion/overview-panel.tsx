@@ -6,8 +6,8 @@ import * as React from "react";
 import { regionBySlug, sourceById } from "@/data";
 import { EntityPortrait } from "@/components/entity-portrait";
 import { FactionBadge } from "@/components/region-badge";
-import { CanonBadge } from "@/components/ui/badge";
-import { CONNECTION_CATEGORY_LABEL } from "@/lib/truth/layer";
+import { connectionEvidenceLine, CONNECTION_EVIDENCE_LABEL } from "@/lib/truth/evidence";
+import { sourceMaterialLine } from "@/lib/truth/evidence";
 import { GROUP_COLOR, RELATIONSHIP_LABEL, relationshipGroup } from "@/lib/graph/style";
 import { hexToRgba } from "@/lib/utils";
 import type { Character, Relationship } from "@/types";
@@ -204,24 +204,29 @@ function CoreRelationshipCard({
               color,
             }}
           >
-            {CONNECTION_CATEGORY_LABEL[relationship.connectionType]}
+            {CONNECTION_EVIDENCE_LABEL[relationship.connectionType]}
           </span>
           <span className="text-muted-dim text-[0.625rem]">
             {relationship.label || RELATIONSHIP_LABEL[relationship.type]}
           </span>
         </p>
+        <p className="text-muted mt-1 line-clamp-1 text-[0.6875rem]">
+          {connectionEvidenceLine(relationship.connectionType, relationship.confidence)}
+        </p>
         <p className="text-muted mt-1.5 line-clamp-2 text-xs leading-relaxed">
           {relationship.shortExplanation}
         </p>
-        <div className="mt-2.5 flex items-center gap-2">
+        <div className="mt-2.5 flex flex-col gap-1">
           <button
             type="button"
             onClick={onSelect}
-            className="text-eyebrow text-gold/80 hover:text-gold transition-colors"
+            className="text-eyebrow text-gold/80 hover:text-gold text-left transition-colors"
           >
             What connects them?
           </button>
-          <CanonBadge status={relationship.canonStatus} className="scale-90" />
+          <p className="text-muted-dim text-[0.625rem]">
+            {sourceMaterialLine(relationship.canonStatus)}
+          </p>
         </div>
       </div>
       <Link

@@ -1,8 +1,5 @@
-import {
-  CONFIDENCE_LABEL,
-  CONNECTION_CATEGORY_LABEL,
-  edgeCategory,
-} from "@/lib/truth/layer";
+import { CONNECTION_EVIDENCE_LABEL } from "@/lib/truth/evidence";
+import { CONFIDENCE_LABEL, edgeCategory } from "@/lib/truth/layer";
 import { cn, hexToRgba } from "@/lib/utils";
 import type { GraphEdge } from "@/types";
 
@@ -26,7 +23,7 @@ export function ConnectionCategoryBadge({
 }) {
   const category = edgeCategory(edge);
   const color = CATEGORY_TONE[category] ?? "#C9A96E";
-  const label = CONNECTION_CATEGORY_LABEL[category];
+  const label = CONNECTION_EVIDENCE_LABEL[category];
 
   return (
     <span

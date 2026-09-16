@@ -1,5 +1,6 @@
 import { characters } from "@/data";
 import { isDailyEligiblePath } from "@/lib/canon/model";
+import { buildLoreGraph } from "@/lib/graph/build";
 import { findNarrativePath, findPaths } from "@/lib/graph";
 import { seededShuffle, todayKey } from "@/lib/utils";
 import type { GraphPath } from "@/types";
@@ -12,17 +13,16 @@ export interface DailyConnectionChallenge {
 }
 
 function findEligibleDailyPath(startId: string, endId: string): GraphPath | null {
-  const candidates = findPaths(startId, endId);
+  const graph = buildLoreGraph();
+  const endpoints = { start: startId, end: endId };
+  const candidates = findPaths(startId, endId, graph);
   for (const path of candidates) {
-    if (isDailyEligiblePath(path.steps.map((step) => step.edge))) {
+    if (isDailyEligiblePath(path.steps, graph, endpoints)) {
       return path;
     }
   }
-  const narrative = findNarrativePath(startId, endId);
-  if (
-    narrative &&
-    isDailyEligiblePath(narrative.steps.map((step) => step.edge))
-  ) {
+  const narrative = findNarrativePath(startId, endId, graph);
+  if (narrative && isDailyEligiblePath(narrative.steps, graph, endpoints)) {
     return narrative;
   }
   return null;

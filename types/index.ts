@@ -106,6 +106,14 @@ export type ConnectionConfidence =
   | "INTERPRETIVE"
   | "UNCERTAIN";
 
+export type ReviewStatus =
+  | "PENDING"
+  | "APPROVED_EDITORIAL"
+  | "VERIFIED_CANON"
+  | "REJECTED";
+
+export type StoryContentType = "fact" | "editorial";
+
 /* -------------------------------------------------------------------------- */
 /* Lore content                                                               */
 /* -------------------------------------------------------------------------- */
@@ -142,6 +150,7 @@ export interface Region extends Entity {
   /** Secondary tone used for gradients. */
   secondaryColor: string;
   icon: RegionIconKind;
+  connectEligible?: boolean;
 }
 
 export type RegionIconKind =
@@ -163,6 +172,7 @@ export interface Faction extends Entity {
   shortDescription: string;
   regionSlug: RegionSlug | null;
   accentColor: string;
+  connectEligible?: boolean;
 }
 
 export interface Location extends Entity {
@@ -230,6 +240,8 @@ export interface Relationship {
   factionIds: string[];
   regionIds: string[];
   verified: boolean;
+  reviewed: boolean;
+  reviewStatus: ReviewStatus;
   needsReview: boolean;
   editorialNote?: string;
 }
@@ -243,6 +255,7 @@ export interface LoreEvent extends Entity {
   characterIds: string[];
   regionSlugs: RegionSlug[];
   canonStatus: CanonStatus;
+  connectEligible?: boolean;
 }
 
 export interface Source {
@@ -265,6 +278,10 @@ export interface StoryPathChapter {
   eventIds: string[];
   estimatedMinutes: number;
   assetKey: string;
+  contentType?: StoryContentType;
+  sourceIds?: string[];
+  canonStatus?: CanonStatus;
+  verified?: boolean;
 }
 
 export interface StoryPath {
@@ -418,6 +435,7 @@ export interface GraphNode {
     factions?: string[];
     era?: string;
     description?: string;
+    connectEligible?: boolean;
   };
 }
 
@@ -447,6 +465,8 @@ export interface LoreGraph {
   nodes: Map<string, GraphNode>;
   edges: GraphEdge[];
   adjacency: Map<string, GraphEdge[]>;
+  /** Structural nodes allowed as Connect path bridges. */
+  connectEligible: Map<string, boolean>;
 }
 
 export interface PathStep {

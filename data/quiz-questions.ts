@@ -890,7 +890,7 @@ const seeds: QSeed[] = [
   },
   {
     kind: "CANON_OR_NOT",
-    prompt: "How does LoreGraph classify Arcane relative to Runeterra's main timeline?",
+    prompt: "How does LoreGraph classify Arcane relative to current Runeterra canon?",
     options: [
       "Partially reconciled with current Runeterra canon",
       "Fully identical canon",

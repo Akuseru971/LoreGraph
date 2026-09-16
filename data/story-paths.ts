@@ -9,6 +9,7 @@ interface ChapterSeed {
   events?: string[];
   minutes?: number;
   asset?: string;
+  contentType?: "fact" | "editorial";
 }
 
 interface PathSeed {
@@ -367,7 +368,7 @@ const seeds: PathSeed[] = [
         title: "THE QUIET WAR",
         subtitle: "Noxus's real conflict",
         body: [
-          "Swain's war is not with Demacia or Ionia. It is with LeBlanc, and it is fought in cellars, ledgers and coded letters, almost entirely out of public view.",
+          "Swain treats the Black Rose as a strategic threat to Noxus and has moved against its influence — a conflict fought in cellars, ledgers and coded letters, almost entirely out of public view.",
           "The Black Rose is still recruiting — including a Medarda councillor in Piltover whose latent magic made the offer non-optional.",
         ],
         chars: ["swain", "leblanc", "mel", "katarina"],
@@ -497,11 +498,11 @@ const seeds: PathSeed[] = [
         events: ["hextech-revolution"],
       },
       {
-        title: "THE MACHINE HERALD",
-        subtitle: "Viktor decides flesh is the defect",
+        title: "THE HERALD OF THE ARCANE",
+        subtitle: "Viktor and the cost of evolution",
         body: [
-          "Viktor began as an idealist trying to end suffering with hextech. Then his own body failed him and he arrived at a harder conclusion.",
-          "The Glorious Evolution applies the doctrine to himself first. The horror is not that he imposes it — it is that a lot of Zaun would say yes.",
+          "Viktor began as an idealist trying to end suffering with hextech. When his own body failed him, he concluded that flesh itself was the defect.",
+          "In current canon he is fully biomechanical — a herald of the Glorious Evolution who offers transformation as salvation. The horror is not only what he became, but how many in Zaun might still accept the trade.",
         ],
         chars: ["viktor", "singed"],
         events: ["glorious-evolution-begins"],
@@ -814,19 +815,20 @@ const seeds: PathSeed[] = [
   {
     slug: "arcane-what-happened-next",
     title: "ARCANE: WHAT HAPPENED NEXT?",
-    subtitle: "Where the series ends and Runeterra continues",
+    subtitle: "Arcane inside Runeterra's current canon",
     description:
-      "If you arrived through Arcane, this is the bridge: which threads continue into the wider universe, which characters are waiting, and where the two continuities diverge.",
+      "If you arrived through Arcane, this path explains how that material now sits inside Runeterra's current canon — and where details are still being reconciled.",
     accentColor: "#8A5FC9",
     featured: true,
     verified: false,
     chapters: [
       {
-        title: "TWO CONTINUITIES",
+        title: "CANON FRAMEWORK",
         subtitle: "Read this first",
+        contentType: "editorial",
         body: [
-          "Arcane is not a separate universe from Runeterra — Riot has integrated parts of it into current champion canon while other details remain unresolved.",
-          "LoreGraph marks material as CURRENT CANON, RECONCILIATION PENDING, or LEGACY LORE so you always know how much confidence a claim deserves.",
+          "Arcane now forms part of Runeterra's current canon framework. Riot has updated champion histories, visuals and narrative direction to align with it — but not every detail has been fully reconciled with older material.",
+          "LoreGraph labels unresolved cases RECONCILIATION PENDING rather than pretending contradictions do not exist.",
         ],
         chars: ["jinx", "vi", "viktor", "mel"],
       },
@@ -834,8 +836,8 @@ const seeds: PathSeed[] = [
         title: "THE SISTERS",
         subtitle: "Vi and Jinx, either way",
         body: [
-          "Both continuities agree on the essentials: two sisters from the undercity, an accident, and a separation that neither of them narrates the same way.",
-          "In the main timeline Vi is a Warden with hextech gauntlets and Jinx is Piltover's most committed problem. The relationship is the constant.",
+          "The essentials hold across sources: two sisters from the undercity, an accident, and a separation that neither narrates the same way.",
+          "In current Runeterra lore Vi is a Warden with hextech gauntlets and Jinx is Piltover's most committed problem. The relationship is the constant.",
         ],
         chars: ["vi", "jinx", "caitlyn"],
         events: ["zaun-sump-disaster", "piltover-zaun-crisis"],
@@ -844,17 +846,17 @@ const seeds: PathSeed[] = [
         title: "THE SHERIFF",
         subtitle: "Caitlyn after the crisis",
         body: [
-          "Caitlyn's arc in both versions is about what enforcement becomes when procedure stops working.",
-          "The main timeline's Sheriff of Piltover is the most capable investigator in the city and the most constrained by its boundaries.",
+          "Caitlyn's arc is about what enforcement becomes when procedure stops working.",
+          "The Sheriff of Piltover is the city's most capable investigator — and among the most constrained by its boundaries.",
         ],
         chars: ["caitlyn", "vi", "camille"],
       },
       {
-        title: "THE MACHINE HERALD",
-        subtitle: "Viktor's two versions",
+        title: "THE HERALD OF THE ARCANE",
+        subtitle: "Viktor after Arcane",
         body: [
-          "Arcane's Viktor and Runeterra's Machine Herald begin from the same place: a brilliant scientist whose own body is failing.",
-          "The main timeline takes the Glorious Evolution much further. It is a doctrine, it recruits, and Zaun is full of people with reasons to listen.",
+          "Arcane helped establish Viktor's origin as a brilliant Zaunite scientist whose body was failing. Current Runeterra canon carries that further: he is now the Herald of the Arcane, fully biomechanical.",
+          "The Glorious Evolution is no longer a private experiment — it is a doctrine with followers, and Zaun still contains people desperate enough to consider it.",
         ],
         chars: ["viktor", "singed", "ekko"],
         events: ["glorious-evolution-begins"],
@@ -863,8 +865,8 @@ const seeds: PathSeed[] = [
         title: "THE CHEMIST",
         subtitle: "Singed goes much further back",
         body: [
-          "Singed's main-timeline record is longer and worse: he armed Noxus during the invasion of Ionia, and his chemical weapon is the reason a Noxian commander deserted.",
-          "He is the thread that connects the undercity to a continental war.",
+          "Singed's wider Runeterra record extends far beyond Piltover: he armed Noxus during the invasion of Ionia, and his chemical weapons are tied to a Noxian commander's desertion.",
+          "He is one thread that connects the undercity to a continental war.",
         ],
         chars: ["singed", "riven", "swain", "irelia"],
         events: ["the-place-of-blood"],
@@ -883,8 +885,8 @@ const seeds: PathSeed[] = [
         title: "THE UNDERCITY KEEPS GOING",
         subtitle: "Ekko, the Firelights and Camille",
         body: [
-          "Ekko's Z-Drive, the Firelights and the clans' quiet enforcement are all live in the main timeline.",
-          "Camille is the part of Piltover that Arcane viewers tend to underestimate: the clans have their own instrument, and it is not the Wardens.",
+          "Ekko's Z-Drive, the Firelights and the clans' quiet enforcement are all part of current Runeterra lore.",
+          "Camille is the part of Piltover that is easy to underestimate: the clans have their own instrument, and it is not the Wardens.",
         ],
         chars: ["ekko", "camille", "vi"],
       },
@@ -982,6 +984,7 @@ function buildChapters(pathSlug: string, chapters: ChapterSeed[]): StoryPathChap
     eventIds: (c.events ?? []).map((s) => `event:${s}`),
     estimatedMinutes: c.minutes ?? 2,
     assetKey: c.asset ?? c.chars[0] ?? pathSlug,
+    contentType: c.contentType ?? "fact",
   }));
 }
 
