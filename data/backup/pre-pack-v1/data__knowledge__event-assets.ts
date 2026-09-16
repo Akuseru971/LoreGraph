@@ -1,11 +1,10 @@
 import type { EventAsset } from "@/types";
-import { packEventAssets } from "./generated/event-assets-pack";
 
 /**
  * Official artwork and focal points for major lore events.
  * Images resolved via lib/assets when assetKey is set.
  */
-const coreEventAssets: EventAsset[] = [
+export const eventAssets: EventAsset[] = [
   {
     eventId: "event:void-incursion",
     assetKey: "void-incursion",
@@ -62,14 +61,6 @@ const coreEventAssets: EventAsset[] = [
     sourceType: "Champion Biography",
     copyrightOwner: "Riot Games",
   },
-];
-
-/** Core assets win over pack imports when both define the same event. */
-export const eventAssets: EventAsset[] = [
-  ...coreEventAssets,
-  ...packEventAssets.filter(
-    (p) => !coreEventAssets.some((c) => c.eventId === p.eventId),
-  ),
 ];
 
 export const eventAssetByEventId = new Map(

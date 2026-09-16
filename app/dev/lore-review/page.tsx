@@ -1,3 +1,5 @@
+import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
 import { notFound } from "next/navigation";
 import { characters, claims, events, relationships, sources } from "@/data";
 import { CONNECTION_EVIDENCE_LABEL } from "@/lib/truth/evidence";

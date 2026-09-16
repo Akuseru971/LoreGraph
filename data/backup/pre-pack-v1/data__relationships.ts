@@ -6,7 +6,6 @@ import type {
 import { normalizeCanonStatus } from "@/lib/canon/model";
 import { inferConfidence, inferConnectionCategory } from "@/lib/truth/layer";
 import { deriveNeedsReview, deriveReviewStatus } from "@/lib/truth/review";
-import { packRelationshipSeeds } from "./knowledge/generated/relationships-pack";
 import { relationshipExpansionSeeds } from "./relationships-expansion";
 import { bioSourceId } from "./sources";
 import { RUNETERRA_ID } from "./universes";
@@ -1967,29 +1966,7 @@ const baseSeeds: RelSeed[] = [
   },
 ];
 
-const packSeeds: RelSeed[] = packRelationshipSeeds.map((s) => ({
-  a: s.a,
-  b: s.b,
-  type: s.type,
-  label: s.label,
-  short: s.short,
-  long: s.long,
-  importance: s.importance,
-  canon: s.canon,
-  sources: s.sources,
-  verified: s.verified ?? false,
-  connectionType: s.connectionType,
-  needsReview: s.needsReview,
-  reviewed: s.reviewed,
-  reviewStatus: s.reviewStatus as RelSeed["reviewStatus"],
-  editorialNote: s.editorialNote,
-}));
-
-const seeds: RelSeed[] = [
-  ...baseSeeds,
-  ...relationshipExpansionSeeds,
-  ...packSeeds,
-];
+const seeds: RelSeed[] = [...baseSeeds, ...relationshipExpansionSeeds];
 
 export const relationships: Relationship[] = seeds
   // Placeholder rows document known gaps without polluting the live graph.

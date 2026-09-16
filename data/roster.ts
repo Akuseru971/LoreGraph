@@ -1019,7 +1019,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": undefined,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2202,7 +2202,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": undefined,
     "factions": [],
     "species": undefined,
     "era": undefined

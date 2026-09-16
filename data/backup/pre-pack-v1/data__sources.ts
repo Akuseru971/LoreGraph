@@ -249,12 +249,5 @@ function enrichSource(s: Source): Source {
   };
 }
 
-import { packSources } from "./knowledge/generated/sources-pack";
-
-const allSources = [...publications, ...biographies, ...packSources].map(enrichSource);
-const dedupedSources = [
-  ...new Map(allSources.map((s) => [s.id, s])).values(),
-];
-
-export const sources: Source[] = dedupedSources;
+export const sources: Source[] = [...publications, ...biographies].map(enrichSource);
 export const sourceById = new Map(sources.map((s) => [s.id, s]));

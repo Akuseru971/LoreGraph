@@ -1,11 +1,7 @@
 import { normalizeCanonStatus } from "@/lib/canon/model";
 import type { LoreEvent, RegionSlug } from "@/types";
 import { eventAssetByEventId } from "./knowledge/event-assets";
-import eventParticipantsPack from "./knowledge/generated/event-participants.json";
-import { packEvents } from "./knowledge/generated/events-pack";
 import { RUNETERRA_ID } from "./universes";
-
-const packParticipantMap = eventParticipantsPack as Record<string, string[]>;
 
 export const charId = (slug: string) => `char:${slug}`;
 export const eventId = (slug: string) => `event:${slug}`;
@@ -518,7 +514,7 @@ const seeds: EventSeed[] = [
   },
 ];
 
-const coreEvents: LoreEvent[] = seeds.map((s) => {
+export const events: LoreEvent[] = seeds.map((s) => {
   const id = eventId(s.slug);
   const asset = eventAssetByEventId.get(id);
   return {
@@ -539,18 +535,6 @@ const coreEvents: LoreEvent[] = seeds.map((s) => {
     connectEligible: s.connectEligible ?? s.slug !== "celestial-age",
     asset,
   };
-});
-
-const packBySlug = new Map(packEvents.map((e) => [e.slug, e]));
-export const events: LoreEvent[] = [
-  ...coreEvents,
-  ...packEvents.filter((p) => !coreEvents.some((c) => c.slug === p.slug)),
-].map((e) => {
-  const fromPack = packParticipantMap[e.slug] ?? [];
-  const mergedIds = [...new Set([...e.characterIds, ...fromPack])];
-  return mergedIds.length > e.characterIds.length
-    ? { ...e, characterIds: mergedIds }
-    : e;
 });
 
 export const eventById = new Map(events.map((e) => [e.id, e]));

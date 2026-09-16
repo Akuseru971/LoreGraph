@@ -14,6 +14,8 @@ SOURCE → RAW RESEARCH → STRUCTURED CLAIMS → NORMALIZED ENTITIES → RECONC
 |---------|-------------|
 | `npm run lore:discover` | Discover candidate Riot + Wiki source URLs per champion |
 | `npm run lore:sync-years` | Sync release years from Meraki Analytics into `data/roster.ts` |
+| `npm run lore:import-pack` | Import Knowledge Pack v1 from staging CSVs |
+| `npm run lore:reconcile` | Alias for `lore:import-pack` |
 | `npm run lore:build` | Sync years + regenerate expansion seeds |
 | `npm run lore:validate` | Extended quality checks → `reports/lore-review.json` |
 | `npm run lore:report` | Generate `docs/lore-knowledge-report.md` |
