@@ -10,9 +10,10 @@ import {
 } from "@/lib/assets";
 import { cn, initials } from "@/lib/utils";
 
-const VARIANT_MAP: Record<"portrait" | "splash", ChampionAssetType> = {
+const VARIANT_MAP: Record<"portrait" | "splash" | "card", ChampionAssetType> = {
   portrait: "portrait",
-  splash: "splash",
+  splash: "hero",
+  card: "card",
 };
 
 export function EntityPortrait({
@@ -29,7 +30,7 @@ export function EntityPortrait({
   assetKey: string;
   name: string;
   accentColor: string;
-  variant?: "portrait" | "splash";
+  variant?: "portrait" | "splash" | "card";
   className?: string;
   rounded?: string;
   showMonogram?: boolean;
@@ -39,7 +40,9 @@ export function EntityPortrait({
   const [failed, setFailed] = React.useState(false);
   const remote = getChampionAsset({ slug: assetKey, assetKey }, VARIANT_MAP[variant]);
   const artwork = generateArtwork(assetKey, accentColor, variant);
-  const objectPosition = championArtPosition(assetKey);
+  const focalMode =
+    variant === "splash" ? "HERO" : variant === "card" ? "CARD" : "MOBILE";
+  const objectPosition = championArtPosition(assetKey, focalMode);
 
   return (
     <div

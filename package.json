@@ -21,6 +21,8 @@
     "lore:reconcile": "npm run lore:import-pack",
     "validate:data": "tsx scripts/validate-data.ts",
     "validate:assets": "tsx scripts/validate-assets.ts",
+    "assets:ingest": "tsx scripts/assets/ingest.ts",
+    "lore:assets": "npm run assets:ingest",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -49,6 +51,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
     "typescript": "^5",

@@ -54,7 +54,7 @@ export function CharacterCard({
             assetKey={character.assetKey}
             name={character.name}
             accentColor={character.accentColor}
-            variant={size === "lg" ? "splash" : "portrait"}
+            variant={size === "lg" ? "splash" : "card"}
             rounded="rounded-none"
             className="absolute inset-0 size-full transition-transform duration-500 group-hover:scale-[1.03]"
             priority={priority}

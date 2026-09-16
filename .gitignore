@@ -23,6 +23,9 @@
 # production
 /build
 
+# asset download cache (masters re-used across ingest runs)
+.cache/
+
 # misc
 .DS_Store
 *.pem

@@ -45,7 +45,7 @@ export function CharacterHero({
   const collected = progress.characters[character.id]?.collected ?? false;
   const region = regionBySlug.get(character.region);
   const artwork = generateArtwork(character.assetKey, character.accentColor, "splash");
-  const splashUrl = getChampionAssetUrl(character.assetKey, "splash");
+  const splashUrl = getChampionAssetUrl(character.assetKey, "hero");
   const [splashFailed, setSplashFailed] = React.useState(false);
 
   const factionNames = character.factions
@@ -67,7 +67,7 @@ export function CharacterHero({
             priority
             sizes="100vw"
             className="object-cover opacity-70"
-            style={{ objectPosition: championArtPosition(character.assetKey) }}
+            style={{ objectPosition: championArtPosition(character.assetKey, "HERO") }}
             onError={() => setSplashFailed(true)}
           />
         ) : null}

@@ -1,0 +1,17 @@
+{
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "champions": {},
+  "events": {},
+  "regions": {},
+  "factions": {},
+  "artifacts": {},
+  "stats": {
+    "manifestRows": 0,
+    "mastersDownloaded": 0,
+    "variantsGenerated": 0,
+    "cacheHits": 0,
+    "failedDownloads": [],
+    "lowResolution": [],
+    "visualQaPending": 0
+  }
+}

@@ -4,39 +4,26 @@ import {
   getChampionAssetUrl,
   getChampionAssets,
   championArtPosition,
-  getEntityAsset,
-  getEventAsset,
-  getRegionAsset,
-  getFactionAsset,
-  getManifestIndex,
-  hasLocalChampionAssets,
   type ChampionAssetType,
-} from "./assets/registry";
+} from "./assets/champion-assets";
 
 export {
   getChampionAsset,
   getChampionAssetUrl,
   getChampionAssets,
   championArtPosition,
-  getEntityAsset,
-  getEventAsset,
-  getRegionAsset,
-  getFactionAsset,
-  getManifestIndex,
-  hasLocalChampionAssets,
   type ChampionAssetType,
 };
 
-/** @deprecated Use getChampionAssetUrl — local + CDN assets are always available. */
+/** @deprecated Use getChampionAssetUrl — remote Riot assets are always available. */
 export const hasRemoteAssets = true;
 
-export type AssetVariant = "portrait" | "splash" | "story" | "card" | "cinematic";
+export type AssetVariant = "portrait" | "splash" | "story";
 
 export function assetUrl(key: string, variant: AssetVariant): string | null {
-  if (variant === "cinematic") return getChampionAssetUrl(key, "cinematic");
-  if (variant === "card") return getChampionAssetUrl(key, "card");
-  if (variant === "splash" || variant === "story") return getChampionAssetUrl(key, "splash");
-  return getChampionAssetUrl(key, "portrait");
+  if (variant === "splash") return getChampionAssetUrl(key, "splash");
+  if (variant === "portrait") return getChampionAssetUrl(key, "portrait");
+  return getChampionAssetUrl(key, "splash");
 }
 
 export function portraitUrl(key: string): string {
@@ -45,14 +32,6 @@ export function portraitUrl(key: string): string {
 
 export function splashUrl(key: string): string {
   return getChampionAssetUrl(key, "splash");
-}
-
-export function cardUrl(key: string): string {
-  return getChampionAssetUrl(key, "card");
-}
-
-export function cinematicUrl(key: string): string {
-  return getChampionAssetUrl(key, "cinematic");
 }
 
 export interface GeneratedArtwork {

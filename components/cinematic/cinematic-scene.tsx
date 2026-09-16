@@ -25,14 +25,18 @@ export function CinematicScene({
   lineIndex: number;
 }) {
   const reduceMotion = useReducedMotion();
+  const isPortrait = format === "portrait";
+  const isSquare = format === "square";
   const accent = step.accentColor ?? "#C9A96E";
   const artwork = step.assetKey
     ? generateArtwork(step.assetKey, accent, "splash")
     : null;
-  const splash = step.assetKey ? getChampionAssetUrl(step.assetKey, "splash") : null;
-
-  const isPortrait = format === "portrait";
-  const isSquare = format === "square";
+  const splash = step.assetKey
+    ? getChampionAssetUrl(
+        step.assetKey,
+        isPortrait ? "cinematic" : "splash",
+      )
+    : null;
 
   const cameraScale =
     phase === "travel" ? 0.92 : phase === "arrival" ? 1.02 : phase === "narration" ? 1 : 0.96;
@@ -67,7 +71,12 @@ export function CinematicScene({
             alt=""
             fill
             className="object-cover opacity-35"
-            style={{ objectPosition: championArtPosition(step.assetKey) }}
+            style={{
+              objectPosition: championArtPosition(
+                step.assetKey,
+                isPortrait ? "CINEMATIC" : "HERO",
+              ),
+            }}
             sizes={isPortrait ? "100vw" : "100vw"}
           />
         ) : null}
