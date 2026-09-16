@@ -124,13 +124,13 @@ export const piltoverZaunSeeds: CharacterSeed[] = [
   {
     slug: "viktor",
     name: "Viktor",
-    title: "The Machine Herald",
+    title: "The Herald of the Arcane",
     region: "zaun",
     factions: ["glorious-evolution"],
     roles: ["Scientist", "Herald", "Augmented"],
     status: "Alive",
     species: "Human (augmented)",
-    aliases: ["The Machine Herald"],
+    aliases: ["The Herald of the Arcane", "The Machine Herald"],
     accentColor: "#5FA86B",
     releaseYear: 2011,
     complexity: 4,
@@ -142,11 +142,11 @@ export const piltoverZaunSeeds: CharacterSeed[] = [
     tags: ["zaun", "piltover", "transhumanism", "evolution", "hextech", "arcane"],
     sources: ["source:arcane"],
     short:
-      "A Zaunite scientist who decided that human frailty is a solvable engineering problem, and started with himself.",
+      "A fully biomechanical Zaunite inventor who embraced the Glorious Evolution and now offers hexcore salvation to a world he believes is too fragile to refuse.",
     long: [
-      "Viktor began as an idealist. He wanted to end suffering, and he had the intellect to make real progress on it — his early work was collaborative, celebrated and aimed squarely at helping people.",
-      "Then his own body failed him, his collaborators diverged, and he arrived at a harder conclusion: that the flesh is the bug, not the environment. The Glorious Evolution is his answer — the replacement of human weakness with something deliberate.",
-      "What makes him disturbing rather than villainous is that he is consistent. He applies the doctrine to himself first, and he is genuinely offering it rather than imposing it. The horror is that a lot of Zaun would say yes.",
+      "Viktor began as an idealist in Zaun and Piltover's shared hextech age — brilliant, collaborative, and aimed at reducing suffering rather than profiting from it.",
+      "When his own body failed him, he concluded that flesh itself was the defect. The Glorious Evolution became his answer: replace human frailty with deliberate design, beginning with himself.",
+      "In current canon he is no longer merely augmented but fully biomechanical — a messianic figure to his followers who believes eliminating emotion eliminates suffering. The horror is that he is consistent, and much of Zaun would still say yes.",
     ],
     timeline: [
       {

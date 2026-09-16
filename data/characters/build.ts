@@ -1,5 +1,5 @@
+import { normalizeCanonStatus } from "@/lib/canon/model";
 import type {
-  CanonStatus,
   Character,
   CharacterStatus,
   LoreComplexity,
@@ -43,7 +43,7 @@ export interface CharacterSeed {
   events?: string[];
   timeline?: TimelineSeed[];
   sources?: string[];
-  canonStatus?: CanonStatus;
+  canonStatus?: string;
   verified?: boolean;
 }
 
@@ -83,7 +83,7 @@ export function buildCharacter(seed: CharacterSeed): Character {
     difficulty: seed.difficulty ?? seed.complexity,
     loreComplexity: seed.complexity,
     featured: seed.featured ?? false,
-    canonStatus: seed.canonStatus ?? "CANON",
+    canonStatus: normalizeCanonStatus(seed.canonStatus),
     relatedCharacterIds: [],
     eventIds: (seed.events ?? []).map((s) => `event:${s}`),
     sourceIds: [bioSourceId(seed.slug), ...(seed.sources ?? [])],

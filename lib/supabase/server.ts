@@ -22,7 +22,7 @@ export async function getSupabaseServerClient(): Promise<SupabaseClient | null> 
             cookieStore.set(name, value, options);
           }
         } catch {
-          // Called from a server component render — middleware refreshes instead.
+          // Called from a server component render — cookie writes may be skipped.
         }
       },
     },

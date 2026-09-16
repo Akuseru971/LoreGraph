@@ -67,15 +67,14 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "Shurima turns on its own gods and Targon joins the effort. Aatrox is on the losing side of a war he started.",
         event: "darkin-war",
-        with: ["pantheon", "varus"],
+        with: ["varus", "nasus"],
       },
       {
         era: "Ancient Shurima",
         title: "Sealed inside the blade",
         description:
-          "Unkillable, so instead imprisoned — bound into the sword he fought with and buried where nobody would look.",
+          "Unkillable, so instead imprisoned — bound into the sword he fought with after Targon and the Aspect of War intervened.",
         event: "darkin-war",
-        with: ["pantheon"],
       },
       {
         era: "Modern Runeterra",
@@ -103,7 +102,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
     roles: ["Warrior", "Aspect Host", "Mortal"],
     status: "Alive",
     species: "Human (Aspect fragment)",
-    aliases: ["Atreus", "The Aspect of War"],
+    aliases: ["Atreus"],
     accentColor: "#8B7FC7",
     releaseYear: 2010,
     complexity: 4,
@@ -112,7 +111,6 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
     popularity: 74,
     verified: true,
     events: [
-      "darkin-war",
       "aatrox-pantheon-duel",
       "pantheon-reborn",
       "targon-aurelion-loose",
@@ -122,7 +120,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
     short:
       "A mortal who was used as a god's armour, survived the god's death, and kept the spear anyway.",
     long: [
-      "Atreus climbed Mount Targon as a nobody and came back down carrying the Aspect of War. For years the arrangement worked the way Targon's arrangements usually do: the celestial made the decisions, the mortal supplied the body, and the results were spectacular. The Aspect of War fought in the Darkin War and helped put Aatrox inside his own sword.",
+      "Atreus climbed Mount Targon as a nobody and came back down carrying the Aspect of War. For years the arrangement worked the way Targon's arrangements usually do: the celestial made the decisions, the mortal supplied the body, and the results were spectacular. The Aspect he hosted had already fought in the Darkin War long before Atreus was born — but Atreus inherited its memory, its enemies, and eventually its death.",
       "Then Aatrox came back for him. The Darkin Blade found the Aspect of War and killed it — properly, in a way that celestial beings are not supposed to be killable. Atreus was left alive on the ground, hollowed out, no longer anybody's vessel.",
       "What makes Pantheon interesting is what happened next. He should have been finished. Instead he got up with a fragment of the dead Aspect still lodged in him and made a choice the celestials had never needed from him before: to fight as a man rather than as a mount.",
       "He is now the rare figure in Runeterra who has looked directly at both a god and a Darkin and concluded that neither of them is owed his obedience.",
@@ -135,12 +133,10 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "A Rakkor boy climbs Mount Targon, survives the summit, and is chosen by the Aspect of War.",
       },
       {
-        era: "Ancient Shurima",
-        title: "The Darkin War",
+        era: "Old Targon",
+        title: "Hosting the Aspect of War",
         description:
-          "As the Aspect of War, he fights the corrupted Ascended and helps seal Aatrox into his blade.",
-        event: "darkin-war",
-        with: ["aatrox", "varus"],
+          "Atreus becomes the mortal vessel for a celestial that already sealed Darkin in ancient Shurima — centuries before his own birth.",
       },
       {
         era: "Modern Runeterra",

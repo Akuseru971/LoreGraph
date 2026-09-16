@@ -77,7 +77,8 @@ export function ChampionScreen({
     <>
       <CharacterHero
         character={character}
-        connections={neighbors.filter((n) => n.edge.connectionKind === "direct").length}
+        connections={neighbors.length}
+        directConnections={neighbors.filter((n) => n.edge.connectionKind === "direct").length}
         onExploreConnections={() => goToTab("connections")}
         onStartStory={() => setStory(stories[0] ?? null)}
         hasStory={stories.length > 0}

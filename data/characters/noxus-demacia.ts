@@ -150,7 +150,7 @@ export const noxusDemaciaSeeds: CharacterSeed[] = [
     complexity: 3,
     importance: 60,
     popularity: 58,
-    canonStatus: "AMBIGUOUS",
+    canonStatus: "RECONCILIATION_PENDING",
     verified: false,
     events: ["black-rose-resurgence", "piltover-zaun-crisis"],
     tags: ["noxus", "black-rose", "piltover", "politics", "arcane", "latent-magic"],
