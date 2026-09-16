@@ -10,6 +10,7 @@ export {
   characterNameOf,
   connectionKindOf,
   countConnections,
+  countDirectConnections,
   getCharacterGraph,
   getDirectRelationships,
   getNeighbors,

@@ -41,11 +41,13 @@ export type RelationshipType =
   | "unknown";
 
 export type CanonStatus =
-  | "CANON"
+  | "CURRENT_CANON"
   | "AMBIGUOUS"
-  | "OLD_LORE"
-  | "RETCONNED"
-  | "ALTERNATE_UNIVERSE";
+  | "RECONCILIATION_PENDING"
+  | "LEGACY_LORE"
+  | "ALTERNATE_UNIVERSE"
+  | "THEMATIC_ONLY"
+  | "UNKNOWN";
 
 export type SourceType =
   | "Champion Biography"
@@ -95,7 +97,7 @@ export type ConnectionCategory =
   | "STRUCTURAL_LORE"
   | "THEMATIC_PARALLEL"
   | "AMBIGUOUS"
-  | "LEGACY_LORE";
+  | "LEGACY_CONNECTION";
 
 export type ConnectionConfidence =
   | "DOCUMENTED"
@@ -308,6 +310,8 @@ export interface QuizQuestion {
   difficulty: LoreComplexity;
   xp: number;
   verified: boolean;
+  /** Canon tier for factual Daily quizzes — defaults to current canon. */
+  canonStatus?: CanonStatus;
 }
 
 /* -------------------------------------------------------------------------- */

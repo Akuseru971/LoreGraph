@@ -1,9 +1,9 @@
 import type {
-  CanonStatus,
   ConnectionCategory,
   Relationship,
   RelationshipType,
 } from "@/types";
+import { normalizeCanonStatus } from "@/lib/canon/model";
 import { inferConfidence, inferConnectionCategory } from "@/lib/truth/layer";
 import { bioSourceId } from "./sources";
 import { RUNETERRA_ID } from "./universes";
@@ -17,7 +17,7 @@ interface RelSeed {
   short: string;
   long: string;
   importance: number;
-  canon?: CanonStatus;
+  canon?: string;
   events?: string[];
   sources?: string[];
   verified?: boolean;
@@ -40,8 +40,8 @@ const seeds: RelSeed[] = [
     type: "enemy",
     label: "Mortal Enemies",
     short:
-      "Pantheon's Aspect helped seal Aatrox inside his own sword. Aatrox came back and killed it.",
-    long: "During the Darkin War, the Aspect of War fought alongside Shurima and Targon to stop the corrupted Ascended. Aatrox could not be killed, so he was bound into his blade — and Targon's involvement is the reason he holds a grudge measured in millennia. When he returned, he hunted the Aspect of War down and destroyed the celestial, leaving the mortal host Atreus alive on the ground. That survival is the twist: the man got up, kept a fragment of the dead god, and is now the only mortal who has fought Aatrox and remained himself afterwards.",
+      "Aatrox returned and destroyed the Aspect of War; the mortal host Atreus survived and became Pantheon.",
+    long: "During the Darkin War, celestial hosts fought alongside Shurima to stop the corrupted Ascended — but Aatrox's imprisonment inside his blade belongs to that wider conflict, not to Pantheon's host specifically. Millennia later, Aatrox hunted down the Aspect of War and destroyed the celestial, leaving Atreus alive on the ground. That survival is the twist: the man got up, kept a fragment of the dead god, and is now the only mortal who has fought Aatrox and remained himself afterwards.",
     importance: 98,
     events: ["darkin-war", "aatrox-pantheon-duel", "pantheon-reborn"],
     sources: ["source:twilight-of-the-gods"],
@@ -1921,13 +1921,15 @@ const seeds: RelSeed[] = [
   {
     a: "azir",
     b: "kaisa",
-    type: "political",
-    label: "Shurima Reborn",
+    type: "related",
+    label: "Shared Shuriman Context",
     short:
-      "Azir's restored empire claims the desert Kaisa survived by becoming something else.",
-    long: "Kaisa is what the Void did to Shurima's children. Azir is what Shurima pretends it can still be. Their connection is the empire confronting its most painful consequence.",
-    importance: 76,
-    verified: true,
+      "Both belong to Shurima's story — one as its restored emperor, one as a survivor the Void remade.",
+    long: "Kai'Sa comes from the Shuriman desert and Azir leads a restored Shuriman empire, but no official source documents a direct political or personal relationship between them. LoreGraph records this as structural context through Shurima and the Void, not as a verified encounter.",
+    importance: 52,
+    connectionType: "STRUCTURAL_LORE",
+    needsReview: true,
+    editorialNote: "Geographic and thematic overlap only — not a documented direct relationship.",
   },
   {
     a: "nasus",
@@ -1992,7 +1994,7 @@ export const relationships: Relationship[] = seeds
       shortExplanation: s.short,
       longExplanation: s.long,
       importanceScore: s.importance,
-      canonStatus: s.canon ?? "CANON",
+      canonStatus: normalizeCanonStatus(s.canon),
       sourceIds,
       eventIds: (s.events ?? []).map((e) => `event:${e}`),
       factionIds: [],

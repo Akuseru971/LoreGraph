@@ -140,9 +140,19 @@ export function connectionKindOf(edge: GraphEdge): ConnectionKind {
   return edge.connectionKind;
 }
 
-/** Relationship count used on character cards. */
-export function countConnections(characterId: string): number {
-  return getDirectRelationships(characterId).length;
+/** Lore connections visible in the graph (direct + structural). */
+export function countConnections(
+  characterId: string,
+  graph: LoreGraph = buildLoreGraph(),
+): number {
+  return getNeighbors(characterId, { includeIndirect: true }, graph).length;
+}
+
+/** Verified direct canon relationships only. */
+export function countDirectConnections(characterId: string): number {
+  return getDirectRelationships(characterId).filter(
+    (r) => r.connectionType === "DIRECT_CANON" && r.verified,
+  ).length;
 }
 
 export function characterNameOf(id: string): string {

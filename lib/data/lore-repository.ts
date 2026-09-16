@@ -75,7 +75,20 @@ export const loreRepository: LoreRepository = {
    * and the answer cannot be rerolled by refreshing.
    */
   dailyQuestions: (date = todayKey(), count = 5) => {
-    const eligible = quizQuestions.filter((q) => q.verified);
+    const eligible = quizQuestions.filter((q) => {
+      if (!q.verified) return false;
+      const canon = q.canonStatus ?? "CURRENT_CANON";
+      if (canon === "CURRENT_CANON") return true;
+      if (
+        q.kind === "CANON_OR_NOT" &&
+        (canon === "LEGACY_LORE" ||
+          canon === "AMBIGUOUS" ||
+          canon === "RECONCILIATION_PENDING")
+      ) {
+        return true;
+      }
+      return false;
+    });
     const shuffled = seededShuffle(eligible, `daily:${date}`);
     const picked: QuizQuestion[] = [];
     const usedKinds = new Set<string>();

@@ -18,7 +18,10 @@ import { DailyConnection } from "./daily-connection";
 import { ShareCardDialog } from "./share-card";
 import { track } from "@/lib/analytics";
 import { findPaths, pathNarrative } from "@/lib/graph";
-import { indirectPathDisclaimer } from "@/lib/truth/layer";
+import {
+  connectionDepthLabel,
+  indirectPathDisclaimer,
+} from "@/lib/truth/layer";
 import { absoluteUrl } from "@/lib/seo";
 import { cn, hexToRgba } from "@/lib/utils";
 import type { Character, GraphPath, PathStrategy } from "@/types";
@@ -327,7 +330,7 @@ export function ConnectExperience({
               <span>
                 {active!.directOnly ? "Direct relationship" : "Indirect connection"}
               </span>
-              <span>Lore depth {active!.score}/100</span>
+              <span>{connectionDepthLabel(active!.length, active!.directOnly)}</span>
               {revealing ? (
                 <span className="text-gold">Mapping route…</span>
               ) : null}

@@ -24,12 +24,14 @@ const COMPLEXITY_LABEL = ["", "Entry point", "Approachable", "Layered", "Deep", 
 export function CharacterHero({
   character,
   connections,
+  directConnections,
   onExploreConnections,
   onStartStory,
   hasStory,
 }: {
   character: Character;
   connections: number;
+  directConnections?: number;
   onExploreConnections: () => void;
   onStartStory: () => void;
   hasStory: boolean;
@@ -113,7 +115,12 @@ export function CharacterHero({
               <Button variant="primary" size="lg" onClick={onExploreConnections}>
                 <GitFork aria-hidden />
                 Explore connections
-                <span className="text-ink/60 ml-1 tabular-nums">{connections}</span>
+                <span className="text-ink/60 ml-1 tabular-nums">
+                  {connections}
+                  {typeof directConnections === "number" && directConnections !== connections
+                    ? ` (${directConnections} direct)`
+                    : ""}
+                </span>
               </Button>
               <Button variant="secondary" size="lg" asChild>
                 <Link href={`/connect?from=${character.slug}`}>

@@ -1,10 +1,21 @@
 /**
- * Truth Layer validation. Run with `npm run validate:lore`.
+ * Canon Model V3 validation. Run with `npm run validate:lore`.
  */
-import { characters, events, loreEntities, relationships, sourceById } from "../data";
+import {
+  characters,
+  events,
+  loreEntities,
+  quizQuestions,
+  relationships,
+  sourceById,
+} from "../data";
+import { isCurrentCanon, isDailyEligiblePath } from "../lib/canon/model";
+import { dailyConnection } from "../lib/data/daily";
 import { buildLoreGraph, resetLoreGraphCache } from "../lib/graph";
+import { countConnections } from "../lib/graph/queries";
+import { findNarrativePath } from "../lib/graph/algorithms";
 import { ddragonChampionKey } from "../lib/assets/champion-assets";
-import { needsReview } from "../lib/truth/layer";
+import { edgeCategory, needsReview } from "../lib/truth/layer";
 import type { ConnectionCategory } from "../types";
 
 const problems: string[] = [];
@@ -21,7 +32,7 @@ const categoryCounts: Record<ConnectionCategory, number> = {
   STRUCTURAL_LORE: 0,
   THEMATIC_PARALLEL: 0,
   AMBIGUOUS: 0,
-  LEGACY_LORE: 0,
+  LEGACY_CONNECTION: 0,
 };
 
 let needsReviewCount = 0;
@@ -41,6 +52,21 @@ for (const rel of relationships) {
   }
   if (rel.connectionType === "DIRECT_CANON" && !rel.verified) {
     warn(`DIRECT_CANON but unverified: ${rel.id}`);
+  }
+  if (
+    rel.connectionType === "DIRECT_CANON" &&
+    rel.confidence === "UNCERTAIN"
+  ) {
+    warn(`DIRECT_CANON with UNCERTAIN confidence: ${rel.id}`);
+  }
+  if (rel.connectionType === "DIRECT_CANON" && rel.sourceIds.length === 0) {
+    warn(`DIRECT_CANON without sources: ${rel.id}`);
+  }
+  if (
+    isCurrentCanon(rel.canonStatus) &&
+    rel.canonStatus === "ALTERNATE_UNIVERSE"
+  ) {
+    warn(`CURRENT_CANON and ALTERNATE_UNIVERSE conflict: ${rel.id}`);
   }
   if (!rel.shortExplanation) {
     warn(`Missing summary: ${rel.id}`);
@@ -70,6 +96,45 @@ for (const character of characters) {
   } catch {
     warn(`Asset mapping failed for ${character.slug}`);
   }
+
+  const displayed = countConnections(character.id, graph);
+  const neighbors = graph.adjacency.get(character.id)?.length ?? 0;
+  if (displayed === 0 && neighbors > 0) {
+    warn(`${character.slug} shows 0 connections but graph has ${neighbors} edges`);
+  }
+}
+
+for (const question of quizQuestions) {
+  if (!question.verified) continue;
+  const canon = question.canonStatus ?? "CURRENT_CANON";
+  if (
+    canon !== "CURRENT_CANON" &&
+    question.kind !== "CANON_OR_NOT"
+  ) {
+    warn(`Daily quiz ${question.id} is verified but not CURRENT_CANON`);
+  }
+}
+
+const daily = dailyConnection();
+if (daily.path) {
+  const edges = daily.path.steps.map((s) => s.edge);
+  if (!isDailyEligiblePath(edges)) {
+    warn("Daily Connection path contains ineligible edges");
+  }
+}
+
+const aatroxKaisa = findNarrativePath("char:aatrox", "char:kaisa", graph);
+if (aatroxKaisa) {
+  const badEventHop = aatroxKaisa.steps.some(
+    (s) =>
+      s.to.slug === "void-incursion" ||
+      (s.to.slug === "kaisa" &&
+        s.from.slug === "void-incursion" &&
+        edgeCategory(s.edge) === "SHARED_EVENT"),
+  );
+  if (badEventHop) {
+    warn("Aatrox → Kai'Sa path incorrectly routes through ancient Void incursion event");
+  }
 }
 
 console.log("\nLore validation report");
@@ -84,7 +149,7 @@ console.log(`Shared events (derived): ${graph.edges.filter((e) => e.connectionCa
 console.log(`Shared factions (derived): ${graph.edges.filter((e) => e.connectionCategory === "SHARED_FACTION").length}`);
 console.log(`Thematic parallel: ${categoryCounts.THEMATIC_PARALLEL}`);
 console.log(`Ambiguous: ${categoryCounts.AMBIGUOUS}`);
-console.log(`Legacy lore: ${categoryCounts.LEGACY_LORE}`);
+console.log(`Legacy connection: ${categoryCounts.LEGACY_CONNECTION}`);
 console.log(`Needs review: ${needsReviewCount}`);
 console.log(`Invalid issues: ${problems.length}`);
 

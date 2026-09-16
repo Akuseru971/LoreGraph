@@ -40,7 +40,7 @@ const LORE_CATEGORIES = new Set<ConnectionCategory>([
   "STRUCTURAL_LORE",
   "THEMATIC_PARALLEL",
   "AMBIGUOUS",
-  "LEGACY_LORE",
+  "LEGACY_CONNECTION",
 ]);
 
 function matches(filter: FilterId, neighbor: Neighbor): boolean {

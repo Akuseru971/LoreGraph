@@ -825,8 +825,8 @@ const seeds: PathSeed[] = [
         title: "TWO CONTINUITIES",
         subtitle: "Read this first",
         body: [
-          "Arcane is its own continuity. It shares characters with Runeterra's main timeline but not every event, and Riot has been explicit that the two are not identical.",
-          "LoreGraph marks Arcane-derived connections as ALTERNATE_UNIVERSE or AMBIGUOUS so you always know which body of material a claim comes from.",
+          "Arcane is not a separate universe from Runeterra — Riot has integrated parts of it into current champion canon while other details remain unresolved.",
+          "LoreGraph marks material as CURRENT CANON, RECONCILIATION PENDING, or LEGACY LORE so you always know how much confidence a claim deserves.",
         ],
         chars: ["jinx", "vi", "viktor", "mel"],
       },

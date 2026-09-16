@@ -7,7 +7,12 @@ import { relationshipById, sourceById } from "@/data";
 import { CanonBadge } from "@/components/ui/badge";
 import { explainStep } from "@/lib/graph/explanations";
 import { edgeStroke } from "@/lib/graph/style";
-import { CONFIDENCE_LABEL } from "@/lib/truth/layer";
+import { isCurrentCanon } from "@/lib/canon/model";
+import {
+  CONFIDENCE_LABEL,
+  CONNECTION_CATEGORY_LABEL,
+  edgeCategory,
+} from "@/lib/truth/layer";
 import { cn, hexToRgba } from "@/lib/utils";
 import type { PathStep } from "@/types";
 import { ConnectionCategoryBadge, ConfidenceBadge } from "./connection-category-badge";
@@ -116,10 +121,26 @@ export function ConnectionStep({
             <div className="text-parchment/80 mt-2 space-y-2 border-l border-line pl-3 text-sm leading-relaxed">
               <p>{relationship?.longExplanation ?? step.edge.description}</p>
               <p className="text-muted text-xs">
-                Confidence: {CONFIDENCE_LABEL[step.edge.confidence]}
+                Type: {CONNECTION_CATEGORY_LABEL[edgeCategory(step.edge)]} ·{" "}
+                Confidence: {CONFIDENCE_LABEL[step.edge.confidence]} · Canon:{" "}
+                {isCurrentCanon(step.edge.canonStatus)
+                  ? "Current canon"
+                  : "Not current canon"}
               </p>
+              {relationship?.editorialNote ? (
+                <p className="text-muted text-xs italic">{relationship.editorialNote}</p>
+              ) : null}
+              {step.from.type === "character" &&
+              step.to.type === "character" &&
+              edgeCategory(step.edge) !== "DIRECT_CANON" ? (
+                <p className="text-muted text-xs">
+                  There is no documented direct relationship between these
+                  characters — this step is inferred from shared lore structure.
+                </p>
+              ) : null}
               {sources.length > 0 ? (
                 <ul className="text-muted text-xs">
+                  <li className="text-eyebrow text-muted-dim mb-1">Sources</li>
                   {sources.map((s) => (
                     <li key={s!.id}>
                       <a
@@ -133,7 +154,9 @@ export function ConnectionStep({
                     </li>
                   ))}
                 </ul>
-              ) : null}
+              ) : (
+                <p className="text-muted text-xs">No source reference attached.</p>
+              )}
             </div>
           ) : null}
         </div>

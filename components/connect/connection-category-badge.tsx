@@ -14,7 +14,7 @@ const CATEGORY_TONE: Record<string, string> = {
   SHARED_REGION: "#647085",
   THEMATIC_PARALLEL: "#8F9AAD",
   AMBIGUOUS: "#A85059",
-  LEGACY_LORE: "#8C7748",
+  LEGACY_CONNECTION: "#8C7748",
 };
 
 export function ConnectionCategoryBadge({

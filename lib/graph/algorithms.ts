@@ -6,6 +6,7 @@ import type {
   PathStep,
   PathStrategy,
 } from "@/types";
+import { isCurrentCanon, normalizeConfidence } from "@/lib/canon/model";
 import { CATEGORY_PATH_COST, edgeCategory } from "@/lib/truth/layer";
 import { buildLoreGraph, otherEnd } from "./build";
 
@@ -42,30 +43,17 @@ function narrativeCost(
     }
   }
 
-  if (category === "THEMATIC_PARALLEL" || category === "LEGACY_LORE") cost += 6;
-  if (category === "AMBIGUOUS") cost += 4;
+  if (category === "THEMATIC_PARALLEL" || category === "LEGACY_CONNECTION") cost += 10;
+  if (category === "AMBIGUOUS") cost += 12;
   if (category === "SHARED_REGION") cost += 2;
 
   if (edge.importance < 40) cost += 2.5;
   else if (edge.importance < 60) cost += 0.9;
   if (edge.importance >= 85 && category === "DIRECT_CANON") cost -= 0.4;
 
-  switch (edge.canonStatus) {
-    case "AMBIGUOUS":
-      cost += 0.8;
-      break;
-    case "OLD_LORE":
-    case "RETCONNED":
-      cost += 2.5;
-      break;
-    case "ALTERNATE_UNIVERSE":
-      cost += 3.5;
-      break;
-    default:
-      break;
-  }
-
-  if (!edge.verified) cost += 1.2;
+  if (!isCurrentCanon(edge.canonStatus)) cost += 4;
+  if (normalizeConfidence(edge.confidence) === "UNCERTAIN") cost += 6;
+  if (!edge.verified) cost += 8;
 
   const far = graph.nodes.get(edge.target);
   const near = graph.nodes.get(edge.source);
@@ -118,7 +106,10 @@ function dijkstra(
 
     for (const edge of graph.adjacency.get(current) ?? []) {
       if (options.blockedEdgeIds?.has(edge.id)) continue;
-      if (edgeCategory(edge) === "THEMATIC_PARALLEL") continue;
+      const category = edgeCategory(edge);
+      if (category === "THEMATIC_PARALLEL" || category === "LEGACY_CONNECTION") {
+        continue;
+      }
       const next = otherEnd(edge, current);
       if (visited.has(next)) continue;
       const penalty = options.nodePenalty?.get(next) ?? 0;
@@ -187,7 +178,7 @@ export function scorePath(steps: PathStep[]): number {
   const directRatio =
     steps.filter((s) => edgeCategory(s.edge) === "DIRECT_CANON").length / steps.length;
   const canonRatio =
-    steps.filter((s) => s.edge.canonStatus === "CANON").length / steps.length;
+    steps.filter((s) => isCurrentCanon(s.edge.canonStatus)).length / steps.length;
   const lengthPenalty = Math.max(0, steps.length - 2) * 5;
   const raw =
     avgImportance * 0.55 + directRatio * 30 + canonRatio * 12 - lengthPenalty;

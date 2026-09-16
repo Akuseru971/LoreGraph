@@ -89,7 +89,7 @@ const CATEGORY_COLOR: Partial<Record<ConnectionCategory, string>> = {
   SHARED_REGION: "#647085",
   THEMATIC_PARALLEL: "#8F9AAD",
   AMBIGUOUS: GROUP_COLOR.hostile,
-  LEGACY_LORE: "#8C7748",
+  LEGACY_CONNECTION: "#8C7748",
 };
 
 export function edgeStroke(edge: GraphEdge): string {

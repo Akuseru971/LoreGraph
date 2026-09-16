@@ -66,6 +66,20 @@ describe("findPaths", () => {
     expect(directCharEdge).toBe(false);
   });
 
+  it("does not route Aatrox to Kai'Sa through the ancient Void incursion event", () => {
+    const path = findNarrativePath(id("aatrox"), id("kaisa"), graph);
+    expect(path).not.toBeNull();
+    const usesAncientVoidEvent = path!.steps.some(
+      (s) =>
+        s.to.slug === "void-incursion" ||
+        s.from.slug === "void-incursion" ||
+        (s.to.slug === "kaisa" &&
+          s.from.slug === "void-incursion" &&
+          s.edge.connectionCategory === "SHARED_EVENT"),
+    );
+    expect(usesAncientVoidEvent).toBe(false);
+  });
+
   it("terminates without infinite loop on cyclic graph", () => {
     const start = performance.now();
     findPaths(id("thresh"), id("aurelion-sol"), graph);

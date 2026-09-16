@@ -169,7 +169,7 @@ export function buildLoreGraph(): LoreGraph {
         description: `${character.name} is associated with ${faction.name}.`,
         connectionKind: "indirect",
         label: "Faction",
-        canonStatus: "CANON",
+        canonStatus: "CURRENT_CANON",
         verified: true,
       });
     }
@@ -193,7 +193,7 @@ export function buildLoreGraph(): LoreGraph {
         }.`,
         connectionKind: "indirect",
         label: "Region",
-        canonStatus: "CANON",
+        canonStatus: "CURRENT_CANON",
         verified: true,
       });
     }
@@ -236,7 +236,7 @@ export function buildLoreGraph(): LoreGraph {
         description: entity.shortDescription,
         connectionKind: "indirect",
         label: entity.name,
-        canonStatus: "CANON",
+        canonStatus: "CURRENT_CANON",
         verified: true,
       });
     }
@@ -255,7 +255,7 @@ export function buildLoreGraph(): LoreGraph {
         description: `${entity.name} is central to ${events.find((e) => e.slug === eventSlug)?.title ?? eventSlug}.`,
         connectionKind: "indirect",
         label: "Lore",
-        canonStatus: "CANON",
+        canonStatus: "CURRENT_CANON",
         verified: true,
       });
     }

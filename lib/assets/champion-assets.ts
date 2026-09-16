@@ -9,7 +9,7 @@
 export type ChampionAssetType = "portrait" | "splash" | "card" | "avatar";
 
 /** Pin a stable Data Dragon patch for square icons; splash/loading paths are versionless. */
-const DDRAGON_VERSION = "14.24.1";
+const DDRAGON_VERSION = "16.18.1";
 const DDRAGON_CDN = "https://ddragon.leagueoflegends.com/cdn";
 
 /** Slug → Data Dragon champion key (only exceptions; default is derived). */
@@ -18,7 +18,7 @@ const DDRAGON_KEY: Record<string, string> = {
   "jarvan-iv": "JarvanIV",
   "lee-sin": "LeeSin",
   leblanc: "Leblanc",
-  kaisa: "KaiSa",
+  kaisa: "Kaisa",
   nunu: "Nunu",
   "tahm-kench": "TahmKench",
   "cho-gath": "Chogath",
