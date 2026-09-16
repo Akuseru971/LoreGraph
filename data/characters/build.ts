@@ -1,5 +1,8 @@
 import { computeCompleteness } from "@/lib/knowledge/completeness";
-import { normalizeCanonStatus } from "@/lib/canon/model";
+import {
+  normalizeCanonStatus,
+  resolveCharacterCanonStatus,
+} from "@/lib/canon/model";
 import type {
   Character,
   CharacterStatus,
@@ -106,7 +109,7 @@ export function buildCharacter(seed: CharacterSeed): Character {
     difficulty: seed.difficulty ?? seed.complexity,
     loreComplexity: seed.complexity,
     featured: seed.featured ?? false,
-    canonStatus: normalizeCanonStatus(seed.canonStatus),
+    canonStatus: resolveCharacterCanonStatus(seed.canonStatus, seed.verified),
     continuity: seed.continuity,
     needsResearch: seed.needsResearch,
     relatedCharacterIds: [],

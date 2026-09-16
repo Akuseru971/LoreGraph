@@ -77,7 +77,10 @@ export function computeCompleteness(
 
   let tier: CompletenessTier;
   if (explicitTier) {
-    tier = explicitTier;
+    tier =
+      explicitTier === "A" && (!character.verified || character.needsResearch)
+        ? "B"
+        : explicitTier;
   } else if (
     character.verified &&
     hasQualityBio(character) &&

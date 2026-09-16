@@ -631,6 +631,8 @@ export interface GraphEdge {
   canonStatus: CanonStatus;
   relationshipId?: string;
   verified: boolean;
+  reviewStatus?: ReviewStatus;
+  needsReview?: boolean;
   sourceIds?: string[];
 }
 

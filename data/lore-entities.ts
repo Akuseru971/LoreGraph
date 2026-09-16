@@ -20,7 +20,7 @@ const entitySeeds: Array<Omit<LoreEntity, "type" | "universeId" | "verified">> =
     name: "The Ascended",
     importance: 88,
     shortDescription:
-      "Mortals elevated by Shurima's Sun Disc to fight the Void — the origin of both guardians and Darkin.",
+      "Mortals elevated by Shurima's Sun Disc into god-warriors — an institution that later defended the empire against the Void and eventually produced both guardians and Darkin.",
     longDescription:
       "The Rite of Ascension created Runeterra's first god-warriors. Many were corrupted into Darkin; others, like Nasus and Renekton, remember the empire that made them.",
     characterSlugs: ["aatrox", "nasus", "azir", "varus", "renekton"],

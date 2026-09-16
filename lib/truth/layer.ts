@@ -2,6 +2,7 @@ import {
   isCurrentCanon,
   normalizeCanonStatus,
   normalizeConnectionCategory,
+  resolveSeedCanonStatus,
 } from "@/lib/canon/model";
 import type {
   ConnectionCategory,
@@ -57,7 +58,7 @@ export function inferConnectionCategory(seed: RelSeedLike): ConnectionCategory {
     return normalizeConnectionCategory(seed.connectionType);
   }
 
-  const canon = normalizeCanonStatus(seed.canon);
+  const canon = resolveSeedCanonStatus(seed.canon, seed.verified);
 
   if (canon === "LEGACY_LORE") return "LEGACY_CONNECTION";
   if (canon === "ALTERNATE_UNIVERSE" || canon === "THEMATIC_ONLY") {

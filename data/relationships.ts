@@ -3,7 +3,7 @@ import type {
   Relationship,
   RelationshipType,
 } from "@/types";
-import { normalizeCanonStatus } from "@/lib/canon/model";
+import { resolveSeedCanonStatus } from "@/lib/canon/model";
 import { inferConfidence, inferConnectionCategory } from "@/lib/truth/layer";
 import { deriveNeedsReview, deriveReviewStatus } from "@/lib/truth/review";
 import { packRelationshipSeeds } from "./knowledge/generated/relationships-pack";
@@ -46,11 +46,14 @@ const baseSeeds: RelSeed[] = [
     label: "Mortal Enemies",
     short:
       "Aatrox returned and destroyed the Aspect of War; the mortal host Atreus survived and became Pantheon.",
-    long: "The Aspect of War helped seal Aatrox during the Darkin War — long before Atreus was born. Millennia later, Aatrox hunted down that same celestial and destroyed it while it rode Atreus, leaving the mortal alive on the ground. That survival is the twist: the man got up, kept a fragment of the dead god, and is now the only mortal who has fought Aatrox and remained himself afterwards.",
+    long: "The Aspect of War helped seal Aatrox during the Darkin War — long before Atreus was born. Millennia later, Aatrox hunted down that same celestial and destroyed it while it rode Atreus, leaving the mortal alive on the ground. That survival is the twist: Atreus got up, still able to wield the fallen Aspect's weapons through his own will, and is now the only mortal who has fought Aatrox and remained himself afterwards.",
     importance: 98,
     events: ["aatrox-pantheon-duel", "pantheon-reborn"],
-    sources: ["source:twilight-of-the-gods"],
+    sources: ["source:twilight-of-the-gods", "source:bio-pantheon"],
+    connectionType: "DIRECT_CANON",
     verified: true,
+    reviewed: true,
+    reviewStatus: "VERIFIED_CANON",
   },
   {
     a: "aatrox",
@@ -70,11 +73,14 @@ const baseSeeds: RelSeed[] = [
     type: "formerAlly",
     label: "Fellow Ascended",
     short:
-      "They were raised by the same Sun Disc and fought the same Void war, before one of them turned.",
-    long: "Nasus and Aatrox were both elevated by Shurima's Rite of Ascension to fight the Void, and for centuries they were on the same side of the line. The Darkin corruption split that permanently. Nasus stayed a scholar who remembers; Aatrox became the thing Shurima had to be defended from. Their relationship is the cleanest illustration of what Ascension actually cost the empire.",
+      "Both belong to Shurima's Ascended lineage and the same broad historical era — not a documented personal alliance.",
+    long: "Nasus and Aatrox share the Ascended institution and the ancient wars that followed Icathia's catastrophe. Riot sources establish both as god-warriors of that era, but do not document a personal relationship between them. LoreGraph links them structurally through Shurima's history, not as confirmed allies who fought side by side.",
     importance: 76,
     events: ["ascension-ritual", "void-incursion", "darkin-corruption"],
+    connectionType: "STRUCTURAL_LORE",
     verified: true,
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
   },
   {
     a: "aatrox",
@@ -82,7 +88,7 @@ const baseSeeds: RelSeed[] = [
     type: "formerAlly",
     label: "Servants of the Same Empire",
     short: "Both belonged to Shurima at its height — one as its weapon, one as its throne.",
-    long: "Azir's empire built the Ascended, and Aatrox was among the first and greatest of them. By the time Azir came to the throne the Darkin problem had already reshaped Shurima's relationship to its own gods. They are connected through the institution rather than through personal history, but that institution is the single most consequential thing either of them belongs to.",
+    long: "The Ascended institution predates Azir by millennia, and Aatrox was among its earliest and greatest products. Azir ruled during Shurima's late imperial period; the Darkin crisis unfolded after the empire's fall. They are connected structurally through Shurima's history, not through documented personal interaction.",
     importance: 68,
     events: ["ascension-ritual", "darkin-war"],
     connectionType: "STRUCTURAL_LORE",
@@ -136,7 +142,7 @@ const baseSeeds: RelSeed[] = [
     type: "formerAlly",
     label: "Ascended Together",
     short: "Two of Shurima's god-warriors, only one of whom survived the centuries intact.",
-    long: "Both were raised by the Sun Disc to fight the Void. Nasus retained himself; Varus did not. The Curator of the Sands keeps records of what the Darkin were before they were Darkin, which makes him one of the few sources on Varus's original identity.",
+    long: "Both belong to Shurima's Ascended lineage. Nasus retained himself; Varus became Darkin. The Curator of the Sands keeps records of what the Darkin were before they were Darkin, which makes him one of the few sources on Varus's original identity — a structural link, not a documented personal bond.",
     importance: 58,
     events: ["void-incursion", "darkin-corruption"],
   },
@@ -271,7 +277,7 @@ const baseSeeds: RelSeed[] = [
     label: "Two Answers to the Void",
     short:
       "Shurima's response to the Void produced the Ascended. Its modern response produced a survivor.",
-    long: "Aatrox exists because the empire decided to manufacture gods to fight the Void, and that decision eventually cost it everything. Kai'Sa exists because the Void came back and one child refused to stop moving. Setting them beside each other is the clearest way to understand what Shurima gained and lost by answering the Void with power rather than survival.",
+    long: "Aatrox belongs to ancient Shurima's Ascended wars against the Void. Kai'Sa belongs to a modern Void incursion thousands of years later. They share no documented meeting — only a structural historical thread through the Void itself.",
     importance: 50,
     events: ["void-incursion", "void-breach-icathia"],
     connectionType: "THEMATIC_PARALLEL",
@@ -2020,7 +2026,7 @@ export const relationships: Relationship[] = seeds
       shortExplanation: s.short,
       longExplanation: s.long,
       importanceScore: s.importance,
-      canonStatus: normalizeCanonStatus(s.canon),
+      canonStatus: resolveSeedCanonStatus(s.canon, verified),
       sourceIds,
       eventIds: (s.events ?? []).map((e) => `event:${e}`),
       factionIds: [],

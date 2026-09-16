@@ -18,6 +18,7 @@ import { buildLoreGraph, resetLoreGraphCache } from "../lib/graph";
 import { countConnections } from "../lib/graph/queries";
 import { ddragonChampionKey } from "../lib/assets/champion-assets";
 import { edgeCategory } from "../lib/truth/layer";
+import { scanTextForRedFlags } from "../lib/canon/red-flags";
 import { deriveNeedsReview } from "../lib/truth/review";
 import type { ConnectionCategory } from "../types";
 
@@ -83,6 +84,9 @@ for (const rel of relationships) {
 
   const derived = deriveNeedsReview(rel);
   if (derived) needsReviewCount++;
+  if (rel.reviewStatus === "PENDING" && !derived) {
+    fail(`PENDING relationship must have needsReview: ${rel.id}`);
+  }
   if (
     !rel.verified &&
     !rel.reviewed &&
@@ -101,7 +105,20 @@ for (const rel of relationships) {
 
 for (const event of events) {
   if (event.connectEligible && !event.verified) {
-    warn(`Connect-eligible event is not verified: ${event.slug}`);
+    fail(`Connect-eligible event is not verified: ${event.slug}`);
+  }
+}
+
+const ANCIENT_EVENT_SLUGS = new Set([
+  "void-incursion",
+  "darkin-war",
+  "darkin-corruption",
+  "ascension-ritual",
+]);
+for (const event of events) {
+  if (!ANCIENT_EVENT_SLUGS.has(event.slug)) continue;
+  if (event.characterIds.includes("char:pantheon")) {
+    fail(`Modern Pantheon (Atreus) listed as participant in ancient event: ${event.slug}`);
   }
 }
 
@@ -123,6 +140,18 @@ for (const character of characters) {
     fail(`${character.slug} biography contains developer disclaimer in public copy`);
   }
 
+  const bioText = [character.shortDescription, ...character.longDescription].join(" ");
+  for (const hit of scanTextForRedFlags(bioText, `character:${character.slug}`)) {
+    if (hit.severity === "error") fail(`${hit.context}: ${hit.message}`);
+    else warn(`${hit.context}: ${hit.message}`);
+  }
+
+  for (const beat of character.timeline) {
+    for (const hit of scanTextForRedFlags(beat.description, `timeline:${character.slug}`)) {
+      if (hit.severity === "error") fail(`${hit.context}: ${hit.message}`);
+    }
+  }
+
   if (character.releaseYear === 2010 && !["singed", "sion", "sivir"].includes(character.slug)) {
     const rosterYear = rosterBySlug.get(character.slug)?.releaseYear;
     if (rosterYear && rosterYear !== 2010) {
@@ -142,6 +171,10 @@ for (const question of quizQuestions) {
   const canon = question.canonStatus ?? "CURRENT_CANON";
   if (canon !== "CURRENT_CANON" && question.kind !== "CANON_OR_NOT") {
     fail(`Daily quiz ${question.id} is verified but not CURRENT_CANON`);
+  }
+  const qText = [question.prompt, question.explanation, ...(question.clues ?? [])].join(" ");
+  for (const hit of scanTextForRedFlags(qText, `quiz:${question.id}`)) {
+    if (hit.severity === "error") fail(`${hit.context}: ${hit.message}`);
   }
 }
 

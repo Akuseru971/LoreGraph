@@ -36,7 +36,7 @@ export const factions: Faction[] = [
     86,
     "shurima",
     "#D1A65C",
-    "Mortals elevated to god-warriors by Shurima's Sun Disc to fight the Void.",
+    "Mortals elevated to god-warriors by Shurima's Sun Disc — later deployed against the Void during Icathia's catastrophe.",
   ),
   f(
     "black-rose",

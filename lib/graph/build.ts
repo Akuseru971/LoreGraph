@@ -169,6 +169,8 @@ export function buildLoreGraph(): LoreGraph {
       canonStatus: rel.canonStatus,
       relationshipId: rel.id,
       verified: rel.verified,
+      reviewStatus: rel.reviewStatus,
+      needsReview: rel.needsReview,
       sourceIds: rel.sourceIds,
     });
   }

@@ -42,9 +42,21 @@ export const CANON_STATUS_HINT: Record<CanonStatus, string> = {
 export function normalizeCanonStatus(
   status?: string | CanonStatus | null,
 ): CanonStatus {
-  if (!status) return "CURRENT_CANON";
+  if (!status) return "UNKNOWN";
   return CANON_MIGRATION[status] ?? (status as CanonStatus);
 }
+
+/** Verified curated seeds without explicit status are treated as current canon. */
+export function resolveSeedCanonStatus(
+  explicit?: string | CanonStatus | null,
+  verified?: boolean,
+): CanonStatus {
+  if (explicit) return normalizeCanonStatus(explicit);
+  if (verified) return "CURRENT_CANON";
+  return "UNKNOWN";
+}
+
+export const resolveCharacterCanonStatus = resolveSeedCanonStatus;
 
 export function normalizeConnectionCategory(
   category: ConnectionCategory | string,
@@ -74,6 +86,8 @@ const DAILY_EDGE_CATEGORIES = new Set<ConnectionCategory>([
   "STRUCTURAL_LORE",
 ]);
 
+const DAILY_REVIEW_STATUSES = new Set(["VERIFIED_CANON", "APPROVED_EDITORIAL"]);
+
 /** Whether an edge may appear in the default Daily Connection challenge. */
 export function isDailyEligibleEdge(edge: GraphEdge): boolean {
   const category = normalizeConnectionCategory(
@@ -81,8 +95,15 @@ export function isDailyEligibleEdge(edge: GraphEdge): boolean {
   );
   if (!DAILY_EDGE_CATEGORIES.has(category)) return false;
   if (!edge.verified) return false;
+  if (edge.needsReview) return false;
+  if (edge.reviewStatus && !DAILY_REVIEW_STATUSES.has(edge.reviewStatus)) {
+    return false;
+  }
   if (normalizeConfidence(edge.confidence) === "UNCERTAIN") return false;
   if (!isDailyEligibleCanon(edge.canonStatus)) return false;
+  if (category === "STRUCTURAL_LORE" && edge.confidence === "DERIVED") {
+    return false;
+  }
   return true;
 }
 

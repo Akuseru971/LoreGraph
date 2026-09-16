@@ -3,6 +3,8 @@ import type { Relationship, ReviewStatus } from "@/types";
 
 /** Derive whether a relationship still needs editorial review. */
 export function deriveNeedsReview(rel: Relationship): boolean {
+  if (rel.reviewStatus === "PENDING") return true;
+
   if (rel.reviewStatus === "APPROVED_EDITORIAL" || rel.reviewStatus === "VERIFIED_CANON") {
     if (rel.connectionType === "DIRECT_CANON" && rel.sourceIds.length === 0) {
       return true;

@@ -531,7 +531,6 @@ export const ioniaSeeds: CharacterSeed[] = [
         title: "Centuries with the Aion Er'na",
         description:
           "Cloistered in the spirit realm, she trains with the legendary Kinkou relic until mastery becomes identity.",
-        with: ["shen"],
       },
       {
         era: "Modern Ionia",
@@ -539,7 +538,6 @@ export const ioniaSeeds: CharacterSeed[] = [
         description:
           "While she is absent, the Order splits over whether balance requires watching threats or ending them.",
         event: "kinkou-fracture",
-        with: ["akali", "shen", "zed"],
       },
       {
         era: "Modern Ionia",

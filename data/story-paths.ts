@@ -29,16 +29,16 @@ const seeds: PathSeed[] = [
     title: "THE DARKIN",
     subtitle: "How Shurima's greatest heroes became its worst mistake",
     description:
-      "Shurima manufactured gods to survive the Void. It worked, and then it kept working long after the war was over. This is the story of what immortality does to a purpose.",
+      "Shurima elevated mortals into god-warriors — an institution that would later face the Void and, long after, curdle into something worse. This is the story of what immortality does to a purpose.",
     accentColor: "#A8434A",
     featured: true,
-    verified: true,
+    verified: false,
     chapters: [
       {
         title: "THE ASCENDED",
         subtitle: "Mortals made into god-warriors",
         body: [
-          "Shurima's Sun Disc could elevate a mortal into something else entirely: stronger, longer-lived, and built for a war the empire could not otherwise win. The Rite of Ascension was an honour, a public ceremony, and a weapons programme.",
+          "Shurima's Sun Disc could elevate a mortal into something else entirely: stronger, longer-lived, and entrusted with defending an empire that mortal armies alone could not hold. The Rite of Ascension was an honour, a public ceremony, and an imperial institution.",
           "The first Ascended were genuine heroes. Statues were carved for them. Aatrox was among the greatest — the empire's answer to a problem that armies had already failed to solve.",
         ],
         chars: ["aatrox", "nasus", "azir"],
@@ -53,7 +53,7 @@ const seeds: PathSeed[] = [
         ],
         chars: ["aatrox", "varus", "nasus"],
         events: ["void-incursion"],
-        contentType: "fact",
+        contentType: "editorial",
       },
       {
         title: "THE FALL",

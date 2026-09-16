@@ -452,7 +452,7 @@ export function reconcileKnowledgePack(pack: KnowledgePack): ReconciledOutput {
       canonStatus: mapCanonStatus(row.canon_status),
       continuity: mapContinuity(row.continuity),
       verified: parseBool(row.verified),
-      connectEligible: true,
+      connectEligible: parseBool(row.verified),
       sourceIds: parsePipeList(row.source_ids).map(mapSourceId),
     };
     packEvents.push(event);

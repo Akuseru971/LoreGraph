@@ -1,4 +1,4 @@
-import { normalizeCanonStatus } from "@/lib/canon/model";
+import { resolveSeedCanonStatus } from "@/lib/canon/model";
 import type { QuizQuestion, QuizQuestionKind, RegionSlug } from "@/types";
 import { RUNETERRA_ID } from "./universes";
 
@@ -22,7 +22,7 @@ const seeds: QSeed[] = [
     kind: "WHO_AM_I",
     prompt: "Who am I?",
     clues: [
-      "I was once an Ascended warrior, raised to fight the Void.",
+      "I was once an Ascended warrior who defended Shurima against the Void.",
       "Centuries of war hollowed me out, and my own empire turned against me.",
       "I could not be killed, so I was imprisoned inside my own weapon.",
     ],
@@ -330,7 +330,7 @@ const seeds: QSeed[] = [
     options: ["True", "False"],
     correct: 0,
     explanation:
-      "Both were raised by Shurima's Sun Disc to fight the Void, and both were later sealed inside their own weapons after the Darkin corruption.",
+      "Both were Shuriman Ascended who later became Darkin and were sealed inside their own weapons after the corruption.",
     chars: ["aatrox", "varus"],
     regions: ["shurima"],
     verified: true,
@@ -980,7 +980,7 @@ export const quizQuestions: QuizQuestion[] = seeds.map((s, i) => ({
   difficulty: s.difficulty ?? 2,
   xp: 25,
   verified: s.verified ?? false,
-  canonStatus: normalizeCanonStatus(s.canonStatus),
+  canonStatus: resolveSeedCanonStatus(s.canonStatus, s.verified ?? false),
 }));
 
 export const quizQuestionById = new Map(quizQuestions.map((q) => [q.id, q]));

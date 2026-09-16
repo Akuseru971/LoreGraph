@@ -31,7 +31,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
     short:
       "Once Shurima's greatest champion, now the thing left inside his own sword — and the closest Runeterra has to an ending.",
     long: [
-      "Aatrox was among the first mortals raised by Shurima's Sun Disc into an Ascended: a god-warrior forged specifically to stop the Void from eating the world. For a while, he was exactly what the empire needed. Statues were carved. Songs were written. The war went on long enough that neither stopped mattering, and then long enough that both did.",
+      "Aatrox was among the first mortals raised by Shurima's Sun Disc into an Ascended: a god-warrior who would later become one of Shurima's honored defenders against the Void. For a while, he was exactly what the empire needed. Statues were carved. Songs were written. The war went on long enough that neither stopped mattering, and then long enough that both did.",
       "Something in the Ascended broke during those centuries. Immortality without an end condition curdled into appetite, and the heroes who had saved Shurima became the reason it needed saving again. The mortals who had built them fought back, and Targon intervened — but killing a being like Aatrox turned out to be impossible. Instead he was sealed inside his own weapon, which is a very different kind of solution.",
       "Every sword needs a hand. When a mortal picks up Aatrox's blade, he takes the body and remakes it into a shape he recognises, wearing the wielder until there is nothing left to wear. He is not trying to conquer Runeterra. He wants out, and he has concluded that the world ending is the most reliable exit.",
       "That makes him less a villain with a plan than a consequence with a grudge — and it puts him permanently at odds with Targon, who built the cage.",
@@ -41,7 +41,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Ancient Shurima",
         title: "Raised as an Ascended",
         description:
-          "Chosen as one of Shurima's god-warriors, given power by the Sun Disc to fight something mortal armies could not.",
+          "Chosen as one of Shurima's god-warriors, given power by the Sun Disc long before the Void catastrophe would test that institution.",
         event: "ascension-ritual",
         with: ["nasus", "azir"],
       },
@@ -65,7 +65,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Ancient Shurima",
         title: "The Darkin War",
         description:
-          "Shurima turns on its own gods and Targon joins the effort. Aatrox is on the losing side of a war he started.",
+          "After Shurima's fall, surviving Ascended war among themselves. Mortals and Targonian Aspects join the effort to defeat or seal the Darkin.",
         event: "darkin-war",
         with: ["varus", "nasus"],
       },
@@ -87,7 +87,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Modern Runeterra",
         title: "The duel with the Aspect of War",
         description:
-          "He hunts down the Aspect who helped cage him and kills the host — which is not the same as killing the star inside it.",
+          "He hunts down the Aspect who helped cage him and destroys the celestial power within Atreus — while the mortal host survives.",
         event: "aatrox-pantheon-duel",
         with: ["pantheon"],
       },
@@ -122,7 +122,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
     long: [
       "Atreus climbed Mount Targon as a nobody and came back down carrying the Aspect of War. For years the arrangement worked the way Targon's arrangements usually do: the celestial made the decisions, the mortal supplied the body, and the results were spectacular. The Aspect he hosted had already fought in the Darkin War long before Atreus was born — but Atreus inherited its memory, its enemies, and eventually its death.",
       "Then Aatrox came back for him. The Darkin Blade found the Aspect of War and killed it — properly, in a way that celestial beings are not supposed to be killable. Atreus was left alive on the ground, hollowed out, no longer anybody's vessel.",
-      "What makes Pantheon interesting is what happened next. He should have been finished. Instead he got up with a fragment of the dead Aspect still lodged in him and made a choice the celestials had never needed from him before: to fight as a man rather than as a mount.",
+      "What makes Pantheon interesting is what happened next. He should have been finished. Instead he got up and made a choice the celestials had never needed from him before: to fight as a man rather than as a mount, still able to wield the fallen Aspect's weapons through his own will.",
       "He is now the rare figure in Runeterra who has looked directly at both a god and a Darkin and concluded that neither of them is owed his obedience.",
     ],
     timeline: [
@@ -150,7 +150,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Modern Runeterra",
         title: "Atreus stands up",
         description:
-          "He recovers a fragment of the dead Aspect and takes the spear for himself — no longer a vessel, still a weapon.",
+          "He takes up the fallen Aspect's weapons through his own will — no longer a vessel, still a warrior.",
         event: "pantheon-reborn",
       },
       {

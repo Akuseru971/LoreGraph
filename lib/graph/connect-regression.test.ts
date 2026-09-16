@@ -71,6 +71,45 @@ describe("Connect regression pairs", () => {
     expect(directCanon).toBe(false);
   });
 
+  it("Aatrox → Nasus is not direct canon", () => {
+    const path = pathBetween("aatrox", "nasus");
+    expect(path).not.toBeNull();
+    const directCanon = path!.steps.some(
+      (s) =>
+        edgeCategory(s.edge) === "DIRECT_CANON" &&
+        s.edge.connectionKind === "direct",
+    );
+    expect(directCanon).toBe(false);
+  });
+
+  it("Aatrox → Varus prefers structural Darkin link", () => {
+    const path = pathBetween("aatrox", "varus");
+    expect(path).not.toBeNull();
+    expect(path!.length).toBeLessThanOrEqual(2);
+  });
+
+  it("Swain → Ambessa is not direct canon", () => {
+    const path = pathBetween("swain", "ambessa");
+    if (!path) return;
+    const directCanon = path.steps.some(
+      (s) =>
+        edgeCategory(s.edge) === "DIRECT_CANON" &&
+        s.edge.connectionKind === "direct",
+    );
+    expect(directCanon).toBe(false);
+  });
+
+  it("Yunara → Shen is not direct canon", () => {
+    const path = pathBetween("yunara", "shen");
+    if (!path) return;
+    const directCanon = path.steps.some(
+      (s) =>
+        edgeCategory(s.edge) === "DIRECT_CANON" &&
+        s.edge.connectionKind === "direct",
+    );
+    expect(directCanon).toBe(false);
+  });
+
   it("Morgana → Aurelion Sol does not shortcut through Celestial Age", () => {
     const path = pathBetween("morgana", "aurelion-sol");
     expect(path).not.toBeNull();

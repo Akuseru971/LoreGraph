@@ -1,4 +1,4 @@
-import { normalizeCanonStatus } from "@/lib/canon/model";
+import { resolveSeedCanonStatus } from "@/lib/canon/model";
 import type { LoreEvent, RegionSlug } from "@/types";
 import { eventAssetByEventId } from "./knowledge/event-assets";
 import eventParticipantsPack from "./knowledge/generated/event-participants.json";
@@ -421,7 +421,7 @@ const seeds: EventSeed[] = [
     slug: "aatrox-pantheon-duel",
     title: "The Aspect Who Died Standing",
     description:
-      "The Darkin Blade hunts down the Aspect of War who helped seal him and kills the mortal host — which turns out to be a different thing from killing the Aspect.",
+      "The Darkin Blade hunts down the Aspect of War who helped seal him and destroys the celestial power within Atreus — while the mortal host survives on the ground.",
     era: "Modern Runeterra",
     order: 350,
     importance: 90,
@@ -534,23 +534,37 @@ const coreEvents: LoreEvent[] = seeds.map((s) => {
     importance: s.importance,
     characterIds: s.characters.map(charId),
     regionSlugs: s.regions,
-    canonStatus: normalizeCanonStatus(s.canonStatus),
+    canonStatus: resolveSeedCanonStatus(s.canonStatus, s.verified ?? true),
     verified: s.verified ?? true,
-    connectEligible: s.connectEligible ?? s.slug !== "celestial-age",
+    connectEligible:
+      (s.connectEligible ?? s.slug !== "celestial-age") &&
+      (s.verified ?? true),
     asset,
   };
 });
 
 const packBySlug = new Map(packEvents.map((e) => [e.slug, e]));
+function isEraNode(event: LoreEvent): boolean {
+  return (
+    event.slug.startsWith("era-") ||
+    /^era of /i.test(event.title) ||
+    event.slug.includes("-era")
+  );
+}
+
 export const events: LoreEvent[] = [
   ...coreEvents,
   ...packEvents.filter((p) => !coreEvents.some((c) => c.slug === p.slug)),
 ].map((e) => {
   const fromPack = packParticipantMap[e.slug] ?? [];
   const mergedIds = [...new Set([...e.characterIds, ...fromPack])];
-  return mergedIds.length > e.characterIds.length
-    ? { ...e, characterIds: mergedIds }
-    : e;
+  const base =
+    mergedIds.length > e.characterIds.length
+      ? { ...e, characterIds: mergedIds }
+      : e;
+  const connectEligible =
+    Boolean(base.connectEligible && base.verified) && !isEraNode(base);
+  return { ...base, connectEligible };
 });
 
 export const eventById = new Map(events.map((e) => [e.id, e]));
