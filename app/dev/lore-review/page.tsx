@@ -52,6 +52,16 @@ export default function LoreReviewPage() {
     }))
     .slice(0, 50);
 
+  let packResearchCount = 0;
+  const packQueuePath = join(process.cwd(), "reports/research-queue-pack.json");
+  if (existsSync(packQueuePath)) {
+    try {
+      packResearchCount = JSON.parse(readFileSync(packQueuePath, "utf8")).length;
+    } catch {
+      packResearchCount = 0;
+    }
+  }
+
   const riotPrimary = sources.filter((s) => s.authorityTier === "PRIMARY_OFFICIAL").length;
   const wikiSources = sources.filter(
     (s) => s.authorityTier === "OFFICIAL_COMMUNITY_REFERENCE",
@@ -73,6 +83,7 @@ export default function LoreReviewPage() {
         <StatCard label="Riot primary sources" value={String(riotPrimary)} />
         <StatCard label="Wiki sources" value={String(wikiSources)} />
         <StatCard label="Relationships flagged" value={String(flagged.length)} />
+        <StatCard label="Pack research queue" value={String(packResearchCount)} />
         <StatCard label="Profiles needing work" value={String(profileIssues.length)} />
       </div>
 
