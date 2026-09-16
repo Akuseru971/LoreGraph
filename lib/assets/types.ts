@@ -42,7 +42,7 @@ export type SourceAuthority =
   | "LOREGRAPH_COMPOSITE";
 
 /** Raw CSV row from asset manifest. */
-export interface AssetManifestRecord {
+export interface AssetManifestRecord extends Record<string, string> {
   asset_id: string;
   entity_id: string;
   entity_type: AssetEntityType;

@@ -22,6 +22,7 @@
     "validate:data": "tsx scripts/validate-data.ts",
     "validate:assets": "tsx scripts/validate-assets.ts",
     "assets:ingest": "tsx scripts/assets/ingest.ts",
+    "assets:report": "tsx scripts/assets/generate-report.ts",
     "lore:assets": "npm run assets:ingest",
     "test": "vitest run",
     "test:watch": "vitest"

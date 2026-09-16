@@ -28,12 +28,29 @@ const ROLE_MAP: Record<ChampionAssetType, AssetRole> = {
 
 const index = manifestData as AssetManifestIndex;
 
+/** Roster slug → manifest slug (hyphenated LoL.com URLs). */
+const MANIFEST_SLUG_ALIASES: Record<string, string> = {
+  belveth: "bel-veth",
+  chogath: "cho-gath",
+  ksante: "k-sante",
+  kaisa: "kai-sa",
+  khazix: "kha-zix",
+  "nunu-willump": "nunu",
+  reksai: "rek-sai",
+  velkoz: "vel-koz",
+};
+
 function normalizeSlug(slug: string): string {
   return slug.toLowerCase().replace(/_/g, "-");
 }
 
-function championEntry(slug: string): ChampionAssetIndex | null {
+function manifestSlug(slug: string): string {
   const key = normalizeSlug(slug);
+  return MANIFEST_SLUG_ALIASES[key] ?? key;
+}
+
+function championEntry(slug: string): ChampionAssetIndex | null {
+  const key = manifestSlug(slug);
   return index?.champions[key] ?? null;
 }
 
@@ -83,10 +100,11 @@ export function getChampionAssetUrl(
   slug: string,
   type: ChampionAssetType = "portrait",
 ): string {
-  const entry = championEntry(slug);
+  const key = normalizeSlug(slug);
+  const entry = championEntry(key);
   const local = entry ? pathForRole(entry, type) : null;
   if (local) return local;
-  return cdnFallback(slug, type);
+  return cdnFallback(key, type);
 }
 
 export function getChampionAsset(

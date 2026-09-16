@@ -15,8 +15,6 @@ import type { AssetManifestIndex } from "../lib/assets/types";
 
 const ROOT = process.cwd();
 const INDEX_PATH = join(ROOT, "data/assets/manifest-index.json");
-const PUBLIC_ASSETS = join(ROOT, "public/assets");
-
 interface Issue {
   severity: "error" | "warn";
   message: string;

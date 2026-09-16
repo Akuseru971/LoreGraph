@@ -8,7 +8,6 @@ import {
   mkdirSync,
   readFileSync,
   writeFileSync,
-  statSync,
 } from "node:fs";
 import { dirname, join } from "node:path";
 import sharp from "sharp";
@@ -23,7 +22,6 @@ import {
 import type {
   AssetManifestIndex,
   AssetManifestRecord,
-  ChampionAssetIndex,
   EntityAssetMeta,
 } from "../../lib/assets/types";
 import { computeFocalCrop, VARIANT_SPECS } from "./crop";
@@ -353,6 +351,23 @@ async function main() {
   }
 
   stats.visualQaPending = records.filter((r) => r.qa_status === "NEEDS_VISUAL_QA").length;
+
+  // Mirror manifest entries under roster slugs where they differ.
+  const ROSTER_ALIASES: Record<string, string> = {
+    "bel-veth": "belveth",
+    "cho-gath": "chogath",
+    "k-sante": "ksante",
+    "kai-sa": "kaisa",
+    "kha-zix": "khazix",
+    nunu: "nunu-willump",
+    "rek-sai": "reksai",
+    "vel-koz": "velkoz",
+  };
+  for (const [manifestKey, rosterKey] of Object.entries(ROSTER_ALIASES)) {
+    if (champions[manifestKey]) {
+      champions[rosterKey] = { ...champions[manifestKey], slug: rosterKey };
+    }
+  }
 
   const index: AssetManifestIndex = markLocalPaths({
     generatedAt: new Date().toISOString(),
