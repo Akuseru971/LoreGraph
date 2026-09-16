@@ -3,7 +3,7 @@ import { IBM_Plex_Mono, Instrument_Serif, Inter } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
 import { AppProviders } from "@/components/providers";
 import { getCurrentUser } from "@/lib/supabase/server";
-import { getSiteUrl } from "@/lib/seo";
+import { getSiteUrl, robotsDirective } from "@/lib/seo";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     description:
       "Every character. Every conflict. Every connection. Explore Runeterra as an interactive network.",
   },
-  robots: { index: true, follow: true },
+  robots: robotsDirective(),
 };
 
 export const viewport: Viewport = {

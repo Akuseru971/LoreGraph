@@ -1,5 +1,6 @@
 import { characterById, eventById, loreEntityById } from "@/data";
-import type { GraphEdge, GraphNode } from "@/types";
+import { eventRoleExplanation } from "@/lib/events/roles";
+import type { EventRelationRole, GraphEdge, GraphNode } from "@/types";
 
 /**
  * Character-specific explanations for structural graph edges.
@@ -9,10 +10,15 @@ export function characterEventExplanation(
   characterId: string,
   eventId: string,
   fallback: string,
+  role?: EventRelationRole,
 ): string {
   const character = characterById.get(characterId);
   const event = eventById.get(eventId);
   if (!character || !event) return fallback;
+
+  if (role && role !== "ASSOCIATED_WITH") {
+    return eventRoleExplanation(character.name, event.title, role);
+  }
 
   const slug = event.slug;
   const name = character.name;
@@ -73,10 +79,10 @@ export function contextualEdgeDescription(
   if (edge.connectionKind === "direct") return edge.description;
 
   if (from.type === "character" && to.type === "event") {
-    return characterEventExplanation(from.id, to.id, edge.description);
+    return characterEventExplanation(from.id, to.id, edge.description, edge.eventRole);
   }
   if (to.type === "character" && from.type === "event") {
-    return characterEventExplanation(to.id, from.id, edge.description);
+    return characterEventExplanation(to.id, from.id, edge.description, edge.eventRole);
   }
   if (from.type === "character" && to.type === "concept") {
     return characterConceptExplanation(from.id, to.id, edge.description);

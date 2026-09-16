@@ -6,6 +6,7 @@ import {
   regions,
   relationships,
 } from "@/data";
+import { EVENT_ROLE_PATH_WEIGHT } from "@/lib/events/roles";
 import {
   characterConceptExplanation,
   characterEventExplanation,
@@ -222,26 +223,35 @@ export function buildLoreGraph(): LoreGraph {
   }
 
   for (const event of events) {
-    for (const characterId of event.characterIds) {
+    for (const link of event.characterLinks ?? []) {
+      const { characterId, role } = link;
       if (!nodes.has(characterId)) continue;
+      const roleWeight = EVENT_ROLE_PATH_WEIGHT[role] ?? 6;
+      const edgeVerified =
+        event.verified && !link.needsReview && role !== "EDITORIAL_CONTEXT";
       pushEdge({
         id: `edge:event-${event.slug}-${characterId}`,
         source: characterId,
         target: event.id,
         relationship: "related",
         connectionCategory: "SHARED_EVENT",
-        confidence: "STRONG",
-        weight: CATEGORY_PATH_COST.SHARED_EVENT,
+        confidence: role === "PARTICIPANT" || role === "CAUSE" ? "STRONG" : "DERIVED",
+        weight: CATEGORY_PATH_COST.SHARED_EVENT * roleWeight,
         importance: Math.round(event.importance * 0.7),
         description: characterEventExplanation(
           characterId,
           event.id,
           event.description,
+          role,
         ),
         connectionKind: "indirect",
         label: "Event",
         canonStatus: event.canonStatus,
-        verified: event.verified,
+        verified: edgeVerified,
+        reviewStatus: link.reviewStatus,
+        needsReview: link.needsReview,
+        sourceIds: link.sourceIds,
+        eventRole: role,
       });
     }
   }

@@ -1,3 +1,8 @@
+import {
+  blocksToBody,
+  buildNarrativeBlocks,
+  computeStoryPathQuality,
+} from "@/lib/story-path/blocks";
 import type { StoryPath, StoryPathChapter } from "@/types";
 import { RUNETERRA_ID } from "./universes";
 
@@ -977,18 +982,29 @@ const seeds: PathSeed[] = [
 ];
 
 function buildChapters(pathSlug: string, chapters: ChapterSeed[]): StoryPathChapter[] {
-  return chapters.map((c, i) => ({
-    id: `chapter:${pathSlug}-${i + 1}`,
-    order: i + 1,
-    title: c.title,
-    subtitle: c.subtitle,
-    body: c.body,
-    characterIds: c.chars.map((s) => `char:${s}`),
-    eventIds: (c.events ?? []).map((s) => `event:${s}`),
-    estimatedMinutes: c.minutes ?? 2,
-    assetKey: c.asset ?? c.chars[0] ?? pathSlug,
-    contentType: c.contentType ?? "fact",
-  }));
+  return chapters.map((c, i) => {
+    const characterIds = c.chars.map((s) => `char:${s}`);
+    const eventIds = (c.events ?? []).map((s) => `event:${s}`);
+    const blocks = buildNarrativeBlocks(c.body, {
+      characterIds,
+      eventIds,
+      chapterContentType: c.contentType,
+    });
+
+    return {
+      id: `chapter:${pathSlug}-${i + 1}`,
+      order: i + 1,
+      title: c.title,
+      subtitle: c.subtitle,
+      body: blocksToBody(blocks),
+      blocks,
+      characterIds,
+      eventIds,
+      estimatedMinutes: c.minutes ?? 2,
+      assetKey: c.asset ?? c.chars[0] ?? pathSlug,
+      contentType: c.contentType ?? "fact",
+    };
+  });
 }
 
 export const storyPaths: StoryPath[] = seeds.map((s) => {
@@ -996,6 +1012,11 @@ export const storyPaths: StoryPath[] = seeds.map((s) => {
   const characterIds = Array.from(
     new Set(chapters.flatMap((c) => c.characterIds)),
   );
+  const allBlocks = chapters.flatMap((c) => c.blocks);
+  const quality = computeStoryPathQuality(allBlocks);
+  const hasUnresolvedWithoutDisclosure =
+    quality.containsUnresolved && (s.verified ?? false);
+
   return {
     id: `story:${s.slug}`,
     universeId: RUNETERRA_ID,
@@ -1008,7 +1029,8 @@ export const storyPaths: StoryPath[] = seeds.map((s) => {
     chapters,
     estimatedMinutes: chapters.reduce((sum, c) => sum + c.estimatedMinutes, 0),
     featured: s.featured ?? false,
-    verified: s.verified ?? false,
+    verified: (s.verified ?? false) && !hasUnresolvedWithoutDisclosure,
+    quality,
   };
 });
 

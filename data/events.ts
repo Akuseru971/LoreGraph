@@ -1,4 +1,9 @@
 import { resolveSeedCanonStatus } from "@/lib/canon/model";
+import {
+  buildEventCharacterLinks,
+  characterIdsFromLinks,
+  isEraNode,
+} from "@/lib/events/links";
 import type { LoreEvent, RegionSlug } from "@/types";
 import { eventAssetByEventId } from "./knowledge/event-assets";
 import eventParticipantsPack from "./knowledge/generated/event-participants.json";
@@ -518,13 +523,35 @@ const seeds: EventSeed[] = [
   },
 ];
 
+function finalizeEvent(
+  e: Omit<LoreEvent, "characterLinks" | "characterIds" | "isEra"> & {
+    characterIds: string[];
+  },
+): LoreEvent {
+  const era = isEraNode({ slug: e.slug, title: e.title });
+  const characterLinks = buildEventCharacterLinks(e, e.characterIds);
+  const characterIds = characterIdsFromLinks(characterLinks);
+  const connectEligible =
+    Boolean(e.connectEligible && e.verified) &&
+    !era &&
+    characterLinks.some((l) => l.role === "PARTICIPANT" || l.role === "CAUSE");
+
+  return {
+    ...e,
+    isEra: era,
+    characterLinks,
+    characterIds,
+    connectEligible,
+  };
+}
+
 const coreEvents: LoreEvent[] = seeds.map((s) => {
   const id = eventId(s.slug);
   const asset = eventAssetByEventId.get(id);
-  return {
+  const base = {
     id,
     universeId: RUNETERRA_ID,
-    type: "event",
+    type: "event" as const,
     slug: s.slug,
     name: s.title,
     title: s.title,
@@ -541,31 +568,21 @@ const coreEvents: LoreEvent[] = seeds.map((s) => {
       (s.verified ?? true),
     asset,
   };
+  return finalizeEvent(base);
 });
 
 const packBySlug = new Map(packEvents.map((e) => [e.slug, e]));
-function isEraNode(event: LoreEvent): boolean {
-  return (
-    event.slug.startsWith("era-") ||
-    /^era of /i.test(event.title) ||
-    event.slug.includes("-era")
-  );
-}
 
 export const events: LoreEvent[] = [
   ...coreEvents,
-  ...packEvents.filter((p) => !coreEvents.some((c) => c.slug === p.slug)),
-].map((e) => {
-  const fromPack = packParticipantMap[e.slug] ?? [];
-  const mergedIds = [...new Set([...e.characterIds, ...fromPack])];
-  const base =
-    mergedIds.length > e.characterIds.length
-      ? { ...e, characterIds: mergedIds }
-      : e;
-  const connectEligible =
-    Boolean(base.connectEligible && base.verified) && !isEraNode(base);
-  return { ...base, connectEligible };
-});
+  ...packEvents
+    .filter((p) => !coreEvents.some((c) => c.slug === p.slug))
+    .map((p) => {
+      const fromPack = packParticipantMap[p.slug] ?? [];
+      const mergedIds = [...new Set([...p.characterIds, ...fromPack])];
+      return finalizeEvent({ ...p, characterIds: mergedIds });
+    }),
+];
 
 export const eventById = new Map(events.map((e) => [e.id, e]));
 export const eventBySlug = new Map(events.map((e) => [e.slug, e]));

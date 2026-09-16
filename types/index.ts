@@ -159,6 +159,72 @@ export type ReviewStatus =
 
 export type StoryContentType = "fact" | "editorial";
 
+/** Beat-level truth classification for Story Path narrative blocks. */
+export type NarrativeEvidenceClass =
+  | "FACT"
+  | "SUPPORTED_SYNTHESIS"
+  | "EDITORIAL_FRAMING"
+  | "INTERPRETATION"
+  | "TRANSITION"
+  | "UNRESOLVED";
+
+export interface StoryNarrativeBlock {
+  text: string;
+  evidenceClass: NarrativeEvidenceClass;
+  claimIds?: string[];
+  sourceIds?: string[];
+  canonStatus?: CanonStatus;
+  reviewStatus?: ReviewStatus;
+}
+
+export interface StoryPathQuality {
+  reviewCoverage: number;
+  factCoverage: number;
+  sourceCoverage: number;
+  containsInterpretation: boolean;
+  containsUnresolved: boolean;
+  blockCounts: Record<NarrativeEvidenceClass, number>;
+}
+
+/** Role-aware character ↔ event association. */
+export type EventRelationRole =
+  | "PARTICIPANT"
+  | "CAUSE"
+  | "INSTIGATOR"
+  | "COMMANDER"
+  | "TARGET"
+  | "VICTIM"
+  | "OBSERVER"
+  | "AFFECTED_BY"
+  | "BENEFICIARY"
+  | "CONSEQUENCE"
+  | "ACTIVE_DURING"
+  | "ASSOCIATED_WITH"
+  | "MENTIONED_IN"
+  | "EDITORIAL_CONTEXT";
+
+export interface EventCharacterLink {
+  characterId: string;
+  role: EventRelationRole;
+  claimIds?: string[];
+  sourceIds?: string[];
+  canonStatus?: CanonStatus;
+  reviewStatus?: ReviewStatus;
+  needsReview?: boolean;
+}
+
+export interface ChampionQualityDimensions {
+  contentCompleteness: number;
+  sourceCoverage: number;
+  canonConfidence: number;
+  reviewCoverage: number;
+  timelineCoverage: number;
+  relationshipCoverage: number;
+  eventCoverage: number;
+  continuityClassified: boolean;
+  criticalMissing: string[];
+}
+
 /* -------------------------------------------------------------------------- */
 /* Cinematic Journey                                                          */
 /* -------------------------------------------------------------------------- */
@@ -380,6 +446,8 @@ export interface LoreEvent extends Entity {
   description: string;
   era: string;
   order: number;
+  /** Role-aware character associations — always populated on exported events. */
+  characterLinks?: EventCharacterLink[];
   characterIds: string[];
   regionSlugs: RegionSlug[];
   canonStatus: CanonStatus;
@@ -387,6 +455,8 @@ export interface LoreEvent extends Entity {
   connectEligible?: boolean;
   sourceIds?: string[];
   asset?: EventAsset;
+  /** When true, this node is an era/period — not a discrete incident. */
+  isEra?: boolean;
 }
 
 export interface EventAsset {
@@ -448,7 +518,10 @@ export interface StoryPathChapter {
   order: number;
   title: string;
   subtitle: string;
+  /** @deprecated Prefer `blocks` — kept for backward compatibility. */
   body: string[];
+  /** Paragraph-level truth classification. */
+  blocks: StoryNarrativeBlock[];
   characterIds: string[];
   eventIds: string[];
   estimatedMinutes: number;
@@ -471,7 +544,9 @@ export interface StoryPath {
   chapters: StoryPathChapter[];
   estimatedMinutes: number;
   featured: boolean;
+  /** Derived from block-level evidence — not a blanket canon guarantee. */
   verified: boolean;
+  quality?: StoryPathQuality;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -634,6 +709,8 @@ export interface GraphEdge {
   reviewStatus?: ReviewStatus;
   needsReview?: boolean;
   sourceIds?: string[];
+  /** Event participation role when edge is character ↔ event. */
+  eventRole?: EventRelationRole;
 }
 
 export type ConnectionKind = "direct" | "indirect";

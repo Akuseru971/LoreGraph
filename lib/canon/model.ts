@@ -6,6 +6,7 @@ import type {
   LoreGraph,
   PathStep,
 } from "@/types";
+import { DAILY_INELIGIBLE_EVENT_ROLES } from "@/lib/events/roles";
 import { isConnectBridgeNode } from "@/lib/graph/connect-eligibility";
 import { edgeCategory } from "@/lib/truth/layer";
 
@@ -102,6 +103,9 @@ export function isDailyEligibleEdge(edge: GraphEdge): boolean {
   if (normalizeConfidence(edge.confidence) === "UNCERTAIN") return false;
   if (!isDailyEligibleCanon(edge.canonStatus)) return false;
   if (category === "STRUCTURAL_LORE" && edge.confidence === "DERIVED") {
+    return false;
+  }
+  if (edge.eventRole && DAILY_INELIGIBLE_EVENT_ROLES.has(edge.eventRole)) {
     return false;
   }
   return true;

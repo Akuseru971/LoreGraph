@@ -1,7 +1,11 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { notFound } from "next/navigation";
-import { characters, claims, events, relationships, sources } from "@/data";
+import { characters, claims, events, relationships, sources, storyPaths } from "@/data";
+import { validateEvents } from "@/lib/events/validate";
+import { computeQuality } from "@/lib/knowledge/quality-matrix";
+import { absoluteUrl, getSiteUrl, isProductionIndexable } from "@/lib/seo";
+import { validateStoryPaths } from "@/lib/story-path/validate";
 import { CONNECTION_EVIDENCE_LABEL } from "@/lib/truth/evidence";
 import { deriveNeedsReview, reviewReason } from "@/lib/truth/review";
 
@@ -68,6 +72,35 @@ export default function LoreReviewPage() {
   ).length;
   const eventsWithAssets = events.filter((e) => e.asset).length;
 
+  const storyValidation = validateStoryPaths();
+  const eventValidation = validateEvents();
+  const unsupportedFacts = storyValidation.factsWithoutEvidence;
+
+  const tierACandidatesFailing = characters
+    .filter((c) => c.completenessTier === "A")
+    .map((c) => ({ c, q: computeQuality(c, "A") }))
+    .filter(({ q }) => q.tier !== "A")
+    .map(({ c, q }) => ({
+      name: c.name,
+      reasons: q.tierReasons?.join(", ") ?? "integrity thresholds",
+    }));
+
+  const nearTierA = characters
+    .map((c) => ({ c, q: computeQuality(c) }))
+    .filter(({ q }) => q.tier === "B" && q.dimensions.reviewCoverage >= 60)
+    .slice(0, 15)
+    .map(({ c, q }) => ({
+      name: c.name,
+      review: q.dimensions.reviewCoverage,
+      canon: q.dimensions.canonConfidence,
+    }));
+
+  const unresolvedContinuity = characters.filter((c) => !c.continuity).length;
+
+  const eventRolesNeedingReview = (events.flatMap((e) => e.characterLinks ?? []) ?? []).filter(
+    (l) => l.needsReview,
+  ).length;
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <h1 className="text-monument text-3xl">Lore review (dev only)</h1>
@@ -85,7 +118,61 @@ export default function LoreReviewPage() {
         <StatCard label="Relationships flagged" value={String(flagged.length)} />
         <StatCard label="Pack research queue" value={String(packResearchCount)} />
         <StatCard label="Profiles needing work" value={String(profileIssues.length)} />
+        <StatCard label="Story FACT gaps" value={String(unsupportedFacts)} />
+        <StatCard label="Event roles pending" value={String(eventRolesNeedingReview)} />
+        <StatCard label="Unresolved continuity" value={String(unresolvedContinuity)} />
       </div>
+
+      <h2 className="mt-12 text-xl font-medium">Canon hardening</h2>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <div className="rounded-lg border border-line bg-surface/40 p-4 text-sm">
+          <p className="text-eyebrow text-muted text-xs">SEO origin</p>
+          <p className="mt-1 font-mono text-xs">{getSiteUrl()}</p>
+          <p className="text-muted mt-2 text-xs">
+            Indexable: {isProductionIndexable() ? "yes" : "no (preview/dev)"}
+          </p>
+          <p className="text-muted mt-1 font-mono text-xs">{absoluteUrl("/champion/aatrox")}</p>
+        </div>
+        <div className="rounded-lg border border-line bg-surface/40 p-4 text-sm">
+          <p className="text-eyebrow text-muted text-xs">Story path blocks</p>
+          <ul className="text-muted mt-2 space-y-1 text-xs">
+            {Object.entries(storyValidation.blockCounts).map(([k, v]) => (
+              <li key={k}>{k}: {v}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="rounded-lg border border-line bg-surface/40 p-4 text-sm">
+          <p className="text-eyebrow text-muted text-xs">Event role breakdown</p>
+          <ul className="text-muted mt-2 space-y-1 text-xs">
+            {Object.entries(eventValidation.roleCounts)
+              .sort((a, b) => b[1] - a[1])
+              .map(([k, v]) => (
+                <li key={k}>{k}: {v}</li>
+              ))}
+          </ul>
+        </div>
+        <div className="rounded-lg border border-line bg-surface/40 p-4 text-sm">
+          <p className="text-eyebrow text-muted text-xs">Tier A integrity failures</p>
+          <ul className="text-muted mt-2 space-y-1 text-xs">
+            {tierACandidatesFailing.length === 0 ? (
+              <li>None — all explicit Tier A pass thresholds</li>
+            ) : (
+              tierACandidatesFailing.map((r) => (
+                <li key={r.name}>{r.name}: {r.reasons}</li>
+              ))
+            )}
+          </ul>
+        </div>
+      </div>
+
+      <h2 className="mt-12 text-xl font-medium">Closest to Tier A</h2>
+      <ul className="text-muted mt-4 space-y-1 text-sm">
+        {nearTierA.map((r) => (
+          <li key={r.name}>
+            {r.name} — review {r.review}%, canon {r.canon}%
+          </li>
+        ))}
+      </ul>
 
       <h2 className="mt-12 text-xl font-medium">Profile quality issues</h2>
       <table className="mt-4 w-full text-left text-sm">
