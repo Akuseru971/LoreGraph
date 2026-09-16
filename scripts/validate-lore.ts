@@ -7,6 +7,7 @@ import {
   loreEntities,
   quizQuestions,
   relationships,
+  rosterBySlug,
   sourceById,
   storyPaths,
 } from "../data";
@@ -104,6 +105,9 @@ for (const event of events) {
   }
 }
 
+const CONSERVATIVE_DISCLAIMER =
+  /LoreGraph keeps this profile conservative until additional official sources are reviewed/i;
+
 for (const character of characters) {
   try {
     ddragonChampionKey(character.slug);
@@ -113,6 +117,17 @@ for (const character of characters) {
 
   if (character.title.toLowerCase().includes("machine herald") && character.slug === "viktor") {
     fail("Viktor still uses outdated Machine Herald title");
+  }
+
+  if (CONSERVATIVE_DISCLAIMER.test(character.longDescription.join(" "))) {
+    fail(`${character.slug} biography contains developer disclaimer in public copy`);
+  }
+
+  if (character.releaseYear === 2010 && !["singed", "sion", "sivir"].includes(character.slug)) {
+    const rosterYear = rosterBySlug.get(character.slug)?.releaseYear;
+    if (rosterYear && rosterYear !== 2010) {
+      fail(`${character.slug} has stale releaseYear 2010 (roster says ${rosterYear})`);
+    }
   }
 
   const displayed = countConnections(character.id, graph);

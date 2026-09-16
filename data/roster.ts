@@ -57,7 +57,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -70,7 +70,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -96,7 +96,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2021,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -109,7 +109,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -122,7 +122,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2024,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -135,7 +135,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -148,7 +148,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -161,7 +161,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -174,7 +174,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "targon",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2019,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -187,7 +187,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -200,7 +200,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "targon",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -213,7 +213,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2024,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -226,7 +226,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -239,7 +239,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2015,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -252,7 +252,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "void",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -265,7 +265,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -278,7 +278,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -291,7 +291,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -304,7 +304,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2023,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -317,7 +317,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "piltover",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -330,7 +330,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "piltover",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -356,7 +356,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "void",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -369,7 +369,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bandle-city",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -382,7 +382,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -395,7 +395,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "targon",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -408,7 +408,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -421,7 +421,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -434,7 +434,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2015,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -447,7 +447,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -460,7 +460,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -486,7 +486,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -499,7 +499,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -512,7 +512,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -538,7 +538,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -564,7 +564,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -590,7 +590,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -603,7 +603,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2021,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -616,7 +616,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -629,7 +629,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "piltover",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -642,7 +642,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2023,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -655,7 +655,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2015,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -681,7 +681,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -694,7 +694,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -707,7 +707,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -720,7 +720,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -733,7 +733,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "piltover",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -746,7 +746,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -759,7 +759,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -772,7 +772,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -785,7 +785,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "void",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2018,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -798,7 +798,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -811,7 +811,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -824,7 +824,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -837,7 +837,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "void",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -850,7 +850,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -863,7 +863,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -876,7 +876,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -902,7 +902,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "void",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -915,7 +915,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2015,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -928,7 +928,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -967,7 +967,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -980,7 +980,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "targon",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -993,7 +993,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1006,7 +1006,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1032,7 +1032,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1045,7 +1045,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bandle-city",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1071,7 +1071,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1097,7 +1097,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1110,7 +1110,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1123,7 +1123,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2025,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1136,7 +1136,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ixtal",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2023,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1175,7 +1175,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1188,7 +1188,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2023,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1201,7 +1201,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1214,7 +1214,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1227,7 +1227,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1240,7 +1240,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ixtal",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2018,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1253,7 +1253,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ixtal",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1266,7 +1266,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1279,7 +1279,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1292,7 +1292,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1318,7 +1318,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "piltover",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1331,7 +1331,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1370,7 +1370,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2018,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1383,7 +1383,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ixtal",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2019,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1396,7 +1396,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1409,7 +1409,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1422,7 +1422,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1435,7 +1435,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1448,7 +1448,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1461,7 +1461,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1474,7 +1474,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1487,7 +1487,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1500,7 +1500,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1513,7 +1513,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1526,7 +1526,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1539,7 +1539,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1552,7 +1552,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1565,7 +1565,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2019,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1578,7 +1578,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "piltover",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1591,7 +1591,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1604,7 +1604,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1630,7 +1630,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1643,7 +1643,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1656,7 +1656,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1669,7 +1669,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1682,7 +1682,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1695,7 +1695,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2024,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1721,7 +1721,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "targon",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1747,7 +1747,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2019,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1760,7 +1760,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1773,7 +1773,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2015,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1786,7 +1786,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1799,7 +1799,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "noxus",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1812,7 +1812,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "targon",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1825,7 +1825,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bandle-city",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1838,7 +1838,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1851,7 +1851,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bandle-city",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1877,7 +1877,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1890,7 +1890,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bilgewater",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1903,7 +1903,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1916,7 +1916,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1942,7 +1942,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1955,7 +1955,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "demacia",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1968,7 +1968,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bandle-city",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1981,7 +1981,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "void",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -1994,7 +1994,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "B",
-    "releaseYear": 2010,
+    "releaseYear": 2021,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2007,7 +2007,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "piltover",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2020,7 +2020,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2021,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2033,7 +2033,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2059,7 +2059,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "freljord",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2072,7 +2072,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2085,7 +2085,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2098,7 +2098,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2111,7 +2111,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shurima",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2137,7 +2137,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2150,7 +2150,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2163,7 +2163,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "shadow-isles",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2176,7 +2176,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2025,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2189,7 +2189,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "bandle-city",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2019,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2215,7 +2215,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2228,7 +2228,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "ionia",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2241,7 +2241,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2254,7 +2254,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "zaun",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2267,7 +2267,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2280,7 +2280,7 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "targon",
     "active": true,
     "tier": "A",
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "factions": [],
     "species": undefined,
     "era": undefined
@@ -2293,13 +2293,12 @@ export const ROSTER_ENTRIES: RosterEntry[] =
     "region": "runeterra",
     "active": true,
     "tier": "C",
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "factions": [],
     "species": undefined,
     "era": undefined
   }
-]
-;
+];
 
 export const ACTIVE_ROSTER = ROSTER_ENTRIES.filter((e) => e.active);
 export const EXPECTED_ROSTER_COUNT = ACTIVE_ROSTER.length;

@@ -25,10 +25,14 @@ const biographies: Source[] = championSlugs.map((slug) => ({
   id: bioSourceId(slug),
   title: `${displayName(slug)} — Champion Biography`,
   type: "Champion Biography",
-  url: `https://universe.leagueoflegends.com/en_US/champion/${slug}/`,
+  url: `https://www.leagueoflegends.com/en-us/champions/${slug}/`,
   publisher: "Riot Games",
   publicationDate: null,
   canonStatus: "CURRENT_CANON",
+  authorityTier: "PRIMARY_OFFICIAL" as const,
+  domain: "leagueoflegends.com",
+  mediaType: "web",
+  continuity: "MAIN_RUNETERRA" as const,
 }));
 
 const publications: Source[] = [
@@ -193,11 +197,57 @@ const publications: Source[] = [
     publisher: "LoreGraph",
     publicationDate: null,
     canonStatus: "AMBIGUOUS",
+    authorityTier: "DISCOVERY_ONLY",
+  },
+  {
+    id: "source:wiki-ambessa",
+    title: "League of Legends Wiki — Ambessa",
+    type: "Wiki Universe",
+    url: "https://wiki.leagueoflegends.com/en-us/Ambessa",
+    publisher: "Riot Games Community Wiki",
+    publicationDate: null,
+    canonStatus: "CURRENT_CANON",
+    authorityTier: "OFFICIAL_COMMUNITY_REFERENCE",
+    domain: "wiki.leagueoflegends.com",
+    mediaType: "web",
+    originalSourceId: "source:bio-ambessa",
+  },
+  {
+    id: "source:wiki-yunara",
+    title: "League of Legends Wiki — Yunara",
+    type: "Wiki Universe",
+    url: "https://wiki.leagueoflegends.com/en-us/Yunara",
+    publisher: "Riot Games Community Wiki",
+    publicationDate: null,
+    canonStatus: "CURRENT_CANON",
+    authorityTier: "OFFICIAL_COMMUNITY_REFERENCE",
+    domain: "wiki.leagueoflegends.com",
+    mediaType: "web",
+    originalSourceId: "source:bio-yunara",
   },
 ];
 
-export const sources: Source[] = [...publications, ...biographies].map((s) => ({
-  ...s,
-  canonStatus: normalizeCanonStatus(s.canonStatus),
-}));
+function enrichSource(s: Source): Source {
+  const authorityTier =
+    s.authorityTier ??
+    (s.publisher === "Riot Games" || s.publisher.includes("Riot")
+      ? "PRIMARY_OFFICIAL"
+      : s.type === "Wiki Universe" || s.type === "Wiki Reference"
+        ? "OFFICIAL_COMMUNITY_REFERENCE"
+        : "OFFICIAL_PUBLISHED");
+  return {
+    ...s,
+    canonStatus: normalizeCanonStatus(s.canonStatus),
+    authorityTier,
+    domain: s.domain ?? (() => {
+      try {
+        return new URL(s.url).hostname;
+      } catch {
+        return undefined;
+      }
+    })(),
+  };
+}
+
+export const sources: Source[] = [...publications, ...biographies].map(enrichSource);
 export const sourceById = new Map(sources.map((s) => [s.id, s]));

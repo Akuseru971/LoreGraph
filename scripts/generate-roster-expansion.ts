@@ -72,10 +72,10 @@ function capitalizeTitle(raw: string): string {
     .join(" ");
 }
 
-function trimWords(text: string, maxWords: number): string {
-  const words = text.replace(/\s+/g, " ").trim().split(" ");
-  if (words.length <= maxWords) return words.join(" ");
-  return `${words.slice(0, maxWords).join(" ")}…`;
+function firstSentence(text: string): string {
+  const cleaned = text.replace(/\s+/g, " ").trim();
+  const match = cleaned.match(/^[^.!?]+[.!?]/);
+  return match ? match[0].trim() : cleaned;
 }
 
 function buildSeed(
@@ -90,14 +90,12 @@ function buildSeed(
 
   const blurb = ddragon.blurb?.trim() ?? "";
   const short = blurb
-    ? trimWords(blurb, 42)
+    ? firstSentence(blurb)
     : `${ddragon.name} is a champion whose story is tied to ${region.replace("-", " ")}.`;
 
   const longParagraph = blurb
-    ? blurb.length > 280
-      ? blurb
-      : `${blurb} LoreGraph keeps this profile conservative until additional official sources are reviewed.`
-    : `${ddragon.name} appears in Runeterra's current champion roster. This profile records what is reliably established without inventing undocumented connections.`;
+    ? blurb
+    : `${ddragon.name} appears in Runeterra's current champion roster. Further biography enrichment is pending official source review.`;
 
   const importance = tier === "A" ? 72 : tier === "B" ? 58 : 42;
   const popularity = tier === "A" ? 68 : tier === "B" ? 52 : 38;
@@ -129,11 +127,12 @@ function buildSeed(
     title: capitalizeTitle(ddragon.title.replace(/^the /i, "The ")),
     region,
     factions,
-    roles: ddragon.tags.slice(0, 3).map((t) => capitalizeTitle(t)),
+    roles: [],
+    gameplayRoles: ddragon.tags.slice(0, 3).map((t) => capitalizeTitle(t)),
     status: "Alive",
     species: entry.species ?? "Unknown",
     aliases,
-    releaseYear: entry.releaseYear ?? 2010,
+    releaseYear: entry.releaseYear ?? null,
     complexity: complexity as CharacterSeed["complexity"],
     importance,
     popularity,
@@ -141,13 +140,15 @@ function buildSeed(
     short,
     long: [longParagraph],
     tags: [region.replace("-", " "), ...ddragon.tags.slice(0, 4).map((t) => t.toLowerCase())],
-    timeline: [
-      {
-        era: entry.era ?? "Modern Runeterra",
-        title: ddragon.name,
-        description: trimWords(short, 28),
-      },
-    ],
+    timeline: blurb
+      ? [
+          {
+            era: entry.era ?? "Modern Runeterra",
+            title: "Current era",
+            description: firstSentence(blurb),
+          },
+        ]
+      : [],
   };
 }
 

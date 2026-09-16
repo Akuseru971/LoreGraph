@@ -8,21 +8,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Minotaur",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Always a mighty warrior with a fearsome reputation, Alistar seeks revenge for the death of his clan at the hands of the Noxian empire. Though he was enslaved and forced into the life of a gladiator, his unbreakable will was what kept…",
+    "short": "Always a mighty warrior with a fearsome reputation, Alistar seeks revenge for the death of his clan at the hands of the Noxian empire.",
     "long": [
-      "Always a mighty warrior with a fearsome reputation, Alistar seeks revenge for the death of his clan at the hands of the Noxian empire. Though he was enslaved and forced into the life of a gladiator, his unbreakable will was what kept him from truly... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Always a mighty warrior with a fearsome reputation, Alistar seeks revenge for the death of his clan at the hands of the Noxian empire. Though he was enslaved and forced into the life of a gladiator, his unbreakable will was what kept him from truly..."
     ],
     "tags": [
       "runeterra",
@@ -32,45 +33,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Alistar",
-        "description": "Always a mighty warrior with a fearsome reputation, Alistar seeks revenge for the death of his clan at the hands of the Noxian empire. Though he was enslaved…"
-      }
-    ]
-  },
-  {
-    "slug": "ambessa",
-    "name": "Ambessa",
-    "title": "Matriarch Of War",
-    "region": "noxus",
-    "factions": [
-      "noxus"
-    ],
-    "roles": [
-      "Fighter",
-      "Assassin"
-    ],
-    "status": "Alive",
-    "species": "Unknown",
-    "aliases": [],
-    "releaseYear": 2010,
-    "complexity": 3,
-    "importance": 72,
-    "popularity": 68,
-    "verified": false,
-    "short": "All who know the name Medarda respect and fear the family's leader, Ambessa. As a Noxian general, she embodies a deadly combination of ruthless strength and fearless resolve in battle. Her role as matriarch is no different, requiring great cunning to...",
-    "long": [
-      "All who know the name Medarda respect and fear the family's leader, Ambessa. As a Noxian general, she embodies a deadly combination of ruthless strength and fearless resolve in battle. Her role as matriarch is no different, requiring great cunning to... LoreGraph keeps this profile conservative until additional official sources are reviewed."
-    ],
-    "tags": [
-      "noxus",
-      "fighter",
-      "assassin"
-    ],
-    "timeline": [
-      {
-        "era": "Modern Runeterra",
-        "title": "Ambessa",
-        "description": "All who know the name Medarda respect and fear the family's leader, Ambessa. As a Noxian general, she embodies a deadly combination of ruthless strength and fearless resolve…"
+        "title": "Current era",
+        "description": "Always a mighty warrior with a fearsome reputation, Alistar seeks revenge for the death of his clan at the hands of the Noxian empire."
       }
     ]
   },
@@ -82,21 +46,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Legend claims that Amumu is a lonely and melancholy soul from ancient Shurima, roaming the world in search of a friend. Doomed by an ancient curse to remain alone forever, his touch is death, his affection ruin. Those who claim to have…",
+    "short": "Legend claims that Amumu is a lonely and melancholy soul from ancient Shurima, roaming the world in search of a friend.",
     "long": [
-      "Legend claims that Amumu is a lonely and melancholy soul from ancient Shurima, roaming the world in search of a friend. Doomed by an ancient curse to remain alone forever, his touch is death, his affection ruin. Those who claim to have seen him describe... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Legend claims that Amumu is a lonely and melancholy soul from ancient Shurima, roaming the world in search of a friend. Doomed by an ancient curse to remain alone forever, his touch is death, his affection ruin. Those who claim to have seen him describe..."
     ],
     "tags": [
       "shurima",
@@ -106,8 +71,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Amumu",
-        "description": "Legend claims that Amumu is a lonely and melancholy soul from ancient Shurima, roaming the world in search of a friend. Doomed by an ancient curse to remain…"
+        "title": "Current era",
+        "description": "Legend claims that Amumu is a lonely and melancholy soul from ancient Shurima, roaming the world in search of a friend."
       }
     ]
   },
@@ -119,20 +84,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Anivia is a benevolent winged spirit who endures endless cycles of life, death, and rebirth to protect the Freljord. A demigod born of unforgiving ice and bitter winds, she wields those elemental powers to thwart any who dare disturb her homeland...",
+    "short": "Anivia is a benevolent winged spirit who endures endless cycles of life, death, and rebirth to protect the Freljord.",
     "long": [
-      "Anivia is a benevolent winged spirit who endures endless cycles of life, death, and rebirth to protect the Freljord. A demigod born of unforgiving ice and bitter winds, she wields those elemental powers to thwart any who dare disturb her homeland... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Anivia is a benevolent winged spirit who endures endless cycles of life, death, and rebirth to protect the Freljord. A demigod born of unforgiving ice and bitter winds, she wields those elemental powers to thwart any who dare disturb her homeland..."
     ],
     "tags": [
       "freljord",
@@ -141,8 +107,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Anivia",
-        "description": "Anivia is a benevolent winged spirit who endures endless cycles of life, death, and rebirth to protect the Freljord. A demigod born of unforgiving ice and bitter winds,…"
+        "title": "Current era",
+        "description": "Anivia is a benevolent winged spirit who endures endless cycles of life, death, and rebirth to protect the Freljord."
       }
     ]
   },
@@ -154,21 +120,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Dangerous, yet disarmingly precocious, Annie is a child mage with immense pyromantic power. Even in the shadows of the mountains north of Noxus, she is a magical outlier. Her natural affinity for fire manifested early in life through unpredictable...",
+    "short": "Dangerous, yet disarmingly precocious, Annie is a child mage with immense pyromantic power.",
     "long": [
-      "Dangerous, yet disarmingly precocious, Annie is a child mage with immense pyromantic power. Even in the shadows of the mountains north of Noxus, she is a magical outlier. Her natural affinity for fire manifested early in life through unpredictable... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Dangerous, yet disarmingly precocious, Annie is a child mage with immense pyromantic power. Even in the shadows of the mountains north of Noxus, she is a magical outlier. Her natural affinity for fire manifested early in life through unpredictable..."
     ],
     "tags": [
       "noxus",
@@ -178,8 +145,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Annie",
-        "description": "Dangerous, yet disarmingly precocious, Annie is a child mage with immense pyromantic power. Even in the shadows of the mountains north of Noxus, she is a magical outlier.…"
+        "title": "Current era",
+        "description": "Dangerous, yet disarmingly precocious, Annie is a child mage with immense pyromantic power."
       }
     ]
   },
@@ -191,20 +158,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "aspects"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2019,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Emerging from moonlight's shadow with weapons drawn, Aphelios kills the enemies of his faith in brooding silence—speaking only through the certainty of his aim, and the firing of each gun. Though fueled by a poison that renders him mute, he is guided…",
+    "short": "Emerging from moonlight's shadow with weapons drawn, Aphelios kills the enemies of his faith in brooding silence—speaking only through the certainty of his aim, and the firing of each gun.",
     "long": [
-      "Emerging from moonlight's shadow with weapons drawn, Aphelios kills the enemies of his faith in brooding silence—speaking only through the certainty of his aim, and the firing of each gun. Though fueled by a poison that renders him mute, he is guided by... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Emerging from moonlight's shadow with weapons drawn, Aphelios kills the enemies of his faith in brooding silence—speaking only through the certainty of his aim, and the firing of each gun. Though fueled by a poison that renders him mute, he is guided by..."
     ],
     "tags": [
       "targon",
@@ -213,8 +181,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Aphelios",
-        "description": "Emerging from moonlight's shadow with weapons drawn, Aphelios kills the enemies of his faith in brooding silence—speaking only through the certainty of his aim, and the firing of…"
+        "title": "Current era",
+        "description": "Emerging from moonlight's shadow with weapons drawn, Aphelios kills the enemies of his faith in brooding silence—speaking only through the certainty of his aim, and the firing of each gun."
       }
     ]
   },
@@ -226,21 +194,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2024,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "From the moment she was born, Aurora navigated life with a unique ability to move between the spirit and material realms. Determined to learn more about the spirit realm's inhabitants, she left her home to further her research and happened upon a...",
+    "short": "From the moment she was born, Aurora navigated life with a unique ability to move between the spirit and material realms.",
     "long": [
-      "From the moment she was born, Aurora navigated life with a unique ability to move between the spirit and material realms. Determined to learn more about the spirit realm's inhabitants, she left her home to further her research and happened upon a... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "From the moment she was born, Aurora navigated life with a unique ability to move between the spirit and material realms. Determined to learn more about the spirit realm's inhabitants, she left her home to further her research and happened upon a..."
     ],
     "tags": [
       "freljord",
@@ -250,8 +219,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Aurora",
-        "description": "From the moment she was born, Aurora navigated life with a unique ability to move between the spirit and material realms. Determined to learn more about the spirit…"
+        "title": "Current era",
+        "description": "From the moment she was born, Aurora navigated life with a unique ability to move between the spirit and material realms."
       }
     ]
   },
@@ -261,21 +230,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Wandering Caretaker",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2015,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "A traveler from beyond the stars, Bard is an agent of serendipity who fights to maintain a balance where life can endure the indifference of chaos. Many Runeterrans sing songs that ponder his extraordinary nature, yet they all agree that the cosmic...",
+    "short": "A traveler from beyond the stars, Bard is an agent of serendipity who fights to maintain a balance where life can endure the indifference of chaos.",
     "long": [
-      "A traveler from beyond the stars, Bard is an agent of serendipity who fights to maintain a balance where life can endure the indifference of chaos. Many Runeterrans sing songs that ponder his extraordinary nature, yet they all agree that the cosmic... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A traveler from beyond the stars, Bard is an agent of serendipity who fights to maintain a balance where life can endure the indifference of chaos. Many Runeterrans sing songs that ponder his extraordinary nature, yet they all agree that the cosmic..."
     ],
     "tags": [
       "runeterra",
@@ -285,8 +255,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Bard",
-        "description": "A traveler from beyond the stars, Bard is an agent of serendipity who fights to maintain a balance where life can endure the indifference of chaos. Many Runeterrans…"
+        "title": "Current era",
+        "description": "A traveler from beyond the stars, Bard is an agent of serendipity who fights to maintain a balance where life can endure the indifference of chaos."
       }
     ]
   },
@@ -298,7 +268,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "void"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter"
     ],
     "status": "Alive",
@@ -307,14 +278,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "Bel'Veth",
       "Belveth"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "A nightmarish empress created from the raw material of an entire devoured city, Bel'Veth is the end of Runeterra itself... and the beginning of a monstrous reality of her own design. Driven by epochs of repurposed history, knowledge, and memories from...",
+    "short": "A nightmarish empress created from the raw material of an entire devoured city, Bel'Veth is the end of Runeterra itself.",
     "long": [
-      "A nightmarish empress created from the raw material of an entire devoured city, Bel'Veth is the end of Runeterra itself... and the beginning of a monstrous reality of her own design. Driven by epochs of repurposed history, knowledge, and memories from... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A nightmarish empress created from the raw material of an entire devoured city, Bel'Veth is the end of Runeterra itself... and the beginning of a monstrous reality of her own design. Driven by epochs of repurposed history, knowledge, and memories from..."
     ],
     "tags": [
       "void",
@@ -323,8 +294,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Bel'Veth",
-        "description": "A nightmarish empress created from the raw material of an entire devoured city, Bel'Veth is the end of Runeterra itself... and the beginning of a monstrous reality of…"
+        "title": "Current era",
+        "description": "A nightmarish empress created from the raw material of an entire devoured city, Bel'Veth is the end of Runeterra itself."
       }
     ]
   },
@@ -336,21 +307,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Blitzcrank is an enormous, near-indestructible automaton from Zaun, originally built to dispose of hazardous waste. However, he found this primary purpose too restricting, and modified his own form to better serve the fragile people of the Sump...",
+    "short": "Blitzcrank is an enormous, near-indestructible automaton from Zaun, originally built to dispose of hazardous waste.",
     "long": [
-      "Blitzcrank is an enormous, near-indestructible automaton from Zaun, originally built to dispose of hazardous waste. However, he found this primary purpose too restricting, and modified his own form to better serve the fragile people of the Sump... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Blitzcrank is an enormous, near-indestructible automaton from Zaun, originally built to dispose of hazardous waste. However, he found this primary purpose too restricting, and modified his own form to better serve the fragile people of the Sump..."
     ],
     "tags": [
       "zaun",
@@ -360,8 +332,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Blitzcrank",
-        "description": "Blitzcrank is an enormous, near-indestructible automaton from Zaun, originally built to dispose of hazardous waste. However, he found this primary purpose too restricting, and modified his own form…"
+        "title": "Current era",
+        "description": "Blitzcrank is an enormous, near-indestructible automaton from Zaun, originally built to dispose of hazardous waste."
       }
     ]
   },
@@ -371,21 +343,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Burning Vengeance",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Once a tribesman of the icy Freljord named Kegan Rodhe, the creature known as Brand is a lesson in the temptation of greater power. Seeking one of the legendary World Runes, Kegan betrayed his companions and seized it for himself—and, in an…",
+    "short": "Once a tribesman of the icy Freljord named Kegan Rodhe, the creature known as Brand is a lesson in the temptation of greater power.",
     "long": [
-      "Once a tribesman of the icy Freljord named Kegan Rodhe, the creature known as Brand is a lesson in the temptation of greater power. Seeking one of the legendary World Runes, Kegan betrayed his companions and seized it for himself—and, in an instant, the... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Once a tribesman of the icy Freljord named Kegan Rodhe, the creature known as Brand is a lesson in the temptation of greater power. Seeking one of the legendary World Runes, Kegan betrayed his companions and seized it for himself—and, in an instant, the..."
     ],
     "tags": [
       "runeterra",
@@ -395,8 +368,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Brand",
-        "description": "Once a tribesman of the icy Freljord named Kegan Rodhe, the creature known as Brand is a lesson in the temptation of greater power. Seeking one of the…"
+        "title": "Current era",
+        "description": "Once a tribesman of the icy Freljord named Kegan Rodhe, the creature known as Brand is a lesson in the temptation of greater power."
       }
     ]
   },
@@ -408,21 +381,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Blessed with massive biceps and an even bigger heart, Braum is a beloved hero of the Freljord. Every mead hall north of Frostheld toasts his legendary strength, said to have felled a forest of oaks in a single night, and punched an…",
+    "short": "Blessed with massive biceps and an even bigger heart, Braum is a beloved hero of the Freljord.",
     "long": [
-      "Blessed with massive biceps and an even bigger heart, Braum is a beloved hero of the Freljord. Every mead hall north of Frostheld toasts his legendary strength, said to have felled a forest of oaks in a single night, and punched an entire mountain into... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Blessed with massive biceps and an even bigger heart, Braum is a beloved hero of the Freljord. Every mead hall north of Frostheld toasts his legendary strength, said to have felled a forest of oaks in a single night, and punched an entire mountain into..."
     ],
     "tags": [
       "freljord",
@@ -432,8 +406,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Braum",
-        "description": "Blessed with massive biceps and an even bigger heart, Braum is a beloved hero of the Freljord. Every mead hall north of Frostheld toasts his legendary strength, said…"
+        "title": "Current era",
+        "description": "Blessed with massive biceps and an even bigger heart, Braum is a beloved hero of the Freljord."
       }
     ]
   },
@@ -445,21 +419,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2023,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A failed experiment by the Black Rose, Briar's uncontrollable bloodlust required a special pillory to focus her frenzied mind. After years of confinement, this living weapon broke free from her restraints and unleashed herself into the world. Now she's...",
+    "short": "A failed experiment by the Black Rose, Briar's uncontrollable bloodlust required a special pillory to focus her frenzied mind.",
     "long": [
-      "A failed experiment by the Black Rose, Briar's uncontrollable bloodlust required a special pillory to focus her frenzied mind. After years of confinement, this living weapon broke free from her restraints and unleashed herself into the world. Now she's... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A failed experiment by the Black Rose, Briar's uncontrollable bloodlust required a special pillory to focus her frenzied mind. After years of confinement, this living weapon broke free from her restraints and unleashed herself into the world. Now she's..."
     ],
     "tags": [
       "noxus",
@@ -469,8 +444,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Briar",
-        "description": "A failed experiment by the Black Rose, Briar's uncontrollable bloodlust required a special pillory to focus her frenzied mind. After years of confinement, this living weapon broke free…"
+        "title": "Current era",
+        "description": "A failed experiment by the Black Rose, Briar's uncontrollable bloodlust required a special pillory to focus her frenzied mind."
       }
     ]
   },
@@ -482,7 +457,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
@@ -493,9 +469,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Cassiopeia is a deadly creature bent on manipulating others to her sinister will. Youngest and most beautiful daughter of the noble Du Couteau family of Noxus, she ventured deep into the crypts beneath Shurima in search of ancient power. There, she was...",
+    "short": "Cassiopeia is a deadly creature bent on manipulating others to her sinister will.",
     "long": [
-      "Cassiopeia is a deadly creature bent on manipulating others to her sinister will. Youngest and most beautiful daughter of the noble Du Couteau family of Noxus, she ventured deep into the crypts beneath Shurima in search of ancient power. There, she was... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Cassiopeia is a deadly creature bent on manipulating others to her sinister will. Youngest and most beautiful daughter of the noble Du Couteau family of Noxus, she ventured deep into the crypts beneath Shurima in search of ancient power. There, she was..."
     ],
     "tags": [
       "noxus",
@@ -504,8 +480,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Cassiopeia",
-        "description": "Cassiopeia is a deadly creature bent on manipulating others to her sinister will. Youngest and most beautiful daughter of the noble Du Couteau family of Noxus, she ventured…"
+        "title": "Current era",
+        "description": "Cassiopeia is a deadly creature bent on manipulating others to her sinister will."
       }
     ]
   },
@@ -517,7 +493,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "void"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Mage"
     ],
@@ -527,14 +504,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "Cho'Gath",
       "Chogath"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "From the moment Cho'Gath first emerged into the harsh light of Runeterra's sun, the beast was driven by the most pure and insatiable hunger. A perfect expression of the Void's desire to consume all life, Cho'Gath's complex biology quickly converts...",
+    "short": "From the moment Cho'Gath first emerged into the harsh light of Runeterra's sun, the beast was driven by the most pure and insatiable hunger.",
     "long": [
-      "From the moment Cho'Gath first emerged into the harsh light of Runeterra's sun, the beast was driven by the most pure and insatiable hunger. A perfect expression of the Void's desire to consume all life, Cho'Gath's complex biology quickly converts... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "From the moment Cho'Gath first emerged into the harsh light of Runeterra's sun, the beast was driven by the most pure and insatiable hunger. A perfect expression of the Void's desire to consume all life, Cho'Gath's complex biology quickly converts..."
     ],
     "tags": [
       "void",
@@ -544,8 +521,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Cho'Gath",
-        "description": "From the moment Cho'Gath first emerged into the harsh light of Runeterra's sun, the beast was driven by the most pure and insatiable hunger. A perfect expression of…"
+        "title": "Current era",
+        "description": "From the moment Cho'Gath first emerged into the harsh light of Runeterra's sun, the beast was driven by the most pure and insatiable hunger."
       }
     ]
   },
@@ -557,21 +534,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "yordle"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "The yordle pilot Corki loves two things above all others: flying, and his glamorous mustache... though not necessarily in that order. After leaving Bandle City, he settled in Piltover and fell in love with the wondrous machines he found there. He...",
+    "short": "The yordle pilot Corki loves two things above all others: flying, and his glamorous mustache.",
     "long": [
-      "The yordle pilot Corki loves two things above all others: flying, and his glamorous mustache... though not necessarily in that order. After leaving Bandle City, he settled in Piltover and fell in love with the wondrous machines he found there. He... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The yordle pilot Corki loves two things above all others: flying, and his glamorous mustache... though not necessarily in that order. After leaving Bandle City, he settled in Piltover and fell in love with the wondrous machines he found there. He..."
     ],
     "tags": [
       "bandle city",
@@ -581,8 +559,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Corki",
-        "description": "The yordle pilot Corki loves two things above all others: flying, and his glamorous mustache... though not necessarily in that order. After leaving Bandle City, he settled in…"
+        "title": "Current era",
+        "description": "The yordle pilot Corki loves two things above all others: flying, and his glamorous mustache."
       }
     ]
   },
@@ -594,7 +572,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Fighter"
     ],
@@ -604,14 +583,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "Dr. Mundo",
       "Mundo"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Utterly mad, tragically homicidal, and horrifyingly purple, Dr. Mundo is what keeps many of Zaun's citizens indoors on particularly dark nights. Now a self-proclaimed physician, he was once a patient of Zaun's most infamous asylum. After \"curing\" the...",
+    "short": "Utterly mad, tragically homicidal, and horrifyingly purple, Dr.",
     "long": [
-      "Utterly mad, tragically homicidal, and horrifyingly purple, Dr. Mundo is what keeps many of Zaun's citizens indoors on particularly dark nights. Now a self-proclaimed physician, he was once a patient of Zaun's most infamous asylum. After \"curing\" the... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Utterly mad, tragically homicidal, and horrifyingly purple, Dr. Mundo is what keeps many of Zaun's citizens indoors on particularly dark nights. Now a self-proclaimed physician, he was once a patient of Zaun's most infamous asylum. After \"curing\" the..."
     ],
     "tags": [
       "zaun",
@@ -621,8 +600,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Dr. Mundo",
-        "description": "Utterly mad, tragically homicidal, and horrifyingly purple, Dr. Mundo is what keeps many of Zaun's citizens indoors on particularly dark nights. Now a self-proclaimed physician, he was once…"
+        "title": "Current era",
+        "description": "Utterly mad, tragically homicidal, and horrifyingly purple, Dr."
       }
     ]
   },
@@ -634,21 +613,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shadow-isles"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Elise is a deadly predator who dwells in a shuttered, lightless palace, deep within the oldest city of Noxus. Once mortal, she was the mistress of a powerful house, but the bite of a vile demigod transformed her into something beautiful, yet…",
+    "short": "Elise is a deadly predator who dwells in a shuttered, lightless palace, deep within the oldest city of Noxus.",
     "long": [
-      "Elise is a deadly predator who dwells in a shuttered, lightless palace, deep within the oldest city of Noxus. Once mortal, she was the mistress of a powerful house, but the bite of a vile demigod transformed her into something beautiful, yet utterly... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Elise is a deadly predator who dwells in a shuttered, lightless palace, deep within the oldest city of Noxus. Once mortal, she was the mistress of a powerful house, but the bite of a vile demigod transformed her into something beautiful, yet utterly..."
     ],
     "tags": [
       "shadow isles",
@@ -658,8 +638,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Elise",
-        "description": "Elise is a deadly predator who dwells in a shuttered, lightless palace, deep within the oldest city of Noxus. Once mortal, she was the mistress of a powerful…"
+        "title": "Current era",
+        "description": "Elise is a deadly predator who dwells in a shuttered, lightless palace, deep within the oldest city of Noxus."
       }
     ]
   },
@@ -669,21 +649,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "Agony's Embrace",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Within the dark seams of Runeterra, the demon Evelynn searches for her next victim. She lures in prey with the voluptuous façade of a human female, but once a person succumbs to her charms, Evelynn's true form is unleashed. She then subjects…",
+    "short": "Within the dark seams of Runeterra, the demon Evelynn searches for her next victim.",
     "long": [
-      "Within the dark seams of Runeterra, the demon Evelynn searches for her next victim. She lures in prey with the voluptuous façade of a human female, but once a person succumbs to her charms, Evelynn's true form is unleashed. She then subjects her victim... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Within the dark seams of Runeterra, the demon Evelynn searches for her next victim. She lures in prey with the voluptuous façade of a human female, but once a person succumbs to her charms, Evelynn's true form is unleashed. She then subjects her victim..."
     ],
     "tags": [
       "runeterra",
@@ -693,8 +674,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Evelynn",
-        "description": "Within the dark seams of Runeterra, the demon Evelynn searches for her next victim. She lures in prey with the voluptuous façade of a human female, but once…"
+        "title": "Current era",
+        "description": "Within the dark seams of Runeterra, the demon Evelynn searches for her next victim."
       }
     ]
   },
@@ -706,7 +687,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "piltover"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Mage"
     ],
@@ -718,9 +700,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "A dashing adventurer, unknowingly gifted in the magical arts, Ezreal raids long-lost catacombs, tangles with ancient curses, and overcomes seemingly impossible odds with ease. His courage and bravado knowing no bounds, he prefers to improvise his way...",
+    "short": "A dashing adventurer, unknowingly gifted in the magical arts, Ezreal raids long-lost catacombs, tangles with ancient curses, and overcomes seemingly impossible odds with ease.",
     "long": [
-      "A dashing adventurer, unknowingly gifted in the magical arts, Ezreal raids long-lost catacombs, tangles with ancient curses, and overcomes seemingly impossible odds with ease. His courage and bravado knowing no bounds, he prefers to improvise his way... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A dashing adventurer, unknowingly gifted in the magical arts, Ezreal raids long-lost catacombs, tangles with ancient curses, and overcomes seemingly impossible odds with ease. His courage and bravado knowing no bounds, he prefers to improvise his way..."
     ],
     "tags": [
       "piltover",
@@ -730,8 +712,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Ezreal",
-        "description": "A dashing adventurer, unknowingly gifted in the magical arts, Ezreal raids long-lost catacombs, tangles with ancient curses, and overcomes seemingly impossible odds with ease. His courage and bravado…"
+        "title": "Current era",
+        "description": "A dashing adventurer, unknowingly gifted in the magical arts, Ezreal raids long-lost catacombs, tangles with ancient curses, and overcomes seemingly impossible odds with ease."
       }
     ]
   },
@@ -741,21 +723,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Ancient Fear",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Something has awoken in Runeterra. Something ancient. Something terrible. The ageless horror known as Fiddlesticks stalks the edges of mortal society, drawn to areas thick with paranoia where it feeds upon terrorized victims. Wielding a jagged scythe...",
+    "short": "Something has awoken in Runeterra.",
     "long": [
-      "Something has awoken in Runeterra. Something ancient. Something terrible. The ageless horror known as Fiddlesticks stalks the edges of mortal society, drawn to areas thick with paranoia where it feeds upon terrorized victims. Wielding a jagged scythe... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Something has awoken in Runeterra. Something ancient. Something terrible. The ageless horror known as Fiddlesticks stalks the edges of mortal society, drawn to areas thick with paranoia where it feeds upon terrorized victims. Wielding a jagged scythe..."
     ],
     "tags": [
       "runeterra",
@@ -765,8 +748,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Fiddlesticks",
-        "description": "Something has awoken in Runeterra. Something ancient. Something terrible. The ageless horror known as Fiddlesticks stalks the edges of mortal society, drawn to areas thick with paranoia where…"
+        "title": "Current era",
+        "description": "Something has awoken in Runeterra."
       }
     ]
   },
@@ -778,21 +761,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "The most feared duelist in all Valoran, Fiora is as renowned for her brusque manner and cunning mind as she is for the speed of her bluesteel rapier. Born to House Laurent in the kingdom of Demacia, Fiora took control of the…",
+    "short": "The most feared duelist in all Valoran, Fiora is as renowned for her brusque manner and cunning mind as she is for the speed of her bluesteel rapier.",
     "long": [
-      "The most feared duelist in all Valoran, Fiora is as renowned for her brusque manner and cunning mind as she is for the speed of her bluesteel rapier. Born to House Laurent in the kingdom of Demacia, Fiora took control of the family from her father in... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The most feared duelist in all Valoran, Fiora is as renowned for her brusque manner and cunning mind as she is for the speed of her bluesteel rapier. Born to House Laurent in the kingdom of Demacia, Fiora took control of the family from her father in..."
     ],
     "tags": [
       "demacia",
@@ -802,8 +786,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Fiora",
-        "description": "The most feared duelist in all Valoran, Fiora is as renowned for her brusque manner and cunning mind as she is for the speed of her bluesteel rapier.…"
+        "title": "Current era",
+        "description": "The most feared duelist in all Valoran, Fiora is as renowned for her brusque manner and cunning mind as she is for the speed of her bluesteel rapier."
       }
     ]
   },
@@ -815,21 +799,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin",
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Fizz is an amphibious yordle, who dwells among the reefs surrounding Bilgewater. He often retrieves and returns the tithes cast into the sea by superstitious captains, but even the saltiest of sailors know better than to cross him—for many are the tales...",
+    "short": "Fizz is an amphibious yordle, who dwells among the reefs surrounding Bilgewater.",
     "long": [
-      "Fizz is an amphibious yordle, who dwells among the reefs surrounding Bilgewater. He often retrieves and returns the tithes cast into the sea by superstitious captains, but even the saltiest of sailors know better than to cross him—for many are the tales... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Fizz is an amphibious yordle, who dwells among the reefs surrounding Bilgewater. He often retrieves and returns the tithes cast into the sea by superstitious captains, but even the saltiest of sailors know better than to cross him—for many are the tales..."
     ],
     "tags": [
       "bilgewater",
@@ -839,8 +824,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Fizz",
-        "description": "Fizz is an amphibious yordle, who dwells among the reefs surrounding Bilgewater. He often retrieves and returns the tithes cast into the sea by superstitious captains, but even…"
+        "title": "Current era",
+        "description": "Fizz is an amphibious yordle, who dwells among the reefs surrounding Bilgewater."
       }
     ]
   },
@@ -852,7 +837,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Mage"
     ],
@@ -864,9 +850,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Outside the gleaming city of Demacia, the stone colossus Galio keeps vigilant watch. Built as a bulwark against enemy mages, he often stands motionless for decades until the presence of powerful magic stirs him to life. Once activated, Galio makes the...",
+    "short": "Outside the gleaming city of Demacia, the stone colossus Galio keeps vigilant watch.",
     "long": [
-      "Outside the gleaming city of Demacia, the stone colossus Galio keeps vigilant watch. Built as a bulwark against enemy mages, he often stands motionless for decades until the presence of powerful magic stirs him to life. Once activated, Galio makes the... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Outside the gleaming city of Demacia, the stone colossus Galio keeps vigilant watch. Built as a bulwark against enemy mages, he often stands motionless for decades until the presence of powerful magic stirs him to life. Once activated, Galio makes the..."
     ],
     "tags": [
       "demacia",
@@ -876,8 +862,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Galio",
-        "description": "Outside the gleaming city of Demacia, the stone colossus Galio keeps vigilant watch. Built as a bulwark against enemy mages, he often stands motionless for decades until the…"
+        "title": "Current era",
+        "description": "Outside the gleaming city of Demacia, the stone colossus Galio keeps vigilant watch."
       }
     ]
   },
@@ -889,20 +875,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "As unpredictable as he is brutal, the dethroned reaver king Gangplank is feared far and wide. Once, he ruled the port city of Bilgewater, and while his reign is over, there are those who believe this has only made him more dangerous.…",
+    "short": "As unpredictable as he is brutal, the dethroned reaver king Gangplank is feared far and wide.",
     "long": [
-      "As unpredictable as he is brutal, the dethroned reaver king Gangplank is feared far and wide. Once, he ruled the port city of Bilgewater, and while his reign is over, there are those who believe this has only made him more dangerous. Gangplank would see... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "As unpredictable as he is brutal, the dethroned reaver king Gangplank is feared far and wide. Once, he ruled the port city of Bilgewater, and while his reign is over, there are those who believe this has only made him more dangerous. Gangplank would see..."
     ],
     "tags": [
       "bilgewater",
@@ -911,8 +898,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Gangplank",
-        "description": "As unpredictable as he is brutal, the dethroned reaver king Gangplank is feared far and wide. Once, he ruled the port city of Bilgewater, and while his reign…"
+        "title": "Current era",
+        "description": "As unpredictable as he is brutal, the dethroned reaver king Gangplank is feared far and wide."
       }
     ]
   },
@@ -924,21 +911,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Gnar is a primeval yordle whose playful antics can erupt into a toddler's outrage in an instant, transforming him into a massive beast bent on destruction. Frozen in True Ice for millennia, the curious creature broke free and now hops about a…",
+    "short": "Gnar is a primeval yordle whose playful antics can erupt into a toddler's outrage in an instant, transforming him into a massive beast bent on destruction.",
     "long": [
-      "Gnar is a primeval yordle whose playful antics can erupt into a toddler's outrage in an instant, transforming him into a massive beast bent on destruction. Frozen in True Ice for millennia, the curious creature broke free and now hops about a changed... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Gnar is a primeval yordle whose playful antics can erupt into a toddler's outrage in an instant, transforming him into a massive beast bent on destruction. Frozen in True Ice for millennia, the curious creature broke free and now hops about a changed..."
     ],
     "tags": [
       "freljord",
@@ -948,8 +936,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Gnar",
-        "description": "Gnar is a primeval yordle whose playful antics can erupt into a toddler's outrage in an instant, transforming him into a massive beast bent on destruction. Frozen in…"
+        "title": "Current era",
+        "description": "Gnar is a primeval yordle whose playful antics can erupt into a toddler's outrage in an instant, transforming him into a massive beast bent on destruction."
       }
     ]
   },
@@ -961,7 +949,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Mage"
     ],
@@ -973,9 +962,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Equal parts jolly and imposing, Gragas is a massive, rowdy brewmaster who's always on the lookout for new ways to raise everyone's spirits. Hailing from parts unknown, he searches for ingredients among the unblemished wastes of the Freljord to help him...",
+    "short": "Equal parts jolly and imposing, Gragas is a massive, rowdy brewmaster who's always on the lookout for new ways to raise everyone's spirits.",
     "long": [
-      "Equal parts jolly and imposing, Gragas is a massive, rowdy brewmaster who's always on the lookout for new ways to raise everyone's spirits. Hailing from parts unknown, he searches for ingredients among the unblemished wastes of the Freljord to help him... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Equal parts jolly and imposing, Gragas is a massive, rowdy brewmaster who's always on the lookout for new ways to raise everyone's spirits. Hailing from parts unknown, he searches for ingredients among the unblemished wastes of the Freljord to help him..."
     ],
     "tags": [
       "freljord",
@@ -985,8 +974,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Gragas",
-        "description": "Equal parts jolly and imposing, Gragas is a massive, rowdy brewmaster who's always on the lookout for new ways to raise everyone's spirits. Hailing from parts unknown, he…"
+        "title": "Current era",
+        "description": "Equal parts jolly and imposing, Gragas is a massive, rowdy brewmaster who's always on the lookout for new ways to raise everyone's spirits."
       }
     ]
   },
@@ -998,20 +987,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Malcolm Graves is a renowned mercenary, gambler, and thief—a wanted man in every city and empire he has visited. Even though he has an explosive temper, he possesses a strict sense of criminal honor, often enforced at the business end of his...",
+    "short": "Malcolm Graves is a renowned mercenary, gambler, and thief—a wanted man in every city and empire he has visited.",
     "long": [
-      "Malcolm Graves is a renowned mercenary, gambler, and thief—a wanted man in every city and empire he has visited. Even though he has an explosive temper, he possesses a strict sense of criminal honor, often enforced at the business end of his... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Malcolm Graves is a renowned mercenary, gambler, and thief—a wanted man in every city and empire he has visited. Even though he has an explosive temper, he possesses a strict sense of criminal honor, often enforced at the business end of his..."
     ],
     "tags": [
       "bilgewater",
@@ -1020,8 +1010,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Graves",
-        "description": "Malcolm Graves is a renowned mercenary, gambler, and thief—a wanted man in every city and empire he has visited. Even though he has an explosive temper, he possesses…"
+        "title": "Current era",
+        "description": "Malcolm Graves is a renowned mercenary, gambler, and thief—a wanted man in every city and empire he has visited."
       }
     ]
   },
@@ -1033,20 +1023,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shadow-isles"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2021,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A former doll transformed and brought to life by magic, Gwen wields the very tools that once created her. She carries the weight of her maker's love with every step, taking nothing for granted. At her command is the Hallowed Mist, an…",
+    "short": "A former doll transformed and brought to life by magic, Gwen wields the very tools that once created her.",
     "long": [
-      "A former doll transformed and brought to life by magic, Gwen wields the very tools that once created her. She carries the weight of her maker's love with every step, taking nothing for granted. At her command is the Hallowed Mist, an ancient and... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A former doll transformed and brought to life by magic, Gwen wields the very tools that once created her. She carries the weight of her maker's love with every step, taking nothing for granted. At her command is the Hallowed Mist, an ancient and..."
     ],
     "tags": [
       "shadow isles",
@@ -1055,8 +1046,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Gwen",
-        "description": "A former doll transformed and brought to life by magic, Gwen wields the very tools that once created her. She carries the weight of her maker's love with…"
+        "title": "Current era",
+        "description": "A former doll transformed and brought to life by magic, Gwen wields the very tools that once created her."
       }
     ]
   },
@@ -1068,21 +1059,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shadow-isles"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Hecarim is a spectral fusion of man and beast, cursed to ride down the souls of the living for all eternity. When the Blessed Isles fell into shadow, this proud knight was obliterated by the destructive energies of the Ruination, along with…",
+    "short": "Hecarim is a spectral fusion of man and beast, cursed to ride down the souls of the living for all eternity.",
     "long": [
-      "Hecarim is a spectral fusion of man and beast, cursed to ride down the souls of the living for all eternity. When the Blessed Isles fell into shadow, this proud knight was obliterated by the destructive energies of the Ruination, along with all his... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Hecarim is a spectral fusion of man and beast, cursed to ride down the souls of the living for all eternity. When the Blessed Isles fell into shadow, this proud knight was obliterated by the destructive energies of the Ruination, along with all his..."
     ],
     "tags": [
       "shadow isles",
@@ -1092,8 +1084,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Hecarim",
-        "description": "Hecarim is a spectral fusion of man and beast, cursed to ride down the souls of the living for all eternity. When the Blessed Isles fell into shadow,…"
+        "title": "Current era",
+        "description": "Hecarim is a spectral fusion of man and beast, cursed to ride down the souls of the living for all eternity."
       }
     ]
   },
@@ -1105,21 +1097,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "piltover"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "The eccentric Professor Cecil B. Heimerdinger is one of the most innovative and esteemed inventors the world has ever known. As the longest serving member of the Council of Piltover, he saw the best and the worst of the city's unending desire…",
+    "short": "The eccentric Professor Cecil B.",
     "long": [
-      "The eccentric Professor Cecil B. Heimerdinger is one of the most innovative and esteemed inventors the world has ever known. As the longest serving member of the Council of Piltover, he saw the best and the worst of the city's unending desire for... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The eccentric Professor Cecil B. Heimerdinger is one of the most innovative and esteemed inventors the world has ever known. As the longest serving member of the Council of Piltover, he saw the best and the worst of the city's unending desire for..."
     ],
     "tags": [
       "piltover",
@@ -1129,8 +1122,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Heimerdinger",
-        "description": "The eccentric Professor Cecil B. Heimerdinger is one of the most innovative and esteemed inventors the world has ever known. As the longest serving member of the Council…"
+        "title": "Current era",
+        "description": "The eccentric Professor Cecil B."
       }
     ]
   },
@@ -1142,21 +1135,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2023,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Hwei is a brooding painter who creates brilliant art in order to confront Ionia's criminals and comfort their victims. Beneath his melancholy roils a torn, emotional mind—haunted by both the vibrant visions of his imagination and the gruesome memories...",
+    "short": "Hwei is a brooding painter who creates brilliant art in order to confront Ionia's criminals and comfort their victims.",
     "long": [
-      "Hwei is a brooding painter who creates brilliant art in order to confront Ionia's criminals and comfort their victims. Beneath his melancholy roils a torn, emotional mind—haunted by both the vibrant visions of his imagination and the gruesome memories... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Hwei is a brooding painter who creates brilliant art in order to confront Ionia's criminals and comfort their victims. Beneath his melancholy roils a torn, emotional mind—haunted by both the vibrant visions of his imagination and the gruesome memories..."
     ],
     "tags": [
       "ionia",
@@ -1166,8 +1160,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Hwei",
-        "description": "Hwei is a brooding painter who creates brilliant art in order to confront Ionia's criminals and comfort their victims. Beneath his melancholy roils a torn, emotional mind—haunted by…"
+        "title": "Current era",
+        "description": "Hwei is a brooding painter who creates brilliant art in order to confront Ionia's criminals and comfort their victims."
       }
     ]
   },
@@ -1179,21 +1173,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2015,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Illaoi's powerful physique is dwarfed only by her indomitable faith. As the prophet of the Great Kraken, she uses a huge, golden idol to rip her foes' spirits from their bodies and shatter their perception of reality. All who challenge the “Truth…",
+    "short": "Illaoi's powerful physique is dwarfed only by her indomitable faith.",
     "long": [
-      "Illaoi's powerful physique is dwarfed only by her indomitable faith. As the prophet of the Great Kraken, she uses a huge, golden idol to rip her foes' spirits from their bodies and shatter their perception of reality. All who challenge the “Truth Bearer... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Illaoi's powerful physique is dwarfed only by her indomitable faith. As the prophet of the Great Kraken, she uses a huge, golden idol to rip her foes' spirits from their bodies and shatter their perception of reality. All who challenge the “Truth Bearer..."
     ],
     "tags": [
       "bilgewater",
@@ -1203,8 +1198,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Illaoi",
-        "description": "Illaoi's powerful physique is dwarfed only by her indomitable faith. As the prophet of the Great Kraken, she uses a huge, golden idol to rip her foes' spirits…"
+        "title": "Current era",
+        "description": "Illaoi's powerful physique is dwarfed only by her indomitable faith."
       }
     ]
   },
@@ -1216,21 +1211,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Ivern Bramblefoot, known to many as the Green Father, is a peculiar half man, half tree who roams Runeterra's forests, cultivating life everywhere he goes. He knows the secrets of the natural world, and holds deep friendships with all things that grow...",
+    "short": "Ivern Bramblefoot, known to many as the Green Father, is a peculiar half man, half tree who roams Runeterra's forests, cultivating life everywhere he goes.",
     "long": [
-      "Ivern Bramblefoot, known to many as the Green Father, is a peculiar half man, half tree who roams Runeterra's forests, cultivating life everywhere he goes. He knows the secrets of the natural world, and holds deep friendships with all things that grow... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Ivern Bramblefoot, known to many as the Green Father, is a peculiar half man, half tree who roams Runeterra's forests, cultivating life everywhere he goes. He knows the secrets of the natural world, and holds deep friendships with all things that grow..."
     ],
     "tags": [
       "freljord",
@@ -1240,8 +1236,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Ivern",
-        "description": "Ivern Bramblefoot, known to many as the Green Father, is a peculiar half man, half tree who roams Runeterra's forests, cultivating life everywhere he goes. He knows the…"
+        "title": "Current era",
+        "description": "Ivern Bramblefoot, known to many as the Green Father, is a peculiar half man, half tree who roams Runeterra's forests, cultivating life everywhere he goes."
       }
     ]
   },
@@ -1253,21 +1249,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Armed with the power of Runeterra's gales, Janna is a mysterious, elemental wind spirit who protects the dispossessed of Zaun. Some believe she was brought into existence by the pleas of Runeterra's sailors who prayed for fair winds as they navigated...",
+    "short": "Armed with the power of Runeterra's gales, Janna is a mysterious, elemental wind spirit who protects the dispossessed of Zaun.",
     "long": [
-      "Armed with the power of Runeterra's gales, Janna is a mysterious, elemental wind spirit who protects the dispossessed of Zaun. Some believe she was brought into existence by the pleas of Runeterra's sailors who prayed for fair winds as they navigated... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Armed with the power of Runeterra's gales, Janna is a mysterious, elemental wind spirit who protects the dispossessed of Zaun. Some believe she was brought into existence by the pleas of Runeterra's sailors who prayed for fair winds as they navigated..."
     ],
     "tags": [
       "zaun",
@@ -1277,8 +1274,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Janna",
-        "description": "Armed with the power of Runeterra's gales, Janna is a mysterious, elemental wind spirit who protects the dispossessed of Zaun. Some believe she was brought into existence by…"
+        "title": "Current era",
+        "description": "Armed with the power of Runeterra's gales, Janna is a mysterious, elemental wind spirit who protects the dispossessed of Zaun."
       }
     ]
   },
@@ -1288,20 +1285,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "Grandmaster At Arms",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Unmatched in both his skill with unique armaments and his biting sarcasm, Jax is the last known weapons master of Icathia. After his homeland was laid low by its own hubris in unleashing the Void, Jax and his kind vowed to protect…",
+    "short": "Unmatched in both his skill with unique armaments and his biting sarcasm, Jax is the last known weapons master of Icathia.",
     "long": [
-      "Unmatched in both his skill with unique armaments and his biting sarcasm, Jax is the last known weapons master of Icathia. After his homeland was laid low by its own hubris in unleashing the Void, Jax and his kind vowed to protect what little remained... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Unmatched in both his skill with unique armaments and his biting sarcasm, Jax is the last known weapons master of Icathia. After his homeland was laid low by its own hubris in unleashing the Void, Jax and his kind vowed to protect what little remained..."
     ],
     "tags": [
       "runeterra",
@@ -1310,8 +1308,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Jax",
-        "description": "Unmatched in both his skill with unique armaments and his biting sarcasm, Jax is the last known weapons master of Icathia. After his homeland was laid low by…"
+        "title": "Current era",
+        "description": "Unmatched in both his skill with unique armaments and his biting sarcasm, Jax is the last known weapons master of Icathia."
       }
     ]
   },
@@ -1323,21 +1321,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "piltover"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Marksman"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Jayce Talis is a brilliant inventor who, along with his friend Viktor, made the first great discoveries in the field of hextech. Celebrated across Piltover, he tries to live up to his reputation as \"the Man of Progress,\" but often struggles with…",
+    "short": "Jayce Talis is a brilliant inventor who, along with his friend Viktor, made the first great discoveries in the field of hextech.",
     "long": [
-      "Jayce Talis is a brilliant inventor who, along with his friend Viktor, made the first great discoveries in the field of hextech. Celebrated across Piltover, he tries to live up to his reputation as \"the Man of Progress,\" but often struggles with the... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Jayce Talis is a brilliant inventor who, along with his friend Viktor, made the first great discoveries in the field of hextech. Celebrated across Piltover, he tries to live up to his reputation as \"the Man of Progress,\" but often struggles with the..."
     ],
     "tags": [
       "piltover",
@@ -1347,8 +1346,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Jayce",
-        "description": "Jayce Talis is a brilliant inventor who, along with his friend Viktor, made the first great discoveries in the field of hextech. Celebrated across Piltover, he tries to…"
+        "title": "Current era",
+        "description": "Jayce Talis is a brilliant inventor who, along with his friend Viktor, made the first great discoveries in the field of hextech."
       }
     ]
   },
@@ -1360,7 +1359,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Fighter"
     ],
@@ -1370,14 +1370,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "K'Sante",
       "KSante"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Defiant and courageous, K'Sante battles colossal beasts and ruthless Ascended to protect his home of Nazumah, a coveted oasis amid the sands of Shurima. But after a falling-out with his former partner, K'Sante realizes that in order to become a warrior...",
+    "short": "Defiant and courageous, K'Sante battles colossal beasts and ruthless Ascended to protect his home of Nazumah, a coveted oasis amid the sands of Shurima.",
     "long": [
-      "Defiant and courageous, K'Sante battles colossal beasts and ruthless Ascended to protect his home of Nazumah, a coveted oasis amid the sands of Shurima. But after a falling-out with his former partner, K'Sante realizes that in order to become a warrior... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Defiant and courageous, K'Sante battles colossal beasts and ruthless Ascended to protect his home of Nazumah, a coveted oasis amid the sands of Shurima. But after a falling-out with his former partner, K'Sante realizes that in order to become a warrior..."
     ],
     "tags": [
       "shurima",
@@ -1387,8 +1387,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "K'Sante",
-        "description": "Defiant and courageous, K'Sante battles colossal beasts and ruthless Ascended to protect his home of Nazumah, a coveted oasis amid the sands of Shurima. But after a falling-out…"
+        "title": "Current era",
+        "description": "Defiant and courageous, K'Sante battles colossal beasts and ruthless Ascended to protect his home of Nazumah, a coveted oasis amid the sands of Shurima."
       }
     ]
   },
@@ -1400,20 +1400,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shadow-isles"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "The harbinger of oblivion, Karthus is an undying spirit whose haunting songs are a prelude to the horror of his nightmarish appearance. The living fear the eternity of undeath, but Karthus sees only beauty and purity in its embrace, a perfect union…",
+    "short": "The harbinger of oblivion, Karthus is an undying spirit whose haunting songs are a prelude to the horror of his nightmarish appearance.",
     "long": [
-      "The harbinger of oblivion, Karthus is an undying spirit whose haunting songs are a prelude to the horror of his nightmarish appearance. The living fear the eternity of undeath, but Karthus sees only beauty and purity in its embrace, a perfect union of... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The harbinger of oblivion, Karthus is an undying spirit whose haunting songs are a prelude to the horror of his nightmarish appearance. The living fear the eternity of undeath, but Karthus sees only beauty and purity in its embrace, a perfect union of..."
     ],
     "tags": [
       "shadow isles",
@@ -1422,8 +1423,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Karthus",
-        "description": "The harbinger of oblivion, Karthus is an undying spirit whose haunting songs are a prelude to the horror of his nightmarish appearance. The living fear the eternity of…"
+        "title": "Current era",
+        "description": "The harbinger of oblivion, Karthus is an undying spirit whose haunting songs are a prelude to the horror of his nightmarish appearance."
       }
     ]
   },
@@ -1435,21 +1436,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "void"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Cutting a burning swath through the darkest places of the world, Kassadin knows his days are numbered. A widely traveled Shuriman guide and adventurer, he had chosen to raise a family among the peaceful southern tribes—until the day his village was...",
+    "short": "Cutting a burning swath through the darkest places of the world, Kassadin knows his days are numbered.",
     "long": [
-      "Cutting a burning swath through the darkest places of the world, Kassadin knows his days are numbered. A widely traveled Shuriman guide and adventurer, he had chosen to raise a family among the peaceful southern tribes—until the day his village was... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Cutting a burning swath through the darkest places of the world, Kassadin knows his days are numbered. A widely traveled Shuriman guide and adventurer, he had chosen to raise a family among the peaceful southern tribes—until the day his village was..."
     ],
     "tags": [
       "void",
@@ -1459,8 +1461,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Kassadin",
-        "description": "Cutting a burning swath through the darkest places of the world, Kassadin knows his days are numbered. A widely traveled Shuriman guide and adventurer, he had chosen to…"
+        "title": "Current era",
+        "description": "Cutting a burning swath through the darkest places of the world, Kassadin knows his days are numbered."
       }
     ]
   },
@@ -1472,21 +1474,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A peerless practitioner of lethal shadow magic, Shieda Kayn battles to achieve his true destiny—to one day lead the Order of Shadow into a new era of Ionian supremacy. He wields the sentient darkin weapon Rhaast, undeterred by its creeping corruption of...",
+    "short": "A peerless practitioner of lethal shadow magic, Shieda Kayn battles to achieve his true destiny—to one day lead the Order of Shadow into a new era of Ionian supremacy.",
     "long": [
-      "A peerless practitioner of lethal shadow magic, Shieda Kayn battles to achieve his true destiny—to one day lead the Order of Shadow into a new era of Ionian supremacy. He wields the sentient darkin weapon Rhaast, undeterred by its creeping corruption of... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A peerless practitioner of lethal shadow magic, Shieda Kayn battles to achieve his true destiny—to one day lead the Order of Shadow into a new era of Ionian supremacy. He wields the sentient darkin weapon Rhaast, undeterred by its creeping corruption of..."
     ],
     "tags": [
       "ionia",
@@ -1496,8 +1499,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Kayn",
-        "description": "A peerless practitioner of lethal shadow magic, Shieda Kayn battles to achieve his true destiny—to one day lead the Order of Shadow into a new era of Ionian…"
+        "title": "Current era",
+        "description": "A peerless practitioner of lethal shadow magic, Shieda Kayn battles to achieve his true destiny—to one day lead the Order of Shadow into a new era of Ionian supremacy."
       }
     ]
   },
@@ -1509,7 +1512,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
@@ -1520,9 +1524,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "More than just the lightning-quick enforcer of Ionian balance, Kennen is the only yordle member of the Kinkou. Despite his small, furry stature, he is eager to take on any threat with a whirling storm of shuriken and boundless enthusiasm. Alongside his...",
+    "short": "More than just the lightning-quick enforcer of Ionian balance, Kennen is the only yordle member of the Kinkou.",
     "long": [
-      "More than just the lightning-quick enforcer of Ionian balance, Kennen is the only yordle member of the Kinkou. Despite his small, furry stature, he is eager to take on any threat with a whirling storm of shuriken and boundless enthusiasm. Alongside his... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "More than just the lightning-quick enforcer of Ionian balance, Kennen is the only yordle member of the Kinkou. Despite his small, furry stature, he is eager to take on any threat with a whirling storm of shuriken and boundless enthusiasm. Alongside his..."
     ],
     "tags": [
       "ionia",
@@ -1531,8 +1535,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Kennen",
-        "description": "More than just the lightning-quick enforcer of Ionian balance, Kennen is the only yordle member of the Kinkou. Despite his small, furry stature, he is eager to take…"
+        "title": "Current era",
+        "description": "More than just the lightning-quick enforcer of Ionian balance, Kennen is the only yordle member of the Kinkou."
       }
     ]
   },
@@ -1544,7 +1548,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "void"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin"
     ],
     "status": "Alive",
@@ -1553,14 +1558,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "Kha'Zix",
       "Khazix"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "The Void grows, and the Void adapts—in none of its myriad spawn are these truths more apparent than Kha'Zix. Evolution drives the core of this mutating horror, born to survive and to slay the strong. Where it struggles to do so, it…",
+    "short": "The Void grows, and the Void adapts—in none of its myriad spawn are these truths more apparent than Kha'Zix.",
     "long": [
-      "The Void grows, and the Void adapts—in none of its myriad spawn are these truths more apparent than Kha'Zix. Evolution drives the core of this mutating horror, born to survive and to slay the strong. Where it struggles to do so, it grows new, more... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The Void grows, and the Void adapts—in none of its myriad spawn are these truths more apparent than Kha'Zix. Evolution drives the core of this mutating horror, born to survive and to slay the strong. Where it struggles to do so, it grows new, more..."
     ],
     "tags": [
       "void",
@@ -1569,8 +1574,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Kha'Zix",
-        "description": "The Void grows, and the Void adapts—in none of its myriad spawn are these truths more apparent than Kha'Zix. Evolution drives the core of this mutating horror, born…"
+        "title": "Current era",
+        "description": "The Void grows, and the Void adapts—in none of its myriad spawn are these truths more apparent than Kha'Zix."
       }
     ]
   },
@@ -1582,20 +1587,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "A warrior as fearless as he is ornery, the yordle Kled embodies the furious bravado of Noxus. He is an icon beloved by the empire's soldiers, distrusted by its officers, and loathed by the nobility. Many claim Kled has fought in every…",
+    "short": "A warrior as fearless as he is ornery, the yordle Kled embodies the furious bravado of Noxus.",
     "long": [
-      "A warrior as fearless as he is ornery, the yordle Kled embodies the furious bravado of Noxus. He is an icon beloved by the empire's soldiers, distrusted by its officers, and loathed by the nobility. Many claim Kled has fought in every campaign the... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A warrior as fearless as he is ornery, the yordle Kled embodies the furious bravado of Noxus. He is an icon beloved by the empire's soldiers, distrusted by its officers, and loathed by the nobility. Many claim Kled has fought in every campaign the..."
     ],
     "tags": [
       "noxus",
@@ -1604,8 +1610,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Kled",
-        "description": "A warrior as fearless as he is ornery, the yordle Kled embodies the furious bravado of Noxus. He is an icon beloved by the empire's soldiers, distrusted by…"
+        "title": "Current era",
+        "description": "A warrior as fearless as he is ornery, the yordle Kled embodies the furious bravado of Noxus."
       }
     ]
   },
@@ -1617,7 +1623,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "void"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Mage"
     ],
@@ -1632,9 +1639,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Belched forth from a rotting Void incursion deep in the wastelands of Icathia, Kog'Maw is an inquisitive yet putrid creature with a caustic, gaping mouth. This particular Void-spawn needs to gnaw and drool on anything within reach to truly understand it...",
+    "short": "Belched forth from a rotting Void incursion deep in the wastelands of Icathia, Kog'Maw is an inquisitive yet putrid creature with a caustic, gaping mouth.",
     "long": [
-      "Belched forth from a rotting Void incursion deep in the wastelands of Icathia, Kog'Maw is an inquisitive yet putrid creature with a caustic, gaping mouth. This particular Void-spawn needs to gnaw and drool on anything within reach to truly understand it... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Belched forth from a rotting Void incursion deep in the wastelands of Icathia, Kog'Maw is an inquisitive yet putrid creature with a caustic, gaping mouth. This particular Void-spawn needs to gnaw and drool on anything within reach to truly understand it..."
     ],
     "tags": [
       "void",
@@ -1644,8 +1651,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Kog'Maw",
-        "description": "Belched forth from a rotting Void incursion deep in the wastelands of Icathia, Kog'Maw is an inquisitive yet putrid creature with a caustic, gaping mouth. This particular Void-spawn…"
+        "title": "Current era",
+        "description": "Belched forth from a rotting Void incursion deep in the wastelands of Icathia, Kog'Maw is an inquisitive yet putrid creature with a caustic, gaping mouth."
       }
     ]
   },
@@ -1657,21 +1664,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Intensely shy, the fae fawn Lillia skittishly wanders Ionia's forests. Hiding just out of sight of mortals—whose mysterious natures have long captivated, but intimidated, her—Lillia hopes to discover why their dreams no longer reach the ancient Dreaming...",
+    "short": "Intensely shy, the fae fawn Lillia skittishly wanders Ionia's forests.",
     "long": [
-      "Intensely shy, the fae fawn Lillia skittishly wanders Ionia's forests. Hiding just out of sight of mortals—whose mysterious natures have long captivated, but intimidated, her—Lillia hopes to discover why their dreams no longer reach the ancient Dreaming... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Intensely shy, the fae fawn Lillia skittishly wanders Ionia's forests. Hiding just out of sight of mortals—whose mysterious natures have long captivated, but intimidated, her—Lillia hopes to discover why their dreams no longer reach the ancient Dreaming..."
     ],
     "tags": [
       "ionia",
@@ -1681,8 +1689,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Lillia",
-        "description": "Intensely shy, the fae fawn Lillia skittishly wanders Ionia's forests. Hiding just out of sight of mortals—whose mysterious natures have long captivated, but intimidated, her—Lillia hopes to discover…"
+        "title": "Current era",
+        "description": "Intensely shy, the fae fawn Lillia skittishly wanders Ionia's forests."
       }
     ]
   },
@@ -1694,7 +1702,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin",
       "Mage"
     ],
@@ -1706,9 +1715,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A nail-slinging exorcist versed in forbidden rites, Corvin Locke is the progeny of Demacian occultists. Born into lies and hypocrisy, he learned young that demons aren't the cause of humanity's darkness, but the consequence. Now, Locke tears through...",
+    "short": "A nail-slinging exorcist versed in forbidden rites, Corvin Locke is the progeny of Demacian occultists.",
     "long": [
-      "A nail-slinging exorcist versed in forbidden rites, Corvin Locke is the progeny of Demacian occultists. Born into lies and hypocrisy, he learned young that demons aren't the cause of humanity's darkness, but the consequence. Now, Locke tears through... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A nail-slinging exorcist versed in forbidden rites, Corvin Locke is the progeny of Demacian occultists. Born into lies and hypocrisy, he learned young that demons aren't the cause of humanity's darkness, but the consequence. Now, Locke tears through..."
     ],
     "tags": [
       "demacia",
@@ -1718,8 +1727,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Locke",
-        "description": "A nail-slinging exorcist versed in forbidden rites, Corvin Locke is the progeny of Demacian occultists. Born into lies and hypocrisy, he learned young that demons aren't the cause…"
+        "title": "Current era",
+        "description": "A nail-slinging exorcist versed in forbidden rites, Corvin Locke is the progeny of Demacian occultists."
       }
     ]
   },
@@ -1729,21 +1738,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Purifier",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Lucian, a Sentinel of Light, is a grim hunter of wraiths and specters, pursuing them relentlessly and annihilating them with his twin relic pistols. After the specter Thresh slew his wife, Lucian embarked on the path of vengeance—but even with her...",
+    "short": "Lucian, a Sentinel of Light, is a grim hunter of wraiths and specters, pursuing them relentlessly and annihilating them with his twin relic pistols.",
     "long": [
-      "Lucian, a Sentinel of Light, is a grim hunter of wraiths and specters, pursuing them relentlessly and annihilating them with his twin relic pistols. After the specter Thresh slew his wife, Lucian embarked on the path of vengeance—but even with her... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Lucian, a Sentinel of Light, is a grim hunter of wraiths and specters, pursuing them relentlessly and annihilating them with his twin relic pistols. After the specter Thresh slew his wife, Lucian embarked on the path of vengeance—but even with her..."
     ],
     "tags": [
       "runeterra",
@@ -1753,8 +1763,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Lucian",
-        "description": "Lucian, a Sentinel of Light, is a grim hunter of wraiths and specters, pursuing them relentlessly and annihilating them with his twin relic pistols. After the specter Thresh…"
+        "title": "Current era",
+        "description": "Lucian, a Sentinel of Light, is a grim hunter of wraiths and specters, pursuing them relentlessly and annihilating them with his twin relic pistols."
       }
     ]
   },
@@ -1766,21 +1776,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "yordle"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "The yordle mage Lulu is known for conjuring dreamlike illusions and fanciful creatures as she roams Runeterra with her fairy companion Pix. Lulu shapes reality on a whim, warping the fabric of the world, and what she views as the constraints of…",
+    "short": "The yordle mage Lulu is known for conjuring dreamlike illusions and fanciful creatures as she roams Runeterra with her fairy companion Pix.",
     "long": [
-      "The yordle mage Lulu is known for conjuring dreamlike illusions and fanciful creatures as she roams Runeterra with her fairy companion Pix. Lulu shapes reality on a whim, warping the fabric of the world, and what she views as the constraints of this... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The yordle mage Lulu is known for conjuring dreamlike illusions and fanciful creatures as she roams Runeterra with her fairy companion Pix. Lulu shapes reality on a whim, warping the fabric of the world, and what she views as the constraints of this..."
     ],
     "tags": [
       "bandle city",
@@ -1790,8 +1801,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Lulu",
-        "description": "The yordle mage Lulu is known for conjuring dreamlike illusions and fanciful creatures as she roams Runeterra with her fairy companion Pix. Lulu shapes reality on a whim,…"
+        "title": "Current era",
+        "description": "The yordle mage Lulu is known for conjuring dreamlike illusions and fanciful creatures as she roams Runeterra with her fairy companion Pix."
       }
     ]
   },
@@ -1801,21 +1812,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "Shard Of The Monolith",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "A massive creature of living stone, Malphite struggles to impose blessed order on a chaotic world. Birthed as a servitor-shard to an otherworldly obelisk known as the Monolith, he used his tremendous elemental strength to maintain and protect his...",
+    "short": "A massive creature of living stone, Malphite struggles to impose blessed order on a chaotic world.",
     "long": [
-      "A massive creature of living stone, Malphite struggles to impose blessed order on a chaotic world. Birthed as a servitor-shard to an otherworldly obelisk known as the Monolith, he used his tremendous elemental strength to maintain and protect his... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A massive creature of living stone, Malphite struggles to impose blessed order on a chaotic world. Birthed as a servitor-shard to an otherworldly obelisk known as the Monolith, he used his tremendous elemental strength to maintain and protect his..."
     ],
     "tags": [
       "runeterra",
@@ -1825,8 +1837,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Malphite",
-        "description": "A massive creature of living stone, Malphite struggles to impose blessed order on a chaotic world. Birthed as a servitor-shard to an otherworldly obelisk known as the Monolith,…"
+        "title": "Current era",
+        "description": "A massive creature of living stone, Malphite struggles to impose blessed order on a chaotic world."
       }
     ]
   },
@@ -1838,7 +1850,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "void"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
@@ -1849,9 +1862,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A zealous seer dedicated to the unification of all life, Malzahar truly believes the newly emergent Void to be the path to Runeterra's salvation. In the desert wastes of Shurima, he followed the voices that whispered in his mind, all the way…",
+    "short": "A zealous seer dedicated to the unification of all life, Malzahar truly believes the newly emergent Void to be the path to Runeterra's salvation.",
     "long": [
-      "A zealous seer dedicated to the unification of all life, Malzahar truly believes the newly emergent Void to be the path to Runeterra's salvation. In the desert wastes of Shurima, he followed the voices that whispered in his mind, all the way to ancient... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A zealous seer dedicated to the unification of all life, Malzahar truly believes the newly emergent Void to be the path to Runeterra's salvation. In the desert wastes of Shurima, he followed the voices that whispered in his mind, all the way to ancient..."
     ],
     "tags": [
       "void",
@@ -1860,8 +1873,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Malzahar",
-        "description": "A zealous seer dedicated to the unification of all life, Malzahar truly believes the newly emergent Void to be the path to Runeterra's salvation. In the desert wastes…"
+        "title": "Current era",
+        "description": "A zealous seer dedicated to the unification of all life, Malzahar truly believes the newly emergent Void to be the path to Runeterra's salvation."
       }
     ]
   },
@@ -1873,21 +1886,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shadow-isles"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Maokai is a rageful, towering treant who fights the unnatural horrors of the Shadow Isles. He was twisted into a force of vengeance after a magical cataclysm destroyed his home, surviving undeath only through the Waters of Life infused within his...",
+    "short": "Maokai is a rageful, towering treant who fights the unnatural horrors of the Shadow Isles.",
     "long": [
-      "Maokai is a rageful, towering treant who fights the unnatural horrors of the Shadow Isles. He was twisted into a force of vengeance after a magical cataclysm destroyed his home, surviving undeath only through the Waters of Life infused within his... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Maokai is a rageful, towering treant who fights the unnatural horrors of the Shadow Isles. He was twisted into a force of vengeance after a magical cataclysm destroyed his home, surviving undeath only through the Waters of Life infused within his..."
     ],
     "tags": [
       "shadow isles",
@@ -1897,8 +1911,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Maokai",
-        "description": "Maokai is a rageful, towering treant who fights the unnatural horrors of the Shadow Isles. He was twisted into a force of vengeance after a magical cataclysm destroyed…"
+        "title": "Current era",
+        "description": "Maokai is a rageful, towering treant who fights the unnatural horrors of the Shadow Isles."
       }
     ]
   },
@@ -1910,7 +1924,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Assassin"
     ],
@@ -1919,14 +1934,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "aliases": [
       "Yi"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Master Yi has tempered his body and sharpened his mind, so that thought and action have become almost as one. Though he chooses to enter into violence only as a last resort, the grace and speed of his blade ensures resolution is…",
+    "short": "Master Yi has tempered his body and sharpened his mind, so that thought and action have become almost as one.",
     "long": [
-      "Master Yi has tempered his body and sharpened his mind, so that thought and action have become almost as one. Though he chooses to enter into violence only as a last resort, the grace and speed of his blade ensures resolution is always swift. As one of... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Master Yi has tempered his body and sharpened his mind, so that thought and action have become almost as one. Though he chooses to enter into violence only as a last resort, the grace and speed of his blade ensures resolution is always swift. As one of..."
     ],
     "tags": [
       "ionia",
@@ -1936,8 +1951,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Master Yi",
-        "description": "Master Yi has tempered his body and sharpened his mind, so that thought and action have become almost as one. Though he chooses to enter into violence only…"
+        "title": "Current era",
+        "description": "Master Yi has tempered his body and sharpened his mind, so that thought and action have become almost as one."
       }
     ]
   },
@@ -1949,21 +1964,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ixtal"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2023,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Milio is a warmhearted boy from Ixtal who has, despite his young age, mastered the fire axiom and discovered something new: soothing fire. With this newfound power, Milio plans to help his family escape their exile by joining the Yun Tal—just like…",
+    "short": "Milio is a warmhearted boy from Ixtal who has, despite his young age, mastered the fire axiom and discovered something new: soothing fire.",
     "long": [
-      "Milio is a warmhearted boy from Ixtal who has, despite his young age, mastered the fire axiom and discovered something new: soothing fire. With this newfound power, Milio plans to help his family escape their exile by joining the Yun Tal—just like his... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Milio is a warmhearted boy from Ixtal who has, despite his young age, mastered the fire axiom and discovered something new: soothing fire. With this newfound power, Milio plans to help his family escape their exile by joining the Yun Tal—just like his..."
     ],
     "tags": [
       "ixtal",
@@ -1973,8 +1989,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Milio",
-        "description": "Milio is a warmhearted boy from Ixtal who has, despite his young age, mastered the fire axiom and discovered something new: soothing fire. With this newfound power, Milio…"
+        "title": "Current era",
+        "description": "Milio is a warmhearted boy from Ixtal who has, despite his young age, mastered the fire axiom and discovered something new: soothing fire."
       }
     ]
   },
@@ -1986,7 +2002,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Mage"
     ],
@@ -2001,9 +2018,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A Bilgewater captain famed for her looks but feared for her ruthlessness, Sarah Fortune paints a stark figure among the hardened criminals of the port city. As a child, she witnessed the reaver king Gangplank murder her family—an act she brutally...",
+    "short": "A Bilgewater captain famed for her looks but feared for her ruthlessness, Sarah Fortune paints a stark figure among the hardened criminals of the port city.",
     "long": [
-      "A Bilgewater captain famed for her looks but feared for her ruthlessness, Sarah Fortune paints a stark figure among the hardened criminals of the port city. As a child, she witnessed the reaver king Gangplank murder her family—an act she brutally... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A Bilgewater captain famed for her looks but feared for her ruthlessness, Sarah Fortune paints a stark figure among the hardened criminals of the port city. As a child, she witnessed the reaver king Gangplank murder her family—an act she brutally..."
     ],
     "tags": [
       "bilgewater",
@@ -2013,8 +2030,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Miss Fortune",
-        "description": "A Bilgewater captain famed for her looks but feared for her ruthlessness, Sarah Fortune paints a stark figure among the hardened criminals of the port city. As a…"
+        "title": "Current era",
+        "description": "A Bilgewater captain famed for her looks but feared for her ruthlessness, Sarah Fortune paints a stark figure among the hardened criminals of the port city."
       }
     ]
   },
@@ -2026,21 +2043,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin",
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2023,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Across the sands of Shurima, a chorus of howls rings out. It is the call of the dune hounds, voracious predators who form packs and compete for the right to hunt in these barren lands. Among them, one pack stands above all,…",
+    "short": "Across the sands of Shurima, a chorus of howls rings out.",
     "long": [
-      "Across the sands of Shurima, a chorus of howls rings out. It is the call of the dune hounds, voracious predators who form packs and compete for the right to hunt in these barren lands. Among them, one pack stands above all, for they are driven not only... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Across the sands of Shurima, a chorus of howls rings out. It is the call of the dune hounds, voracious predators who form packs and compete for the right to hunt in these barren lands. Among them, one pack stands above all, for they are driven not only..."
     ],
     "tags": [
       "shurima",
@@ -2050,8 +2068,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Naafiri",
-        "description": "Across the sands of Shurima, a chorus of howls rings out. It is the call of the dune hounds, voracious predators who form packs and compete for the…"
+        "title": "Current era",
+        "description": "Across the sands of Shurima, a chorus of howls rings out."
       }
     ]
   },
@@ -2063,21 +2081,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "A headstrong young vastaya of the seas, Nami was the first of the Marai tribe to leave the waves and venture onto dry land, when their ancient accord with the Targonians was broken. With no other option, she took it upon herself…",
+    "short": "A headstrong young vastaya of the seas, Nami was the first of the Marai tribe to leave the waves and venture onto dry land, when their ancient accord with the Targonians was broken.",
     "long": [
-      "A headstrong young vastaya of the seas, Nami was the first of the Marai tribe to leave the waves and venture onto dry land, when their ancient accord with the Targonians was broken. With no other option, she took it upon herself to complete the sacred... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A headstrong young vastaya of the seas, Nami was the first of the Marai tribe to leave the waves and venture onto dry land, when their ancient accord with the Targonians was broken. With no other option, she took it upon herself to complete the sacred..."
     ],
     "tags": [
       "bilgewater",
@@ -2087,8 +2106,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Nami",
-        "description": "A headstrong young vastaya of the seas, Nami was the first of the Marai tribe to leave the waves and venture onto dry land, when their ancient accord…"
+        "title": "Current era",
+        "description": "A headstrong young vastaya of the seas, Nami was the first of the Marai tribe to leave the waves and venture onto dry land, when their ancient accord with the Targonians was broken."
       }
     ]
   },
@@ -2100,21 +2119,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "A lonely legend as old as the first piers sunk in Bilgewater, the armored goliath known as Nautilus roams the dark waters off the coast of the Blue Flame Isles. Driven by a forgotten betrayal, he strikes without warning, swinging his enormous…",
+    "short": "A lonely legend as old as the first piers sunk in Bilgewater, the armored goliath known as Nautilus roams the dark waters off the coast of the Blue Flame Isles.",
     "long": [
-      "A lonely legend as old as the first piers sunk in Bilgewater, the armored goliath known as Nautilus roams the dark waters off the coast of the Blue Flame Isles. Driven by a forgotten betrayal, he strikes without warning, swinging his enormous anchor to... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A lonely legend as old as the first piers sunk in Bilgewater, the armored goliath known as Nautilus roams the dark waters off the coast of the Blue Flame Isles. Driven by a forgotten betrayal, he strikes without warning, swinging his enormous anchor to..."
     ],
     "tags": [
       "bilgewater",
@@ -2124,8 +2144,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Nautilus",
-        "description": "A lonely legend as old as the first piers sunk in Bilgewater, the armored goliath known as Nautilus roams the dark waters off the coast of the Blue…"
+        "title": "Current era",
+        "description": "A lonely legend as old as the first piers sunk in Bilgewater, the armored goliath known as Nautilus roams the dark waters off the coast of the Blue Flame Isles."
       }
     ]
   },
@@ -2137,21 +2157,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ixtal"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2018,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Hailing from a long lost tribe of vastaya, Neeko can blend into any crowd by borrowing the appearances of others, even absorbing something of their emotional state to tell friend from foe in an instant. No one is ever sure where—or who—Neeko…",
+    "short": "Hailing from a long lost tribe of vastaya, Neeko can blend into any crowd by borrowing the appearances of others, even absorbing something of their emotional state to tell friend from foe in an instant.",
     "long": [
-      "Hailing from a long lost tribe of vastaya, Neeko can blend into any crowd by borrowing the appearances of others, even absorbing something of their emotional state to tell friend from foe in an instant. No one is ever sure where—or who—Neeko might be... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Hailing from a long lost tribe of vastaya, Neeko can blend into any crowd by borrowing the appearances of others, even absorbing something of their emotional state to tell friend from foe in an instant. No one is ever sure where—or who—Neeko might be..."
     ],
     "tags": [
       "ixtal",
@@ -2161,8 +2182,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Neeko",
-        "description": "Hailing from a long lost tribe of vastaya, Neeko can blend into any crowd by borrowing the appearances of others, even absorbing something of their emotional state to…"
+        "title": "Current era",
+        "description": "Hailing from a long lost tribe of vastaya, Neeko can blend into any crowd by borrowing the appearances of others, even absorbing something of their emotional state to tell friend from foe in an instant."
       }
     ]
   },
@@ -2174,21 +2195,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ixtal"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Raised in the deepest jungle, Nidalee is a master tracker who can shapeshift into a ferocious cougar at will. Neither wholly woman nor beast, she viciously defends her territory from any and all trespassers, with carefully placed traps and deft spear...",
+    "short": "Raised in the deepest jungle, Nidalee is a master tracker who can shapeshift into a ferocious cougar at will.",
     "long": [
-      "Raised in the deepest jungle, Nidalee is a master tracker who can shapeshift into a ferocious cougar at will. Neither wholly woman nor beast, she viciously defends her territory from any and all trespassers, with carefully placed traps and deft spear... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Raised in the deepest jungle, Nidalee is a master tracker who can shapeshift into a ferocious cougar at will. Neither wholly woman nor beast, she viciously defends her territory from any and all trespassers, with carefully placed traps and deft spear..."
     ],
     "tags": [
       "ixtal",
@@ -2198,8 +2220,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Nidalee",
-        "description": "Raised in the deepest jungle, Nidalee is a master tracker who can shapeshift into a ferocious cougar at will. Neither wholly woman nor beast, she viciously defends her…"
+        "title": "Current era",
+        "description": "Raised in the deepest jungle, Nidalee is a master tracker who can shapeshift into a ferocious cougar at will."
       }
     ]
   },
@@ -2211,21 +2233,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Nilah is an ascetic warrior from a distant land, seeking the world's deadliest, most titanic opponents so that she might challenge and destroy them. Having won her power through an encounter with the long-imprisoned demon of joy, she has no emotions...",
+    "short": "Nilah is an ascetic warrior from a distant land, seeking the world's deadliest, most titanic opponents so that she might challenge and destroy them.",
     "long": [
-      "Nilah is an ascetic warrior from a distant land, seeking the world's deadliest, most titanic opponents so that she might challenge and destroy them. Having won her power through an encounter with the long-imprisoned demon of joy, she has no emotions... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Nilah is an ascetic warrior from a distant land, seeking the world's deadliest, most titanic opponents so that she might challenge and destroy them. Having won her power through an encounter with the long-imprisoned demon of joy, she has no emotions..."
     ],
     "tags": [
       "bilgewater",
@@ -2235,8 +2258,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Nilah",
-        "description": "Nilah is an ascetic warrior from a distant land, seeking the world's deadliest, most titanic opponents so that she might challenge and destroy them. Having won her power…"
+        "title": "Current era",
+        "description": "Nilah is an ascetic warrior from a distant land, seeking the world's deadliest, most titanic opponents so that she might challenge and destroy them."
       }
     ]
   },
@@ -2246,21 +2269,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Eternal Nightmare",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A demonic amalgamation drawn from the nightmares that haunt every sentient mind, the thing known as Nocturne has become a primordial force of pure evil. It is liquidly chaotic in aspect, a faceless shadow with cold eyes and armed with wicked-looking...",
+    "short": "A demonic amalgamation drawn from the nightmares that haunt every sentient mind, the thing known as Nocturne has become a primordial force of pure evil.",
     "long": [
-      "A demonic amalgamation drawn from the nightmares that haunt every sentient mind, the thing known as Nocturne has become a primordial force of pure evil. It is liquidly chaotic in aspect, a faceless shadow with cold eyes and armed with wicked-looking... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A demonic amalgamation drawn from the nightmares that haunt every sentient mind, the thing known as Nocturne has become a primordial force of pure evil. It is liquidly chaotic in aspect, a faceless shadow with cold eyes and armed with wicked-looking..."
     ],
     "tags": [
       "runeterra",
@@ -2270,8 +2294,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Nocturne",
-        "description": "A demonic amalgamation drawn from the nightmares that haunt every sentient mind, the thing known as Nocturne has become a primordial force of pure evil. It is liquidly…"
+        "title": "Current era",
+        "description": "A demonic amalgamation drawn from the nightmares that haunt every sentient mind, the thing known as Nocturne has become a primordial force of pure evil."
       }
     ]
   },
@@ -2283,7 +2307,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Mage"
     ],
@@ -2293,14 +2318,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "Nunu",
       "Willump"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Once upon a time, there was a boy who wanted to prove he was a hero by slaying a fearsome monster—only to discover that the beast, a lonely and magical yeti, merely needed a friend. Bound together by ancient power and a…",
+    "short": "Once upon a time, there was a boy who wanted to prove he was a hero by slaying a fearsome monster—only to discover that the beast, a lonely and magical yeti, merely needed a friend.",
     "long": [
-      "Once upon a time, there was a boy who wanted to prove he was a hero by slaying a fearsome monster—only to discover that the beast, a lonely and magical yeti, merely needed a friend. Bound together by ancient power and a shared love of snowballs, Nunu... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Once upon a time, there was a boy who wanted to prove he was a hero by slaying a fearsome monster—only to discover that the beast, a lonely and magical yeti, merely needed a friend. Bound together by ancient power and a shared love of snowballs, Nunu..."
     ],
     "tags": [
       "freljord",
@@ -2310,8 +2335,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Nunu & Willump",
-        "description": "Once upon a time, there was a boy who wanted to prove he was a hero by slaying a fearsome monster—only to discover that the beast, a lonely…"
+        "title": "Current era",
+        "description": "Once upon a time, there was a boy who wanted to prove he was a hero by slaying a fearsome monster—only to discover that the beast, a lonely and magical yeti, merely needed a friend."
       }
     ]
   },
@@ -2323,7 +2348,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
@@ -2335,9 +2361,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "An unstoppable force of destruction, the axe-wielding Olaf wants nothing but to die in glorious combat. Hailing from the brutal Freljordian peninsula of Lokfar, he once received a prophecy foretelling his peaceful passing—a coward's fate, and a great...",
+    "short": "An unstoppable force of destruction, the axe-wielding Olaf wants nothing but to die in glorious combat.",
     "long": [
-      "An unstoppable force of destruction, the axe-wielding Olaf wants nothing but to die in glorious combat. Hailing from the brutal Freljordian peninsula of Lokfar, he once received a prophecy foretelling his peaceful passing—a coward's fate, and a great... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "An unstoppable force of destruction, the axe-wielding Olaf wants nothing but to die in glorious combat. Hailing from the brutal Freljordian peninsula of Lokfar, he once received a prophecy foretelling his peaceful passing—a coward's fate, and a great..."
     ],
     "tags": [
       "freljord",
@@ -2347,8 +2373,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Olaf",
-        "description": "An unstoppable force of destruction, the axe-wielding Olaf wants nothing but to die in glorious combat. Hailing from the brutal Freljordian peninsula of Lokfar, he once received a…"
+        "title": "Current era",
+        "description": "An unstoppable force of destruction, the axe-wielding Olaf wants nothing but to die in glorious combat."
       }
     ]
   },
@@ -2360,21 +2386,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "piltover"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Once a curious girl of flesh and blood, Orianna is now a technological marvel comprised entirely of clockwork. She became gravely ill after an accident in the lower districts of Zaun, and her failing body had to be replaced with exquisite artifice...",
+    "short": "Once a curious girl of flesh and blood, Orianna is now a technological marvel comprised entirely of clockwork.",
     "long": [
-      "Once a curious girl of flesh and blood, Orianna is now a technological marvel comprised entirely of clockwork. She became gravely ill after an accident in the lower districts of Zaun, and her failing body had to be replaced with exquisite artifice... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Once a curious girl of flesh and blood, Orianna is now a technological marvel comprised entirely of clockwork. She became gravely ill after an accident in the lower districts of Zaun, and her failing body had to be replaced with exquisite artifice..."
     ],
     "tags": [
       "piltover",
@@ -2384,8 +2411,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Orianna",
-        "description": "Once a curious girl of flesh and blood, Orianna is now a technological marvel comprised entirely of clockwork. She became gravely ill after an accident in the lower…"
+        "title": "Current era",
+        "description": "Once a curious girl of flesh and blood, Orianna is now a technological marvel comprised entirely of clockwork."
       }
     ]
   },
@@ -2397,20 +2424,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Ornn is the Freljordian spirit of forging and craftsmanship. He works in the solitude of a massive smithy, hammered out from the lava caverns beneath the volcano Hearth-Home. There he stokes bubbling cauldrons of molten rock to purify ores and fashion...",
+    "short": "Ornn is the Freljordian spirit of forging and craftsmanship.",
     "long": [
-      "Ornn is the Freljordian spirit of forging and craftsmanship. He works in the solitude of a massive smithy, hammered out from the lava caverns beneath the volcano Hearth-Home. There he stokes bubbling cauldrons of molten rock to purify ores and fashion... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Ornn is the Freljordian spirit of forging and craftsmanship. He works in the solitude of a massive smithy, hammered out from the lava caverns beneath the volcano Hearth-Home. There he stokes bubbling cauldrons of molten rock to purify ores and fashion..."
     ],
     "tags": [
       "freljord",
@@ -2419,8 +2447,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Ornn",
-        "description": "Ornn is the Freljordian spirit of forging and craftsmanship. He works in the solitude of a massive smithy, hammered out from the lava caverns beneath the volcano Hearth-Home.…"
+        "title": "Current era",
+        "description": "Ornn is the Freljordian spirit of forging and craftsmanship."
       }
     ]
   },
@@ -2432,7 +2460,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Fighter"
     ],
@@ -2444,9 +2473,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Runeterra has no shortage of valiant champions, but few are as tenacious as Poppy. Bearing the legendary hammer of Orlon, a weapon twice her size, this determined yordle has spent untold years searching in secret for the fabled “Hero of Demacia,” said...",
+    "short": "Runeterra has no shortage of valiant champions, but few are as tenacious as Poppy.",
     "long": [
-      "Runeterra has no shortage of valiant champions, but few are as tenacious as Poppy. Bearing the legendary hammer of Orlon, a weapon twice her size, this determined yordle has spent untold years searching in secret for the fabled “Hero of Demacia,” said... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Runeterra has no shortage of valiant champions, but few are as tenacious as Poppy. Bearing the legendary hammer of Orlon, a weapon twice her size, this determined yordle has spent untold years searching in secret for the fabled “Hero of Demacia,” said..."
     ],
     "tags": [
       "demacia",
@@ -2456,8 +2485,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Poppy",
-        "description": "Runeterra has no shortage of valiant champions, but few are as tenacious as Poppy. Bearing the legendary hammer of Orlon, a weapon twice her size, this determined yordle…"
+        "title": "Current era",
+        "description": "Runeterra has no shortage of valiant champions, but few are as tenacious as Poppy."
       }
     ]
   },
@@ -2469,21 +2498,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2018,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A renowned harpooner from the slaughter docks of Bilgewater, Pyke should have met his death in the belly of a gigantic jaull-fish… and yet, he returned. Now, stalking the dank alleys and backways of his former hometown, he uses his new supernatural...",
+    "short": "A renowned harpooner from the slaughter docks of Bilgewater, Pyke should have met his death in the belly of a gigantic jaull-fish… and yet, he returned.",
     "long": [
-      "A renowned harpooner from the slaughter docks of Bilgewater, Pyke should have met his death in the belly of a gigantic jaull-fish… and yet, he returned. Now, stalking the dank alleys and backways of his former hometown, he uses his new supernatural... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A renowned harpooner from the slaughter docks of Bilgewater, Pyke should have met his death in the belly of a gigantic jaull-fish… and yet, he returned. Now, stalking the dank alleys and backways of his former hometown, he uses his new supernatural..."
     ],
     "tags": [
       "bilgewater",
@@ -2493,8 +2523,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Pyke",
-        "description": "A renowned harpooner from the slaughter docks of Bilgewater, Pyke should have met his death in the belly of a gigantic jaull-fish… and yet, he returned. Now, stalking…"
+        "title": "Current era",
+        "description": "A renowned harpooner from the slaughter docks of Bilgewater, Pyke should have met his death in the belly of a gigantic jaull-fish… and yet, he returned."
       }
     ]
   },
@@ -2506,20 +2536,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ixtal"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2019,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "In the jungle city of Ixaocan, Qiyana plots her own ruthless path to the high seat of the Yun Tal. Last in line to succeed her parents, she faces those who stand in her way with brash confidence and unprecedented mastery over…",
+    "short": "In the jungle city of Ixaocan, Qiyana plots her own ruthless path to the high seat of the Yun Tal.",
     "long": [
-      "In the jungle city of Ixaocan, Qiyana plots her own ruthless path to the high seat of the Yun Tal. Last in line to succeed her parents, she faces those who stand in her way with brash confidence and unprecedented mastery over elemental magic. With the... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "In the jungle city of Ixaocan, Qiyana plots her own ruthless path to the high seat of the Yun Tal. Last in line to succeed her parents, she faces those who stand in her way with brash confidence and unprecedented mastery over elemental magic. With the..."
     ],
     "tags": [
       "ixtal",
@@ -2528,8 +2559,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Qiyana",
-        "description": "In the jungle city of Ixaocan, Qiyana plots her own ruthless path to the high seat of the Yun Tal. Last in line to succeed her parents, she…"
+        "title": "Current era",
+        "description": "In the jungle city of Ixaocan, Qiyana plots her own ruthless path to the high seat of the Yun Tal."
       }
     ]
   },
@@ -2541,21 +2572,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Quinn is an elite ranger-knight of Demacia, who undertakes dangerous missions deep in enemy territory. She and her legendary eagle, Valor, share an unbreakable bond, and their foes are often slain before they realize they are fighting not one, but two...",
+    "short": "Quinn is an elite ranger-knight of Demacia, who undertakes dangerous missions deep in enemy territory.",
     "long": [
-      "Quinn is an elite ranger-knight of Demacia, who undertakes dangerous missions deep in enemy territory. She and her legendary eagle, Valor, share an unbreakable bond, and their foes are often slain before they realize they are fighting not one, but two... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Quinn is an elite ranger-knight of Demacia, who undertakes dangerous missions deep in enemy territory. She and her legendary eagle, Valor, share an unbreakable bond, and their foes are often slain before they realize they are fighting not one, but two..."
     ],
     "tags": [
       "demacia",
@@ -2565,8 +2597,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Quinn",
-        "description": "Quinn is an elite ranger-knight of Demacia, who undertakes dangerous missions deep in enemy territory. She and her legendary eagle, Valor, share an unbreakable bond, and their foes…"
+        "title": "Current era",
+        "description": "Quinn is an elite ranger-knight of Demacia, who undertakes dangerous missions deep in enemy territory."
       }
     ]
   },
@@ -2578,20 +2610,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "As mercurial as he is charming, Rakan is an infamous vastayan troublemaker and the greatest battle-dancer in Lhotlan tribal history. To the humans of the Ionian highlands, his name has long been synonymous with wild festivals, uncontrollable parties...",
+    "short": "As mercurial as he is charming, Rakan is an infamous vastayan troublemaker and the greatest battle-dancer in Lhotlan tribal history.",
     "long": [
-      "As mercurial as he is charming, Rakan is an infamous vastayan troublemaker and the greatest battle-dancer in Lhotlan tribal history. To the humans of the Ionian highlands, his name has long been synonymous with wild festivals, uncontrollable parties... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "As mercurial as he is charming, Rakan is an infamous vastayan troublemaker and the greatest battle-dancer in Lhotlan tribal history. To the humans of the Ionian highlands, his name has long been synonymous with wild festivals, uncontrollable parties..."
     ],
     "tags": [
       "ionia",
@@ -2600,8 +2633,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Rakan",
-        "description": "As mercurial as he is charming, Rakan is an infamous vastayan troublemaker and the greatest battle-dancer in Lhotlan tribal history. To the humans of the Ionian highlands, his…"
+        "title": "Current era",
+        "description": "As mercurial as he is charming, Rakan is an infamous vastayan troublemaker and the greatest battle-dancer in Lhotlan tribal history."
       }
     ]
   },
@@ -2613,20 +2646,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Idolized by many, dismissed by some, mystifying to all, the curious being Rammus is an enigma. Protected by a spiked shell, he inspires increasingly disparate theories on his origin wherever he goes—from demigod, to sacred oracle, to a mere beast...",
+    "short": "Idolized by many, dismissed by some, mystifying to all, the curious being Rammus is an enigma.",
     "long": [
-      "Idolized by many, dismissed by some, mystifying to all, the curious being Rammus is an enigma. Protected by a spiked shell, he inspires increasingly disparate theories on his origin wherever he goes—from demigod, to sacred oracle, to a mere beast... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Idolized by many, dismissed by some, mystifying to all, the curious being Rammus is an enigma. Protected by a spiked shell, he inspires increasingly disparate theories on his origin wherever he goes—from demigod, to sacred oracle, to a mere beast..."
     ],
     "tags": [
       "shurima",
@@ -2635,8 +2669,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Rammus",
-        "description": "Idolized by many, dismissed by some, mystifying to all, the curious being Rammus is an enigma. Protected by a spiked shell, he inspires increasingly disparate theories on his…"
+        "title": "Current era",
+        "description": "Idolized by many, dismissed by some, mystifying to all, the curious being Rammus is an enigma."
       }
     ]
   },
@@ -2648,7 +2682,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
@@ -2658,14 +2693,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "Rek'Sai",
       "Reksai"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "An apex predator, Rek'Sai is a merciless Void-spawn that tunnels beneath the ground to ambush and devour unsuspecting prey. Her insatiable hunger has laid waste to entire regions of the once-great empire of Shurima—merchants, traders, even armed...",
+    "short": "An apex predator, Rek'Sai is a merciless Void-spawn that tunnels beneath the ground to ambush and devour unsuspecting prey.",
     "long": [
-      "An apex predator, Rek'Sai is a merciless Void-spawn that tunnels beneath the ground to ambush and devour unsuspecting prey. Her insatiable hunger has laid waste to entire regions of the once-great empire of Shurima—merchants, traders, even armed... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "An apex predator, Rek'Sai is a merciless Void-spawn that tunnels beneath the ground to ambush and devour unsuspecting prey. Her insatiable hunger has laid waste to entire regions of the once-great empire of Shurima—merchants, traders, even armed..."
     ],
     "tags": [
       "shurima",
@@ -2675,8 +2710,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Rek'Sai",
-        "description": "An apex predator, Rek'Sai is a merciless Void-spawn that tunnels beneath the ground to ambush and devour unsuspecting prey. Her insatiable hunger has laid waste to entire regions…"
+        "title": "Current era",
+        "description": "An apex predator, Rek'Sai is a merciless Void-spawn that tunnels beneath the ground to ambush and devour unsuspecting prey."
       }
     ]
   },
@@ -2688,21 +2723,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "The product of brutal experimentation at the hands of the Black Rose, Rell is a defiant, living weapon determined to topple Noxus. Her childhood was one of misery and horror, enduring unspeakable procedures to perfect and weaponize her magical control...",
+    "short": "The product of brutal experimentation at the hands of the Black Rose, Rell is a defiant, living weapon determined to topple Noxus.",
     "long": [
-      "The product of brutal experimentation at the hands of the Black Rose, Rell is a defiant, living weapon determined to topple Noxus. Her childhood was one of misery and horror, enduring unspeakable procedures to perfect and weaponize her magical control... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The product of brutal experimentation at the hands of the Black Rose, Rell is a defiant, living weapon determined to topple Noxus. Her childhood was one of misery and horror, enduring unspeakable procedures to perfect and weaponize her magical control..."
     ],
     "tags": [
       "noxus",
@@ -2712,8 +2748,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Rell",
-        "description": "The product of brutal experimentation at the hands of the Black Rose, Rell is a defiant, living weapon determined to topple Noxus. Her childhood was one of misery…"
+        "title": "Current era",
+        "description": "The product of brutal experimentation at the hands of the Black Rose, Rell is a defiant, living weapon determined to topple Noxus."
       }
     ]
   },
@@ -2725,7 +2761,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
@@ -2734,14 +2771,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "aliases": [
       "Renata"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Renata Glasc rose from the ashes of her childhood home with nothing but her name and her parents' alchemical research. In the decades since, she has become Zaun's wealthiest chem-baron, a business magnate who built her power by tying everyone's...",
+    "short": "Renata Glasc rose from the ashes of her childhood home with nothing but her name and her parents' alchemical research.",
     "long": [
-      "Renata Glasc rose from the ashes of her childhood home with nothing but her name and her parents' alchemical research. In the decades since, she has become Zaun's wealthiest chem-baron, a business magnate who built her power by tying everyone's... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Renata Glasc rose from the ashes of her childhood home with nothing but her name and her parents' alchemical research. In the decades since, she has become Zaun's wealthiest chem-baron, a business magnate who built her power by tying everyone's..."
     ],
     "tags": [
       "zaun",
@@ -2751,8 +2788,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Renata Glasc",
-        "description": "Renata Glasc rose from the ashes of her childhood home with nothing but her name and her parents' alchemical research. In the decades since, she has become Zaun's…"
+        "title": "Current era",
+        "description": "Renata Glasc rose from the ashes of her childhood home with nothing but her name and her parents' alchemical research."
       }
     ]
   },
@@ -2764,21 +2801,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Renekton is a terrifying, rage-fueled Ascended being from the scorched deserts of Shurima. Once, he was his empire's most esteemed warrior, leading the nation's armies to countless victories. However, after the empire's fall, Renekton was entombed...",
+    "short": "Renekton is a terrifying, rage-fueled Ascended being from the scorched deserts of Shurima.",
     "long": [
-      "Renekton is a terrifying, rage-fueled Ascended being from the scorched deserts of Shurima. Once, he was his empire's most esteemed warrior, leading the nation's armies to countless victories. However, after the empire's fall, Renekton was entombed... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Renekton is a terrifying, rage-fueled Ascended being from the scorched deserts of Shurima. Once, he was his empire's most esteemed warrior, leading the nation's armies to countless victories. However, after the empire's fall, Renekton was entombed..."
     ],
     "tags": [
       "shurima",
@@ -2788,8 +2826,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Renekton",
-        "description": "Renekton is a terrifying, rage-fueled Ascended being from the scorched deserts of Shurima. Once, he was his empire's most esteemed warrior, leading the nation's armies to countless victories.…"
+        "title": "Current era",
+        "description": "Renekton is a terrifying, rage-fueled Ascended being from the scorched deserts of Shurima."
       }
     ]
   },
@@ -2799,21 +2837,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Pridestalker",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin",
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Rengar is a ferocious vastayan trophy hunter who lives for the thrill of tracking down and killing dangerous creatures. He scours the world for the most fearsome beasts he can find, especially seeking any trace of Kha'Zix, the void creature who...",
+    "short": "Rengar is a ferocious vastayan trophy hunter who lives for the thrill of tracking down and killing dangerous creatures.",
     "long": [
-      "Rengar is a ferocious vastayan trophy hunter who lives for the thrill of tracking down and killing dangerous creatures. He scours the world for the most fearsome beasts he can find, especially seeking any trace of Kha'Zix, the void creature who... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Rengar is a ferocious vastayan trophy hunter who lives for the thrill of tracking down and killing dangerous creatures. He scours the world for the most fearsome beasts he can find, especially seeking any trace of Kha'Zix, the void creature who..."
     ],
     "tags": [
       "runeterra",
@@ -2823,8 +2862,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Rengar",
-        "description": "Rengar is a ferocious vastayan trophy hunter who lives for the thrill of tracking down and killing dangerous creatures. He scours the world for the most fearsome beasts…"
+        "title": "Current era",
+        "description": "Rengar is a ferocious vastayan trophy hunter who lives for the thrill of tracking down and killing dangerous creatures."
       }
     ]
   },
@@ -2836,21 +2875,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Rumble is a young inventor with a temper. Using nothing more than his own two hands and a heap of scrap, the feisty yordle constructed a colossal mech suit outfitted with an arsenal of electrified harpoons and incendiary rockets. Though others may…",
+    "short": "Rumble is a young inventor with a temper.",
     "long": [
-      "Rumble is a young inventor with a temper. Using nothing more than his own two hands and a heap of scrap, the feisty yordle constructed a colossal mech suit outfitted with an arsenal of electrified harpoons and incendiary rockets. Though others may scoff... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Rumble is a young inventor with a temper. Using nothing more than his own two hands and a heap of scrap, the feisty yordle constructed a colossal mech suit outfitted with an arsenal of electrified harpoons and incendiary rockets. Though others may scoff..."
     ],
     "tags": [
       "zaun",
@@ -2860,8 +2900,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Rumble",
-        "description": "Rumble is a young inventor with a temper. Using nothing more than his own two hands and a heap of scrap, the feisty yordle constructed a colossal mech…"
+        "title": "Current era",
+        "description": "Rumble is a young inventor with a temper."
       }
     ]
   },
@@ -2873,21 +2913,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Samira stares death in the eye with unyielding confidence, seeking thrill wherever she goes. After her Shuriman home was destroyed as a child, Samira found her true calling in Noxus, where she built a reputation as a stylish daredevil taking on...",
+    "short": "Samira stares death in the eye with unyielding confidence, seeking thrill wherever she goes.",
     "long": [
-      "Samira stares death in the eye with unyielding confidence, seeking thrill wherever she goes. After her Shuriman home was destroyed as a child, Samira found her true calling in Noxus, where she built a reputation as a stylish daredevil taking on... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Samira stares death in the eye with unyielding confidence, seeking thrill wherever she goes. After her Shuriman home was destroyed as a child, Samira found her true calling in Noxus, where she built a reputation as a stylish daredevil taking on..."
     ],
     "tags": [
       "noxus",
@@ -2897,8 +2938,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Samira",
-        "description": "Samira stares death in the eye with unyielding confidence, seeking thrill wherever she goes. After her Shuriman home was destroyed as a child, Samira found her true calling…"
+        "title": "Current era",
+        "description": "Samira stares death in the eye with unyielding confidence, seeking thrill wherever she goes."
       }
     ]
   },
@@ -2910,20 +2951,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Sejuani is the brutal, unforgiving Iceborn warmother of the Winter's Claw, one of the most feared tribes of the Freljord. Her people's survival is a constant, desperate battle against the elements, forcing them to raid Noxians, Demacians, and Avarosans...",
+    "short": "Sejuani is the brutal, unforgiving Iceborn warmother of the Winter's Claw, one of the most feared tribes of the Freljord.",
     "long": [
-      "Sejuani is the brutal, unforgiving Iceborn warmother of the Winter's Claw, one of the most feared tribes of the Freljord. Her people's survival is a constant, desperate battle against the elements, forcing them to raid Noxians, Demacians, and Avarosans... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Sejuani is the brutal, unforgiving Iceborn warmother of the Winter's Claw, one of the most feared tribes of the Freljord. Her people's survival is a constant, desperate battle against the elements, forcing them to raid Noxians, Demacians, and Avarosans..."
     ],
     "tags": [
       "freljord",
@@ -2932,8 +2974,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Sejuani",
-        "description": "Sejuani is the brutal, unforgiving Iceborn warmother of the Winter's Claw, one of the most feared tribes of the Freljord. Her people's survival is a constant, desperate battle…"
+        "title": "Current era",
+        "description": "Sejuani is the brutal, unforgiving Iceborn warmother of the Winter's Claw, one of the most feared tribes of the Freljord."
       }
     ]
   },
@@ -2945,21 +2987,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "piltover"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Born in Piltover to Zaunite parents, Seraphine can hear the souls of others—the world sings to her, and she sings back. Though these sounds overwhelmed her in her youth, she now draws on them for inspiration, turning the chaos into a symphony.…",
+    "short": "Born in Piltover to Zaunite parents, Seraphine can hear the souls of others—the world sings to her, and she sings back.",
     "long": [
-      "Born in Piltover to Zaunite parents, Seraphine can hear the souls of others—the world sings to her, and she sings back. Though these sounds overwhelmed her in her youth, she now draws on them for inspiration, turning the chaos into a symphony. She... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Born in Piltover to Zaunite parents, Seraphine can hear the souls of others—the world sings to her, and she sings back. Though these sounds overwhelmed her in her youth, she now draws on them for inspiration, turning the chaos into a symphony. She..."
     ],
     "tags": [
       "piltover",
@@ -2969,8 +3012,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Seraphine",
-        "description": "Born in Piltover to Zaunite parents, Seraphine can hear the souls of others—the world sings to her, and she sings back. Though these sounds overwhelmed her in her…"
+        "title": "Current era",
+        "description": "Born in Piltover to Zaunite parents, Seraphine can hear the souls of others—the world sings to her, and she sings back."
       }
     ]
   },
@@ -2982,21 +3025,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2020,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A leader of Ionia's growing criminal underworld, Sett rose to prominence in the wake of the war with Noxus. Though he began as a humble challenger in the fighting pits of Navori, he quickly gained notoriety for his savage strength, and his…",
+    "short": "A leader of Ionia's growing criminal underworld, Sett rose to prominence in the wake of the war with Noxus.",
     "long": [
-      "A leader of Ionia's growing criminal underworld, Sett rose to prominence in the wake of the war with Noxus. Though he began as a humble challenger in the fighting pits of Navori, he quickly gained notoriety for his savage strength, and his ability to... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A leader of Ionia's growing criminal underworld, Sett rose to prominence in the wake of the war with Noxus. Though he began as a humble challenger in the fighting pits of Navori, he quickly gained notoriety for his savage strength, and his ability to..."
     ],
     "tags": [
       "ionia",
@@ -3006,8 +3050,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Sett",
-        "description": "A leader of Ionia's growing criminal underworld, Sett rose to prominence in the wake of the war with Noxus. Though he began as a humble challenger in the…"
+        "title": "Current era",
+        "description": "A leader of Ionia's growing criminal underworld, Sett rose to prominence in the wake of the war with Noxus."
       }
     ]
   },
@@ -3017,20 +3061,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Demon Jester",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Crafted long ago as a plaything for a lonely prince, the enchanted marionette Shaco now delights in murder and mayhem. Corrupted by dark magic and the loss of his beloved charge, the once-kind puppet finds pleasure only in the misery of the…",
+    "short": "Crafted long ago as a plaything for a lonely prince, the enchanted marionette Shaco now delights in murder and mayhem.",
     "long": [
-      "Crafted long ago as a plaything for a lonely prince, the enchanted marionette Shaco now delights in murder and mayhem. Corrupted by dark magic and the loss of his beloved charge, the once-kind puppet finds pleasure only in the misery of the poor souls... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Crafted long ago as a plaything for a lonely prince, the enchanted marionette Shaco now delights in murder and mayhem. Corrupted by dark magic and the loss of his beloved charge, the once-kind puppet finds pleasure only in the misery of the poor souls..."
     ],
     "tags": [
       "runeterra",
@@ -3039,8 +3084,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Shaco",
-        "description": "Crafted long ago as a plaything for a lonely prince, the enchanted marionette Shaco now delights in murder and mayhem. Corrupted by dark magic and the loss of…"
+        "title": "Current era",
+        "description": "Crafted long ago as a plaything for a lonely prince, the enchanted marionette Shaco now delights in murder and mayhem."
       }
     ]
   },
@@ -3052,21 +3097,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Shyvana is a fearsome half-dragon warrior. Though she often appears humanoid, she also rules the skies as a dragon, incinerating her foes with fiery breath. Having saved the life of the crown prince Jarvan IV, Shyvana now serves uneasily in his royal...",
+    "short": "Shyvana is a fearsome half-dragon warrior.",
     "long": [
-      "Shyvana is a fearsome half-dragon warrior. Though she often appears humanoid, she also rules the skies as a dragon, incinerating her foes with fiery breath. Having saved the life of the crown prince Jarvan IV, Shyvana now serves uneasily in his royal... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Shyvana is a fearsome half-dragon warrior. Though she often appears humanoid, she also rules the skies as a dragon, incinerating her foes with fiery breath. Having saved the life of the crown prince Jarvan IV, Shyvana now serves uneasily in his royal..."
     ],
     "tags": [
       "demacia",
@@ -3076,8 +3122,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Shyvana",
-        "description": "Shyvana is a fearsome half-dragon warrior. Though she often appears humanoid, she also rules the skies as a dragon, incinerating her foes with fiery breath. Having saved the…"
+        "title": "Current era",
+        "description": "Shyvana is a fearsome half-dragon warrior."
       }
     ]
   },
@@ -3089,21 +3135,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "A war hero from a bygone era, Sion was revered in Noxus for choking the life out of a Demacian king with his bare hands—but, denied oblivion, he was resurrected to serve his empire even in death. His indiscriminate slaughter claimed all…",
+    "short": "A war hero from a bygone era, Sion was revered in Noxus for choking the life out of a Demacian king with his bare hands—but, denied oblivion, he was resurrected to serve his empire even in death.",
     "long": [
-      "A war hero from a bygone era, Sion was revered in Noxus for choking the life out of a Demacian king with his bare hands—but, denied oblivion, he was resurrected to serve his empire even in death. His indiscriminate slaughter claimed all who stood in his... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A war hero from a bygone era, Sion was revered in Noxus for choking the life out of a Demacian king with his bare hands—but, denied oblivion, he was resurrected to serve his empire even in death. His indiscriminate slaughter claimed all who stood in his..."
     ],
     "tags": [
       "noxus",
@@ -3113,8 +3160,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Sion",
-        "description": "A war hero from a bygone era, Sion was revered in Noxus for choking the life out of a Demacian king with his bare hands—but, denied oblivion, he…"
+        "title": "Current era",
+        "description": "A war hero from a bygone era, Sion was revered in Noxus for choking the life out of a Demacian king with his bare hands—but, denied oblivion, he was resurrected to serve his empire even in death."
       }
     ]
   },
@@ -3126,20 +3173,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Sivir is a renowned fortune hunter and mercenary captain who plies her trade in the deserts of Shurima. Armed with her legendary jeweled crossblade, she has fought and won countless battles for those who can afford her exorbitant price. Known for her...",
+    "short": "Sivir is a renowned fortune hunter and mercenary captain who plies her trade in the deserts of Shurima.",
     "long": [
-      "Sivir is a renowned fortune hunter and mercenary captain who plies her trade in the deserts of Shurima. Armed with her legendary jeweled crossblade, she has fought and won countless battles for those who can afford her exorbitant price. Known for her... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Sivir is a renowned fortune hunter and mercenary captain who plies her trade in the deserts of Shurima. Armed with her legendary jeweled crossblade, she has fought and won countless battles for those who can afford her exorbitant price. Known for her..."
     ],
     "tags": [
       "shurima",
@@ -3148,8 +3196,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Sivir",
-        "description": "Sivir is a renowned fortune hunter and mercenary captain who plies her trade in the deserts of Shurima. Armed with her legendary jeweled crossblade, she has fought and…"
+        "title": "Current era",
+        "description": "Sivir is a renowned fortune hunter and mercenary captain who plies her trade in the deserts of Shurima."
       }
     ]
   },
@@ -3161,21 +3209,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "The ancient, colossal brackern Skarner is revered in Ixtal as one of the founding members of its ruling caste, the Yun Tal. Devoted to keeping his nation safe from the rest of the world, Skarner dwells in a chamber beneath Ixaocan where…",
+    "short": "The ancient, colossal brackern Skarner is revered in Ixtal as one of the founding members of its ruling caste, the Yun Tal.",
     "long": [
-      "The ancient, colossal brackern Skarner is revered in Ixtal as one of the founding members of its ruling caste, the Yun Tal. Devoted to keeping his nation safe from the rest of the world, Skarner dwells in a chamber beneath Ixaocan where he can hear the... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The ancient, colossal brackern Skarner is revered in Ixtal as one of the founding members of its ruling caste, the Yun Tal. Devoted to keeping his nation safe from the rest of the world, Skarner dwells in a chamber beneath Ixaocan where he can hear the..."
     ],
     "tags": [
       "shurima",
@@ -3185,8 +3234,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Skarner",
-        "description": "The ancient, colossal brackern Skarner is revered in Ixtal as one of the founding members of its ruling caste, the Yun Tal. Devoted to keeping his nation safe…"
+        "title": "Current era",
+        "description": "The ancient, colossal brackern Skarner is revered in Ixtal as one of the founding members of its ruling caste, the Yun Tal."
       }
     ]
   },
@@ -3198,21 +3247,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2024,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Hidden amongst the craggy cliffs of the Noxian frontier, under the watchful eyes of his mother, a young dragon is learning what it means to be heir to the Camavoran imperial dragon lineage. Playful and eager to grow up, Smolder looks for…",
+    "short": "Hidden amongst the craggy cliffs of the Noxian frontier, under the watchful eyes of his mother, a young dragon is learning what it means to be heir to the Camavoran imperial dragon lineage.",
     "long": [
-      "Hidden amongst the craggy cliffs of the Noxian frontier, under the watchful eyes of his mother, a young dragon is learning what it means to be heir to the Camavoran imperial dragon lineage. Playful and eager to grow up, Smolder looks for any excuse to... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Hidden amongst the craggy cliffs of the Noxian frontier, under the watchful eyes of his mother, a young dragon is learning what it means to be heir to the Camavoran imperial dragon lineage. Playful and eager to grow up, Smolder looks for any excuse to..."
     ],
     "tags": [
       "noxus",
@@ -3222,8 +3272,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Smolder",
-        "description": "Hidden amongst the craggy cliffs of the Noxian frontier, under the watchful eyes of his mother, a young dragon is learning what it means to be heir to…"
+        "title": "Current era",
+        "description": "Hidden amongst the craggy cliffs of the Noxian frontier, under the watchful eyes of his mother, a young dragon is learning what it means to be heir to the Camavoran imperial dragon lineage."
       }
     ]
   },
@@ -3235,7 +3285,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
@@ -3247,9 +3298,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Sona is Demacia's foremost virtuoso of the stringed etwahl, speaking only through her graceful chords and vibrant arias. This genteel manner has endeared her to the highborn, though others suspect her spellbinding melodies to actually emanate magic—a...",
+    "short": "Sona is Demacia's foremost virtuoso of the stringed etwahl, speaking only through her graceful chords and vibrant arias.",
     "long": [
-      "Sona is Demacia's foremost virtuoso of the stringed etwahl, speaking only through her graceful chords and vibrant arias. This genteel manner has endeared her to the highborn, though others suspect her spellbinding melodies to actually emanate magic—a... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Sona is Demacia's foremost virtuoso of the stringed etwahl, speaking only through her graceful chords and vibrant arias. This genteel manner has endeared her to the highborn, though others suspect her spellbinding melodies to actually emanate magic—a..."
     ],
     "tags": [
       "demacia",
@@ -3259,8 +3310,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Sona",
-        "description": "Sona is Demacia's foremost virtuoso of the stringed etwahl, speaking only through her graceful chords and vibrant arias. This genteel manner has endeared her to the highborn, though…"
+        "title": "Current era",
+        "description": "Sona is Demacia's foremost virtuoso of the stringed etwahl, speaking only through her graceful chords and vibrant arias."
       }
     ]
   },
@@ -3272,21 +3323,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "aspects"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "A wanderer from the celestial dimensions beyond Mount Targon, Soraka gave up her immortality to protect the mortal races from their own more violent instincts. She endeavors to spread the virtues of compassion and mercy to everyone she meets—even...",
+    "short": "A wanderer from the celestial dimensions beyond Mount Targon, Soraka gave up her immortality to protect the mortal races from their own more violent instincts.",
     "long": [
-      "A wanderer from the celestial dimensions beyond Mount Targon, Soraka gave up her immortality to protect the mortal races from their own more violent instincts. She endeavors to spread the virtues of compassion and mercy to everyone she meets—even... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A wanderer from the celestial dimensions beyond Mount Targon, Soraka gave up her immortality to protect the mortal races from their own more violent instincts. She endeavors to spread the virtues of compassion and mercy to everyone she meets—even..."
     ],
     "tags": [
       "targon",
@@ -3296,8 +3348,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Soraka",
-        "description": "A wanderer from the celestial dimensions beyond Mount Targon, Soraka gave up her immortality to protect the mortal races from their own more violent instincts. She endeavors to…"
+        "title": "Current era",
+        "description": "A wanderer from the celestial dimensions beyond Mount Targon, Soraka gave up her immortality to protect the mortal races from their own more violent instincts."
       }
     ]
   },
@@ -3309,7 +3361,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Support"
     ],
@@ -3319,14 +3372,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "Tahm",
       "Tahm Kench"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2015,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Known by many names throughout history, the demon Tahm Kench travels the waterways of Runeterra, feeding his insatiable appetite with the misery of others. Though he may appear singularly charming and proud, he swaggers through the physical realm like a...",
+    "short": "Known by many names throughout history, the demon Tahm Kench travels the waterways of Runeterra, feeding his insatiable appetite with the misery of others.",
     "long": [
-      "Known by many names throughout history, the demon Tahm Kench travels the waterways of Runeterra, feeding his insatiable appetite with the misery of others. Though he may appear singularly charming and proud, he swaggers through the physical realm like a... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Known by many names throughout history, the demon Tahm Kench travels the waterways of Runeterra, feeding his insatiable appetite with the misery of others. Though he may appear singularly charming and proud, he swaggers through the physical realm like a..."
     ],
     "tags": [
       "bilgewater",
@@ -3336,8 +3389,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Tahm Kench",
-        "description": "Known by many names throughout history, the demon Tahm Kench travels the waterways of Runeterra, feeding his insatiable appetite with the misery of others. Though he may appear…"
+        "title": "Current era",
+        "description": "Known by many names throughout history, the demon Tahm Kench travels the waterways of Runeterra, feeding his insatiable appetite with the misery of others."
       }
     ]
   },
@@ -3349,21 +3402,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2016,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Taliyah is a nomadic mage from Shurima, torn between teenage wonder and adult responsibility. She has crossed nearly all of Valoran on a journey to learn the true nature of her growing powers, though more recently she has returned to protect her…",
+    "short": "Taliyah is a nomadic mage from Shurima, torn between teenage wonder and adult responsibility.",
     "long": [
-      "Taliyah is a nomadic mage from Shurima, torn between teenage wonder and adult responsibility. She has crossed nearly all of Valoran on a journey to learn the true nature of her growing powers, though more recently she has returned to protect her tribe... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Taliyah is a nomadic mage from Shurima, torn between teenage wonder and adult responsibility. She has crossed nearly all of Valoran on a journey to learn the true nature of her growing powers, though more recently she has returned to protect her tribe..."
     ],
     "tags": [
       "shurima",
@@ -3373,8 +3427,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Taliyah",
-        "description": "Taliyah is a nomadic mage from Shurima, torn between teenage wonder and adult responsibility. She has crossed nearly all of Valoran on a journey to learn the true…"
+        "title": "Current era",
+        "description": "Taliyah is a nomadic mage from Shurima, torn between teenage wonder and adult responsibility."
       }
     ]
   },
@@ -3386,20 +3440,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Talon is the knife in the darkness, a merciless killer able to strike without warning and escape before any alarm is raised. He carved out a dangerous reputation on the brutal streets of Noxus, where he was forced to fight, kill, and…",
+    "short": "Talon is the knife in the darkness, a merciless killer able to strike without warning and escape before any alarm is raised.",
     "long": [
-      "Talon is the knife in the darkness, a merciless killer able to strike without warning and escape before any alarm is raised. He carved out a dangerous reputation on the brutal streets of Noxus, where he was forced to fight, kill, and steal to survive... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Talon is the knife in the darkness, a merciless killer able to strike without warning and escape before any alarm is raised. He carved out a dangerous reputation on the brutal streets of Noxus, where he was forced to fight, kill, and steal to survive..."
     ],
     "tags": [
       "noxus",
@@ -3408,8 +3463,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Talon",
-        "description": "Talon is the knife in the darkness, a merciless killer able to strike without warning and escape before any alarm is raised. He carved out a dangerous reputation…"
+        "title": "Current era",
+        "description": "Talon is the knife in the darkness, a merciless killer able to strike without warning and escape before any alarm is raised."
       }
     ]
   },
@@ -3421,21 +3476,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "aspects"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Taric is the Aspect of the Protector, wielding incredible power as Runeterra's guardian of life, love, and beauty. Shamed by a dereliction of duty and exiled from his homeland Demacia, Taric ascended Mount Targon to find redemption, only to discover a...",
+    "short": "Taric is the Aspect of the Protector, wielding incredible power as Runeterra's guardian of life, love, and beauty.",
     "long": [
-      "Taric is the Aspect of the Protector, wielding incredible power as Runeterra's guardian of life, love, and beauty. Shamed by a dereliction of duty and exiled from his homeland Demacia, Taric ascended Mount Targon to find redemption, only to discover a... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Taric is the Aspect of the Protector, wielding incredible power as Runeterra's guardian of life, love, and beauty. Shamed by a dereliction of duty and exiled from his homeland Demacia, Taric ascended Mount Targon to find redemption, only to discover a..."
     ],
     "tags": [
       "targon",
@@ -3445,8 +3501,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Taric",
-        "description": "Taric is the Aspect of the Protector, wielding incredible power as Runeterra's guardian of life, love, and beauty. Shamed by a dereliction of duty and exiled from his…"
+        "title": "Current era",
+        "description": "Taric is the Aspect of the Protector, wielding incredible power as Runeterra's guardian of life, love, and beauty."
       }
     ]
   },
@@ -3458,21 +3514,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "yordle"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Undeterred by even the most dangerous and threatening of obstacles, Teemo scouts the world with boundless enthusiasm and a cheerful spirit. A yordle with an unwavering sense of morality, he takes pride in following the Bandle Scout's Code, sometimes...",
+    "short": "Undeterred by even the most dangerous and threatening of obstacles, Teemo scouts the world with boundless enthusiasm and a cheerful spirit.",
     "long": [
-      "Undeterred by even the most dangerous and threatening of obstacles, Teemo scouts the world with boundless enthusiasm and a cheerful spirit. A yordle with an unwavering sense of morality, he takes pride in following the Bandle Scout's Code, sometimes... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Undeterred by even the most dangerous and threatening of obstacles, Teemo scouts the world with boundless enthusiasm and a cheerful spirit. A yordle with an unwavering sense of morality, he takes pride in following the Bandle Scout's Code, sometimes..."
     ],
     "tags": [
       "bandle city",
@@ -3482,8 +3539,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Teemo",
-        "description": "Undeterred by even the most dangerous and threatening of obstacles, Teemo scouts the world with boundless enthusiasm and a cheerful spirit. A yordle with an unwavering sense of…"
+        "title": "Current era",
+        "description": "Undeterred by even the most dangerous and threatening of obstacles, Teemo scouts the world with boundless enthusiasm and a cheerful spirit."
       }
     ]
   },
@@ -3495,21 +3552,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "yordle"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "While many other yordles channel their energy into discovery, invention, or just plain mischief-making, Tristana was always inspired by the adventures of great warriors. She had heard much about Runeterra, its factions, and its wars, and believed her...",
+    "short": "While many other yordles channel their energy into discovery, invention, or just plain mischief-making, Tristana was always inspired by the adventures of great warriors.",
     "long": [
-      "While many other yordles channel their energy into discovery, invention, or just plain mischief-making, Tristana was always inspired by the adventures of great warriors. She had heard much about Runeterra, its factions, and its wars, and believed her... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "While many other yordles channel their energy into discovery, invention, or just plain mischief-making, Tristana was always inspired by the adventures of great warriors. She had heard much about Runeterra, its factions, and its wars, and believed her..."
     ],
     "tags": [
       "bandle city",
@@ -3519,8 +3577,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Tristana",
-        "description": "While many other yordles channel their energy into discovery, invention, or just plain mischief-making, Tristana was always inspired by the adventures of great warriors. She had heard much…"
+        "title": "Current era",
+        "description": "While many other yordles channel their energy into discovery, invention, or just plain mischief-making, Tristana was always inspired by the adventures of great warriors."
       }
     ]
   },
@@ -3532,7 +3590,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
@@ -3544,9 +3603,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Trundle is a hulking and devious troll with a particularly vicious streak, and there is nothing he cannot bludgeon into submission—not even the Freljord itself. Fiercely territorial, he chases down anyone foolish enough to enter his domain. Then, his...",
+    "short": "Trundle is a hulking and devious troll with a particularly vicious streak, and there is nothing he cannot bludgeon into submission—not even the Freljord itself.",
     "long": [
-      "Trundle is a hulking and devious troll with a particularly vicious streak, and there is nothing he cannot bludgeon into submission—not even the Freljord itself. Fiercely territorial, he chases down anyone foolish enough to enter his domain. Then, his... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Trundle is a hulking and devious troll with a particularly vicious streak, and there is nothing he cannot bludgeon into submission—not even the Freljord itself. Fiercely territorial, he chases down anyone foolish enough to enter his domain. Then, his..."
     ],
     "tags": [
       "freljord",
@@ -3556,8 +3615,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Trundle",
-        "description": "Trundle is a hulking and devious troll with a particularly vicious streak, and there is nothing he cannot bludgeon into submission—not even the Freljord itself. Fiercely territorial, he…"
+        "title": "Current era",
+        "description": "Trundle is a hulking and devious troll with a particularly vicious streak, and there is nothing he cannot bludgeon into submission—not even the Freljord itself."
       }
     ]
   },
@@ -3569,21 +3628,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Fueled by unbridled fury and rage, Tryndamere once carved his way through the Freljord, openly challenging the greatest warriors of the north to prepare himself for even darker days ahead. The wrathful barbarian has long sought revenge for the...",
+    "short": "Fueled by unbridled fury and rage, Tryndamere once carved his way through the Freljord, openly challenging the greatest warriors of the north to prepare himself for even darker days ahead.",
     "long": [
-      "Fueled by unbridled fury and rage, Tryndamere once carved his way through the Freljord, openly challenging the greatest warriors of the north to prepare himself for even darker days ahead. The wrathful barbarian has long sought revenge for the... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Fueled by unbridled fury and rage, Tryndamere once carved his way through the Freljord, openly challenging the greatest warriors of the north to prepare himself for even darker days ahead. The wrathful barbarian has long sought revenge for the..."
     ],
     "tags": [
       "freljord",
@@ -3593,8 +3653,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Tryndamere",
-        "description": "Fueled by unbridled fury and rage, Tryndamere once carved his way through the Freljord, openly challenging the greatest warriors of the north to prepare himself for even darker…"
+        "title": "Current era",
+        "description": "Fueled by unbridled fury and rage, Tryndamere once carved his way through the Freljord, openly challenging the greatest warriors of the north to prepare himself for even darker days ahead."
       }
     ]
   },
@@ -3606,7 +3666,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "bilgewater"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Marksman"
     ],
@@ -3616,14 +3677,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "TF",
       "Twisted Fate"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Twisted Fate is an infamous cardsharp and swindler who has gambled and charmed his way across much of the known world, earning the enmity and admiration of the rich and foolish alike. He rarely takes things seriously, greeting each day with a…",
+    "short": "Twisted Fate is an infamous cardsharp and swindler who has gambled and charmed his way across much of the known world, earning the enmity and admiration of the rich and foolish alike.",
     "long": [
-      "Twisted Fate is an infamous cardsharp and swindler who has gambled and charmed his way across much of the known world, earning the enmity and admiration of the rich and foolish alike. He rarely takes things seriously, greeting each day with a mocking... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Twisted Fate is an infamous cardsharp and swindler who has gambled and charmed his way across much of the known world, earning the enmity and admiration of the rich and foolish alike. He rarely takes things seriously, greeting each day with a mocking..."
     ],
     "tags": [
       "bilgewater",
@@ -3633,8 +3694,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Twisted Fate",
-        "description": "Twisted Fate is an infamous cardsharp and swindler who has gambled and charmed his way across much of the known world, earning the enmity and admiration of the…"
+        "title": "Current era",
+        "description": "Twisted Fate is an infamous cardsharp and swindler who has gambled and charmed his way across much of the known world, earning the enmity and admiration of the rich and foolish alike."
       }
     ]
   },
@@ -3646,21 +3707,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A Zaunite plague rat by birth, but a connoisseur of filth by passion, Twitch is not afraid to get his paws dirty. Aiming a chem-powered crossbow at the gilded heart of Piltover, he has vowed to show those in the city above…",
+    "short": "A Zaunite plague rat by birth, but a connoisseur of filth by passion, Twitch is not afraid to get his paws dirty.",
     "long": [
-      "A Zaunite plague rat by birth, but a connoisseur of filth by passion, Twitch is not afraid to get his paws dirty. Aiming a chem-powered crossbow at the gilded heart of Piltover, he has vowed to show those in the city above just how filthy they really... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A Zaunite plague rat by birth, but a connoisseur of filth by passion, Twitch is not afraid to get his paws dirty. Aiming a chem-powered crossbow at the gilded heart of Piltover, he has vowed to show those in the city above just how filthy they really..."
     ],
     "tags": [
       "zaun",
@@ -3670,8 +3732,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Twitch",
-        "description": "A Zaunite plague rat by birth, but a connoisseur of filth by passion, Twitch is not afraid to get his paws dirty. Aiming a chem-powered crossbow at the…"
+        "title": "Current era",
+        "description": "A Zaunite plague rat by birth, but a connoisseur of filth by passion, Twitch is not afraid to get his paws dirty."
       }
     ]
   },
@@ -3683,21 +3745,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "The most powerful spirit walker alive, Udyr communes with all the spirits of the Freljord, whether by empathically understanding their needs, or by channeling and transforming their ethereal energy into his own primal fighting style. He seeks balance...",
+    "short": "The most powerful spirit walker alive, Udyr communes with all the spirits of the Freljord, whether by empathically understanding their needs, or by channeling and transforming their ethereal energy into his own primal fighting style.",
     "long": [
-      "The most powerful spirit walker alive, Udyr communes with all the spirits of the Freljord, whether by empathically understanding their needs, or by channeling and transforming their ethereal energy into his own primal fighting style. He seeks balance... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The most powerful spirit walker alive, Udyr communes with all the spirits of the Freljord, whether by empathically understanding their needs, or by channeling and transforming their ethereal energy into his own primal fighting style. He seeks balance..."
     ],
     "tags": [
       "freljord",
@@ -3707,8 +3770,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Udyr",
-        "description": "The most powerful spirit walker alive, Udyr communes with all the spirits of the Freljord, whether by empathically understanding their needs, or by channeling and transforming their ethereal…"
+        "title": "Current era",
+        "description": "The most powerful spirit walker alive, Udyr communes with all the spirits of the Freljord, whether by empathically understanding their needs, or by channeling and transforming their ethereal energy into his own primal fighting style."
       }
     ]
   },
@@ -3720,7 +3783,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
@@ -3732,9 +3796,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Once a powerful Noxian headsman, Urgot was betrayed by the empire for which he had killed so many. Bound in iron chains, he was forced to learn the true meaning of strength in the Dredge—a prison mine deep beneath Zaun. Emerging in…",
+    "short": "Once a powerful Noxian headsman, Urgot was betrayed by the empire for which he had killed so many.",
     "long": [
-      "Once a powerful Noxian headsman, Urgot was betrayed by the empire for which he had killed so many. Bound in iron chains, he was forced to learn the true meaning of strength in the Dredge—a prison mine deep beneath Zaun. Emerging in a disaster that... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Once a powerful Noxian headsman, Urgot was betrayed by the empire for which he had killed so many. Bound in iron chains, he was forced to learn the true meaning of strength in the Dredge—a prison mine deep beneath Zaun. Emerging in a disaster that..."
     ],
     "tags": [
       "zaun",
@@ -3744,8 +3808,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Urgot",
-        "description": "Once a powerful Noxian headsman, Urgot was betrayed by the empire for which he had killed so many. Bound in iron chains, he was forced to learn the…"
+        "title": "Current era",
+        "description": "Once a powerful Noxian headsman, Urgot was betrayed by the empire for which he had killed so many."
       }
     ]
   },
@@ -3757,21 +3821,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman",
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Shauna Vayne is a deadly, remorseless Demacian monster hunter, who has dedicated her life to finding and destroying the demon that murdered her family. Armed with a wrist-mounted crossbow and a heart full of vengeance, she is only truly happy when...",
+    "short": "Shauna Vayne is a deadly, remorseless Demacian monster hunter, who has dedicated her life to finding and destroying the demon that murdered her family.",
     "long": [
-      "Shauna Vayne is a deadly, remorseless Demacian monster hunter, who has dedicated her life to finding and destroying the demon that murdered her family. Armed with a wrist-mounted crossbow and a heart full of vengeance, she is only truly happy when... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Shauna Vayne is a deadly, remorseless Demacian monster hunter, who has dedicated her life to finding and destroying the demon that murdered her family. Armed with a wrist-mounted crossbow and a heart full of vengeance, she is only truly happy when..."
     ],
     "tags": [
       "demacia",
@@ -3781,8 +3846,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Vayne",
-        "description": "Shauna Vayne is a deadly, remorseless Demacian monster hunter, who has dedicated her life to finding and destroying the demon that murdered her family. Armed with a wrist-mounted…"
+        "title": "Current era",
+        "description": "Shauna Vayne is a deadly, remorseless Demacian monster hunter, who has dedicated her life to finding and destroying the demon that murdered her family."
       }
     ]
   },
@@ -3794,20 +3859,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "yordle"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "An enthusiastic master of dark sorcery, Veigar has embraced powers that few mortals dare approach. As a free-spirited inhabitant of Bandle City, he longed to push beyond the limitations of yordle magic, and turned instead to arcane texts that had been...",
+    "short": "An enthusiastic master of dark sorcery, Veigar has embraced powers that few mortals dare approach.",
     "long": [
-      "An enthusiastic master of dark sorcery, Veigar has embraced powers that few mortals dare approach. As a free-spirited inhabitant of Bandle City, he longed to push beyond the limitations of yordle magic, and turned instead to arcane texts that had been... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "An enthusiastic master of dark sorcery, Veigar has embraced powers that few mortals dare approach. As a free-spirited inhabitant of Bandle City, he longed to push beyond the limitations of yordle magic, and turned instead to arcane texts that had been..."
     ],
     "tags": [
       "bandle city",
@@ -3816,8 +3882,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Veigar",
-        "description": "An enthusiastic master of dark sorcery, Veigar has embraced powers that few mortals dare approach. As a free-spirited inhabitant of Bandle City, he longed to push beyond the…"
+        "title": "Current era",
+        "description": "An enthusiastic master of dark sorcery, Veigar has embraced powers that few mortals dare approach."
       }
     ]
   },
@@ -3829,7 +3895,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "void"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
@@ -3839,14 +3906,14 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
       "Vel'Koz",
       "Velkoz"
     ],
-    "releaseYear": 2010,
+    "releaseYear": 2014,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "It is unclear if Vel'Koz was the first Void-spawn to emerge on Runeterra, but there has certainly never been another to match his level of cruel, calculating sentience. While his kin devour or defile everything around them, he seeks instead to...",
+    "short": "It is unclear if Vel'Koz was the first Void-spawn to emerge on Runeterra, but there has certainly never been another to match his level of cruel, calculating sentience.",
     "long": [
-      "It is unclear if Vel'Koz was the first Void-spawn to emerge on Runeterra, but there has certainly never been another to match his level of cruel, calculating sentience. While his kin devour or defile everything around them, he seeks instead to... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "It is unclear if Vel'Koz was the first Void-spawn to emerge on Runeterra, but there has certainly never been another to match his level of cruel, calculating sentience. While his kin devour or defile everything around them, he seeks instead to..."
     ],
     "tags": [
       "void",
@@ -3856,8 +3923,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Vel'Koz",
-        "description": "It is unclear if Vel'Koz was the first Void-spawn to emerge on Runeterra, but there has certainly never been another to match his level of cruel, calculating sentience.…"
+        "title": "Current era",
+        "description": "It is unclear if Vel'Koz was the first Void-spawn to emerge on Runeterra, but there has certainly never been another to match his level of cruel, calculating sentience."
       }
     ]
   },
@@ -3869,20 +3936,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shadow-isles"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2021,
     "complexity": 2,
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "In the black heart of the Shadow Isles, a lone yordle trudges through the spectral fog, content in its murky misery. With an endless supply of teen angst and a powerful shadow in tow, Vex lives in her own self-made slice of…",
+    "short": "In the black heart of the Shadow Isles, a lone yordle trudges through the spectral fog, content in its murky misery.",
     "long": [
-      "In the black heart of the Shadow Isles, a lone yordle trudges through the spectral fog, content in its murky misery. With an endless supply of teen angst and a powerful shadow in tow, Vex lives in her own self-made slice of gloom, far from the revolting... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "In the black heart of the Shadow Isles, a lone yordle trudges through the spectral fog, content in its murky misery. With an endless supply of teen angst and a powerful shadow in tow, Vex lives in her own self-made slice of gloom, far from the revolting..."
     ],
     "tags": [
       "shadow isles",
@@ -3891,8 +3959,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Vex",
-        "description": "In the black heart of the Shadow Isles, a lone yordle trudges through the spectral fog, content in its murky misery. With an endless supply of teen angst…"
+        "title": "Current era",
+        "description": "In the black heart of the Shadow Isles, a lone yordle trudges through the spectral fog, content in its murky misery."
       }
     ]
   },
@@ -3904,7 +3972,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "noxus"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Fighter"
     ],
@@ -3916,9 +3985,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A fiend with a thirst for mortal blood, Vladimir has influenced the affairs of Noxus since the empire's earliest days. In addition to unnaturally extending his life, his mastery of hemomancy allows him to control the minds and bodies of others as…",
+    "short": "A fiend with a thirst for mortal blood, Vladimir has influenced the affairs of Noxus since the empire's earliest days.",
     "long": [
-      "A fiend with a thirst for mortal blood, Vladimir has influenced the affairs of Noxus since the empire's earliest days. In addition to unnaturally extending his life, his mastery of hemomancy allows him to control the minds and bodies of others as easily... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A fiend with a thirst for mortal blood, Vladimir has influenced the affairs of Noxus since the empire's earliest days. In addition to unnaturally extending his life, his mastery of hemomancy allows him to control the minds and bodies of others as easily..."
     ],
     "tags": [
       "noxus",
@@ -3928,8 +3997,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Vladimir",
-        "description": "A fiend with a thirst for mortal blood, Vladimir has influenced the affairs of Noxus since the empire's earliest days. In addition to unnaturally extending his life, his…"
+        "title": "Current era",
+        "description": "A fiend with a thirst for mortal blood, Vladimir has influenced the affairs of Noxus since the empire's earliest days."
       }
     ]
   },
@@ -3941,21 +4010,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "freljord"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "To those who still revere him, the Volibear is the storm made manifest. Destructive, wild, and stubbornly resolute, he existed before mortals walked the Freljord's tundra, and is fiercely protective of the lands that he and his demi-god kin created...",
+    "short": "To those who still revere him, the Volibear is the storm made manifest.",
     "long": [
-      "To those who still revere him, the Volibear is the storm made manifest. Destructive, wild, and stubbornly resolute, he existed before mortals walked the Freljord's tundra, and is fiercely protective of the lands that he and his demi-god kin created... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "To those who still revere him, the Volibear is the storm made manifest. Destructive, wild, and stubbornly resolute, he existed before mortals walked the Freljord's tundra, and is fiercely protective of the lands that he and his demi-god kin created..."
     ],
     "tags": [
       "freljord",
@@ -3965,8 +4035,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Volibear",
-        "description": "To those who still revere him, the Volibear is the storm made manifest. Destructive, wild, and stubbornly resolute, he existed before mortals walked the Freljord's tundra, and is…"
+        "title": "Current era",
+        "description": "To those who still revere him, the Volibear is the storm made manifest."
       }
     ]
   },
@@ -3978,21 +4048,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Warwick is a monster who hunts the gray alleys of Zaun. Transformed by agonizing experiments, his body is fused with an intricate system of chambers and pumps, machinery filling his veins with alchemical rage. He bursts from the shadows to prey upon...",
+    "short": "Warwick is a monster who hunts the gray alleys of Zaun.",
     "long": [
-      "Warwick is a monster who hunts the gray alleys of Zaun. Transformed by agonizing experiments, his body is fused with an intricate system of chambers and pumps, machinery filling his veins with alchemical rage. He bursts from the shadows to prey upon... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Warwick is a monster who hunts the gray alleys of Zaun. Transformed by agonizing experiments, his body is fused with an intricate system of chambers and pumps, machinery filling his veins with alchemical rage. He bursts from the shadows to prey upon..."
     ],
     "tags": [
       "zaun",
@@ -4002,8 +4073,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Warwick",
-        "description": "Warwick is a monster who hunts the gray alleys of Zaun. Transformed by agonizing experiments, his body is fused with an intricate system of chambers and pumps, machinery…"
+        "title": "Current era",
+        "description": "Warwick is a monster who hunts the gray alleys of Zaun."
       }
     ]
   },
@@ -4015,21 +4086,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Wukong is a vastayan trickster who uses his strength, agility, and intelligence to confuse his opponents and gain the upper hand. After finding a lifelong friend in the warrior known as Master Yi, Wukong became the last student of the ancient martial...",
+    "short": "Wukong is a vastayan trickster who uses his strength, agility, and intelligence to confuse his opponents and gain the upper hand.",
     "long": [
-      "Wukong is a vastayan trickster who uses his strength, agility, and intelligence to confuse his opponents and gain the upper hand. After finding a lifelong friend in the warrior known as Master Yi, Wukong became the last student of the ancient martial... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Wukong is a vastayan trickster who uses his strength, agility, and intelligence to confuse his opponents and gain the upper hand. After finding a lifelong friend in the warrior known as Master Yi, Wukong became the last student of the ancient martial..."
     ],
     "tags": [
       "ionia",
@@ -4039,8 +4111,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Wukong",
-        "description": "Wukong is a vastayan trickster who uses his strength, agility, and intelligence to confuse his opponents and gain the upper hand. After finding a lifelong friend in the…"
+        "title": "Current era",
+        "description": "Wukong is a vastayan trickster who uses his strength, agility, and intelligence to confuse his opponents and gain the upper hand."
       }
     ]
   },
@@ -4052,21 +4124,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Xerath is an Ascended Magus of ancient Shurima, a being of arcane energy writhing in the broken shards of a magical sarcophagus. For millennia, he was trapped beneath the desert sands, but the rise of Shurima freed him from his ancient prison.…",
+    "short": "Xerath is an Ascended Magus of ancient Shurima, a being of arcane energy writhing in the broken shards of a magical sarcophagus.",
     "long": [
-      "Xerath is an Ascended Magus of ancient Shurima, a being of arcane energy writhing in the broken shards of a magical sarcophagus. For millennia, he was trapped beneath the desert sands, but the rise of Shurima freed him from his ancient prison. Driven... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Xerath is an Ascended Magus of ancient Shurima, a being of arcane energy writhing in the broken shards of a magical sarcophagus. For millennia, he was trapped beneath the desert sands, but the rise of Shurima freed him from his ancient prison. Driven..."
     ],
     "tags": [
       "shurima",
@@ -4076,8 +4149,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Xerath",
-        "description": "Xerath is an Ascended Magus of ancient Shurima, a being of arcane energy writhing in the broken shards of a magical sarcophagus. For millennia, he was trapped beneath…"
+        "title": "Current era",
+        "description": "Xerath is an Ascended Magus of ancient Shurima, a being of arcane energy writhing in the broken shards of a magical sarcophagus."
       }
     ]
   },
@@ -4089,7 +4162,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "demacia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
@@ -4103,9 +4177,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 58,
     "popularity": 52,
     "verified": false,
-    "short": "Xin Zhao is a resolute warrior loyal to the ruling Lightshield dynasty. Once condemned to the fighting pits of Noxus, he survived countless gladiatorial bouts, but after being freed by Demacian forces, he swore his life and allegiance to these brave...",
+    "short": "Xin Zhao is a resolute warrior loyal to the ruling Lightshield dynasty.",
     "long": [
-      "Xin Zhao is a resolute warrior loyal to the ruling Lightshield dynasty. Once condemned to the fighting pits of Noxus, he survived countless gladiatorial bouts, but after being freed by Demacian forces, he swore his life and allegiance to these brave... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Xin Zhao is a resolute warrior loyal to the ruling Lightshield dynasty. Once condemned to the fighting pits of Noxus, he survived countless gladiatorial bouts, but after being freed by Demacian forces, he swore his life and allegiance to these brave..."
     ],
     "tags": [
       "demacia",
@@ -4115,8 +4189,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Xin Zhao",
-        "description": "Xin Zhao is a resolute warrior loyal to the ruling Lightshield dynasty. Once condemned to the fighting pits of Noxus, he survived countless gladiatorial bouts, but after being…"
+        "title": "Current era",
+        "description": "Xin Zhao is a resolute warrior loyal to the ruling Lightshield dynasty."
       }
     ]
   },
@@ -4128,21 +4202,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shadow-isles"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter",
       "Tank"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2011,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "The last survivor of a long-forgotten religious order, Yorick is both blessed and cursed with power over the dead. Trapped on the Shadow Isles, his only companions are the rotting corpses and shrieking wraiths that he gathers to him. Yorick's monstrous...",
+    "short": "The last survivor of a long-forgotten religious order, Yorick is both blessed and cursed with power over the dead.",
     "long": [
-      "The last survivor of a long-forgotten religious order, Yorick is both blessed and cursed with power over the dead. Trapped on the Shadow Isles, his only companions are the rotting corpses and shrieking wraiths that he gathers to him. Yorick's monstrous... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "The last survivor of a long-forgotten religious order, Yorick is both blessed and cursed with power over the dead. Trapped on the Shadow Isles, his only companions are the rotting corpses and shrieking wraiths that he gathers to him. Yorick's monstrous..."
     ],
     "tags": [
       "shadow isles",
@@ -4152,43 +4227,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Yorick",
-        "description": "The last survivor of a long-forgotten religious order, Yorick is both blessed and cursed with power over the dead. Trapped on the Shadow Isles, his only companions are…"
-      }
-    ]
-  },
-  {
-    "slug": "yunara",
-    "name": "Yunara",
-    "title": "The Unbroken Faith",
-    "region": "ionia",
-    "factions": [
-      "ionia"
-    ],
-    "roles": [
-      "Marksman"
-    ],
-    "status": "Alive",
-    "species": "Unknown",
-    "aliases": [],
-    "releaseYear": 2010,
-    "complexity": 3,
-    "importance": 72,
-    "popularity": 68,
-    "verified": false,
-    "short": "Unwavering in her devotion to Ionia, Yunara has spent centuries cloistered away in the spirit realm honing her skills with the Aion Er'na, a legendary Kinkou relic. Despite all she has sacrificed, Yunara's vow to rid the land of disharmony and strife...",
-    "long": [
-      "Unwavering in her devotion to Ionia, Yunara has spent centuries cloistered away in the spirit realm honing her skills with the Aion Er'na, a legendary Kinkou relic. Despite all she has sacrificed, Yunara's vow to rid the land of disharmony and strife... LoreGraph keeps this profile conservative until additional official sources are reviewed."
-    ],
-    "tags": [
-      "ionia",
-      "marksman"
-    ],
-    "timeline": [
-      {
-        "era": "Modern Runeterra",
-        "title": "Yunara",
-        "description": "Unwavering in her devotion to Ionia, Yunara has spent centuries cloistered away in the spirit realm honing her skills with the Aion Er'na, a legendary Kinkou relic. Despite…"
+        "title": "Current era",
+        "description": "The last survivor of a long-forgotten religious order, Yorick is both blessed and cursed with power over the dead."
       }
     ]
   },
@@ -4200,21 +4240,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "yordle"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2019,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A magical cat from Bandle City, Yuumi was once the familiar of a yordle enchantress, Norra. When her master mysteriously disappeared, Yuumi became the Keeper of Norra's sentient Book of Thresholds, traveling through portals in its pages to search for...",
+    "short": "A magical cat from Bandle City, Yuumi was once the familiar of a yordle enchantress, Norra.",
     "long": [
-      "A magical cat from Bandle City, Yuumi was once the familiar of a yordle enchantress, Norra. When her master mysteriously disappeared, Yuumi became the Keeper of Norra's sentient Book of Thresholds, traveling through portals in its pages to search for... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A magical cat from Bandle City, Yuumi was once the familiar of a yordle enchantress, Norra. When her master mysteriously disappeared, Yuumi became the Keeper of Norra's sentient Book of Thresholds, traveling through portals in its pages to search for..."
     ],
     "tags": [
       "bandle city",
@@ -4224,8 +4265,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Yuumi",
-        "description": "A magical cat from Bandle City, Yuumi was once the familiar of a yordle enchantress, Norra. When her master mysteriously disappeared, Yuumi became the Keeper of Norra's sentient…"
+        "title": "Current era",
+        "description": "A magical cat from Bandle City, Yuumi was once the familiar of a yordle enchantress, Norra."
       }
     ]
   },
@@ -4237,7 +4278,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "shurima"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Fighter"
     ],
     "status": "Alive",
@@ -4248,9 +4290,9 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A fallen god wielding both divine and profane power, Zaahen hunts his fellow Darkin while defying the corruption that threatens to consume him. Once willingly sealed within his glaive to stave off madness, he now walks free, noble in heart and vicious...",
+    "short": "A fallen god wielding both divine and profane power, Zaahen hunts his fellow Darkin while defying the corruption that threatens to consume him.",
     "long": [
-      "A fallen god wielding both divine and profane power, Zaahen hunts his fellow Darkin while defying the corruption that threatens to consume him. Once willingly sealed within his glaive to stave off madness, he now walks free, noble in heart and vicious... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A fallen god wielding both divine and profane power, Zaahen hunts his fellow Darkin while defying the corruption that threatens to consume him. Once willingly sealed within his glaive to stave off madness, he now walks free, noble in heart and vicious..."
     ],
     "tags": [
       "shurima",
@@ -4259,8 +4301,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Zaahen",
-        "description": "A fallen god wielding both divine and profane power, Zaahen hunts his fellow Darkin while defying the corruption that threatens to consume him. Once willingly sealed within his…"
+        "title": "Current era",
+        "description": "A fallen god wielding both divine and profane power, Zaahen hunts his fellow Darkin while defying the corruption that threatens to consume him."
       }
     ]
   },
@@ -4272,21 +4314,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Tank",
       "Fighter"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2013,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Zac is the product of a toxic spill that ran through a chemtech seam and pooled in an isolated cavern deep in Zaun's Sump. Despite such humble origins, Zac has grown from primordial ooze into a thinking being who dwells in the…",
+    "short": "Zac is the product of a toxic spill that ran through a chemtech seam and pooled in an isolated cavern deep in Zaun's Sump.",
     "long": [
-      "Zac is the product of a toxic spill that ran through a chemtech seam and pooled in an isolated cavern deep in Zaun's Sump. Despite such humble origins, Zac has grown from primordial ooze into a thinking being who dwells in the city's pipes, occasionally... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Zac is the product of a toxic spill that ran through a chemtech seam and pooled in an isolated cavern deep in Zaun's Sump. Despite such humble origins, Zac has grown from primordial ooze into a thinking being who dwells in the city's pipes, occasionally..."
     ],
     "tags": [
       "zaun",
@@ -4296,8 +4339,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Zac",
-        "description": "Zac is the product of a toxic spill that ran through a chemtech seam and pooled in an isolated cavern deep in Zaun's Sump. Despite such humble origins,…"
+        "title": "Current era",
+        "description": "Zac is the product of a toxic spill that ran through a chemtech seam and pooled in an isolated cavern deep in Zaun's Sump."
       }
     ]
   },
@@ -4309,20 +4352,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "ionia"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Assassin"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "Utterly ruthless and without mercy, Zed is the leader of the Order of Shadow, an organization he created with the intent of militarizing Ionia's magical and martial traditions to drive out Noxian invaders. During the war, desperation led him to unlock...",
+    "short": "Utterly ruthless and without mercy, Zed is the leader of the Order of Shadow, an organization he created with the intent of militarizing Ionia's magical and martial traditions to drive out Noxian invaders.",
     "long": [
-      "Utterly ruthless and without mercy, Zed is the leader of the Order of Shadow, an organization he created with the intent of militarizing Ionia's magical and martial traditions to drive out Noxian invaders. During the war, desperation led him to unlock... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Utterly ruthless and without mercy, Zed is the leader of the Order of Shadow, an organization he created with the intent of militarizing Ionia's magical and martial traditions to drive out Noxian invaders. During the war, desperation led him to unlock..."
     ],
     "tags": [
       "ionia",
@@ -4331,8 +4375,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Zed",
-        "description": "Utterly ruthless and without mercy, Zed is the leader of the Order of Shadow, an organization he created with the intent of militarizing Ionia's magical and martial traditions…"
+        "title": "Current era",
+        "description": "Utterly ruthless and without mercy, Zed is the leader of the Order of Shadow, an organization he created with the intent of militarizing Ionia's magical and martial traditions to drive out Noxian invaders."
       }
     ]
   },
@@ -4344,20 +4388,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Marksman"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2022,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "A headstrong, spirited young woman from Zaun's working-class, Zeri channels her electric magic to charge herself and her custom-crafted gun. Her volatile power mirrors her emotions, its sparks reflecting her lightning-fast approach to life. Deeply...",
+    "short": "A headstrong, spirited young woman from Zaun's working-class, Zeri channels her electric magic to charge herself and her custom-crafted gun.",
     "long": [
-      "A headstrong, spirited young woman from Zaun's working-class, Zeri channels her electric magic to charge herself and her custom-crafted gun. Her volatile power mirrors her emotions, its sparks reflecting her lightning-fast approach to life. Deeply... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "A headstrong, spirited young woman from Zaun's working-class, Zeri channels her electric magic to charge herself and her custom-crafted gun. Her volatile power mirrors her emotions, its sparks reflecting her lightning-fast approach to life. Deeply..."
     ],
     "tags": [
       "zaun",
@@ -4366,8 +4411,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Zeri",
-        "description": "A headstrong, spirited young woman from Zaun's working-class, Zeri channels her electric magic to charge herself and her custom-crafted gun. Her volatile power mirrors her emotions, its sparks…"
+        "title": "Current era",
+        "description": "A headstrong, spirited young woman from Zaun's working-class, Zeri channels her electric magic to charge herself and her custom-crafted gun."
       }
     ]
   },
@@ -4379,20 +4424,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "zaun"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "With a love of big bombs and short fuses, the yordle Ziggs is an explosive force of nature. As an inventor's assistant in Piltover, he was bored by his predictable life and befriended a mad, blue-haired bomber named Jinx. After a wild…",
+    "short": "With a love of big bombs and short fuses, the yordle Ziggs is an explosive force of nature.",
     "long": [
-      "With a love of big bombs and short fuses, the yordle Ziggs is an explosive force of nature. As an inventor's assistant in Piltover, he was bored by his predictable life and befriended a mad, blue-haired bomber named Jinx. After a wild night on the town... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "With a love of big bombs and short fuses, the yordle Ziggs is an explosive force of nature. As an inventor's assistant in Piltover, he was bored by his predictable life and befriended a mad, blue-haired bomber named Jinx. After a wild night on the town..."
     ],
     "tags": [
       "zaun",
@@ -4401,8 +4447,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Ziggs",
-        "description": "With a love of big bombs and short fuses, the yordle Ziggs is an explosive force of nature. As an inventor's assistant in Piltover, he was bored by…"
+        "title": "Current era",
+        "description": "With a love of big bombs and short fuses, the yordle Ziggs is an explosive force of nature."
       }
     ]
   },
@@ -4412,21 +4458,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "The Chronokeeper",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Support",
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2009,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Once a powerful Icathian mage, Zilean became obsessed with the passage of time after witnessing his homeland's destruction by the Void. Unable to spare even a minute to grieve the catastrophic loss, he called upon ancient temporal magic to divine all...",
+    "short": "Once a powerful Icathian mage, Zilean became obsessed with the passage of time after witnessing his homeland's destruction by the Void.",
     "long": [
-      "Once a powerful Icathian mage, Zilean became obsessed with the passage of time after witnessing his homeland's destruction by the Void. Unable to spare even a minute to grieve the catastrophic loss, he called upon ancient temporal magic to divine all... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Once a powerful Icathian mage, Zilean became obsessed with the passage of time after witnessing his homeland's destruction by the Void. Unable to spare even a minute to grieve the catastrophic loss, he called upon ancient temporal magic to divine all..."
     ],
     "tags": [
       "runeterra",
@@ -4436,8 +4483,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Zilean",
-        "description": "Once a powerful Icathian mage, Zilean became obsessed with the passage of time after witnessing his homeland's destruction by the Void. Unable to spare even a minute to…"
+        "title": "Current era",
+        "description": "Once a powerful Icathian mage, Zilean became obsessed with the passage of time after witnessing his homeland's destruction by the Void."
       }
     ]
   },
@@ -4449,20 +4496,21 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "factions": [
       "aspects"
     ],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2017,
     "complexity": 3,
     "importance": 72,
     "popularity": 68,
     "verified": false,
-    "short": "As the embodiment of mischief, imagination, and change, Zoe acts as the cosmic messenger of Targon, heralding major events that reshape worlds. Her mere presence warps the arcane mathematics governing realities, sometimes causing cataclysms without...",
+    "short": "As the embodiment of mischief, imagination, and change, Zoe acts as the cosmic messenger of Targon, heralding major events that reshape worlds.",
     "long": [
-      "As the embodiment of mischief, imagination, and change, Zoe acts as the cosmic messenger of Targon, heralding major events that reshape worlds. Her mere presence warps the arcane mathematics governing realities, sometimes causing cataclysms without... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "As the embodiment of mischief, imagination, and change, Zoe acts as the cosmic messenger of Targon, heralding major events that reshape worlds. Her mere presence warps the arcane mathematics governing realities, sometimes causing cataclysms without..."
     ],
     "tags": [
       "targon",
@@ -4471,8 +4519,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Zoe",
-        "description": "As the embodiment of mischief, imagination, and change, Zoe acts as the cosmic messenger of Targon, heralding major events that reshape worlds. Her mere presence warps the arcane…"
+        "title": "Current era",
+        "description": "As the embodiment of mischief, imagination, and change, Zoe acts as the cosmic messenger of Targon, heralding major events that reshape worlds."
       }
     ]
   },
@@ -4482,21 +4530,22 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "title": "Rise Of The Thorns",
     "region": "runeterra",
     "factions": [],
-    "roles": [
+    "roles": [],
+    "gameplayRoles": [
       "Mage",
       "Support"
     ],
     "status": "Alive",
     "species": "Unknown",
     "aliases": [],
-    "releaseYear": 2010,
+    "releaseYear": 2012,
     "complexity": 2,
     "importance": 42,
     "popularity": 38,
     "verified": false,
-    "short": "Born in an ancient, sorcerous catastrophe, Zyra is the wrath of nature given form—an alluring hybrid of plant and human, kindling new life with every step. She views the many mortals of Valoran as little more than prey for her seeded progeny,…",
+    "short": "Born in an ancient, sorcerous catastrophe, Zyra is the wrath of nature given form—an alluring hybrid of plant and human, kindling new life with every step.",
     "long": [
-      "Born in an ancient, sorcerous catastrophe, Zyra is the wrath of nature given form—an alluring hybrid of plant and human, kindling new life with every step. She views the many mortals of Valoran as little more than prey for her seeded progeny, and thinks... LoreGraph keeps this profile conservative until additional official sources are reviewed."
+      "Born in an ancient, sorcerous catastrophe, Zyra is the wrath of nature given form—an alluring hybrid of plant and human, kindling new life with every step. She views the many mortals of Valoran as little more than prey for her seeded progeny, and thinks..."
     ],
     "tags": [
       "runeterra",
@@ -4506,8 +4555,8 @@ export const rosterExpansionSeeds: CharacterSeed[] = [
     "timeline": [
       {
         "era": "Modern Runeterra",
-        "title": "Zyra",
-        "description": "Born in an ancient, sorcerous catastrophe, Zyra is the wrath of nature given form—an alluring hybrid of plant and human, kindling new life with every step. She views…"
+        "title": "Current era",
+        "description": "Born in an ancient, sorcerous catastrophe, Zyra is the wrath of nature given form—an alluring hybrid of plant and human, kindling new life with every step."
       }
     ]
   }

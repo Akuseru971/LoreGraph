@@ -238,6 +238,14 @@ export const factions: Faction[] = [
     "#D8C878",
     "A scattered order dedicated to pushing back the Black Mist wherever it lands.",
   ),
+  f(
+    "medarda",
+    "House Medarda",
+    74,
+    "noxus",
+    "#A03041",
+    "A Noxian noble house whose influence spans generals, diplomats, and heirs trained in political ruthlessness.",
+  ),
 ];
 
 export const factionById = new Map(factions.map((x) => [x.id, x]));

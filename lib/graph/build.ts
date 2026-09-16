@@ -6,6 +6,10 @@ import {
   regions,
   relationships,
 } from "@/data";
+import {
+  characterConceptExplanation,
+  characterEventExplanation,
+} from "@/lib/knowledge/edge-explanations";
 import { CATEGORY_PATH_COST } from "@/lib/truth/layer";
 import type {
   ConnectionCategory,
@@ -227,7 +231,11 @@ export function buildLoreGraph(): LoreGraph {
         confidence: "STRONG",
         weight: CATEGORY_PATH_COST.SHARED_EVENT,
         importance: Math.round(event.importance * 0.7),
-        description: event.description,
+        description: characterEventExplanation(
+          characterId,
+          event.id,
+          event.description,
+        ),
         connectionKind: "indirect",
         label: "Event",
         canonStatus: event.canonStatus,
@@ -249,7 +257,11 @@ export function buildLoreGraph(): LoreGraph {
         confidence: "STRONG",
         weight: CATEGORY_PATH_COST.STRUCTURAL_LORE,
         importance: Math.round(entity.importance * 0.75),
-        description: entity.shortDescription,
+        description: characterConceptExplanation(
+          charId,
+          entity.id,
+          entity.shortDescription,
+        ),
         connectionKind: "indirect",
         label: entity.name,
         canonStatus: "CURRENT_CANON",

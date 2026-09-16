@@ -81,6 +81,19 @@ const entitySeeds: Array<Omit<LoreEntity, "type" | "universeId" | "verified">> =
     connectEligible: true,
   },
   {
+    id: "concept:aion-erna",
+    slug: "aion-erna",
+    name: "Aion Er'na",
+    importance: 68,
+    shortDescription:
+      "A legendary Kinkou relic — a weapon Yunara has trained with for centuries in the spirit realm.",
+    longDescription:
+      "The Aion Er'na is tied to Ionian balance and the Kinkou Order. Yunara's mastery of it defines her role as a guardian who emerged from long isolation.",
+    characterSlugs: ["yunara", "shen", "kennen"],
+    eventSlugs: ["kinkou-fracture"],
+    accentColor: "#7FA8C7",
+  },
+  {
     id: "concept:ruination",
     slug: "ruination",
     name: "The Ruination",

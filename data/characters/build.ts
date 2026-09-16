@@ -1,7 +1,9 @@
+import { computeCompleteness } from "@/lib/knowledge/completeness";
 import { normalizeCanonStatus } from "@/lib/canon/model";
 import type {
   Character,
   CharacterStatus,
+  Continuity,
   LoreComplexity,
   RegionSlug,
   TimelineBeat,
@@ -26,12 +28,16 @@ export interface CharacterSeed {
   title: string;
   region: RegionSlug;
   factions: string[];
+  /** Narrative / occupational roles from lore — not gameplay classes. */
   roles: string[];
+  /** Gameplay metadata from Data Dragon — kept separate from lore roles. */
+  gameplayRoles?: string[];
   status: CharacterStatus;
   species: string;
   aliases?: string[];
   accentColor?: string;
-  releaseYear: number;
+  releaseYear: number | null;
+  releaseDate?: string | null;
   complexity: LoreComplexity;
   difficulty?: LoreComplexity;
   featured?: boolean;
@@ -44,7 +50,10 @@ export interface CharacterSeed {
   timeline?: TimelineSeed[];
   sources?: string[];
   canonStatus?: string;
+  continuity?: Continuity;
   verified?: boolean;
+  completenessTier?: "A" | "B" | "C";
+  needsResearch?: boolean;
 }
 
 export const charIdOf = (slug: string) => `char:${slug}`;
@@ -59,9 +68,22 @@ export function buildCharacter(seed: CharacterSeed): Character {
     order: index + 1,
     characterIds: [charIdOf(seed.slug), ...(beat.with ?? []).map(charIdOf)],
     eventId: beat.event ? `event:${beat.event}` : undefined,
+    sourceIds: seed.sources,
+    canonStatus: normalizeCanonStatus(seed.canonStatus),
+    continuity: seed.continuity,
   }));
 
-  return {
+  const gameplayData =
+    seed.gameplayRoles && seed.gameplayRoles.length > 0
+      ? {
+          classes: seed.gameplayRoles,
+          roles: seed.gameplayRoles,
+          difficulty: seed.difficulty ?? seed.complexity,
+          releaseDate: seed.releaseDate ?? null,
+        }
+      : undefined;
+
+  const built: Character = {
     id: charIdOf(seed.slug),
     universeId: RUNETERRA_ID,
     type: "character",
@@ -75,6 +97,7 @@ export function buildCharacter(seed: CharacterSeed): Character {
     region: seed.region,
     factions: seed.factions.map((s) => `faction:${s}`),
     roles: seed.roles,
+    gameplayData,
     status: seed.status,
     species: seed.species,
     aliases: seed.aliases ?? [],
@@ -84,6 +107,8 @@ export function buildCharacter(seed: CharacterSeed): Character {
     loreComplexity: seed.complexity,
     featured: seed.featured ?? false,
     canonStatus: normalizeCanonStatus(seed.canonStatus),
+    continuity: seed.continuity,
+    needsResearch: seed.needsResearch,
     relatedCharacterIds: [],
     eventIds: (seed.events ?? []).map((s) => `event:${s}`),
     sourceIds: [bioSourceId(seed.slug), ...(seed.sources ?? [])],
@@ -91,5 +116,14 @@ export function buildCharacter(seed: CharacterSeed): Character {
     tags: seed.tags,
     assetKey: seed.slug,
     popularity: seed.popularity,
+  };
+
+  const completeness = computeCompleteness(built, seed.completenessTier);
+  return {
+    ...built,
+    completenessTier: completeness.tier,
+    completenessScore: completeness.score,
+    missingFields: completeness.missingFields,
+    needsResearch: seed.needsResearch ?? completeness.needsResearch,
   };
 }

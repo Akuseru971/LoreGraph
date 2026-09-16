@@ -1,4 +1,5 @@
 import { characterById, factionBySlug, regionBySlug } from "@/data";
+import { contextualEdgeDescription } from "@/lib/knowledge/edge-explanations";
 import type { GraphEdge, GraphNode, PathStep } from "@/types";
 
 /**
@@ -67,14 +68,14 @@ export function explainStep(step: PathStep): {
   if (to.type === "event") {
     return {
       headline: to.name.toUpperCase(),
-      body: to.metadata.description ?? edge.description,
+      body: contextualEdgeDescription(edge, from, to),
       kind: "indirect",
     };
   }
 
   return {
     headline: `${from.name} → ${to.name}`,
-    body: edge.description,
+    body: contextualEdgeDescription(edge, from, to),
     kind: "indirect",
   };
 }

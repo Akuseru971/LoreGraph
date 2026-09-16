@@ -48,7 +48,10 @@ export function OverviewPanel({
     },
     { label: "Species", value: character.species },
     { label: "Status", value: character.status },
-    { label: "Roles", value: character.roles.join(", ") },
+    {
+      label: "Roles",
+      value: character.roles.length > 0 ? character.roles.join(", ") : "—",
+    },
     {
       label: "Aliases",
       value: character.aliases.length > 0 ? character.aliases.join(", ") : "—",

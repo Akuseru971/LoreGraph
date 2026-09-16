@@ -57,7 +57,52 @@ export type SourceType =
   | "Game"
   | "Developer Post"
   | "Series"
-  | "Novel";
+  | "Novel"
+  | "Wiki Universe"
+  | "Wiki Reference"
+  | "Lore Video"
+  | "Region Page"
+  | "Faction Page"
+  | "Event Page"
+  | "Voice Line"
+  | "Book"
+  | "Card Text"
+  | "Other";
+
+/** Authority tier for source provenance hierarchy. */
+export type SourceAuthorityTier =
+  | "PRIMARY_OFFICIAL"
+  | "OFFICIAL_COMMUNITY_REFERENCE"
+  | "OFFICIAL_PUBLISHED"
+  | "DISCOVERY_ONLY";
+
+export type Continuity =
+  | "MAIN_RUNETERRA"
+  | "ARCANE"
+  | "SKIN_UNIVERSE"
+  | "LEGACY"
+  | "OTHER";
+
+export type FactConfidence =
+  | "DOCUMENTED"
+  | "STRONG"
+  | "DERIVED"
+  | "INTERPRETIVE"
+  | "UNCERTAIN";
+
+export type RelationshipCanonical = "DIRECT" | "INDIRECT" | "NONE";
+
+export type CompletenessTier = "A" | "B" | "C";
+
+export type ClaimType =
+  | "ATTRIBUTE"
+  | "RELATIONSHIP"
+  | "PARTICIPATION"
+  | "TRANSFORMATION"
+  | "LOCATION"
+  | "CHRONOLOGY"
+  | "OWNERSHIP"
+  | "AFFILIATION";
 
 export type RegionSlug =
   | "demacia"
@@ -255,6 +300,16 @@ export interface TimelineBeat {
   order: number;
   characterIds: string[];
   eventId?: string;
+  sourceIds?: string[];
+  canonStatus?: CanonStatus;
+  continuity?: Continuity;
+}
+
+export interface GameplayData {
+  classes: string[];
+  roles: string[];
+  difficulty?: LoreComplexity;
+  releaseDate?: string | null;
 }
 
 export interface Character extends Entity {
@@ -265,16 +320,24 @@ export interface Character extends Entity {
   /** Region of origin / primary association. */
   region: RegionSlug;
   factions: string[];
+  /** Narrative / occupational roles from lore sources — not gameplay classes. */
   roles: string[];
+  gameplayData?: GameplayData;
   status: CharacterStatus;
   species: string;
   aliases: string[];
   accentColor: string;
-  releaseYear: number;
+  /** Champion release year when documented; null when unknown. */
+  releaseYear: number | null;
   difficulty: LoreComplexity;
   loreComplexity: LoreComplexity;
   featured: boolean;
   canonStatus: CanonStatus;
+  continuity?: Continuity;
+  completenessTier?: CompletenessTier;
+  completenessScore?: number;
+  missingFields?: string[];
+  needsResearch?: boolean;
   relatedCharacterIds: string[];
   eventIds: string[];
   sourceIds: string[];
@@ -320,7 +383,26 @@ export interface LoreEvent extends Entity {
   characterIds: string[];
   regionSlugs: RegionSlug[];
   canonStatus: CanonStatus;
+  continuity?: Continuity;
   connectEligible?: boolean;
+  sourceIds?: string[];
+  asset?: EventAsset;
+}
+
+export interface EventAsset {
+  eventId: string;
+  primaryImageUrl?: string;
+  fallbackImageUrl?: string;
+  assetKey?: string;
+  sourceUrl?: string;
+  sourceType?: SourceType;
+  copyrightOwner?: string;
+  focalPointX?: number;
+  focalPointY?: number;
+  focalPointMobileX?: number;
+  focalPointMobileY?: number;
+  objectPosition?: string;
+  attribution?: string;
 }
 
 export interface Source {
@@ -331,6 +413,34 @@ export interface Source {
   publisher: string;
   publicationDate: string | null;
   canonStatus: CanonStatus;
+  authorityTier?: SourceAuthorityTier;
+  domain?: string;
+  mediaType?: string;
+  continuity?: Continuity;
+  retrievedAt?: string;
+  lastCheckedAt?: string;
+  contentHash?: string;
+  originalSourceId?: string;
+  archivedUrl?: string;
+  notes?: string;
+}
+
+export interface Claim {
+  id: string;
+  subjectId: string;
+  predicate: string;
+  objectId?: string;
+  value?: string;
+  claimType: ClaimType;
+  certainty: FactConfidence;
+  canonStatus: CanonStatus;
+  continuity: Continuity;
+  sourceIds: string[];
+  evidenceNote?: string;
+  reviewed: boolean;
+  needsReview: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface StoryPathChapter {

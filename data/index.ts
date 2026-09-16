@@ -11,6 +11,7 @@ export { regions, regionBySlug, featuredRegionSlugs } from "./regions";
 export { relationships, relationshipById } from "./relationships";
 export { loreEntities, loreEntityById, loreEntityBySlug } from "./lore-entities";
 export { sources, sourceById, championSlugs, bioSourceId } from "./sources";
+export { claims, claimById } from "./knowledge/claims";
 export {
   storyPaths,
   storyPathBySlug,

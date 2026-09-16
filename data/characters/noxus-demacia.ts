@@ -186,6 +186,68 @@ export const noxusDemaciaSeeds: CharacterSeed[] = [
     ],
   },
   {
+    slug: "ambessa",
+    name: "Ambessa",
+    title: "Matriarch of War",
+    region: "noxus",
+    factions: ["medarda"],
+    roles: ["Noxian General", "Medarda Matriarch", "Military Leader"],
+    gameplayRoles: ["Fighter", "Assassin"],
+    status: "Alive",
+    species: "Human",
+    aliases: ["Ambessa Medarda", "Matriarch of War"],
+    accentColor: "#A03041",
+    releaseYear: 2024,
+    releaseDate: "2024-11-06",
+    complexity: 4,
+    featured: true,
+    importance: 82,
+    popularity: 72,
+    verified: true,
+    completenessTier: "A",
+    events: ["noxian-rise", "black-rose-resurgence"],
+    sources: ["source:wiki-ambessa"],
+    tags: ["noxus", "medarda", "general", "matriarch", "military", "wolf"],
+    short:
+      "The Medarda matriarch and Noxian general who treats family legacy and battlefield command with the same ruthless clarity.",
+    long: [
+      "Ambessa Medarda leads a house whose name commands respect and fear across Noxus. She is both a general in the empire's wars and the matriarch who decides which Medardas survive the politics that follow them — two roles that require the same thing: no visible weakness.",
+      "Her authority is built on strength and cunning in equal measure. She empowers the family line while tolerating no failure and no sentiment that might be mistaken for it. Noxian doctrine speaks of the Wolf; Ambessa has made that metaphor operational.",
+      "Her relationship with Mel sits at the intersection of Noxian aristocracy and Piltover's council politics. In Arcane-era material their bond is defined by inheritance, rivalry, and a matriarch willing to sacrifice affection for legacy. Main-continuity reconciliation between those portrayals remains pending.",
+      "At the highest level of Noxian power she intersects with Swain's statecraft — military might meeting the Trifarix's long game — while the Black Rose watches every mage-born advantage the Medarda bloodline might produce.",
+    ],
+    timeline: [
+      {
+        era: "Modern Noxus",
+        title: "Matriarch of the Medardas",
+        description:
+          "She assumes leadership of a Noxian house whose influence is measured in generals, diplomats, and heirs trained never to show doubt.",
+      },
+      {
+        era: "Modern Noxus",
+        title: "General of the Wolf",
+        description:
+          "Her battlefield reputation matches her domestic one: decisive, merciless, and unwilling to leave outcomes to chance.",
+        event: "noxian-rise",
+      },
+      {
+        era: "Modern Noxus",
+        title: "Legacy over affection",
+        description:
+          "She protects the Medarda name even when that protection costs her children's love — a price she has already decided is acceptable.",
+        with: ["mel"],
+      },
+      {
+        era: "Modern Noxus",
+        title: "The state's machine",
+        description:
+          "Her military authority runs parallel to Swain's restructuring of Noxus — power shared, never surrendered.",
+        event: "noxian-rise",
+        with: ["swain"],
+      },
+    ],
+  },
+  {
     slug: "darius",
     name: "Darius",
     title: "The Hand of Noxus",
