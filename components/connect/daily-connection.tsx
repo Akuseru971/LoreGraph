@@ -2,7 +2,6 @@
 
 import { Sparkles, Target } from "lucide-react";
 import * as React from "react";
-import { useProgress } from "@/components/providers";
 import { EntityPortrait } from "@/components/entity-portrait";
 import { Button } from "@/components/ui/button";
 import { ConnectionGraph } from "./connection-graph";
@@ -28,7 +27,6 @@ export function DailyConnection({
   path: GraphPath | null;
   onOpenInConnect: (a: Character, b: Character) => void;
 }) {
-  const { recordConnectionFound } = useProgress();
   const storageKey = `loregraph.daily-connection.${date}`;
   const savedGuess = React.useMemo(() => {
     if (typeof window === "undefined") return null;
@@ -51,7 +49,6 @@ export function DailyConnection({
     } catch {
       // Storage unavailable; the attempt stays in memory.
     }
-    recordConnectionFound();
   };
 
   const actual = path?.length ?? null;

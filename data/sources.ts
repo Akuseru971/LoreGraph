@@ -1,3 +1,4 @@
+import { normalizeCanonStatus } from "@/lib/canon/model";
 import type { Source } from "@/types";
 
 /**
@@ -80,7 +81,7 @@ const biographies: Source[] = championSlugs.map((slug) => ({
   url: `https://universe.leagueoflegends.com/en_US/champion/${slug}/`,
   publisher: "Riot Games",
   publicationDate: null,
-  canonStatus: "CANON",
+  canonStatus: "CURRENT_CANON",
 }));
 
 const publications: Source[] = [
@@ -91,7 +92,7 @@ const publications: Source[] = [
     url: "https://universe.leagueoflegends.com/en_US/",
     publisher: "Riot Games",
     publicationDate: null,
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:arcane",
@@ -100,7 +101,7 @@ const publications: Source[] = [
     url: "https://www.netflix.com/title/81435684",
     publisher: "Riot Games / Fortiche / Netflix",
     publicationDate: "2021-11-06",
-    canonStatus: "ALTERNATE_UNIVERSE",
+    canonStatus: "RECONCILIATION_PENDING",
   },
   {
     id: "source:ruination-novel",
@@ -109,7 +110,7 @@ const publications: Source[] = [
     url: "https://universe.leagueoflegends.com/en_US/story/ruination/",
     publisher: "Orbit / Riot Games",
     publicationDate: "2022-09-13",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:ruined-king-game",
@@ -118,7 +119,7 @@ const publications: Source[] = [
     url: "https://www.riotgames.com/en/news/ruined-king-a-league-of-legends-story",
     publisher: "Airship Syndicate / Riot Forge",
     publicationDate: "2021-11-16",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:convergence-game",
@@ -127,7 +128,7 @@ const publications: Source[] = [
     url: "https://www.riotgames.com/en/news/convergence-a-league-of-legends-story",
     publisher: "Double Stallion / Riot Forge",
     publicationDate: "2023-05-23",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:lor",
@@ -136,7 +137,7 @@ const publications: Source[] = [
     url: "https://playruneterra.com/",
     publisher: "Riot Games",
     publicationDate: null,
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:league-game",
@@ -145,7 +146,7 @@ const publications: Source[] = [
     url: "https://www.leagueoflegends.com/",
     publisher: "Riot Games",
     publicationDate: null,
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:awaken",
@@ -154,7 +155,7 @@ const publications: Source[] = [
     url: "https://www.youtube.com/watch?v=pAnKsFmVn4g",
     publisher: "Riot Games",
     publicationDate: "2019-01-11",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:warriors-2020",
@@ -163,7 +164,7 @@ const publications: Source[] = [
     url: "https://www.youtube.com/watch?v=gJKNZmb1jeM",
     publisher: "Riot Games",
     publicationDate: "2020-01-09",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:a-new-dawn",
@@ -172,7 +173,7 @@ const publications: Source[] = [
     url: "https://www.youtube.com/watch?v=vzHrjOMfHPY",
     publisher: "Riot Games",
     publicationDate: "2014-08-22",
-    canonStatus: "OLD_LORE",
+    canonStatus: "LEGACY_LORE",
   },
   {
     id: "source:rise",
@@ -181,7 +182,7 @@ const publications: Source[] = [
     url: "https://www.youtube.com/watch?v=fB8TyLTD7EE",
     publisher: "Riot Games",
     publicationDate: "2018-09-22",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:still-here",
@@ -190,7 +191,7 @@ const publications: Source[] = [
     url: "https://www.youtube.com/watch?v=k3Wu4vrtTZE",
     publisher: "Riot Games",
     publicationDate: "2021-01-08",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:ashe-warmother",
@@ -199,7 +200,7 @@ const publications: Source[] = [
     url: "https://universe.leagueoflegends.com/en_US/comic/ashe-warmother/",
     publisher: "Riot Games / Marvel",
     publicationDate: "2017-11-14",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:lux-comic",
@@ -208,7 +209,7 @@ const publications: Source[] = [
     url: "https://universe.leagueoflegends.com/en_US/comic/lux/",
     publisher: "Riot Games / Marvel",
     publicationDate: "2019-01-16",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:zed-comic",
@@ -217,7 +218,7 @@ const publications: Source[] = [
     url: "https://universe.leagueoflegends.com/en_US/comic/zed/",
     publisher: "Riot Games / Marvel",
     publicationDate: "2019-08-14",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:ryze-call-of-power",
@@ -226,7 +227,7 @@ const publications: Source[] = [
     url: "https://universe.leagueoflegends.com/en_US/story/ryze-call-of-power/",
     publisher: "Riot Games",
     publicationDate: "2016-11-15",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:twilight-of-the-gods",
@@ -235,7 +236,7 @@ const publications: Source[] = [
     url: "https://universe.leagueoflegends.com/en_US/story/twilight-of-the-gods/",
     publisher: "Riot Games",
     publicationDate: "2018-01-11",
-    canonStatus: "CANON",
+    canonStatus: "CURRENT_CANON",
   },
   {
     id: "source:editor-review",
@@ -248,5 +249,8 @@ const publications: Source[] = [
   },
 ];
 
-export const sources: Source[] = [...publications, ...biographies];
+export const sources: Source[] = [...publications, ...biographies].map((s) => ({
+  ...s,
+  canonStatus: normalizeCanonStatus(s.canonStatus),
+}));
 export const sourceById = new Map(sources.map((s) => [s.id, s]));

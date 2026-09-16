@@ -75,7 +75,21 @@ export const loreRepository: LoreRepository = {
    * and the answer cannot be rerolled by refreshing.
    */
   dailyQuestions: (date = todayKey(), count = 5) => {
-    const shuffled = seededShuffle(quizQuestions, `daily:${date}`);
+    const eligible = quizQuestions.filter((q) => {
+      if (!q.verified) return false;
+      const canon = q.canonStatus ?? "CURRENT_CANON";
+      if (canon === "CURRENT_CANON") return true;
+      if (
+        q.kind === "CANON_OR_NOT" &&
+        (canon === "LEGACY_LORE" ||
+          canon === "AMBIGUOUS" ||
+          canon === "RECONCILIATION_PENDING")
+      ) {
+        return true;
+      }
+      return false;
+    });
+    const shuffled = seededShuffle(eligible, `daily:${date}`);
     const picked: QuizQuestion[] = [];
     const usedKinds = new Set<string>();
     for (const question of shuffled) {
@@ -100,6 +114,8 @@ function scoreMatch(haystack: string, needle: string): number {
   if (target === needle) return 100;
   if (target.startsWith(needle)) return 80;
   if (target.includes(needle)) return 55;
+  const words = needle.split(/\s+/).filter(Boolean);
+  if (words.length > 1 && words.every((w) => target.includes(w))) return 48;
   return 0;
 }
 
@@ -110,11 +126,17 @@ export function searchLore(query: string, limit = 12): SearchResult[] {
   const results: SearchResult[] = [];
 
   for (const character of characters) {
+    const factionNames = character.factions
+      .map((id) => factionBySlug.get(id.replace("faction:", ""))?.name ?? "")
+      .filter(Boolean);
     const score = Math.max(
       scoreMatch(character.name, needle),
       scoreMatch(character.title, needle) * 0.7,
+      scoreMatch(character.shortDescription, needle) * 0.35,
       ...character.aliases.map((a) => scoreMatch(a, needle) * 0.8),
-      ...character.tags.map((t) => scoreMatch(t, needle) * 0.4),
+      ...character.tags.map((t) => scoreMatch(t, needle) * 0.55),
+      ...factionNames.map((f) => scoreMatch(f, needle) * 0.5),
+      scoreMatch(regionBySlug.get(character.region)?.name ?? "", needle) * 0.45,
     );
     if (score > 0) {
       results.push({
@@ -147,8 +169,31 @@ export function searchLore(query: string, limit = 12): SearchResult[] {
     }
   }
 
+  for (const path of storyPaths) {
+    const score = Math.max(
+      scoreMatch(path.title, needle),
+      scoreMatch(path.subtitle, needle) * 0.7,
+      scoreMatch(path.description, needle) * 0.5,
+    );
+    if (score > 0) {
+      results.push({
+        id: path.id,
+        type: "concept",
+        name: path.title,
+        slug: path.slug,
+        subtitle: "Story path",
+        accentColor: path.accentColor,
+        href: `/`,
+        score: score + (path.featured ? 8 : 0),
+      });
+    }
+  }
+
   for (const faction of factions) {
-    const score = scoreMatch(faction.name, needle);
+    const score = Math.max(
+      scoreMatch(faction.name, needle),
+      scoreMatch(faction.shortDescription, needle) * 0.45,
+    );
     if (score > 0) {
       results.push({
         id: faction.id,

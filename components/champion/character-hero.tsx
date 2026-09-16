@@ -1,6 +1,8 @@
 "use client";
 
-import { BookOpen, Bookmark, BookmarkCheck, GitFork } from "lucide-react";
+import { BookOpen, Bookmark, BookmarkCheck, GitFork, Route } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import * as React from "react";
 import { factionBySlug, regionBySlug } from "@/data";
 import { useProgress } from "@/components/providers";
@@ -8,7 +10,11 @@ import { EntityPortrait } from "@/components/entity-portrait";
 import { Badge, CanonBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProgressRing } from "@/components/ui/progress-ring";
-import { generateArtwork } from "@/lib/assets";
+import {
+  championArtPosition,
+  generateArtwork,
+  getChampionAssetUrl,
+} from "@/lib/assets";
 import { characterKnowledge, PROGRESS_LEVEL_LABEL, progressLevelFor } from "@/lib/progress/model";
 import { hexToRgba } from "@/lib/utils";
 import type { Character } from "@/types";
@@ -18,12 +24,14 @@ const COMPLEXITY_LABEL = ["", "Entry point", "Approachable", "Layered", "Deep", 
 export function CharacterHero({
   character,
   connections,
+  directConnections,
   onExploreConnections,
   onStartStory,
   hasStory,
 }: {
   character: Character;
   connections: number;
+  directConnections?: number;
   onExploreConnections: () => void;
   onStartStory: () => void;
   hasStory: boolean;
@@ -33,6 +41,8 @@ export function CharacterHero({
   const collected = progress.characters[character.id]?.collected ?? false;
   const region = regionBySlug.get(character.region);
   const artwork = generateArtwork(character.assetKey, character.accentColor, "splash");
+  const splashUrl = getChampionAssetUrl(character.assetKey, "splash");
+  const [splashFailed, setSplashFailed] = React.useState(false);
 
   const factionNames = character.factions
     .map((id) => factionBySlug.get(id.replace("faction:", ""))?.name)
@@ -45,14 +55,32 @@ export function CharacterHero({
       {/* --------------------------------------------------------- artwork */}
       <div aria-hidden className="absolute inset-0">
         <div className="absolute inset-0" style={{ background: artwork.background }} />
+        {!splashFailed ? (
+          <Image
+            src={splashUrl}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-70"
+            style={{ objectPosition: championArtPosition(character.assetKey) }}
+            onError={() => setSplashFailed(true)}
+          />
+        ) : null}
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(85% 70% at 78% 30%, ${hexToRgba(character.accentColor, 0.34)} 0%, transparent 65%)`,
+            background: `linear-gradient(105deg, rgba(8,11,18,0.92) 0%, rgba(8,11,18,0.55) 42%, rgba(8,11,18,0.35) 100%)`,
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(85% 70% at 78% 30%, ${hexToRgba(character.accentColor, 0.28)} 0%, transparent 65%)`,
           }}
         />
         <div className="vignette absolute inset-0" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ink via-ink/90 to-transparent" />
       </div>
 
       <div className="relative mx-auto w-full max-w-6xl px-4 pt-10 pb-8 sm:px-6 sm:pt-16 sm:pb-12">
@@ -87,10 +115,21 @@ export function CharacterHero({
               <Button variant="primary" size="lg" onClick={onExploreConnections}>
                 <GitFork aria-hidden />
                 Explore connections
-                <span className="text-ink/60 ml-1 tabular-nums">{connections}</span>
+                <span className="text-ink/60 ml-1 tabular-nums">
+                  {connections}
+                  {typeof directConnections === "number" && directConnections !== connections
+                    ? ` (${directConnections} direct)`
+                    : ""}
+                </span>
+              </Button>
+              <Button variant="secondary" size="lg" asChild>
+                <Link href={`/connect?from=${character.slug}`}>
+                  <Route aria-hidden />
+                  Connect to another champion
+                </Link>
               </Button>
               {hasStory ? (
-                <Button variant="secondary" size="lg" onClick={onStartStory}>
+                <Button variant="ghost" size="lg" onClick={onStartStory}>
                   <BookOpen aria-hidden />
                   Start story
                 </Button>

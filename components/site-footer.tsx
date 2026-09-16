@@ -40,16 +40,11 @@ export function SiteFooter() {
               </ul>
             </nav>
 
-            <nav aria-label="Universes">
-              <h2 className="text-eyebrow text-muted mb-3">Universes</h2>
-              <ul className="space-y-2 text-sm">
-                <li className="text-parchment flex items-center gap-2">
-                  {activeUniverse.displayName}
-                  <span className="text-eyebrow text-gold/70 rounded-full border border-gold/30 px-1.5 py-0.5">
-                    Live
-                  </span>
-                </li>
-                <li className="text-muted">More coming</li>
+            <nav aria-label="Archive">
+              <h2 className="text-eyebrow text-muted mb-3">Archive</h2>
+              <ul className="space-y-2 text-sm text-muted">
+                <li className="text-parchment">{activeUniverse.displayName}</li>
+                <li>50 champions · curated lore graph</li>
               </ul>
             </nav>
 
@@ -80,9 +75,10 @@ export function SiteFooter() {
           </p>
           <p>
             League of Legends and Runeterra are the intellectual property of Riot
-            Games, Inc. This project claims no ownership of that material and
-            makes no claim of official partnership. Artwork placeholders are
-            generated; no third-party images are bundled with this build.
+            Games, Inc. Champion artwork is displayed via Riot&apos;s public Data
+            Dragon CDN for illustrative purposes in this independent fan archive.
+            LoreGraph claims no ownership of game assets and makes no claim of
+            official partnership with Riot Games.
           </p>
           <p className="text-muted-dim">
             © {new Date().getFullYear()} LoreGraph · Built as an independent

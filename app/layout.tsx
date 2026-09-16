@@ -3,7 +3,7 @@ import { IBM_Plex_Mono, Instrument_Serif, Inter } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
 import { AppProviders } from "@/components/providers";
 import { getCurrentUser } from "@/lib/supabase/server";
-import { siteUrl } from "@/lib/seo";
+import { getSiteUrl } from "@/lib/seo";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -27,7 +27,7 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: "LoreGraph — Understand Runeterra",
     template: "%s | LoreGraph",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: "LoreGraph — Understand Runeterra",
     description:
       "Every character. Every conflict. Every connection. Explore Runeterra as an interactive network.",
-    url: siteUrl,
+    url: getSiteUrl(),
   },
   twitter: {
     card: "summary_large_image",

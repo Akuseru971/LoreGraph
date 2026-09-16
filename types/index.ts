@@ -41,11 +41,13 @@ export type RelationshipType =
   | "unknown";
 
 export type CanonStatus =
-  | "CANON"
+  | "CURRENT_CANON"
   | "AMBIGUOUS"
-  | "OLD_LORE"
-  | "RETCONNED"
-  | "ALTERNATE_UNIVERSE";
+  | "RECONCILIATION_PENDING"
+  | "LEGACY_LORE"
+  | "ALTERNATE_UNIVERSE"
+  | "THEMATIC_ONLY"
+  | "UNKNOWN";
 
 export type SourceType =
   | "Champion Biography"
@@ -86,6 +88,32 @@ export type CharacterStatus =
 
 export type LoreComplexity = 1 | 2 | 3 | 4 | 5;
 
+/** Truth Layer — how a connection should be interpreted in UI and pathfinding. */
+export type ConnectionCategory =
+  | "DIRECT_CANON"
+  | "SHARED_EVENT"
+  | "SHARED_FACTION"
+  | "SHARED_REGION"
+  | "STRUCTURAL_LORE"
+  | "THEMATIC_PARALLEL"
+  | "AMBIGUOUS"
+  | "LEGACY_CONNECTION";
+
+export type ConnectionConfidence =
+  | "DOCUMENTED"
+  | "STRONG"
+  | "DERIVED"
+  | "INTERPRETIVE"
+  | "UNCERTAIN";
+
+export type ReviewStatus =
+  | "PENDING"
+  | "APPROVED_EDITORIAL"
+  | "VERIFIED_CANON"
+  | "REJECTED";
+
+export type StoryContentType = "fact" | "editorial";
+
 /* -------------------------------------------------------------------------- */
 /* Lore content                                                               */
 /* -------------------------------------------------------------------------- */
@@ -122,6 +150,7 @@ export interface Region extends Entity {
   /** Secondary tone used for gradients. */
   secondaryColor: string;
   icon: RegionIconKind;
+  connectEligible?: boolean;
 }
 
 export type RegionIconKind =
@@ -143,6 +172,7 @@ export interface Faction extends Entity {
   shortDescription: string;
   regionSlug: RegionSlug | null;
   accentColor: string;
+  connectEligible?: boolean;
 }
 
 export interface Location extends Entity {
@@ -196,6 +226,9 @@ export interface Relationship {
   sourceCharacterId: string;
   targetCharacterId: string;
   type: RelationshipType;
+  /** Truth Layer category — never present direct canon without documentation. */
+  connectionType: ConnectionCategory;
+  confidence: ConnectionConfidence;
   label: string;
   shortExplanation: string;
   longExplanation: string;
@@ -204,7 +237,13 @@ export interface Relationship {
   canonStatus: CanonStatus;
   sourceIds: string[];
   eventIds: string[];
+  factionIds: string[];
+  regionIds: string[];
   verified: boolean;
+  reviewed: boolean;
+  reviewStatus: ReviewStatus;
+  needsReview: boolean;
+  editorialNote?: string;
 }
 
 export interface LoreEvent extends Entity {
@@ -216,6 +255,7 @@ export interface LoreEvent extends Entity {
   characterIds: string[];
   regionSlugs: RegionSlug[];
   canonStatus: CanonStatus;
+  connectEligible?: boolean;
 }
 
 export interface Source {
@@ -238,6 +278,10 @@ export interface StoryPathChapter {
   eventIds: string[];
   estimatedMinutes: number;
   assetKey: string;
+  contentType?: StoryContentType;
+  sourceIds?: string[];
+  canonStatus?: CanonStatus;
+  verified?: boolean;
 }
 
 export interface StoryPath {
@@ -283,6 +327,8 @@ export interface QuizQuestion {
   difficulty: LoreComplexity;
   xp: number;
   verified: boolean;
+  /** Canon tier for factual Daily quizzes — defaults to current canon. */
+  canonStatus?: CanonStatus;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -389,6 +435,7 @@ export interface GraphNode {
     factions?: string[];
     era?: string;
     description?: string;
+    connectEligible?: boolean;
   };
 }
 
@@ -397,6 +444,8 @@ export interface GraphEdge {
   source: string;
   target: string;
   relationship: RelationshipType;
+  connectionCategory: ConnectionCategory;
+  confidence: ConnectionConfidence;
   /** Lower = closer. Derived from importance. */
   weight: number;
   importance: number;
@@ -407,6 +456,7 @@ export interface GraphEdge {
   canonStatus: CanonStatus;
   relationshipId?: string;
   verified: boolean;
+  sourceIds?: string[];
 }
 
 export type ConnectionKind = "direct" | "indirect";
@@ -415,6 +465,8 @@ export interface LoreGraph {
   nodes: Map<string, GraphNode>;
   edges: GraphEdge[];
   adjacency: Map<string, GraphEdge[]>;
+  /** Structural nodes allowed as Connect path bridges. */
+  connectEligible: Map<string, boolean>;
 }
 
 export interface PathStep {

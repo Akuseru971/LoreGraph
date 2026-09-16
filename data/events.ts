@@ -1,3 +1,4 @@
+import { normalizeCanonStatus } from "@/lib/canon/model";
 import type { LoreEvent, RegionSlug } from "@/types";
 import { RUNETERRA_ID } from "./universes";
 
@@ -15,6 +16,7 @@ interface EventSeed {
   regions: RegionSlug[];
   canonStatus?: LoreEvent["canonStatus"];
   verified?: boolean;
+  connectEligible?: boolean;
 }
 
 /**
@@ -32,6 +34,7 @@ const seeds: EventSeed[] = [
     importance: 70,
     characters: ["aurelion-sol", "kayle", "morgana"],
     regions: ["targon", "runeterra"],
+    connectEligible: false,
   },
   {
     slug: "star-forger-bound",
@@ -52,7 +55,7 @@ const seeds: EventSeed[] = [
     era: "Ancient Shurima",
     order: 30,
     importance: 88,
-    characters: ["aatrox", "nasus", "azir", "varus", "kaisa"],
+    characters: ["aatrox", "nasus", "varus"],
     regions: ["shurima", "void"],
   },
   {
@@ -523,8 +526,9 @@ export const events: LoreEvent[] = seeds.map((s) => ({
   importance: s.importance,
   characterIds: s.characters.map(charId),
   regionSlugs: s.regions,
-  canonStatus: s.canonStatus ?? "CANON",
+  canonStatus: normalizeCanonStatus(s.canonStatus),
   verified: s.verified ?? true,
+  connectEligible: s.connectEligible ?? s.slug !== "celestial-age",
 }));
 
 export const eventById = new Map(events.map((e) => [e.id, e]));
