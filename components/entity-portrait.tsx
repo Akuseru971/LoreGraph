@@ -1,12 +1,20 @@
+"use client";
+
 import Image from "next/image";
-import { generateArtwork, portraitUrl, splashUrl } from "@/lib/assets";
+import * as React from "react";
+import {
+  championArtPosition,
+  generateArtwork,
+  getChampionAsset,
+  type ChampionAssetType,
+} from "@/lib/assets";
 import { cn, initials } from "@/lib/utils";
 
-/**
- * Every champion visual goes through here. With NEXT_PUBLIC_ASSET_BASE_URL set
- * it renders real artwork; without it, a deterministic gradient plus a
- * monogram. Either way there is never a broken image box.
- */
+const VARIANT_MAP: Record<"portrait" | "splash", ChampionAssetType> = {
+  portrait: "portrait",
+  splash: "splash",
+};
+
 export function EntityPortrait({
   assetKey,
   name,
@@ -28,35 +36,39 @@ export function EntityPortrait({
   priority?: boolean;
   sizes?: string;
 }) {
-  const remote = variant === "splash" ? splashUrl(assetKey) : portraitUrl(assetKey);
+  const [failed, setFailed] = React.useState(false);
+  const remote = getChampionAsset({ slug: assetKey, assetKey }, VARIANT_MAP[variant]);
   const artwork = generateArtwork(assetKey, accentColor, variant);
+  const objectPosition = championArtPosition(assetKey);
 
   return (
     <div
       className={cn("relative overflow-hidden", rounded, className)}
       style={{ background: artwork.background }}
     >
-      {remote ? (
+      {!failed ? (
         <Image
           src={remote}
           alt={name}
           fill
           sizes={sizes ?? "(max-width: 768px) 40vw, 20vw"}
           className="object-cover"
+          style={{ objectPosition }}
           priority={priority}
+          onError={() => setFailed(true)}
         />
       ) : showMonogram ? (
         <span
           aria-hidden
           className="font-display absolute inset-0 flex items-center justify-center text-[min(38%,4rem)] leading-none tracking-tight"
-          style={{ color: `${accentColor}` , opacity: 0.55 }}
+          style={{ color: accentColor, opacity: 0.55 }}
         >
           {initials(name)}
         </span>
       ) : null}
       <span
         aria-hidden
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{ background: artwork.overlay }}
       />
     </div>

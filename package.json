@@ -9,7 +9,17 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "check:seed": "tsx scripts/check-seed.ts",
-    "db:seed": "tsx scripts/seed-supabase.ts"
+    "db:seed": "tsx scripts/seed-supabase.ts",
+    "validate:lore": "tsx scripts/validate-lore.ts",
+    "lore:discover": "tsx scripts/lore/discover-sources.ts",
+    "lore:sync-years": "tsx scripts/lore/sync-release-years.ts",
+    "lore:validate": "tsx scripts/lore/validate-lore-data.ts",
+    "lore:report": "tsx scripts/lore/generate-report.ts",
+    "lore:build": "npm run lore:sync-years && npx tsx scripts/generate-roster-expansion.ts",
+    "validate:data": "tsx scripts/validate-data.ts",
+    "validate:assets": "tsx scripts/validate-assets.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",
@@ -38,6 +48,7 @@
     "eslint-config-next": "16.3.5",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

@@ -41,11 +41,13 @@ export type RelationshipType =
   | "unknown";
 
 export type CanonStatus =
-  | "CANON"
+  | "CURRENT_CANON"
   | "AMBIGUOUS"
-  | "OLD_LORE"
-  | "RETCONNED"
-  | "ALTERNATE_UNIVERSE";
+  | "RECONCILIATION_PENDING"
+  | "LEGACY_LORE"
+  | "ALTERNATE_UNIVERSE"
+  | "THEMATIC_ONLY"
+  | "UNKNOWN";
 
 export type SourceType =
   | "Champion Biography"
@@ -55,7 +57,52 @@ export type SourceType =
   | "Game"
   | "Developer Post"
   | "Series"
-  | "Novel";
+  | "Novel"
+  | "Wiki Universe"
+  | "Wiki Reference"
+  | "Lore Video"
+  | "Region Page"
+  | "Faction Page"
+  | "Event Page"
+  | "Voice Line"
+  | "Book"
+  | "Card Text"
+  | "Other";
+
+/** Authority tier for source provenance hierarchy. */
+export type SourceAuthorityTier =
+  | "PRIMARY_OFFICIAL"
+  | "OFFICIAL_COMMUNITY_REFERENCE"
+  | "OFFICIAL_PUBLISHED"
+  | "DISCOVERY_ONLY";
+
+export type Continuity =
+  | "MAIN_RUNETERRA"
+  | "ARCANE"
+  | "SKIN_UNIVERSE"
+  | "LEGACY"
+  | "OTHER";
+
+export type FactConfidence =
+  | "DOCUMENTED"
+  | "STRONG"
+  | "DERIVED"
+  | "INTERPRETIVE"
+  | "UNCERTAIN";
+
+export type RelationshipCanonical = "DIRECT" | "INDIRECT" | "NONE";
+
+export type CompletenessTier = "A" | "B" | "C";
+
+export type ClaimType =
+  | "ATTRIBUTE"
+  | "RELATIONSHIP"
+  | "PARTICIPATION"
+  | "TRANSFORMATION"
+  | "LOCATION"
+  | "CHRONOLOGY"
+  | "OWNERSHIP"
+  | "AFFILIATION";
 
 export type RegionSlug =
   | "demacia"
@@ -85,6 +132,97 @@ export type CharacterStatus =
   | "Celestial";
 
 export type LoreComplexity = 1 | 2 | 3 | 4 | 5;
+
+/** Truth Layer — how a connection should be interpreted in UI and pathfinding. */
+export type ConnectionCategory =
+  | "DIRECT_CANON"
+  | "SHARED_EVENT"
+  | "SHARED_FACTION"
+  | "SHARED_REGION"
+  | "STRUCTURAL_LORE"
+  | "THEMATIC_PARALLEL"
+  | "AMBIGUOUS"
+  | "LEGACY_CONNECTION";
+
+export type ConnectionConfidence =
+  | "DOCUMENTED"
+  | "STRONG"
+  | "DERIVED"
+  | "INTERPRETIVE"
+  | "UNCERTAIN";
+
+export type ReviewStatus =
+  | "PENDING"
+  | "APPROVED_EDITORIAL"
+  | "VERIFIED_CANON"
+  | "REJECTED";
+
+export type StoryContentType = "fact" | "editorial";
+
+/* -------------------------------------------------------------------------- */
+/* Cinematic Journey                                                          */
+/* -------------------------------------------------------------------------- */
+
+export type JourneyType =
+  | "CHAMPION_STORY"
+  | "CONNECTION_STORY"
+  | "STORY_PATH";
+
+export type JourneyStepType =
+  | "CHARACTER"
+  | "EVENT"
+  | "REGION"
+  | "FACTION"
+  | "CONCEPT"
+  | "ERA"
+  | "TRANSITION"
+  | "OPENING"
+  | "ENDING";
+
+export type CameraPreset =
+  | "wide"
+  | "approach"
+  | "close"
+  | "drift"
+  | "pullback";
+
+export type JourneyTransition = "travel" | "era-skip" | "fade" | "cut";
+
+export type JourneyContentType = "fact" | "editorial" | "interpretation";
+
+export type JourneyFormat = "landscape" | "portrait" | "square";
+
+export type JourneyPlaybackMode = "auto" | "manual";
+
+export interface JourneyStep {
+  id: string;
+  type: JourneyStepType;
+  entityId?: string;
+  title: string;
+  eyebrow?: string;
+  narration: string[];
+  image?: string;
+  assetKey?: string;
+  accentColor?: string;
+  canonStatus: CanonStatus;
+  contentType: JourneyContentType;
+  sourceIds?: string[];
+  duration: number;
+  cameraPreset?: CameraPreset;
+  transition?: JourneyTransition;
+}
+
+export interface Journey {
+  id: string;
+  type: JourneyType;
+  title: string;
+  subtitle?: string;
+  sourceChampionId?: string;
+  targetChampionId?: string;
+  connectionLabel?: string;
+  steps: JourneyStep[];
+  estimatedDuration: number;
+}
 
 /* -------------------------------------------------------------------------- */
 /* Lore content                                                               */
@@ -122,6 +260,7 @@ export interface Region extends Entity {
   /** Secondary tone used for gradients. */
   secondaryColor: string;
   icon: RegionIconKind;
+  connectEligible?: boolean;
 }
 
 export type RegionIconKind =
@@ -143,6 +282,7 @@ export interface Faction extends Entity {
   shortDescription: string;
   regionSlug: RegionSlug | null;
   accentColor: string;
+  connectEligible?: boolean;
 }
 
 export interface Location extends Entity {
@@ -160,6 +300,16 @@ export interface TimelineBeat {
   order: number;
   characterIds: string[];
   eventId?: string;
+  sourceIds?: string[];
+  canonStatus?: CanonStatus;
+  continuity?: Continuity;
+}
+
+export interface GameplayData {
+  classes: string[];
+  roles: string[];
+  difficulty?: LoreComplexity;
+  releaseDate?: string | null;
 }
 
 export interface Character extends Entity {
@@ -170,16 +320,24 @@ export interface Character extends Entity {
   /** Region of origin / primary association. */
   region: RegionSlug;
   factions: string[];
+  /** Narrative / occupational roles from lore sources — not gameplay classes. */
   roles: string[];
+  gameplayData?: GameplayData;
   status: CharacterStatus;
   species: string;
   aliases: string[];
   accentColor: string;
-  releaseYear: number;
+  /** Champion release year when documented; null when unknown. */
+  releaseYear: number | null;
   difficulty: LoreComplexity;
   loreComplexity: LoreComplexity;
   featured: boolean;
   canonStatus: CanonStatus;
+  continuity?: Continuity;
+  completenessTier?: CompletenessTier;
+  completenessScore?: number;
+  missingFields?: string[];
+  needsResearch?: boolean;
   relatedCharacterIds: string[];
   eventIds: string[];
   sourceIds: string[];
@@ -196,6 +354,9 @@ export interface Relationship {
   sourceCharacterId: string;
   targetCharacterId: string;
   type: RelationshipType;
+  /** Truth Layer category — never present direct canon without documentation. */
+  connectionType: ConnectionCategory;
+  confidence: ConnectionConfidence;
   label: string;
   shortExplanation: string;
   longExplanation: string;
@@ -204,7 +365,13 @@ export interface Relationship {
   canonStatus: CanonStatus;
   sourceIds: string[];
   eventIds: string[];
+  factionIds: string[];
+  regionIds: string[];
   verified: boolean;
+  reviewed: boolean;
+  reviewStatus: ReviewStatus;
+  needsReview: boolean;
+  editorialNote?: string;
 }
 
 export interface LoreEvent extends Entity {
@@ -216,6 +383,26 @@ export interface LoreEvent extends Entity {
   characterIds: string[];
   regionSlugs: RegionSlug[];
   canonStatus: CanonStatus;
+  continuity?: Continuity;
+  connectEligible?: boolean;
+  sourceIds?: string[];
+  asset?: EventAsset;
+}
+
+export interface EventAsset {
+  eventId: string;
+  primaryImageUrl?: string;
+  fallbackImageUrl?: string;
+  assetKey?: string;
+  sourceUrl?: string;
+  sourceType?: SourceType;
+  copyrightOwner?: string;
+  focalPointX?: number;
+  focalPointY?: number;
+  focalPointMobileX?: number;
+  focalPointMobileY?: number;
+  objectPosition?: string;
+  attribution?: string;
 }
 
 export interface Source {
@@ -226,6 +413,34 @@ export interface Source {
   publisher: string;
   publicationDate: string | null;
   canonStatus: CanonStatus;
+  authorityTier?: SourceAuthorityTier;
+  domain?: string;
+  mediaType?: string;
+  continuity?: Continuity;
+  retrievedAt?: string;
+  lastCheckedAt?: string;
+  contentHash?: string;
+  originalSourceId?: string;
+  archivedUrl?: string;
+  notes?: string;
+}
+
+export interface Claim {
+  id: string;
+  subjectId: string;
+  predicate: string;
+  objectId?: string;
+  value?: string;
+  claimType: ClaimType;
+  certainty: FactConfidence;
+  canonStatus: CanonStatus;
+  continuity: Continuity;
+  sourceIds: string[];
+  evidenceNote?: string;
+  reviewed: boolean;
+  needsReview: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface StoryPathChapter {
@@ -238,6 +453,10 @@ export interface StoryPathChapter {
   eventIds: string[];
   estimatedMinutes: number;
   assetKey: string;
+  contentType?: StoryContentType;
+  sourceIds?: string[];
+  canonStatus?: CanonStatus;
+  verified?: boolean;
 }
 
 export interface StoryPath {
@@ -283,6 +502,8 @@ export interface QuizQuestion {
   difficulty: LoreComplexity;
   xp: number;
   verified: boolean;
+  /** Canon tier for factual Daily quizzes — defaults to current canon. */
+  canonStatus?: CanonStatus;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -389,6 +610,7 @@ export interface GraphNode {
     factions?: string[];
     era?: string;
     description?: string;
+    connectEligible?: boolean;
   };
 }
 
@@ -397,6 +619,8 @@ export interface GraphEdge {
   source: string;
   target: string;
   relationship: RelationshipType;
+  connectionCategory: ConnectionCategory;
+  confidence: ConnectionConfidence;
   /** Lower = closer. Derived from importance. */
   weight: number;
   importance: number;
@@ -407,6 +631,7 @@ export interface GraphEdge {
   canonStatus: CanonStatus;
   relationshipId?: string;
   verified: boolean;
+  sourceIds?: string[];
 }
 
 export type ConnectionKind = "direct" | "indirect";
@@ -415,6 +640,8 @@ export interface LoreGraph {
   nodes: Map<string, GraphNode>;
   edges: GraphEdge[];
   adjacency: Map<string, GraphEdge[]>;
+  /** Structural nodes allowed as Connect path bridges. */
+  connectEligible: Map<string, boolean>;
 }
 
 export interface PathStep {

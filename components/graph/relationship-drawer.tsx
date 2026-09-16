@@ -6,7 +6,7 @@ import * as React from "react";
 import { characterById, eventById, relationshipById, sourceById } from "@/data";
 import { useProgress } from "@/components/providers";
 import { EntityPortrait } from "@/components/entity-portrait";
-import { Badge, CanonBadge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { track } from "@/lib/analytics";
 import { RELATIONSHIP_LABEL, edgeStroke } from "@/lib/graph/style";
+import { edgeEvidencePresentation } from "@/lib/truth/evidence";
 import { hexToRgba } from "@/lib/utils";
 import type { GraphEdge, GraphNode } from "@/types";
 
@@ -65,6 +66,7 @@ export function RelationshipDrawer({
   const open = selection !== null && node !== null;
   const otherCharacter = node?.type === "character" ? characterById.get(node.id) : null;
   const accent = edge ? edgeStroke(edge) : "#C9A96E";
+  const evidence = edge ? edgeEvidencePresentation(edge) : null;
 
   const headline = edge
     ? edge.connectionKind === "direct"
@@ -129,16 +131,19 @@ export function RelationshipDrawer({
               {node.name}
             </DialogTitle>
 
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <Badge accentColor={accent}>{headline}</Badge>
-              {edge ? (
-                <>
+            <div className="mt-4 space-y-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge accentColor={accent}>{headline}</Badge>
+                {evidence ? (
                   <Badge className="text-muted border-line">
-                    {edge.connectionKind === "direct"
-                      ? "Direct relationship"
-                      : "Indirect lore connection"}
+                    {evidence.connectionLabel}
                   </Badge>
-                  <CanonBadge status={edge.canonStatus} />
+                ) : null}
+              </div>
+              {evidence ? (
+                <>
+                  <p className="text-muted text-xs">{evidence.evidenceLine}</p>
+                  <p className="text-muted-dim text-xs">{evidence.sourceLine}</p>
                 </>
               ) : null}
             </div>

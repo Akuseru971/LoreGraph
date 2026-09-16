@@ -1,4 +1,9 @@
 import * as React from "react";
+import {
+  CANON_STATUS_HINT,
+  CANON_STATUS_LABEL,
+  normalizeCanonStatus,
+} from "@/lib/canon/model";
 import { cn } from "@/lib/utils";
 import { hexToRgba } from "@/lib/utils";
 
@@ -30,24 +35,14 @@ export function Badge({
   );
 }
 
-const CANON_COPY: Record<string, { label: string; color: string; hint: string }> = {
-  CANON: { label: "Canon", color: "#7FB98A", hint: "Established in current lore" },
-  AMBIGUOUS: {
-    label: "Ambiguous",
-    color: "#C9A96E",
-    hint: "Strongly implied, not stated outright",
-  },
-  OLD_LORE: {
-    label: "Old lore",
-    color: "#9A8A6A",
-    hint: "From an earlier continuity, since replaced",
-  },
-  RETCONNED: { label: "Retconned", color: "#A0707A", hint: "No longer canonical" },
-  ALTERNATE_UNIVERSE: {
-    label: "Alternate",
-    color: "#8B7FC7",
-    hint: "From material outside the main timeline",
-  },
+const CANON_COLORS: Record<string, string> = {
+  CURRENT_CANON: "#7FB98A",
+  AMBIGUOUS: "#C9A96E",
+  RECONCILIATION_PENDING: "#C9A96E",
+  LEGACY_LORE: "#9A8A6A",
+  ALTERNATE_UNIVERSE: "#8B7FC7",
+  THEMATIC_ONLY: "#8B7FC7",
+  UNKNOWN: "#8A8F9C",
 };
 
 export function CanonBadge({
@@ -59,7 +54,11 @@ export function CanonBadge({
   className?: string;
   showHint?: boolean;
 }) {
-  const meta = CANON_COPY[status] ?? CANON_COPY.CANON;
+  const normalized = normalizeCanonStatus(status);
+  const label = CANON_STATUS_LABEL[normalized];
+  const hint = CANON_STATUS_HINT[normalized];
+  const color = CANON_COLORS[normalized] ?? CANON_COLORS.CURRENT_CANON;
+
   return (
     <span
       className={cn(
@@ -67,23 +66,30 @@ export function CanonBadge({
         className,
       )}
       style={{
-        borderColor: hexToRgba(meta.color, 0.32),
-        backgroundColor: hexToRgba(meta.color, 0.09),
-        color: meta.color,
+        borderColor: hexToRgba(color, 0.32),
+        backgroundColor: hexToRgba(color, 0.09),
+        color,
       }}
-      title={meta.hint}
+      title={hint}
     >
       <span
         aria-hidden
         className="size-1.5 rounded-full"
-        style={{ backgroundColor: meta.color }}
+        style={{ backgroundColor: color }}
       />
-      {meta.label}
-      {showHint ? <span className="text-muted normal-case tracking-normal"> · {meta.hint}</span> : null}
+      {label}
+      {showHint ? (
+        <span className="text-muted normal-case tracking-normal"> · {hint}</span>
+      ) : null}
     </span>
   );
 }
 
 export function canonMeta(status: string) {
-  return CANON_COPY[status] ?? CANON_COPY.CANON;
+  const normalized = normalizeCanonStatus(status);
+  return {
+    label: CANON_STATUS_LABEL[normalized],
+    color: CANON_COLORS[normalized] ?? CANON_COLORS.CURRENT_CANON,
+    hint: CANON_STATUS_HINT[normalized],
+  };
 }

@@ -51,15 +51,22 @@ export function DailyQuiz({
 
   const next = () => {
     if (index + 1 >= questions.length) {
-      const totalCorrect = answers.reduce(
+      const finalAnswers =
+        selected !== null && answers.length === index
+          ? [...answers, selected]
+          : answers;
+      const totalCorrect = finalAnswers.reduce(
         (sum, ans, i) => sum + (ans === questions[i].correctIndex ? 1 : 0),
         0,
+      );
+      const correctCharacterIds = questions.flatMap((q, i) =>
+        finalAnswers[i] === q.correctIndex ? q.characterIds : [],
       );
       submitDaily({
         questionIds: questions.map((q) => q.id),
         correct: totalCorrect,
         total: questions.length,
-        characterIds: questions.flatMap((q) => q.characterIds),
+        characterIds: correctCharacterIds,
       });
       setFinished(true);
       return;

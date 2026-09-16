@@ -1,4 +1,6 @@
+import { normalizeCanonStatus } from "@/lib/canon/model";
 import type { LoreEvent, RegionSlug } from "@/types";
+import { eventAssetByEventId } from "./knowledge/event-assets";
 import { RUNETERRA_ID } from "./universes";
 
 export const charId = (slug: string) => `char:${slug}`;
@@ -15,6 +17,7 @@ interface EventSeed {
   regions: RegionSlug[];
   canonStatus?: LoreEvent["canonStatus"];
   verified?: boolean;
+  connectEligible?: boolean;
 }
 
 /**
@@ -32,6 +35,7 @@ const seeds: EventSeed[] = [
     importance: 70,
     characters: ["aurelion-sol", "kayle", "morgana"],
     regions: ["targon", "runeterra"],
+    connectEligible: false,
   },
   {
     slug: "star-forger-bound",
@@ -52,7 +56,7 @@ const seeds: EventSeed[] = [
     era: "Ancient Shurima",
     order: 30,
     importance: 88,
-    characters: ["aatrox", "nasus", "azir", "varus", "kaisa"],
+    characters: ["aatrox", "nasus", "varus"],
     regions: ["shurima", "void"],
   },
   {
@@ -85,7 +89,7 @@ const seeds: EventSeed[] = [
     era: "Ancient Shurima",
     order: 60,
     importance: 95,
-    characters: ["aatrox", "pantheon", "varus", "leona", "diana"],
+    characters: ["aatrox", "varus", "nasus"],
     regions: ["shurima", "targon"],
   },
   {
@@ -510,22 +514,28 @@ const seeds: EventSeed[] = [
   },
 ];
 
-export const events: LoreEvent[] = seeds.map((s) => ({
-  id: eventId(s.slug),
-  universeId: RUNETERRA_ID,
-  type: "event",
-  slug: s.slug,
-  name: s.title,
-  title: s.title,
-  description: s.description,
-  era: s.era,
-  order: s.order,
-  importance: s.importance,
-  characterIds: s.characters.map(charId),
-  regionSlugs: s.regions,
-  canonStatus: s.canonStatus ?? "CANON",
-  verified: s.verified ?? true,
-}));
+export const events: LoreEvent[] = seeds.map((s) => {
+  const id = eventId(s.slug);
+  const asset = eventAssetByEventId.get(id);
+  return {
+    id,
+    universeId: RUNETERRA_ID,
+    type: "event",
+    slug: s.slug,
+    name: s.title,
+    title: s.title,
+    description: s.description,
+    era: s.era,
+    order: s.order,
+    importance: s.importance,
+    characterIds: s.characters.map(charId),
+    regionSlugs: s.regions,
+    canonStatus: normalizeCanonStatus(s.canonStatus),
+    verified: s.verified ?? true,
+    connectEligible: s.connectEligible ?? s.slug !== "celestial-age",
+    asset,
+  };
+});
 
 export const eventById = new Map(events.map((e) => [e.id, e]));
 export const eventBySlug = new Map(events.map((e) => [e.slug, e]));

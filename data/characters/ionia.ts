@@ -489,6 +489,67 @@ export const ioniaSeeds: CharacterSeed[] = [
     ],
   },
   {
+    slug: "yunara",
+    name: "Yunara",
+    title: "The Unbroken Faith",
+    region: "ionia",
+    factions: ["kinkou"],
+    roles: ["Kinkou Guardian", "Spirit Realm Ascetic", "Relic Wielder"],
+    gameplayRoles: ["Marksman"],
+    status: "Alive",
+    species: "Human",
+    aliases: ["The Unbroken Faith"],
+    accentColor: "#7FA8C7",
+    releaseYear: 2025,
+    releaseDate: "2025-07-16",
+    complexity: 4,
+    featured: true,
+    importance: 78,
+    popularity: 68,
+    verified: true,
+    completenessTier: "A",
+    events: ["kinkou-fracture"],
+    sources: ["source:wiki-yunara"],
+    tags: ["ionia", "kinkou", "spirit-realm", "aion-erna", "balance", "faith"],
+    short:
+      "A Kinkou guardian who spent centuries in the spirit realm mastering the Aion Er'na, and emerged with her vow to end disharmony still intact.",
+    long: [
+      "Yunara's devotion to Ionia did not waver when the path required isolation. She withdrew into the spirit realm and spent centuries honing her skill with the Aion Er'na — a legendary Kinkou relic whose mastery demands patience most mortals do not possess.",
+      "Her training was not retreat. It was preparation. The Kinkou guard balance between realms, and Yunara chose to meet that duty on the spirit realm's terms rather than Ionia's impatient surface politics.",
+      "What she sacrificed in those centuries — ordinary life, ease, the company of the living world — she considers part of the vow. Her faith that Ionia can be rid of disharmony and strife has not broken.",
+      "The world she returns to is not the one she left. Ancient threats have risen again, and the fractures within the Kinkou itself — between Shen's restraint and those who left it — form the political landscape she must now navigate with a weapon meant for a more patient age.",
+    ],
+    timeline: [
+      {
+        era: "Ancient Ionia",
+        title: "The vow",
+        description:
+          "She commits to Ionia's balance and accepts a path that will take her out of the living world for centuries.",
+      },
+      {
+        era: "Spirit Realm",
+        title: "Centuries with the Aion Er'na",
+        description:
+          "Cloistered in the spirit realm, she trains with the legendary Kinkou relic until mastery becomes identity.",
+        with: ["shen"],
+      },
+      {
+        era: "Modern Ionia",
+        title: "The Kinkou fractures",
+        description:
+          "While she is absent, the Order splits over whether balance requires watching threats or ending them.",
+        event: "kinkou-fracture",
+        with: ["akali", "shen", "zed"],
+      },
+      {
+        era: "Modern Ionia",
+        title: "Return to a changed land",
+        description:
+          "She emerges to find disharmony she vowed to end — and an ancient shadow testing whether centuries of faith were enough.",
+      },
+    ],
+  },
+  {
     slug: "lee-sin",
     name: "Lee Sin",
     title: "The Blind Monk",

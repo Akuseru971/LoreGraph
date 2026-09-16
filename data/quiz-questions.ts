@@ -1,3 +1,4 @@
+import { normalizeCanonStatus } from "@/lib/canon/model";
 import type { QuizQuestion, QuizQuestionKind, RegionSlug } from "@/types";
 import { RUNETERRA_ID } from "./universes";
 
@@ -12,6 +13,7 @@ interface QSeed {
   regions?: RegionSlug[];
   difficulty?: 1 | 2 | 3 | 4 | 5;
   verified?: boolean;
+  canonStatus?: string;
 }
 
 const seeds: QSeed[] = [
@@ -884,19 +886,20 @@ const seeds: QSeed[] = [
       "Pre-2018 lore tied Aatrox to celestial conflict alongside Kayle and Morgana. His rewrite made him a Shuriman Darkin, so LoreGraph flags that edge OLD_LORE.",
     chars: ["aatrox", "kayle", "morgana"],
     verified: true,
+    canonStatus: "LEGACY_LORE",
   },
   {
     kind: "CANON_OR_NOT",
-    prompt: "How does LoreGraph classify Arcane relative to Runeterra's main timeline?",
+    prompt: "How does LoreGraph classify Arcane relative to current Runeterra canon?",
     options: [
-      "A separate continuity that shares characters",
+      "Partially reconciled with current Runeterra canon",
       "Fully identical canon",
       "Non-canonical fan work",
       "A prequel to the Rune Wars",
     ],
     correct: 0,
     explanation:
-      "Arcane shares characters with the main timeline but not every event. LoreGraph marks Arcane-derived connections so you always know which body of material a claim comes from.",
+      "Arcane is not a wholly separate universe. Riot has reconciled some Arcane material into current canon while other details remain pending — LoreGraph marks those cases RECONCILIATION PENDING rather than pretending they are identical.",
     chars: ["jinx", "vi", "viktor", "mel"],
     verified: true,
   },
@@ -977,6 +980,7 @@ export const quizQuestions: QuizQuestion[] = seeds.map((s, i) => ({
   difficulty: s.difficulty ?? 2,
   xp: 25,
   verified: s.verified ?? false,
+  canonStatus: normalizeCanonStatus(s.canonStatus),
 }));
 
 export const quizQuestionById = new Map(quizQuestions.map((q) => [q.id, q]));

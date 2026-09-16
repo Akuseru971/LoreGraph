@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { characterById, storyPathsForCharacter } from "@/data";
 import { ChampionScreen } from "@/components/champion/champion-screen";
 import type { CoreRelationship } from "@/components/champion/overview-panel";
@@ -105,14 +106,16 @@ export default async function ChampionPage({
         // Derived from our own seed content, so there is nothing user-supplied here.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <ChampionScreen
-        character={character}
-        center={center}
-        neighbors={neighbors}
-        crossEdges={crossEdges}
-        core={core}
-        stories={stories}
-      />
+      <Suspense fallback={null}>
+        <ChampionScreen
+          character={character}
+          center={center}
+          neighbors={neighbors}
+          crossEdges={crossEdges}
+          core={core}
+          stories={stories}
+        />
+      </Suspense>
     </>
   );
 }
