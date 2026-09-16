@@ -40,7 +40,71 @@ export type AnalyticsEvent =
   | { name: "region_filter"; region: string }
   | { name: "signup"; method: string }
   | { name: "return_visit"; daysSinceFirst: number }
-  | { name: "xp_awarded"; amount: number; reason: string };
+  | { name: "xp_awarded"; amount: number; reason: string }
+  | {
+      name: "cinematic_start";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_complete";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_scene_view";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_skip";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_replay";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_recording_mode";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_format_select";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_share";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    };
 
 export type AnalyticsSink = (event: AnalyticsEvent, context: EventContext) => void;
 

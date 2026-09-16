@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Bookmark, BookmarkCheck, GitFork, Route } from "lucide-react";
+import { BookOpen, Bookmark, BookmarkCheck, GitFork, Play, Route } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
@@ -27,14 +27,18 @@ export function CharacterHero({
   directConnections,
   onExploreConnections,
   onStartStory,
+  onPlayStory,
   hasStory,
+  hasTimeline,
 }: {
   character: Character;
   connections: number;
   directConnections?: number;
   onExploreConnections: () => void;
   onStartStory: () => void;
+  onPlayStory: () => void;
   hasStory: boolean;
+  hasTimeline: boolean;
 }) {
   const { progress, toggleCollected } = useProgress();
   const knowledge = characterKnowledge(character.id, progress);
@@ -128,10 +132,16 @@ export function CharacterHero({
                   Connect to another champion
                 </Link>
               </Button>
+              {hasTimeline ? (
+                <Button variant="secondary" size="lg" onClick={onPlayStory}>
+                  <Play aria-hidden />
+                  Watch their story
+                </Button>
+              ) : null}
               {hasStory ? (
                 <Button variant="ghost" size="lg" onClick={onStartStory}>
                   <BookOpen aria-hidden />
-                  Start story
+                  Story path
                 </Button>
               ) : null}
               <Button

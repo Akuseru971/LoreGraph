@@ -1,8 +1,18 @@
 "use client";
 
-import { ArrowRight, Route, Search, Share2, Shuffle, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Play,
+  Route,
+  Search,
+  Share2,
+  Shuffle,
+  Sparkles,
+} from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import * as React from "react";
+import { CinematicPlayer } from "@/components/cinematic/cinematic-player";
 import { characterBySlug, characters, regionBySlug } from "@/data";
 import { useProgress } from "@/components/providers";
 import { Button } from "@/components/ui/button";
@@ -18,6 +28,7 @@ import { DailyConnection } from "./daily-connection";
 import { ShareCardDialog } from "./share-card";
 import { track } from "@/lib/analytics";
 import { findPaths, pathNarrative } from "@/lib/graph";
+import { buildConnectionJourney } from "@/lib/journey";
 import {
   connectionDepthLabel,
   indirectPathDisclaimer,
@@ -50,9 +61,11 @@ export function ConnectExperience({
   initialPaths: GraphPath[];
   daily: { date: string; aSlug: string; bSlug: string; path: GraphPath | null };
 }) {
+  const searchParams = useSearchParams();
   const { recordConnectionSearch, recordConnectionFound, markOnboarding, progress } =
     useProgress();
   const reduceMotion = useReducedMotion();
+  const [cinematicOpen, setCinematicOpen] = React.useState(false);
 
   const [a, setA] = React.useState<Character | null>(
     () => (initialA ? characterBySlug.get(initialA) : null) ?? null,
@@ -182,6 +195,23 @@ export function ConnectExperience({
   const showFirstRunHint = !progress.onboarding.ranFirstConnection && !active;
   const revealing = active && !stale && revealedSteps < (active.steps.length ?? 0);
   const narrative = active ? pathNarrative(active.steps) : [];
+
+  const connectionJourney = React.useMemo(() => {
+    if (!a || !b || !active) return null;
+    return buildConnectionJourney(a, b, active);
+  }, [a, b, active]);
+
+  const cinematicReady =
+    Boolean(connectionJourney) &&
+    active &&
+    !stale &&
+    revealedSteps >= (active?.steps.length ?? 0);
+
+  React.useEffect(() => {
+    if (searchParams.get("cinematic") !== "1" || !cinematicReady) return;
+    const timer = window.setTimeout(() => setCinematicOpen(true), revealInstant ? 0 : 400);
+    return () => window.clearTimeout(timer);
+  }, [searchParams, cinematicReady, revealInstant]);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-16 sm:px-6 sm:pt-12">
@@ -387,12 +417,20 @@ export function ConnectExperience({
                   </p>
                 </div>
                 <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto sm:flex-row">
+                  <Button
+                    variant="primary"
+                    onClick={() => setCinematicOpen(true)}
+                    className="w-full sm:w-auto"
+                  >
+                    <Play aria-hidden />
+                    Play connection
+                  </Button>
                   <Button variant="secondary" onClick={tryAnother} className="w-full sm:w-auto">
                     <Shuffle aria-hidden />
                     Try another
                   </Button>
                   <Button
-                    variant="primary"
+                    variant="secondary"
                     onClick={() => {
                       setShareOpen(true);
                       track({
@@ -471,6 +509,16 @@ export function ConnectExperience({
           accentTo={active.nodes[active.nodes.length - 1].metadata.accentColor}
         />
       ) : null}
+
+      <CinematicPlayer
+        journey={connectionJourney}
+        open={cinematicOpen}
+        onClose={() => setCinematicOpen(false)}
+        initialFormat={
+          searchParams.get("format") === "vertical" ? "portrait" : "landscape"
+        }
+        initialRecording={searchParams.get("recording") === "1"}
+      />
     </div>
   );
 }

@@ -115,6 +115,71 @@ export type ReviewStatus =
 export type StoryContentType = "fact" | "editorial";
 
 /* -------------------------------------------------------------------------- */
+/* Cinematic Journey                                                          */
+/* -------------------------------------------------------------------------- */
+
+export type JourneyType =
+  | "CHAMPION_STORY"
+  | "CONNECTION_STORY"
+  | "STORY_PATH";
+
+export type JourneyStepType =
+  | "CHARACTER"
+  | "EVENT"
+  | "REGION"
+  | "FACTION"
+  | "CONCEPT"
+  | "ERA"
+  | "TRANSITION"
+  | "OPENING"
+  | "ENDING";
+
+export type CameraPreset =
+  | "wide"
+  | "approach"
+  | "close"
+  | "drift"
+  | "pullback";
+
+export type JourneyTransition = "travel" | "era-skip" | "fade" | "cut";
+
+export type JourneyContentType = "fact" | "editorial" | "interpretation";
+
+export type JourneyFormat = "landscape" | "portrait" | "square";
+
+export type JourneyPlaybackMode = "auto" | "manual";
+
+export interface JourneyStep {
+  id: string;
+  type: JourneyStepType;
+  entityId?: string;
+  title: string;
+  eyebrow?: string;
+  narration: string[];
+  image?: string;
+  assetKey?: string;
+  accentColor?: string;
+  canonStatus: CanonStatus;
+  contentType: JourneyContentType;
+  sourceIds?: string[];
+  duration: number;
+  cameraPreset?: CameraPreset;
+  transition?: JourneyTransition;
+}
+
+export interface Journey {
+  id: string;
+  type: JourneyType;
+  title: string;
+  subtitle?: string;
+  sourceChampionId?: string;
+  targetChampionId?: string;
+  connectionLabel?: string;
+  steps: JourneyStep[];
+  estimatedDuration: number;
+}
+
+/* -------------------------------------------------------------------------- */
 /* Lore content                                                               */
 /* -------------------------------------------------------------------------- */
 

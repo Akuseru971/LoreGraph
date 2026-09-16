@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ConnectExperience } from "@/components/connect/connect-experience";
 import { parseConnectParams } from "@/lib/connect/inspiration";
 import { dailyConnection } from "@/lib/data/daily";
@@ -33,11 +34,13 @@ export default async function ConnectPage({
   const daily = dailyConnection();
 
   return (
-    <ConnectExperience
-      initialA={a?.slug ?? null}
-      initialB={b?.slug ?? null}
-      initialPaths={paths}
-      daily={daily}
-    />
+    <Suspense fallback={null}>
+      <ConnectExperience
+        initialA={a?.slug ?? null}
+        initialB={b?.slug ?? null}
+        initialPaths={paths}
+        daily={daily}
+      />
+    </Suspense>
   );
 }

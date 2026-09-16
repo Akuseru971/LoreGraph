@@ -1,9 +1,12 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import { useProgress } from "@/components/providers";
+import { CinematicPlayer } from "@/components/cinematic/cinematic-player";
 import { RelationshipDrawer, type RelationshipSelection } from "@/components/graph/relationship-drawer";
 import { StoryPathPlayer } from "@/components/story/story-path-player";
+import { buildChampionJourney } from "@/lib/journey";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { track } from "@/lib/analytics";
 import type { Neighbor } from "@/lib/graph";
@@ -38,9 +41,17 @@ export function ChampionScreen({
   core: CoreRelationship[];
   stories: StoryPath[];
 }) {
+  const searchParams = useSearchParams();
   const { recordCharacterView, recordTimelineViewed } = useProgress();
   const [tab, setTab] = React.useState<TabId>("overview");
   const [story, setStory] = React.useState<StoryPath | null>(null);
+  const championJourney = React.useMemo(
+    () => (character.timeline.length > 0 ? buildChampionJourney(character) : null),
+    [character],
+  );
+  const [cinematicOpen, setCinematicOpen] = React.useState(
+    () => searchParams.get("cinematic") === "1" && championJourney !== null,
+  );
   const [overviewSelection, setOverviewSelection] =
     React.useState<RelationshipSelection | null>(null);
   const tabsRef = React.useRef<HTMLDivElement | null>(null);
@@ -81,7 +92,9 @@ export function ChampionScreen({
         directConnections={neighbors.filter((n) => n.edge.connectionKind === "direct").length}
         onExploreConnections={() => goToTab("connections")}
         onStartStory={() => setStory(stories[0] ?? null)}
+        onPlayStory={() => setCinematicOpen(true)}
         hasStory={stories.length > 0}
+        hasTimeline={character.timeline.length > 0}
       />
 
       <div ref={tabsRef} className="scroll-mt-16">
@@ -146,6 +159,16 @@ export function ChampionScreen({
       />
 
       <StoryPathPlayer path={story} onClose={() => setStory(null)} />
+
+      <CinematicPlayer
+        journey={championJourney}
+        open={cinematicOpen}
+        onClose={() => setCinematicOpen(false)}
+        initialFormat={
+          searchParams.get("format") === "vertical" ? "portrait" : "landscape"
+        }
+        initialRecording={searchParams.get("recording") === "1"}
+      />
     </>
   );
 }
