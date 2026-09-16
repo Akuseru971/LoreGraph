@@ -12,6 +12,8 @@ export type ChampionAssetType = "portrait" | "splash" | "card" | "avatar";
 const DDRAGON_VERSION = "16.18.1";
 const DDRAGON_CDN = "https://ddragon.leagueoflegends.com/cdn";
 
+import { ddragonKeyForSlug } from "@/data/roster";
+
 /** Slug → Data Dragon champion key (only exceptions; default is derived). */
 const DDRAGON_KEY: Record<string, string> = {
   "aurelion-sol": "AurelionSol",
@@ -19,16 +21,22 @@ const DDRAGON_KEY: Record<string, string> = {
   "lee-sin": "LeeSin",
   leblanc: "Leblanc",
   kaisa: "Kaisa",
-  nunu: "Nunu",
+  "nunu-willump": "Nunu",
   "tahm-kench": "TahmKench",
-  "cho-gath": "Chogath",
+  chogath: "Chogath",
   "kog-maw": "KogMaw",
   "miss-fortune": "MissFortune",
   "master-yi": "MasterYi",
   "twisted-fate": "TwistedFate",
   "dr-mundo": "DrMundo",
-  "rek-sai": "RekSai",
-  "bel-veth": "Belveth",
+  reksai: "RekSai",
+  belveth: "Belveth",
+  ksante: "KSante",
+  khazix: "Khazix",
+  velkoz: "Velkoz",
+  wukong: "MonkeyKing",
+  "xin-zhao": "XinZhao",
+  "renata-glasc": "Renata",
 };
 
 /** Optional per-champion splash focal point (CSS object-position). */
@@ -44,10 +52,7 @@ const ART_POSITION: Record<string, string> = {
 
 export function ddragonChampionKey(slug: string): string {
   if (DDRAGON_KEY[slug]) return DDRAGON_KEY[slug];
-  return slug
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
+  return ddragonKeyForSlug(slug);
 }
 
 export function championArtPosition(slug: string): string {

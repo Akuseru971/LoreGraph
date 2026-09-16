@@ -100,7 +100,7 @@ export function ChampionSelect({
             {value ? value.name : "Choose"}
           </span>
           <span className="text-muted mt-0.5 block truncate text-xs">
-            {value ? (region?.name ?? value.title) : "Search 50 champions"}
+            {value ? (region?.name ?? value.title) : `Search ${characters.length} champions`}
           </span>
         </span>
 

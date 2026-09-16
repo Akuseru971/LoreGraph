@@ -6,6 +6,7 @@ import type {
 import { normalizeCanonStatus } from "@/lib/canon/model";
 import { inferConfidence, inferConnectionCategory } from "@/lib/truth/layer";
 import { deriveNeedsReview, deriveReviewStatus } from "@/lib/truth/review";
+import { relationshipExpansionSeeds } from "./relationships-expansion";
 import { bioSourceId } from "./sources";
 import { RUNETERRA_ID } from "./universes";
 
@@ -35,7 +36,7 @@ interface RelSeed {
  * (shared region / faction / event) are derived in lib/graph/build.ts so they
  * never get confused with these.
  */
-const seeds: RelSeed[] = [
+const baseSeeds: RelSeed[] = [
   /* ---------------------------------------------------------------- Darkin */
   {
     a: "aatrox",
@@ -44,9 +45,9 @@ const seeds: RelSeed[] = [
     label: "Mortal Enemies",
     short:
       "Aatrox returned and destroyed the Aspect of War; the mortal host Atreus survived and became Pantheon.",
-    long: "During the Darkin War, celestial hosts fought alongside Shurima to stop the corrupted Ascended — but Aatrox's imprisonment inside his blade belongs to that wider conflict, not to Pantheon's host specifically. Millennia later, Aatrox hunted down the Aspect of War and destroyed the celestial, leaving Atreus alive on the ground. That survival is the twist: the man got up, kept a fragment of the dead god, and is now the only mortal who has fought Aatrox and remained himself afterwards.",
+    long: "The Aspect of War helped seal Aatrox during the Darkin War — long before Atreus was born. Millennia later, Aatrox hunted down that same celestial and destroyed it while it rode Atreus, leaving the mortal alive on the ground. That survival is the twist: the man got up, kept a fragment of the dead god, and is now the only mortal who has fought Aatrox and remained himself afterwards.",
     importance: 98,
-    events: ["darkin-war", "aatrox-pantheon-duel", "pantheon-reborn"],
+    events: ["aatrox-pantheon-duel", "pantheon-reborn"],
     sources: ["source:twilight-of-the-gods"],
     verified: true,
   },
@@ -124,7 +125,7 @@ const seeds: RelSeed[] = [
     type: "fought",
     label: "Sealed by Targon",
     short: "Targon's intervention in the Darkin War ended with Varus bound inside his bow.",
-    long: "The Aspect of War was central to the campaign that defeated the Darkin, and Varus received the same sentence as Aatrox: imprisonment inside his own weapon. Varus has had far less opportunity to act on that grievance, largely because it took considerably longer for anyone to pick up his bow.",
+    long: "The Aspect of War — not the modern champion Pantheon — was central to the campaign that defeated the Darkin. Varus received the same sentence as Aatrox: imprisonment inside his own weapon. Varus has had far less opportunity to act on that grievance, largely because it took considerably longer for anyone to pick up his bow.",
     importance: 68,
     events: ["darkin-war"],
   },
@@ -1858,12 +1859,16 @@ const seeds: RelSeed[] = [
   {
     a: "leona",
     b: "kayle",
-    type: "ally",
-    label: "Aspects of Targon",
-    short: "Fellow celestial hosts who answer the same mountain with different aspects of judgment.",
-    long: "Kayle and Leona both carry Targonian power into Runeterra's wars. Their bond is institutional — two faces of the same interventionist faith.",
-    importance: 58,
-    verified: true,
+    type: "related",
+    label: "Celestial Judgement",
+    short:
+      "Both wield power tied to Targon's celestial order, but Kayle is not an Aspect host like Leona.",
+    long: "Leona carries the Aspect of the Sun. Kayle's power descends from Targon through her mother, but their relationship is categorical rather than a documented personal alliance. LoreGraph marks this as structural context, not a direct canon encounter.",
+    importance: 44,
+    connectionType: "STRUCTURAL_LORE",
+    verified: false,
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
   },
   {
     a: "diana",
@@ -1959,17 +1964,9 @@ const seeds: RelSeed[] = [
     importance: 28,
     canon: "ALTERNATE_UNIVERSE",
   },
-  {
-    a: "thresh",
-    b: "lucian-placeholder",
-    type: "enemy",
-    label: "The Sentinel He Made",
-    short: "Placeholder edge retained for a champion outside the current 50-character seed.",
-    long: "Thresh's most defining modern conflict involves Lucian, who is not part of this seed. The edge is kept in the data with a placeholder target so that the omission is explicit rather than silent, and it is filtered out of the live graph.",
-    importance: 10,
-    canon: "AMBIGUOUS",
-  },
 ];
+
+const seeds: RelSeed[] = [...baseSeeds, ...relationshipExpansionSeeds];
 
 export const relationships: Relationship[] = seeds
   // Placeholder rows document known gaps without polluting the live graph.

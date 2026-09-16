@@ -95,4 +95,64 @@ describe("Connect regression pairs", () => {
     const path = pathBetween("viktor", "jinx");
     expect(path).not.toBeNull();
   });
+
+  it("Ashe → Sejuani produces a meaningful path", () => {
+    const path = pathBetween("ashe", "sejuani");
+    expect(path).not.toBeNull();
+  });
+
+  it("Renekton → Nasus prefers direct family relationship", () => {
+    const path = pathBetween("renekton", "nasus");
+    expect(path).not.toBeNull();
+    expect(path!.directOnly).toBe(true);
+  });
+
+  it("Renekton → Xerath produces a meaningful path", () => {
+    const path = pathBetween("renekton", "xerath");
+    expect(path).not.toBeNull();
+    expect(path!.directOnly).toBe(true);
+  });
+
+  it("Shen → Zed prefers direct rival relationship", () => {
+    const path = pathBetween("shen", "zed");
+    expect(path).not.toBeNull();
+    expect(path!.directOnly).toBe(true);
+  });
+
+  it("Lucian → Senna prefers direct relationship", () => {
+    const path = pathBetween("lucian", "senna");
+    expect(path).not.toBeNull();
+    expect(path!.directOnly).toBe(true);
+  });
+
+  it("Xayah → Rakan prefers direct relationship", () => {
+    const path = pathBetween("xayah", "rakan");
+    expect(path).not.toBeNull();
+    expect(path!.directOnly).toBe(true);
+  });
+
+  it("Darius → Draven prefers direct family relationship", () => {
+    const path = pathBetween("darius", "draven");
+    expect(path).not.toBeNull();
+    expect(path!.directOnly).toBe(true);
+  });
+
+  it("Volibear → Ornn produces a path without celestial-age shortcut", () => {
+    const path = pathBetween("volibear", "ornn");
+    expect(path).not.toBeNull();
+    const usesCelestialAge = path!.steps.some(
+      (s) => s.to.slug === "celestial-age" || s.from.slug === "celestial-age",
+    );
+    expect(usesCelestialAge).toBe(false);
+  });
+
+  it("Azir → Nasus produces a meaningful path", () => {
+    const path = pathBetween("azir", "nasus");
+    expect(path).not.toBeNull();
+  });
+
+  it("Kayn → Zed produces a meaningful path", () => {
+    const path = pathBetween("kayn", "zed");
+    expect(path).not.toBeNull();
+  });
 });

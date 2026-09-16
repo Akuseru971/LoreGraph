@@ -23,7 +23,7 @@ const entitySeeds: Array<Omit<LoreEntity, "type" | "universeId" | "verified">> =
       "Mortals elevated by Shurima's Sun Disc to fight the Void — the origin of both guardians and Darkin.",
     longDescription:
       "The Rite of Ascension created Runeterra's first god-warriors. Many were corrupted into Darkin; others, like Nasus and Renekton, remember the empire that made them.",
-    characterSlugs: ["aatrox", "nasus", "azir", "varus", "pantheon"],
+    characterSlugs: ["aatrox", "nasus", "azir", "varus", "renekton"],
     eventSlugs: ["ascension-ritual", "darkin-corruption", "void-incursion"],
     accentColor: "#D1A65C",
   },
@@ -65,6 +65,20 @@ const entitySeeds: Array<Omit<LoreEntity, "type" | "universeId" | "verified">> =
     characterSlugs: ["lux", "sylas", "garen", "morgana"],
     eventSlugs: ["mage-rebellion-founding", "sylas-uprising"],
     accentColor: "#D8B978",
+  },
+  {
+    id: "concept:aspect-of-war",
+    slug: "aspect-of-war",
+    name: "Aspect of War",
+    importance: 82,
+    shortDescription:
+      "The Targonian celestial that fought in the Darkin War — later hosted by Atreus, who survived its death.",
+    longDescription:
+      "The Aspect of War is not Atreus. It is the celestial entity that inhabited him for years, intervened in ancient conflicts including the sealing of the Darkin, and was destroyed millennia later when Aatrox returned.",
+    characterSlugs: ["pantheon"],
+    eventSlugs: ["darkin-war", "aatrox-pantheon-duel"],
+    accentColor: "#8B7FC7",
+    connectEligible: true,
   },
   {
     id: "concept:ruination",

@@ -1,5 +1,6 @@
 import { normalizeCanonStatus } from "@/lib/canon/model";
 import type { Source } from "@/types";
+import { rosterBySlug, rosterSlugs } from "./roster";
 
 /**
  * Sources are deliberately conservative: we reference the canonical publications
@@ -7,72 +8,18 @@ import type { Source } from "@/types";
  * Everything unverified in the seed is marked so an editor can review it later.
  */
 
-export const championSlugs = [
-  "aatrox",
-  "ahri",
-  "akali",
-  "akshan",
-  "ashe",
-  "aurelion-sol",
-  "azir",
-  "caitlyn",
-  "camille",
-  "darius",
-  "diana",
-  "draven",
-  "ekko",
-  "garen",
-  "irelia",
-  "jarvan-iv",
-  "jhin",
-  "jinx",
-  "kaisa",
-  "kalista",
-  "karma",
-  "katarina",
-  "kayle",
-  "kindred",
-  "leblanc",
-  "lee-sin",
-  "leona",
-  "lissandra",
-  "lux",
-  "mel",
-  "mordekaiser",
-  "morgana",
-  "nasus",
-  "pantheon",
-  "riven",
-  "ryze",
-  "senna",
-  "shen",
-  "singed",
-  "swain",
-  "sylas",
-  "syndra",
-  "thresh",
-  "varus",
-  "vi",
-  "viego",
-  "viktor",
-  "xayah",
-  "yasuo",
-  "yone",
-] as const;
+export const championSlugs = rosterSlugs;
 
-export type ChampionSlug = (typeof championSlugs)[number];
+export type ChampionSlug = string;
 
 export const bioSourceId = (slug: string) => `source:bio-${slug}`;
 
 const displayName = (slug: string) =>
+  rosterBySlug.get(slug)?.name ??
   slug
     .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ")
-    .replace("Kaisa", "Kai'Sa")
-    .replace("Jarvan Iv", "Jarvan IV")
-    .replace("Leblanc", "LeBlanc")
-    .replace("Aurelion Sol", "Aurelion Sol");
+    .join(" ");
 
 const biographies: Source[] = championSlugs.map((slug) => ({
   id: bioSourceId(slug),

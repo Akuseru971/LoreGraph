@@ -17,6 +17,13 @@ export {
   storyPathsForCharacter,
 } from "./story-paths";
 export { universes, activeUniverse, RUNETERRA_ID } from "./universes";
+export {
+  ACTIVE_ROSTER,
+  EXPECTED_ROSTER_COUNT,
+  ROSTER_ENTRIES,
+  rosterBySlug,
+  rosterSlugs,
+} from "./roster";
 
 /** Champions surfaced in the Discover "Trending" rail, in order. */
 export const trendingCharacterSlugs = [

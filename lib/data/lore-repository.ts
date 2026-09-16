@@ -119,8 +119,35 @@ function scoreMatch(haystack: string, needle: string): number {
   return 0;
 }
 
+const QUERY_ALIASES: Record<string, string> = {
+  kaisa: "kaisa",
+  "kai-sa": "kaisa",
+  chogath: "chogath",
+  "cho-gath": "chogath",
+  khazix: "khazix",
+  "kha-zix": "khazix",
+  leblanc: "leblanc",
+  reksai: "reksai",
+  "rek-sai": "reksai",
+  ksante: "ksante",
+  "k-sante": "ksante",
+  nunu: "nunu-willump",
+  mf: "miss-fortune",
+  tf: "twisted-fate",
+  "a sol": "aurelion-sol",
+  asol: "aurelion-sol",
+  belveth: "bel-veth",
+  velkoz: "velkoz",
+  "vel-koz": "velkoz",
+};
+
+function normalizeSearchQuery(query: string): string {
+  const trimmed = query.trim().toLowerCase();
+  return QUERY_ALIASES[trimmed] ?? trimmed;
+}
+
 export function searchLore(query: string, limit = 12): SearchResult[] {
-  const needle = query.trim().toLowerCase();
+  const needle = normalizeSearchQuery(query);
   if (needle.length === 0) return [];
 
   const results: SearchResult[] = [];

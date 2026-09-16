@@ -51,8 +51,9 @@ const seeds: PathSeed[] = [
           "The Void did not negotiate, did not tire and did not run out. Shurima's god-warriors held the line for centuries, which is exactly as long as it sounds.",
           "Winning a war like that requires becoming something that can fight it indefinitely. Nobody in the empire asked what happens to that something once the fighting ends.",
         ],
-        chars: ["aatrox", "varus", "nasus", "kaisa"],
+        chars: ["aatrox", "varus", "nasus"],
         events: ["void-incursion"],
+        contentType: "fact",
       },
       {
         title: "THE FALL",
@@ -69,9 +70,9 @@ const seeds: PathSeed[] = [
         subtitle: "An empire turns on its own gods",
         body: [
           "Mortal Shurima went to war against the beings it had made, and it could not have won alone. Targon intervened, bringing celestial power to a conflict that was already apocalyptic.",
-          "The Aspect of War fought in that campaign. Millennia later, the man who carried it would learn exactly how long a Darkin's memory is.",
+          "The Aspect of War fought in that campaign — not the mortal Atreus, who would host it thousands of years later. Millennia after the sealing, that same man would learn exactly how long a Darkin's memory is.",
         ],
-        chars: ["aatrox", "pantheon", "varus", "leona"],
+        chars: ["aatrox", "varus", "nasus"],
         events: ["darkin-war"],
       },
       {
@@ -81,7 +82,7 @@ const seeds: PathSeed[] = [
           "The Darkin could not be destroyed. So they were sealed — each one bound into the weapon it had fought with, then hidden, buried or forgotten.",
           "It is an elegant solution with a fatal dependency: it only holds as long as nobody picks the weapon up.",
         ],
-        chars: ["aatrox", "varus", "pantheon"],
+        chars: ["aatrox", "varus"],
         events: ["darkin-war"],
       },
       {
@@ -110,9 +111,11 @@ const seeds: PathSeed[] = [
         body: [
           "The seals are failing one at a time, and every release follows the same pattern: someone finds a remarkable weapon, and the weapon finds a use for them.",
           "Targon built the cages. That makes every Aspect, priest and mortal host a legitimate target in the eyes of whatever comes out of them.",
+          "Kai'Sa belongs to this era as a modern consequence of the Void — not as a witness to the ancient war that created the Darkin.",
         ],
         chars: ["aatrox", "varus", "pantheon", "kaisa"],
         events: ["aatrox-return"],
+        contentType: "editorial",
       },
     ],
   },

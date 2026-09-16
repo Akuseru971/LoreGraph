@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LoreGraphMark } from "@/components/brand";
-import { activeUniverse } from "@/data";
+import { activeUniverse, characters } from "@/data";
 
 export function SiteFooter() {
   return (
@@ -44,7 +44,7 @@ export function SiteFooter() {
               <h2 className="text-eyebrow text-muted mb-3">Archive</h2>
               <ul className="space-y-2 text-sm text-muted">
                 <li className="text-parchment">{activeUniverse.displayName}</li>
-                <li>50 champions · curated lore graph</li>
+                <li>{characters.length} champions · curated lore graph</li>
               </ul>
             </nav>
 

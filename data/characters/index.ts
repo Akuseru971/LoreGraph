@@ -4,14 +4,22 @@ import { frostIslesSeeds } from "./frost-isles";
 import { ioniaSeeds } from "./ionia";
 import { noxusDemaciaSeeds } from "./noxus-demacia";
 import { piltoverZaunSeeds } from "./piltover-zaun";
+import { rosterExpansionSeeds } from "./roster-expansion";
 import { shurimaTargonSeeds } from "./shurima-targon";
 
-export const characterSeeds: CharacterSeed[] = [
+const curatedSeeds: CharacterSeed[] = [
   ...shurimaTargonSeeds,
   ...ioniaSeeds,
   ...noxusDemaciaSeeds,
   ...piltoverZaunSeeds,
   ...frostIslesSeeds,
+];
+
+const curatedSlugs = new Set(curatedSeeds.map((s) => s.slug));
+
+export const characterSeeds: CharacterSeed[] = [
+  ...curatedSeeds,
+  ...rosterExpansionSeeds.filter((s) => !curatedSlugs.has(s.slug)),
 ];
 
 export const characters: Character[] = characterSeeds
