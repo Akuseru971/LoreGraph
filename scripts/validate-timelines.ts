@@ -3,6 +3,7 @@
  */
 import { characters } from "../data/characters";
 import { scanTextForRedFlags } from "../lib/canon/red-flags";
+import { isTrustedTimelineBeat } from "../lib/timeline/trust";
 
 const ANCIENT_ERAS = /ancient|before reckoning|fall of shurima|darkin|rune wars/i;
 const errors: string[] = [];
@@ -27,6 +28,43 @@ for (const c of characters) {
         errors.push(`Pantheon/Atreus in ancient beat without modern event: ${c.slug}/${beat.title}`);
       }
     }
+
+    if (
+      beat.evidenceClass === "FACT" &&
+      beat.canonStatus === "UNKNOWN"
+    ) {
+      errors.push(`FACT timeline beat with UNKNOWN canon: ${c.slug}/${beat.id}`);
+    }
+
+    if (
+      beat.evidenceClass === "FACT" &&
+      (!beat.sourceIds?.length || beat.reviewStatus === "PENDING")
+    ) {
+      errors.push(`FACT timeline beat without trusted provenance: ${c.slug}/${beat.id}`);
+    }
+
+    if (
+      c.slug === "varus" &&
+      beat.eventId === "event:void-incursion"
+    ) {
+      errors.push(`Varus void-incursion beat remains trusted: ${beat.id}`);
+    }
+
+    if (
+      beat.characterIds.length > 2 &&
+      beat.eventId === "event:targon-aurelion-loose"
+    ) {
+      errors.push(`Synthetic shared-event timeline beat: ${c.slug}/${beat.id}`);
+    }
+  }
+
+  const untrustedDisplayedAsFact = c.timeline.filter(
+    (b) => b.evidenceClass === "FACT" && !isTrustedTimelineBeat(b),
+  );
+  if (untrustedDisplayedAsFact.length) {
+    warnings.push(
+      `${c.slug}: ${untrustedDisplayedAsFact.length} FACT beats fail trust check`,
+    );
   }
 }
 

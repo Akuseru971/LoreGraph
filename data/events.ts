@@ -65,7 +65,7 @@ const seeds: EventSeed[] = [
     era: "Ancient Shurima",
     order: 30,
     importance: 88,
-    characters: ["aatrox", "nasus", "varus"],
+    characters: ["aatrox", "nasus"],
     regions: ["shurima", "void"],
   },
   {
@@ -518,7 +518,7 @@ const seeds: EventSeed[] = [
     era: "Modern Runeterra",
     order: 430,
     importance: 74,
-    characters: ["aurelion-sol", "leona", "diana", "pantheon"],
+    characters: ["aurelion-sol"],
     regions: ["targon", "runeterra"],
   },
 ];

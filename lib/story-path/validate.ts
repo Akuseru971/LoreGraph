@@ -2,7 +2,7 @@ import { claimById } from "@/data/knowledge/claims";
 import { sourceById } from "@/data/sources";
 import { storyPaths } from "@/data/story-paths";
 import type { NarrativeEvidenceClass, StoryNarrativeBlock } from "@/types";
-import { supportsNarrativeBlock } from "./support";
+import { supportsNarrativeBlock, validateFactPropositionSupport } from "./support";
 
 export interface StoryPathValidationResult {
   errors: string[];
@@ -41,6 +41,11 @@ function validateBlock(
     }
     if (!supportsNarrativeBlock(block.text, block.claimIds ?? [])) {
       errors.push(`FACT block claims do not semantically support text: ${pathSlug}/${chapterId}`);
+    }
+    for (const issue of validateFactPropositionSupport(block.text, block.claimIds ?? [])) {
+      errors.push(
+        `FACT block proposition issue (${issue.kind}): ${pathSlug}/${chapterId} — ${issue.message}`,
+      );
     }
   }
 

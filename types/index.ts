@@ -153,6 +153,7 @@ export type ConnectionConfidence =
 
 export type ReviewStatus =
   | "PENDING"
+  | "REVIEWED"
   | "APPROVED_EDITORIAL"
   | "VERIFIED_CANON"
   | "REJECTED";
@@ -367,9 +368,16 @@ export interface TimelineBeat {
   characterIds: string[];
   eventId?: string;
   sourceIds?: string[];
+  claimIds?: string[];
   canonStatus?: CanonStatus;
   continuity?: Continuity;
+  reviewStatus?: ReviewStatus;
+  confidence?: FactConfidence;
+  evidenceClass?: NarrativeEvidenceClass;
 }
+
+/** Paragraph-level bio provenance — mirrors Story Path block semantics. */
+export type BioNarrativeBlock = StoryNarrativeBlock;
 
 export interface GameplayData {
   classes: string[];
@@ -383,6 +391,8 @@ export interface Character extends Entity {
   title: string;
   shortDescription: string;
   longDescription: string[];
+  /** Internal canon/editorial separation for biography paragraphs. */
+  bioBlocks?: BioNarrativeBlock[];
   /** Region of origin / primary association. */
   region: RegionSlug;
   factions: string[];

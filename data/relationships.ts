@@ -129,16 +129,6 @@ const baseSeeds: RelSeed[] = [
   },
   {
     a: "varus",
-    b: "pantheon",
-    type: "fought",
-    label: "Sealed by Targon",
-    short: "Targon's intervention in the Darkin War ended with Varus bound inside his bow.",
-    long: "The Aspect of War — not the modern champion Pantheon — was central to the campaign that defeated the Darkin. Varus received the same sentence as Aatrox: imprisonment inside his own weapon. Varus has had far less opportunity to act on that grievance, largely because it took considerably longer for anyone to pick up his bow.",
-    importance: 68,
-    events: ["darkin-war"],
-  },
-  {
-    a: "varus",
     b: "nasus",
     type: "formerAlly",
     label: "Ascended Together",
@@ -169,7 +159,7 @@ const baseSeeds: RelSeed[] = [
     short: "Two mortals who carried celestial Aspects, and both survived the experience differently.",
     long: "Leona still carries the Aspect of the Sun. Pantheon's Aspect of War was destroyed, and Atreus continues wielding its weapons through mortal will alone. That difference makes him uniquely qualified to tell her something no other Targonian can: that the celestials are not guaranteed, and the mortal underneath matters.",
     importance: 72,
-    events: ["targon-aurelion-loose", "ascension-ritual"],
+    events: ["ascension-ritual"],
     verified: true,
   },
   {
@@ -181,7 +171,7 @@ const baseSeeds: RelSeed[] = [
       "Both ended up opposing Targon's establishment — one by discovery, one by being discarded.",
     long: "Diana's heresy was archival: she found what the Solari buried. Pantheon's is structural: he learned that an Aspect can die and that mortals are treated as equipment. They arrive at similar conclusions about Targon's authority from completely different directions.",
     importance: 58,
-    events: ["targon-aurelion-loose"],
+    events: [],
   },
   {
     a: "pantheon",
@@ -192,7 +182,10 @@ const baseSeeds: RelSeed[] = [
       "Aurelion Sol was bound into service by the Aspects. Pantheon carried one of them.",
     long: "The Star Forger's binding is the Aspects' most embarrassing achievement, and Pantheon spent years as the Aspect of War's vessel. That makes him complicit by association in the dragon's eyes — although Pantheon's subsequent decision to bury his own god is exactly the kind of precedent Aurelion Sol finds encouraging.",
     importance: 72,
-    events: ["star-forger-bound", "targon-aurelion-loose"],
+    events: ["star-forger-bound"],
+    connectionType: "STRUCTURAL_LORE",
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
   },
   {
     a: "leona",

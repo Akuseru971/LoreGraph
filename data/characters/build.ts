@@ -1,14 +1,22 @@
+import { buildBioBlocks } from "@/lib/bio/blocks";
 import { computeCompleteness } from "@/lib/knowledge/completeness";
 import {
   normalizeCanonStatus,
   resolveCharacterCanonStatus,
 } from "@/lib/canon/model";
+import {
+  deriveTimelineConfidence,
+  deriveTimelineReviewStatus,
+} from "@/lib/timeline/trust";
 import type {
   Character,
   CharacterStatus,
   Continuity,
+  FactConfidence,
   LoreComplexity,
+  NarrativeEvidenceClass,
   RegionSlug,
+  ReviewStatus,
   TimelineBeat,
 } from "@/types";
 import { regionBySlug } from "../regions";
@@ -23,6 +31,12 @@ export interface TimelineSeed {
   with?: string[];
   /** Slug of a shared world event, if this beat maps onto one. */
   event?: string;
+  sourceIds?: string[];
+  claimIds?: string[];
+  reviewStatus?: ReviewStatus;
+  canonStatus?: string;
+  evidenceClass?: NarrativeEvidenceClass;
+  confidence?: FactConfidence;
 }
 
 export interface CharacterSeed {
@@ -63,18 +77,43 @@ export const charIdOf = (slug: string) => `char:${slug}`;
 
 export function buildCharacter(seed: CharacterSeed): Character {
   const region = regionBySlug.get(seed.region);
-  const timeline: TimelineBeat[] = (seed.timeline ?? []).map((beat, index) => ({
-    id: `beat:${seed.slug}-${index + 1}`,
-    era: beat.era,
-    title: beat.title,
-    description: beat.description,
-    order: index + 1,
-    characterIds: [charIdOf(seed.slug), ...(beat.with ?? []).map(charIdOf)],
-    eventId: beat.event ? `event:${beat.event}` : undefined,
-    sourceIds: seed.sources,
-    canonStatus: normalizeCanonStatus(seed.canonStatus),
-    continuity: seed.continuity,
-  }));
+  const timeline: TimelineBeat[] = (seed.timeline ?? []).map((beat, index) => {
+    const sourceIds =
+      beat.sourceIds ??
+      (beat.event ? undefined : seed.sources) ??
+      (seed.sources?.length ? seed.sources : [bioSourceId(seed.slug)]);
+    const canonStatus = normalizeCanonStatus(beat.canonStatus ?? seed.canonStatus);
+    const reviewStatus =
+      beat.reviewStatus ??
+      deriveTimelineReviewStatus({
+        sourceIds,
+        claimIds: beat.claimIds,
+        canonStatus,
+      });
+    const built: TimelineBeat = {
+      id: `beat:${seed.slug}-${index + 1}`,
+      era: beat.era,
+      title: beat.title,
+      description: beat.description,
+      order: index + 1,
+      characterIds: [charIdOf(seed.slug), ...(beat.with ?? []).map(charIdOf)],
+      eventId: beat.event ? `event:${beat.event}` : undefined,
+      sourceIds,
+      canonStatus,
+      continuity: seed.continuity,
+      reviewStatus,
+      confidence:
+        beat.confidence ??
+        deriveTimelineConfidence({ claimIds: beat.claimIds, reviewStatus }),
+      evidenceClass: beat.evidenceClass,
+    };
+    if (beat.claimIds?.length) built.claimIds = beat.claimIds;
+    if (!built.evidenceClass) {
+      built.evidenceClass =
+        reviewStatus === "VERIFIED_CANON" ? "FACT" : "UNRESOLVED";
+    }
+    return built;
+  });
 
   const gameplayData =
     seed.gameplayRoles && seed.gameplayRoles.length > 0
@@ -97,6 +136,7 @@ export function buildCharacter(seed: CharacterSeed): Character {
     verified: seed.verified ?? false,
     shortDescription: seed.short,
     longDescription: seed.long,
+    bioBlocks: buildBioBlocks(seed.slug, seed.long),
     region: seed.region,
     factions: seed.factions.map((s) => `faction:${s}`),
     roles: seed.roles,

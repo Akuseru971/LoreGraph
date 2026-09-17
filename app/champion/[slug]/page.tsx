@@ -12,6 +12,7 @@ import {
   getNeighbors,
   relationshipCounterpart,
 } from "@/lib/graph";
+import { trustedBioParagraphs } from "@/lib/bio/blocks";
 import { absoluteUrl } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -79,6 +80,10 @@ export default async function ChampionPage({
     .filter((entry): entry is CoreRelationship => entry !== null);
 
   const stories = storyPathsForCharacter(character.id);
+  const seoBio =
+    character.bioBlocks?.length
+      ? trustedBioParagraphs(character.bioBlocks)
+      : character.longDescription;
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -104,7 +109,7 @@ export default async function ChampionPage({
       <article className="sr-only" aria-label={`${character.name} lore summary`}>
         <h1>{character.name} — {character.title}</h1>
         <p>{character.shortDescription}</p>
-        {character.longDescription.map((paragraph, index) => (
+        {seoBio.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
       </article>

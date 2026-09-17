@@ -7,7 +7,9 @@ import { computeQuality } from "@/lib/knowledge/quality-matrix";
 import { absoluteUrl, findForbiddenOrigins, getSiteUrl } from "@/lib/seo";
 import { loreEntityById } from "@/data/lore-entities";
 import { findDuplicateRelationships } from "@/lib/relationships/dedupe";
-import { supportsNarrativeBlock } from "@/lib/story-path/support";
+import { trustedBioParagraphs } from "@/lib/bio/blocks";
+import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
+import { supportsNarrativeBlock, validateFactPropositionSupport } from "@/lib/story-path/support";
 import { validateStoryPaths } from "@/lib/story-path/validate";
 import type { GraphEdge } from "@/types";
 
@@ -132,5 +134,67 @@ describe("Canon hardening regression", () => {
   it("Kai'Sa must never participate in the ancient Void War", () => {
     const kaisa = characters.find((c) => c.slug === "kaisa");
     expect(kaisa?.eventIds).not.toContain("event:void-incursion");
+  });
+
+  it("Varus has no direct character edge to Pantheon", () => {
+    const direct = relationships.find(
+      (r) =>
+        (r.sourceCharacterId === "char:varus" && r.targetCharacterId === "char:pantheon") ||
+        (r.sourceCharacterId === "char:pantheon" && r.targetCharacterId === "char:varus"),
+    );
+    expect(direct).toBeUndefined();
+  });
+
+  it("Varus Void War participation is not trusted timeline", () => {
+    const varus = characters.find((c) => c.slug === "varus");
+    const voidBeat = varus?.timeline.find((b) => b.description.match(/void/i));
+    expect(voidBeat).toBeUndefined();
+    expect(varus?.eventIds).not.toContain("event:void-incursion");
+  });
+
+  it("Pantheon synthetic Aurelion shared-event timeline beat removed", () => {
+    const pantheon = characters.find((c) => c.slug === "pantheon");
+    const synthetic = pantheon?.timeline.find((b) =>
+      b.characterIds.includes("char:aurelion-sol"),
+    );
+    expect(synthetic).toBeUndefined();
+    expect(pantheon?.eventIds).not.toContain("event:targon-aurelion-loose");
+  });
+
+  it("UNKNOWN timeline beats are not treated as trusted", () => {
+    const unknown = characters.flatMap((c) =>
+      c.timeline.filter((b) => b.canonStatus === "UNKNOWN" && isTrustedTimelineBeat(b)),
+    );
+    expect(unknown).toHaveLength(0);
+  });
+
+  it("FACT blocks require proposition-level support", () => {
+    const issues = validateFactPropositionSupport(
+      "The Rite of Ascension was a public imperial institution.",
+      ["claim:aatrox-was-ascended"],
+    );
+    expect(issues.some((i) => i.kind === "scope_mismatch")).toBe(true);
+  });
+
+  it("Aatrox bio SEO shell excludes unresolved editorial paragraphs", () => {
+    const aatrox = characters.find((c) => c.slug === "aatrox");
+    expect(aatrox?.bioBlocks?.length).toBeGreaterThan(0);
+    const trusted = trustedBioParagraphs(aatrox!.bioBlocks!);
+    expect(trusted.join(" ")).not.toMatch(/most reliable exit/i);
+    expect(trusted.join(" ")).toMatch(/Ascended/i);
+  });
+
+  it("Connect Varus to Pantheon routes without direct character edge", () => {
+    resetLoreGraphCache();
+    const graph = buildLoreGraph();
+    const path = findNarrativePath("char:varus", "char:pantheon", graph);
+    expect(path).not.toBeNull();
+    const directCharEdge = path!.steps.some(
+      (s) =>
+        s.edge.connectionKind === "direct" &&
+        ((s.from.id === "char:varus" && s.to.id === "char:pantheon") ||
+          (s.from.id === "char:pantheon" && s.to.id === "char:varus")),
+    );
+    expect(directCharEdge).toBe(false);
   });
 });

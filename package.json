@@ -29,6 +29,7 @@
     "validate:canon": "tsx scripts/validate-canon.ts",
     "report:quality": "tsx scripts/report-quality.ts",
     "report:canon": "tsx scripts/generate-canon-reports.ts",
+    "report:phase1": "tsx scripts/generate-phase1-reports.ts",
     "assets:ingest": "tsx scripts/assets/ingest.ts",
     "assets:report": "tsx scripts/assets/generate-report.ts",
     "lore:assets": "npm run assets:ingest",

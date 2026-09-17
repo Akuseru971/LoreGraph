@@ -11,6 +11,29 @@ for (const d of dupes) {
   errors.push(`Duplicate semantic relationship: ${d.label} (${d.ids.join(", ")})`);
 }
 
+const varusPantheon = relationships.find(
+  (r) =>
+    (r.sourceCharacterId === "char:varus" && r.targetCharacterId === "char:pantheon") ||
+    (r.sourceCharacterId === "char:pantheon" && r.targetCharacterId === "char:varus"),
+);
+if (varusPantheon) {
+  errors.push(
+    `Synthetic Varus↔Pantheon direct edge remains (${varusPantheon.id}) — route through Aspect of War / Darkin War instead`,
+  );
+}
+
+for (const rel of relationships) {
+  if (
+    rel.eventIds.includes("event:targon-aurelion-loose") &&
+    rel.sourceCharacterId !== "char:aurelion-sol" &&
+    rel.targetCharacterId !== "char:aurelion-sol"
+  ) {
+    errors.push(
+      `Relationship ${rel.id} cites synthetic shared event targon-aurelion-loose without Aurelion Sol`,
+    );
+  }
+}
+
 console.log(`Relationships: ${relationships.length}`);
 console.log(`Duplicate groups: ${dupes.length}`);
 
