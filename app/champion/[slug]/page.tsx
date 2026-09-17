@@ -101,6 +101,13 @@ export default async function ChampionPage({
 
   return (
     <>
+      <article className="sr-only" aria-label={`${character.name} lore summary`}>
+        <h1>{character.name} — {character.title}</h1>
+        <p>{character.shortDescription}</p>
+        {character.longDescription.map((paragraph, index) => (
+          <p key={index}>{paragraph}</p>
+        ))}
+      </article>
       <script
         type="application/ld+json"
         // Derived from our own seed content, so there is nothing user-supplied here.

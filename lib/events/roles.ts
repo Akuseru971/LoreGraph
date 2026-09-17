@@ -161,6 +161,12 @@ export const EVENT_ROLE_OVERRIDES: Record<string, Record<string, EventRelationRo
     kayle: "ACTIVE_DURING",
     morgana: "ACTIVE_DURING",
   },
+  "kinkou-fracture": {
+    yunara: "AFFECTED_BY",
+    shen: "PARTICIPANT",
+    akali: "PARTICIPANT",
+    kennen: "OBSERVER",
+  },
   "era-hextech": {
     jayce: "ACTIVE_DURING",
     viktor: "ACTIVE_DURING",

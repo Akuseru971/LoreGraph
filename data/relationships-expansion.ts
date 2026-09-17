@@ -722,18 +722,6 @@ export const relationshipExpansionSeeds: RelExpansionSeed[] = [
     verified: true,
   },
   {
-    a: "aatrox",
-    b: "varus",
-    type: "related",
-    label: "Fellow Darkin",
-    short: "Both are Ascended who became weapon-bound Darkin sealed after the same war.",
-    long: "Shared origin in Shurima's god-warriors and the Darkin War — structural, not necessarily allies.",
-    importance: 78,
-    events: ["darkin-war", "darkin-corruption"],
-    verified: true,
-    connectionType: "STRUCTURAL_LORE",
-  },
-  {
     a: "fiddlesticks",
     b: "nocturne",
     type: "related",

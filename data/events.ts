@@ -94,7 +94,7 @@ const seeds: EventSeed[] = [
     slug: "darkin-war",
     title: "The Darkin War",
     description:
-      "The empire turns on its own gods. Targon intervenes, and the surviving Darkin are not killed but sealed inside the weapons they fought with.",
+      "After Shurima's fall, surviving corrupted Ascended war among themselves. Targon intervenes, and the surviving Darkin are sealed inside the weapons they fought with.",
     era: "Ancient Shurima",
     order: 60,
     importance: 95,
@@ -437,7 +437,7 @@ const seeds: EventSeed[] = [
     slug: "pantheon-reborn",
     title: "A Mortal Keeps the Spear",
     description:
-      "The host survives what the Aspect did not, and the fragment left behind belongs to the man rather than the star.",
+      "The host survives what the Aspect did not, and Atreus keeps the spear through mortal will rather than celestial possession.",
     era: "Modern Runeterra",
     order: 360,
     importance: 86,

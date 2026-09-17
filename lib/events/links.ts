@@ -61,6 +61,13 @@ export function buildEventCharacterLinks(
       role = "ACTIVE_DURING";
     }
 
+    if (
+      role === "PARTICIPANT" &&
+      (!claimEvidence || claimEvidence.reviewStatus === "PENDING" || !claimEvidence.sourceIds.length)
+    ) {
+      role = "ASSOCIATED_WITH";
+    }
+
     const link: EventCharacterLink = {
       characterId,
       role,

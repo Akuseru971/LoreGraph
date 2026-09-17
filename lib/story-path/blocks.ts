@@ -11,59 +11,47 @@ import {
   downgradeIfUnsupported,
   type ClassifyContext,
 } from "./classify";
+import {
+  downgradeUnsupportedFact,
+  resolveSupportingClaims,
+  reviewedClaims,
+  sourcesFromClaims,
+} from "./support";
 
 export interface BuildBlockContext {
+  pathSlug: string;
+  chapterIndex: number;
   characterIds: string[];
   eventIds: string[];
   chapterContentType?: "fact" | "editorial";
 }
 
-function findClaimsForParagraph(
-  text: string,
-  ctx: BuildBlockContext,
-): { claimIds: string[]; sourceIds: string[]; reviewStatus?: ReviewStatus } {
-  const claimIds: string[] = [];
-  const sourceIds = new Set<string>();
-  let reviewStatus: ReviewStatus | undefined;
-
-  const lower = text.toLowerCase();
+function findCandidateClaims(ctx: BuildBlockContext): string[] {
+  const candidates: string[] = [];
 
   for (const claim of claims) {
     const subjectMatch = ctx.characterIds.includes(claim.subjectId);
     const eventMatch =
       claim.objectId && ctx.eventIds.includes(claim.objectId);
-    const noteMatch =
-      claim.evidenceNote &&
-      lower.includes(claim.evidenceNote.toLowerCase().slice(0, 40));
 
-    if (!subjectMatch && !eventMatch && !noteMatch) continue;
-
-    if (claim.needsReview || !claim.reviewed) {
-      if (!reviewStatus) reviewStatus = "PENDING";
-      continue;
-    }
-
+    if (!subjectMatch && !eventMatch) continue;
+    if (claim.needsReview || !claim.reviewed) continue;
     if (claim.canonStatus === "UNKNOWN" || claim.canonStatus === "THEMATIC_ONLY") {
       continue;
     }
 
-    claimIds.push(claim.id);
-    for (const sid of claim.sourceIds) sourceIds.add(sid);
-
-    if (claim.reviewed) reviewStatus = "VERIFIED_CANON";
+    candidates.push(claim.id);
   }
 
-  return {
-    claimIds: [...new Set(claimIds)],
-    sourceIds: [...sourceIds],
-    reviewStatus,
-  };
+  return [...new Set(candidates)];
 }
 
 export function buildNarrativeBlocks(
   paragraphs: string[],
   ctx: BuildBlockContext,
 ): StoryNarrativeBlock[] {
+  const candidates = findCandidateClaims(ctx);
+
   return paragraphs.map((text, index) => {
     const classifyCtx: ClassifyContext = {
       chapterContentType: ctx.chapterContentType,
@@ -72,8 +60,24 @@ export function buildNarrativeBlocks(
     };
 
     let evidenceClass = classifyParagraph(text, classifyCtx);
-    const { claimIds, sourceIds, reviewStatus } = findClaimsForParagraph(text, ctx);
 
+    const claimIds = resolveSupportingClaims(
+      text,
+      candidates,
+      ctx.pathSlug,
+      ctx.chapterIndex,
+      index,
+    );
+    const sourceIds = sourcesFromClaims(claimIds);
+    const reviewed = reviewedClaims(claimIds);
+    const reviewStatus: ReviewStatus | undefined =
+      reviewed.length === claimIds.length && claimIds.length > 0
+        ? "VERIFIED_CANON"
+        : claimIds.length > 0
+          ? "PENDING"
+          : undefined;
+
+    evidenceClass = downgradeUnsupportedFact(evidenceClass, text, claimIds);
     evidenceClass = downgradeIfUnsupported(
       evidenceClass,
       claimIds,
@@ -98,6 +102,11 @@ export function buildNarrativeBlocks(
 
 export function blocksToBody(blocks: StoryNarrativeBlock[]): string[] {
   return blocks.map((b) => b.text);
+}
+
+/** Blocks safe for public trusted narration — excludes UNRESOLVED. */
+export function publicNarrativeBlocks(blocks: StoryNarrativeBlock[]): StoryNarrativeBlock[] {
+  return blocks.filter((b) => b.evidenceClass !== "UNRESOLVED");
 }
 
 export function computeStoryPathQuality(

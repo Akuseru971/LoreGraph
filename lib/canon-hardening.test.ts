@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { characters } from "@/data";
+import { characters, relationships } from "@/data";
 import { isDailyEligibleEdge } from "@/lib/canon/model";
 import { validateEvents } from "@/lib/events/validate";
 import { buildLoreGraph, findNarrativePath, resetLoreGraphCache } from "@/lib/graph";
 import { computeQuality } from "@/lib/knowledge/quality-matrix";
 import { absoluteUrl, findForbiddenOrigins, getSiteUrl } from "@/lib/seo";
+import { loreEntityById } from "@/data/lore-entities";
+import { findDuplicateRelationships } from "@/lib/relationships/dedupe";
+import { supportsNarrativeBlock } from "@/lib/story-path/support";
 import { validateStoryPaths } from "@/lib/story-path/validate";
 import type { GraphEdge } from "@/types";
 
@@ -79,5 +82,55 @@ describe("Canon hardening regression", () => {
   it("Champion canonical URL comes from SITE_URL", () => {
     const url = absoluteUrl("/champion/aatrox");
     expect(url.startsWith(getSiteUrl())).toBe(true);
+  });
+
+  it("FACT blocks require proposition-level claim support", () => {
+    expect(
+      supportsNarrativeBlock(
+        "Beings designed around an endless war found the peace intolerable.",
+        ["claim:aatrox-was-ascended", "claim:aatrox-participated-void-war"],
+      ),
+    ).toBe(false);
+    expect(
+      supportsNarrativeBlock(
+        "Aatrox was among the greatest Ascended.",
+        ["claim:aatrox-was-ascended"],
+      ),
+    ).toBe(true);
+  });
+
+  it("Aatrox↔Varus duplicate structural relationships collapse", () => {
+    const dupes = findDuplicateRelationships(relationships).filter((d) =>
+      d.pair.includes("aatrox") && d.pair.includes("varus"),
+    );
+    expect(dupes).toHaveLength(0);
+  });
+
+  it("Aion Er'na resolves as artifact", () => {
+    expect(loreEntityById.has("artifact:aion-erna")).toBe(true);
+    expect(loreEntityById.has("concept:aion-erna")).toBe(false);
+  });
+
+  it("Varus timeline does not include Pantheon in Darkin War", () => {
+    const varus = characters.find((c) => c.slug === "varus");
+    const sealed = varus?.timeline.find((b) => b.title.includes("Sealed"));
+    expect(sealed?.characterIds).not.toContain("char:pantheon");
+  });
+
+  it("Ascended institution is not described as created for the Void in Aatrox bio", () => {
+    const aatrox = characters.find((c) => c.slug === "aatrox");
+    const bio = aatrox?.longDescription.join(" ");
+    expect(bio).not.toMatch(/created to fight the Void/i);
+    expect(bio).toMatch(/later.*defenders against the Void/i);
+  });
+
+  it("Pantheon species is Human without Aspect fragment", () => {
+    const pantheon = characters.find((c) => c.slug === "pantheon");
+    expect(pantheon?.species).toBe("Human");
+  });
+
+  it("Kai'Sa must never participate in the ancient Void War", () => {
+    const kaisa = characters.find((c) => c.slug === "kaisa");
+    expect(kaisa?.eventIds).not.toContain("event:void-incursion");
   });
 });

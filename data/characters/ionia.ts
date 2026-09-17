@@ -491,6 +491,7 @@ export const ioniaSeeds: CharacterSeed[] = [
   {
     slug: "yunara",
     name: "Yunara",
+    continuity: "MAIN_RUNETERRA",
     title: "The Unbroken Faith",
     region: "ionia",
     factions: ["kinkou"],
@@ -508,7 +509,6 @@ export const ioniaSeeds: CharacterSeed[] = [
     popularity: 68,
     verified: true,
     completenessTier: "A",
-    events: ["kinkou-fracture"],
     sources: ["source:wiki-yunara"],
     tags: ["ionia", "kinkou", "spirit-realm", "aion-erna", "balance", "faith"],
     short:

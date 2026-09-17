@@ -4,6 +4,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "aatrox",
     name: "Aatrox",
+    continuity: "MAIN_RUNETERRA",
     title: "The Darkin Blade",
     region: "shurima",
     factions: ["darkin", "ascended"],
@@ -96,12 +97,13 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "pantheon",
     name: "Pantheon",
+    continuity: "MAIN_RUNETERRA",
     title: "The Unbreakable Spear",
     region: "targon",
     factions: ["aspects", "solari"],
     roles: ["Warrior", "Aspect Host", "Mortal"],
     status: "Alive",
-    species: "Human (Aspect fragment)",
+    species: "Human",
     aliases: ["Atreus"],
     accentColor: "#8B7FC7",
     releaseYear: 2010,
@@ -166,6 +168,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "aurelion-sol",
     name: "Aurelion Sol",
+    continuity: "MAIN_RUNETERRA",
     title: "The Star Forger",
     region: "targon",
     factions: ["celestials"],
@@ -218,6 +221,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "azir",
     name: "Azir",
+    continuity: "MAIN_RUNETERRA",
     title: "The Emperor of the Sands",
     region: "shurima",
     factions: ["ascended", "shuriman-empire"],
@@ -268,6 +272,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "nasus",
     name: "Nasus",
+    continuity: "MAIN_RUNETERRA",
     title: "The Curator of the Sands",
     region: "shurima",
     factions: ["ascended", "shuriman-empire"],
@@ -300,7 +305,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Ancient Shurima",
         title: "Ascended against the Void",
         description:
-          "Raised by the Sun Disc and sent to the front. He wins, and keeps records of the cost.",
+          "Already Ascended when Shurima deployed god-warriors against the Void. He fought at the front and kept records of the cost.",
         event: "void-incursion",
         with: ["aatrox"],
       },
@@ -325,6 +330,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "varus",
     name: "Varus",
+    continuity: "MAIN_RUNETERRA",
     title: "The Arrow of Retribution",
     region: "shurima",
     factions: ["darkin"],
@@ -351,7 +357,8 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
       {
         era: "Ancient Shurima",
         title: "Ascended defender",
-        description: "Raised to fight the Void alongside Shurima's other god-warriors.",
+        description:
+          "Ascended through Shurima's Sun Disc and later fought in the ancient conflict against the Void.",
         event: "void-incursion",
         with: ["aatrox"],
       },
@@ -367,7 +374,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         title: "Sealed into the bow",
         description: "Defeated in the Darkin War and imprisoned inside his own weapon.",
         event: "darkin-war",
-        with: ["aatrox", "pantheon"],
+        with: ["aatrox"],
       },
       {
         era: "Modern Ionia",
@@ -425,6 +432,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "kaisa",
     name: "Kai'Sa",
+    continuity: "MAIN_RUNETERRA",
     title: "Daughter of the Void",
     region: "void",
     factions: ["void-touched"],
@@ -438,7 +446,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
     importance: 64,
     popularity: 78,
     verified: true,
-    events: ["void-breach-icathia", "void-incursion"],
+    events: ["void-breach-icathia"],
     tags: ["void", "shurima", "survivor", "symbiote", "hunter"],
     short:
       "Swallowed by the Void as a child and still alive — wearing a living second skin that keeps her breathing and won't come off.",
@@ -472,6 +480,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "leona",
     name: "Leona",
+    continuity: "MAIN_RUNETERRA",
     title: "The Radiant Dawn",
     region: "targon",
     factions: ["solari", "aspects"],
@@ -484,7 +493,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
     importance: 70,
     popularity: 56,
     verified: true,
-    events: ["targon-solari-purge", "darkin-war", "targon-aurelion-loose"],
+    events: ["targon-solari-purge", "targon-aurelion-loose"],
     tags: ["targon", "solari", "aspect", "faith", "duty"],
     short:
       "The Aspect of the Sun, and the most devout member of an order whose devotion she keeps having to reinterpret.",
@@ -518,6 +527,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
   {
     slug: "diana",
     name: "Diana",
+    continuity: "MAIN_RUNETERRA",
     title: "Scorn of the Moon",
     region: "targon",
     factions: ["lunari", "aspects"],

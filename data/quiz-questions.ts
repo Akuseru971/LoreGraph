@@ -45,7 +45,7 @@ const seeds: QSeed[] = [
     options: ["Pantheon", "Leona", "Diana", "Garen"],
     correct: 0,
     explanation:
-      "Atreus carried the Aspect of War until Aatrox destroyed it. He survived, kept a fragment, and now fights as a mortal rather than a vessel.",
+      "Atreus carried the Aspect of War until Aatrox destroyed it. He survived and now fights as a mortal wielding the fallen Aspect's weapons through his own will.",
     chars: ["pantheon"],
     regions: ["targon"],
     verified: true,
@@ -418,7 +418,7 @@ const seeds: QSeed[] = [
     options: ["True", "False"],
     correct: 1,
     explanation:
-      "Aatrox destroyed the Aspect. What remains is Atreus, a mortal carrying a fragment of a dead god — which is the entire point of the character.",
+      "Aatrox destroyed the Aspect. What remains is Atreus — a mortal who kept fighting with the fallen Aspect's weapons through his own will.",
     chars: ["pantheon", "aatrox"],
     regions: ["targon"],
     verified: true,
@@ -945,7 +945,7 @@ const seeds: QSeed[] = [
     ],
     correct: 0,
     explanation:
-      "Aatrox killed the Aspect. Atreus survived, kept a fragment, and now fights as a man — which is the whole point of the modern character.",
+      "Aatrox destroyed the Aspect. Atreus survived and now fights as a man wielding celestial weapons through mortal will.",
     chars: ["pantheon", "aatrox"],
     verified: true,
   },

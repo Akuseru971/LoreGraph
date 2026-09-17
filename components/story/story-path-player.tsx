@@ -15,6 +15,7 @@ import {
 import { generateArtwork } from "@/lib/assets";
 import { track } from "@/lib/analytics";
 import { EVIDENCE_CLASS_LABEL } from "@/lib/story-path/classify";
+import { publicNarrativeBlocks } from "@/lib/story-path/blocks";
 import { cn, hexToRgba } from "@/lib/utils";
 import type { StoryPath } from "@/types";
 
@@ -59,6 +60,8 @@ function StoryPathPlayerInner({
   }, [index]);
 
   const chapter = path.chapters[index];
+  const displayBlocks = publicNarrativeBlocks(chapter.blocks ?? []);
+  const hiddenUnresolved = (chapter.blocks?.length ?? 0) - displayBlocks.length;
   const isLast = index === path.chapters.length - 1;
   const artwork = generateArtwork(chapter.assetKey, path.accentColor, "story");
 
@@ -149,19 +152,22 @@ function StoryPathPlayerInner({
             </p>
 
             <div className="mt-8 space-y-5">
-              {(chapter.blocks ?? chapter.body.map((text) => ({ text, evidenceClass: "FACT" as const }))).map(
-                (block, i) => (
-                  <p
-                    key={i}
-                    className={cn(
-                      "text-parchment/90 leading-[1.8]",
-                      i === 0 ? "text-[1.0625rem] sm:text-lg" : "text-[0.9375rem] sm:text-base",
-                    )}
-                  >
-                    {block.text}
-                  </p>
-                ),
-              )}
+              {displayBlocks.map((block, i) => (
+                <p
+                  key={i}
+                  className={cn(
+                    "text-parchment/90 leading-[1.8]",
+                    i === 0 ? "text-[1.0625rem] sm:text-lg" : "text-[0.9375rem] sm:text-base",
+                  )}
+                >
+                  {block.text}
+                </p>
+              ))}
+              {hiddenUnresolved > 0 ? (
+                <p className="text-muted border-l border-gold/40 py-1 pl-3 text-xs italic">
+                  {hiddenUnresolved} passage{hiddenUnresolved === 1 ? "" : "s"} withheld pending source review.
+                </p>
+              ) : null}
             </div>
 
             <section className="mt-8">

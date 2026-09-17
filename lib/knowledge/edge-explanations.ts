@@ -24,8 +24,8 @@ export function characterEventExplanation(
   const name = character.name;
 
   const templates: Record<string, string> = {
-    "void-incursion": `${name} fought during the ancient Void War as one of Shurima's Ascended, when Icathia's breach forced the empire to answer with god-warriors.`,
-    "ascension-ritual": `${name} was raised through Shurima's Rite of Ascension — elevated by the Sun Disc into a god-warrior who later defended the empire.`,
+    "void-incursion": `${name} fought during the ancient Void War as one of Shurima's Ascended — the institution already existed before Icathia's breach.`,
+    "ascension-ritual": `${name} was elevated through Shurima's Rite of Ascension — the Sun Disc raised god-warriors who later defended the empire against the Void.`,
     "darkin-corruption": `${name} was among the Ascended who curdled into Darkin after centuries of war against the Void.`,
     "darkin-war": `${name} fought in the Great Darkin War — the conflict that turned Shurima's protectors into its greatest threat.`,
     "noxian-invasion-ionia": `${name} was caught up in Noxus's invasion of Ionia, when a nation with no standing army was forced to invent one under fire.`,

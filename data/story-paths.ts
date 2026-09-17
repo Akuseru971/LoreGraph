@@ -64,17 +64,17 @@ const seeds: PathSeed[] = [
         title: "THE FALL",
         subtitle: "Immortality curdles into appetite",
         body: [
-          "Victory arrived and changed nothing about what the Ascended had become. Beings designed around an endless war found the peace intolerable, and some of them started generating conflict rather than ending it.",
-          "Shurima's monuments turned into its emergency. The empire that had built gods now had to work out how to un-build them.",
+          "Victory arrived and changed nothing about what some Ascended had become. Centuries of war had hollowed out immortality itself, and some of them started generating conflict rather than ending it.",
+          "Shurima's monuments turned into its emergency. An empire already in crisis now had to work out how to un-build the gods it had made.",
         ],
         chars: ["aatrox", "varus"],
         events: ["darkin-corruption"],
       },
       {
         title: "THE DARKIN WAR",
-        subtitle: "An empire turns on its own gods",
+        subtitle: "Surviving god-warriors turn on each other",
         body: [
-          "Mortal Shurima went to war against the beings it had made, and it could not have won alone. Targon intervened, bringing celestial power to a conflict that was already apocalyptic.",
+          "After Shurima's fall, surviving Ascended warred among themselves as corruption spread. Targon intervened, bringing celestial power to a conflict that was already apocalyptic.",
           "The Aspect of War fought in that campaign — not the mortal Atreus, who would host it thousands of years later. Millennia after the sealing, that same man would learn exactly how long a Darkin's memory is.",
         ],
         chars: ["aatrox", "varus", "nasus"],
@@ -599,7 +599,7 @@ const seeds: PathSeed[] = [
         title: "A MORTAL KEEPS THE SPEAR",
         subtitle: "The most important thing anyone has done to Targon",
         body: [
-          "Pantheon got up. He kept a fragment of the dead Aspect and made a choice the celestials had never needed from him: to fight as a man rather than as a mount.",
+          "Atreus got up. He took up the fallen Aspect's weapons through his own will and made a choice the celestials had never needed from him: to fight as a man rather than as a mount.",
           "He is now the only figure who has looked at both a god and a Darkin and concluded that neither is owed his obedience. Aurelion Sol finds that precedent extremely encouraging.",
         ],
         chars: ["pantheon", "aurelion-sol", "leona", "diana"],
@@ -986,6 +986,8 @@ function buildChapters(pathSlug: string, chapters: ChapterSeed[]): StoryPathChap
     const characterIds = c.chars.map((s) => `char:${s}`);
     const eventIds = (c.events ?? []).map((s) => `event:${s}`);
     const blocks = buildNarrativeBlocks(c.body, {
+      pathSlug,
+      chapterIndex: i,
       characterIds,
       eventIds,
       chapterContentType: c.contentType,

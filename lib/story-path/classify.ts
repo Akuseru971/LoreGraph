@@ -15,7 +15,10 @@ const EDITORIAL_PATTERNS = [
   /\bnot through meeting other\b/i,
   /\bbelongs to this era as\b/i,
   /\bcurdles into\b/i,
+  /\bdesigned around an endless war\b/i,
   /\bturned into its emergency\b/i,
+  /\bempire turns on its own gods\b/i,
+  /\bmortal shurima went to war\b/i,
   /\bthe argument\b.+\bstill\b/i,
 ];
 

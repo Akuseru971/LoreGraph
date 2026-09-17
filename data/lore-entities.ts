@@ -75,13 +75,13 @@ const entitySeeds: Array<Omit<LoreEntity, "type" | "universeId" | "verified">> =
       "The Targonian celestial that fought in the Darkin War — later hosted by Atreus, who survived its death.",
     longDescription:
       "The Aspect of War is not Atreus. It is the celestial entity that inhabited him for years, intervened in ancient conflicts including the sealing of the Darkin, and was destroyed millennia later when Aatrox returned.",
-    characterSlugs: ["pantheon"],
+    characterSlugs: [],
     eventSlugs: ["darkin-war", "aatrox-pantheon-duel"],
     accentColor: "#8B7FC7",
     connectEligible: true,
   },
   {
-    id: "concept:aion-erna",
+    id: "artifact:aion-erna",
     slug: "aion-erna",
     name: "Aion Er'na",
     importance: 68,
@@ -89,8 +89,8 @@ const entitySeeds: Array<Omit<LoreEntity, "type" | "universeId" | "verified">> =
       "A legendary Kinkou relic — a weapon Yunara has trained with for centuries in the spirit realm.",
     longDescription:
       "The Aion Er'na is tied to Ionian balance and the Kinkou Order. Yunara's mastery of it defines her role as a guardian who emerged from long isolation.",
-    characterSlugs: ["yunara", "shen", "kennen"],
-    eventSlugs: ["kinkou-fracture"],
+    characterSlugs: ["yunara"],
+    eventSlugs: [],
     accentColor: "#7FA8C7",
   },
   {

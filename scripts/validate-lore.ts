@@ -150,6 +150,13 @@ for (const character of characters) {
     for (const hit of scanTextForRedFlags(beat.description, `timeline:${character.slug}`)) {
       if (hit.severity === "error") fail(`${hit.context}: ${hit.message}`);
     }
+    if (
+      /ancient|before reckoning|fall of shurima|darkin/i.test(beat.era) &&
+      beat.characterIds.includes("char:pantheon") &&
+      beat.eventId !== "event:aatrox-pantheon-duel"
+    ) {
+      fail(`Ancient timeline beat includes char:pantheon: ${character.slug}/${beat.id}`);
+    }
   }
 
   if (character.releaseYear === 2010 && !["singed", "sion", "sivir"].includes(character.slug)) {

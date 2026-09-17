@@ -6,6 +6,7 @@ import type {
 import { resolveSeedCanonStatus } from "@/lib/canon/model";
 import { inferConfidence, inferConnectionCategory } from "@/lib/truth/layer";
 import { deriveNeedsReview, deriveReviewStatus } from "@/lib/truth/review";
+import { dedupeRelationshipSeeds } from "@/lib/relationships/dedupe";
 import { packRelationshipSeeds } from "./knowledge/generated/relationships-pack";
 import { relationshipExpansionSeeds } from "./relationships-expansion";
 import { bioSourceId } from "./sources";
@@ -166,7 +167,7 @@ const baseSeeds: RelSeed[] = [
     type: "ally",
     label: "Fellow Aspect Hosts",
     short: "Two mortals who carried celestial Aspects, and both survived the experience differently.",
-    long: "Leona still carries the Aspect of the Sun. Pantheon's Aspect of War was destroyed, and he continues with only a fragment of it. That difference makes him uniquely qualified to tell her something no other Targonian can: that the celestials are not guaranteed, and the mortal underneath matters.",
+    long: "Leona still carries the Aspect of the Sun. Pantheon's Aspect of War was destroyed, and Atreus continues wielding its weapons through mortal will alone. That difference makes him uniquely qualified to tell her something no other Targonian can: that the celestials are not guaranteed, and the mortal underneath matters.",
     importance: 72,
     events: ["targon-aurelion-loose", "ascension-ritual"],
     verified: true,
@@ -1991,11 +1992,11 @@ const packSeeds: RelSeed[] = packRelationshipSeeds.map((s) => ({
   editorialNote: s.editorialNote,
 }));
 
-const seeds: RelSeed[] = [
+const seeds: RelSeed[] = dedupeRelationshipSeeds([
   ...baseSeeds,
   ...relationshipExpansionSeeds,
   ...packSeeds,
-];
+]);
 
 export const relationships: Relationship[] = seeds
   // Placeholder rows document known gaps without polluting the live graph.

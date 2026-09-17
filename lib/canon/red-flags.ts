@@ -16,19 +16,19 @@ export const CANON_RED_FLAGS: CanonRedFlag[] = [
     severity: "error",
   },
   {
-    pattern: /raised (by|through).*to fight the Void/i,
+    pattern: /raised (by|through).*to fight the Void|designed around an endless war|beings designed for/i,
     message: "Ascension causality: prefer 'defended Shurima against the Void' over 'raised to fight the Void'",
-    severity: "warn",
+    severity: "error",
+  },
+  {
+    pattern: /\bfragment of the (dead )?Aspect\b|kept a fragment\b|Aspect fragment\b/i,
+    message: "Pantheon: avoid unsupported literal celestial fragment unless sourced",
+    severity: "error",
   },
   {
     pattern: /kills the (mortal )?host|killed Atreus|Aatrox killed the host/i,
     message: "Pantheon duel: Aatrox destroyed the Aspect; Atreus survived",
     severity: "error",
-  },
-  {
-    pattern: /fragment of the dead Aspect still lodged/i,
-    message: "Pantheon: avoid unsupported literal celestial fragment unless sourced",
-    severity: "warn",
   },
   {
     pattern: /is documented as a participant in/i,

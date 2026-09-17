@@ -2,6 +2,7 @@ import { claimById } from "@/data/knowledge/claims";
 import { sourceById } from "@/data/sources";
 import { storyPaths } from "@/data/story-paths";
 import type { NarrativeEvidenceClass, StoryNarrativeBlock } from "@/types";
+import { supportsNarrativeBlock } from "./support";
 
 export interface StoryPathValidationResult {
   errors: string[];
@@ -37,6 +38,9 @@ function validateBlock(
     }
     if (block.canonStatus === "UNKNOWN" || block.reviewStatus === "PENDING") {
       errors.push(`FACT block with unresolved evidence: ${pathSlug}/${chapterId}`);
+    }
+    if (!supportsNarrativeBlock(block.text, block.claimIds ?? [])) {
+      errors.push(`FACT block claims do not semantically support text: ${pathSlug}/${chapterId}`);
     }
   }
 
