@@ -6,7 +6,9 @@ import { constellationById } from "@/data/cinematic/constellation-anchors";
 import { getAtmosphereConfig } from "@/lib/cinematic-v3/atmosphere";
 import { computeOutroPhaseState } from "@/lib/cinematic-v3/intro-outro";
 import type { CinematicCoordinates, CinematicOutro, CinematicScene } from "@/types";
+import { isNameConstellation } from "@/lib/cinematic-v3/name-constellation";
 import { ConstellationSilhouette } from "./constellation-silhouette";
+import { NameConstellation } from "./name-constellation";
 
 function easeInOutCubic(t: number): number {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -107,6 +109,8 @@ export function SignatureOutroSequence({
 
   if (!constellation) return null;
 
+  const isNameOutro = outro.type === "NAME_REFORM" && isNameConstellation(constellation);
+
   const pathSegments: string[] = [];
   for (let i = 0; i < pathPoints.length - 1; i++) {
     if (!visitedIndices.includes(i) || !visitedIndices.includes(i + 1)) continue;
@@ -124,6 +128,7 @@ export function SignatureOutroSequence({
       }}
     >
       {outro.showSplashEcho &&
+      !isNameOutro &&
       outro.optionalSplashEcho?.url &&
       state.splashEchoOpacity > 0.02 ? (
         <div
@@ -182,19 +187,31 @@ export function SignatureOutroSequence({
           transform: `scale(${1 / state.pullbackScale})`,
         }}
       >
-        <ConstellationSilhouette
-          constellation={constellation}
-          starRevealProgress={revealProgress}
-          lineProgress={Math.min(1, state.secondaryStarProgress + 0.2)}
-          heroStarId={constellation.heroStarId}
-          heroIntensity={0.9}
-          opacity={1}
-          showLines={state.secondaryStarProgress > 0.3}
-          className="h-full w-full"
-        />
+        {isNameOutro ? (
+          <NameConstellation
+            constellation={constellation}
+            starRevealProgress={revealProgress}
+            lineProgress={Math.min(1, state.secondaryStarProgress + 0.35)}
+            heroStarId={constellation.heroStarId}
+            heroIntensity={0.85}
+            opacity={1}
+            className="h-full w-full"
+          />
+        ) : (
+          <ConstellationSilhouette
+            constellation={constellation}
+            starRevealProgress={revealProgress}
+            lineProgress={Math.min(1, state.secondaryStarProgress + 0.2)}
+            heroStarId={constellation.heroStarId}
+            heroIntensity={0.9}
+            opacity={1}
+            showLines={state.secondaryStarProgress > 0.3}
+            className="h-full w-full"
+          />
+        )}
       </div>
 
-      {showOutroTitle && state.textOpacity > 0.1 && state.phase === "hold" ? (
+      {showOutroTitle && !isNameOutro && state.textOpacity > 0.1 && state.phase === "hold" ? (
         <div
           className="pointer-events-none absolute inset-x-0 bottom-[14%] z-10 px-8 text-center"
           style={{ opacity: state.textOpacity }}

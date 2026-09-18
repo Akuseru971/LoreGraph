@@ -1,5 +1,43 @@
 import type { CinematicCameraPreset, CinematicCoordinates } from "@/types";
 
+export function isFreefallPreset(preset: CinematicCameraPreset): boolean {
+  return preset === "FREEFALL" || preset === "FREEFALL_SPIRAL" || preset === "FREEFALL_DROP";
+}
+
+/** Stylish dezoom → plunge → land easing for inter-scene travel. */
+export function easeFreefallTravel(t: number): number {
+  const clamped = Math.max(0, Math.min(1, t));
+  if (clamped < 0.18) return clamped * 0.12;
+  if (clamped < 0.62) return 0.022 + (clamped - 0.18) * 1.35;
+  return 0.616 + (1 - Math.pow(1 - (clamped - 0.62) / 0.38, 2.8)) * 0.384;
+}
+
+function interpolateFreefall(
+  from: CinematicCoordinates,
+  to: CinematicCoordinates,
+  t: number,
+  variant: CinematicCameraPreset,
+): CinematicCoordinates {
+  const eased = easeFreefallTravel(t);
+  const dezoom = t < 0.22 ? t / 0.22 : 1;
+  const plunge = t < 0.22 ? 0 : t < 0.68 ? (t - 0.22) / 0.46 : 1;
+  const land = t < 0.68 ? 0 : (t - 0.68) / 0.32;
+
+  const spiral =
+    variant === "FREEFALL_SPIRAL" ? Math.sin(plunge * Math.PI * 4) * 0.6 * (1 - land) : 0;
+  const dropBoost = variant === "FREEFALL_DROP" ? plunge * 1.4 : plunge;
+
+  return {
+    x:
+      from.x * (1 - eased) +
+      to.x * eased +
+      spiral +
+      (variant === "FREEFALL_SPIRAL" ? Math.cos(plunge * Math.PI * 3) * 0.35 * (1 - land) : 0),
+    y: from.y + dezoom * 6 + dropBoost * 10 + (to.y - from.y) * eased * land,
+    z: from.z - dezoom * 14 - dropBoost * 8 + (to.z - from.z) * eased,
+  };
+}
+
 function vec3(c: CinematicCoordinates): [number, number, number] {
   return [c.x, c.y, c.z];
 }
@@ -61,6 +99,10 @@ function controlOffset(
       return { x: to.x, y: to.y + 0.5, z: from.z + dz * 0.5 };
     case "FAST_APPROACH":
       return { x: from.x + dx * 0.25, y: from.y + 0.6, z: from.z + dz * 0.2 };
+    case "FREEFALL":
+    case "FREEFALL_SPIRAL":
+    case "FREEFALL_DROP":
+      return { x: from.x + dx * 0.15, y: from.y + 4, z: from.z - 8 };
     case "PULL_BACK":
       return { x: from.x - dx * 0.15, y: from.y + 2, z: from.z - 2 };
     default:
@@ -70,6 +112,7 @@ function controlOffset(
 
 export function easeStarTravel(t: number, preset: CinematicCameraPreset): number {
   const clamped = Math.max(0, Math.min(1, t));
+  if (isFreefallPreset(preset)) return easeFreefallTravel(clamped);
   if (preset === "FAST_APPROACH" || preset === "PASS_THROUGH") {
     return 1 - Math.pow(1 - clamped, 2.2);
   }
@@ -87,6 +130,9 @@ export function interpolateStarPosition(
   prev?: CinematicCoordinates,
   next?: CinematicCoordinates,
 ): CinematicCoordinates {
+  if (isFreefallPreset(preset)) {
+    return interpolateFreefall(from, to, t, preset);
+  }
   const eased = easeStarTravel(t, preset);
   const p0 = vec3(prev ?? { x: from.x - 2, y: from.y, z: from.z - 4 });
   const p1 = vec3(from);
@@ -123,6 +169,9 @@ export function cameraFollowPosition(
     PASS_THROUGH: { x: 0, y: 0.6, z: 2.5 },
     PULL_BACK: { x: 0, y: 4.5, z: 14 },
     HOLD: { x: 0, y: 1.4, z: 5 },
+    FREEFALL: { x: 0, y: 2.2, z: 7 },
+    FREEFALL_SPIRAL: { x: 0.8, y: 2.5, z: 6.5 },
+    FREEFALL_DROP: { x: 0, y: 1.2, z: 5.5 },
   }[preset];
 
   const settle = Math.min(1, t * 1.2);
@@ -137,7 +186,20 @@ export function cameraFollowPosition(
 }
 
 export function trailLengthForPreset(preset: CinematicCameraPreset): number {
+  if (isFreefallPreset(preset)) return 52;
   if (preset === "FAST_APPROACH" || preset === "PASS_THROUGH") return 36;
   if (preset === "HOLD") return 18;
   return 28;
+}
+
+export function freefallIntensity(
+  preset: CinematicCameraPreset,
+  transitionProgress: number,
+  arrived: boolean,
+): number {
+  if (arrived || !isFreefallPreset(preset)) return 0;
+  const t = transitionProgress;
+  if (t < 0.15) return t / 0.15 * 0.4;
+  if (t < 0.75) return 0.4 + ((t - 0.15) / 0.6) * 0.55;
+  return Math.max(0, 0.95 - (t - 0.75) / 0.25 * 0.7);
 }

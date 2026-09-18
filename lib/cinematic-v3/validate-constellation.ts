@@ -21,9 +21,12 @@ export function validateFlagshipConstellation(
   const withReveal = constellation.anchors.filter((a) => a.revealPhase != null);
   const hero = constellation.anchors.find((a) => a.id === constellation.heroStarId);
 
+  const isNameTypography = Boolean(constellation.displayName) || constellation.id.startsWith("name:");
   const minAnchors = constellation.silhouetteSource
     ? MIN_SPLASH_DERIVED_ANCHORS
-    : MIN_FLAGSHIP_ANCHORS;
+    : isNameTypography
+      ? 20
+      : MIN_FLAGSHIP_ANCHORS;
   if (constellation.anchors.length < minAnchors) {
     issues.push({
       level: "WARNING",
@@ -33,7 +36,7 @@ export function validateFlagshipConstellation(
     });
   }
 
-  if (contour.length < MIN_CONTOUR_ANCHORS) {
+  if (!isNameTypography && contour.length < MIN_CONTOUR_ANCHORS) {
     issues.push({
       level: "WARNING",
       constellationId: constellation.id,
@@ -59,7 +62,10 @@ export function validateFlagshipConstellation(
         message: "Splash-derived constellation missing splashAssetPath",
       });
     }
-  } else if ((constellation.contourGroups?.length ?? 0) < MIN_CONTOUR_GROUPS) {
+  } else if (
+    !isNameTypography &&
+    (constellation.contourGroups?.length ?? 0) < MIN_CONTOUR_GROUPS
+  ) {
     issues.push({
       level: "WARNING",
       constellationId: constellation.id,
@@ -86,7 +92,7 @@ export function validateFlagshipConstellation(
     });
   }
 
-  if (iconic.length < 2) {
+  if (!isNameTypography && iconic.length < 2) {
     issues.push({
       level: "WARNING",
       constellationId: constellation.id,

@@ -1,7 +1,8 @@
+import { easeFreefallTravel } from "./star-path";
 import type { CinematicRecordTiming, CinematicScene } from "@/types";
 
 export const DEFAULT_RECORD_TIMING: CinematicRecordTiming = {
-  travelMs: 1300,
+  travelMs: 1900,
   arrivalSettleMs: 300,
   eyebrowRevealMs: 250,
   titleRevealMs: 400,
@@ -132,7 +133,7 @@ export function computeRecordPhaseState(
       narrativePhraseIndex: -1,
       textVisible: false,
       arrived: false,
-      transitionProgress: easeOutCubic(p),
+      transitionProgress: easeFreefallTravel(p),
     };
   }
 

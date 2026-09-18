@@ -1,3 +1,4 @@
+import { NAME_CONSTELLATIONS } from "@/data/cinematic/name-constellations";
 import { AATROX_CONSTELLATION, AATROX_PATH_TO_ANCHOR } from "./aatrox";
 import { YASUO_CONSTELLATION } from "./yasuo";
 import { YONE_CONSTELLATION } from "./yone";
@@ -19,10 +20,12 @@ export const FLAGSHIP_CONSTELLATIONS: ChampionConstellation[] = [
   SKARNER_CONSTELLATION,
 ];
 
-export const constellationById = new Map(
-  FLAGSHIP_CONSTELLATIONS.map((c) => [c.id, c]),
-);
+export const constellationById = new Map([
+  ...NAME_CONSTELLATIONS.map((c) => [c.id, c] as const),
+  ...FLAGSHIP_CONSTELLATIONS.map((c) => [c.id, c] as const),
+]);
 
+/** Silhouette / legacy body constellations — not name typography. */
 export const constellationByCharacterId = new Map(
   FLAGSHIP_CONSTELLATIONS.map((c) => [c.characterId, c]),
 );

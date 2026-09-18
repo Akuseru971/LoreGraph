@@ -368,6 +368,15 @@ export function validateCinematicJourney(journey: CinematicJourney): CinematicVa
         kind: "missing_intro_sequence",
         message: "Flagship CHARACTER journey missing introSequence",
       });
+    } else if (
+      journey.introSequence.type !== "NAME_CONSTELLATION" &&
+      journey.kind === "CHARACTER"
+    ) {
+      issues.push({
+        level: "WARNING",
+        kind: "intro_not_name_constellation",
+        message: "Flagship journey intro should use NAME_CONSTELLATION grammar",
+      });
     } else if (!constellationById.has(journey.introSequence.constellationId)) {
       issues.push({
         level: "ERROR",

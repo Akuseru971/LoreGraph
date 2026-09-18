@@ -13,8 +13,10 @@ import { EnvironmentalMotifField } from "./environmental-motif-field";
 import { ForegroundDepth } from "./foreground-depth";
 import { SceneImagePlane } from "./scene-image-plane";
 import { StarFollowCamera } from "./star-follow-camera";
+import { FreefallStreaks } from "./freefall-streaks";
 import { TravelingStar } from "./traveling-star";
 import { WorldNode } from "./world-node";
+import { freefallIntensity, isFreefallPreset } from "@/lib/cinematic-v3/star-path";
 
 function hashSeed(str: string): number {
   let h = 2166136261;
@@ -69,7 +71,8 @@ function SceneWorld({
   const seed = useMemo(() => hashSeed(journey.id), [journey.id]);
 
   const from = prevScene?.coordinates ?? scene.coordinates;
-  const preset = scene.cameraPreset ?? "SLOW_APPROACH";
+  const preset = scene.cameraPreset ?? "FREEFALL";
+  const freefallFx = freefallIntensity(preset, transitionProgress, arrived);
   const worldScale = scene.worldScale ?? 1;
   const composition = scene.composition ?? scene.image?.compositionHint ?? "NO_IMAGE";
   const imageOffset = imageOffsetForComposition(composition, scene.image?.focalPoint);
@@ -141,6 +144,13 @@ function SceneWorld({
         blend={blend}
         count={particleCountForQuality(quality)}
       />
+      {isFreefallPreset(preset) && traveling ? (
+        <FreefallStreaks
+          intensity={freefallFx}
+          color={atmosphere.particleColor}
+          count={quality === "high" ? 64 : 40}
+        />
+      ) : null}
       <ForegroundDepth color={atmosphere.particleColor} count={quality === "high" ? 32 : 18} seed={seed} />
       {showWorldNode ? (
         <WorldNode

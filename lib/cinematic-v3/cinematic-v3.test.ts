@@ -145,8 +145,8 @@ describe("Cinematic Journey V3", () => {
     const flagshipSlugs = ["aatrox", "yasuo", "yone", "viego", "skarner"];
     for (const slug of flagshipSlugs) {
       const journey = buildChampionJourneyV3(char(slug));
-      expect(journey.introSequence?.type).toBe("SPLASH_TO_CONSTELLATION");
-      expect(journey.outroSequence?.type).toBe("CONSTELLATION_REFORM");
+      expect(journey.introSequence?.type).toBe("NAME_CONSTELLATION");
+      expect(journey.outroSequence?.type).toBe("NAME_REFORM");
       expect(journey.introSequence?.splashAsset.url).toBeTruthy();
       expect(journey.introSequence?.heroStarId).toBeTruthy();
       const constellation = constellationByCharacterId.get(`char:${slug}`);
@@ -171,10 +171,9 @@ describe("Cinematic Journey V3", () => {
     expect(validateFlagshipConstellation(constellation).filter((i) => i.level === "ERROR")).toHaveLength(
       0,
     );
-    expect(journey.introSequence?.recordShowIntroTitle).toBe(true);
-    expect(journey.outroSequence?.pathToAnchorMapping?.["cscene:aatrox:beat:aatrox-5"]).toBe(
-      "blade-core",
-    );
+    expect(journey.introSequence?.type).toBe("NAME_CONSTELLATION");
+    expect(journey.introSequence?.displayName).toBe("AATROX");
+    expect(journey.outroSequence?.type).toBe("NAME_REFORM");
     expect(journey.introSequence?.recordTiming).toBeDefined();
     const duel = journey.scenes.find((s) => s.id === "cscene:aatrox:beat:aatrox-7");
     expect(duel?.image?.url).toContain("aatrox-atreus-duel");
@@ -216,12 +215,29 @@ describe("Cinematic Journey V3", () => {
     expect(late.zoomProgress).toBeGreaterThan(0);
   });
 
-  it("Aatrox record intro timing is under 7s for content pacing", () => {
+  it("Aatrox record intro timing is 4.5–6s for name constellation pacing", () => {
     const journey = buildChampionJourneyV3(char("aatrox"));
     const intro = journey.introSequence!;
     const recordMs = totalIntroMs(intro.recordTiming ?? intro.timing);
-    expect(recordMs).toBeLessThanOrEqual(7000);
-    expect(recordMs).toBeGreaterThanOrEqual(5000);
+    expect(recordMs).toBeLessThanOrEqual(6000);
+    expect(recordMs).toBeGreaterThanOrEqual(4500);
+  });
+
+  it("name constellation builds readable typography for flagship champions", () => {
+    for (const slug of ["aatrox", "yasuo", "yone", "viego", "skarner"]) {
+      const journey = buildChampionJourneyV3(char(slug));
+      expect(journey.introSequence?.type).toBe("NAME_CONSTELLATION");
+      expect(journey.introSequence?.displayName).toBeTruthy();
+      expect(journey.outroSequence?.type).toBe("NAME_REFORM");
+    }
+  });
+
+  it("flagship scenes default to freefall camera presets where curated", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const freefallScenes = journey.scenes.filter((s) =>
+      s.cameraPreset?.startsWith("FREEFALL"),
+    );
+    expect(freefallScenes.length).toBeGreaterThanOrEqual(5);
   });
 
   it("flagship journeys have official background on all curated scenes", () => {
@@ -246,13 +262,13 @@ describe("Cinematic Journey V3", () => {
     expect(constellation.anchors.length).toBeGreaterThanOrEqual(500);
   });
 
-  it("record mode standard scenes pace within 5.5s target", () => {
+  it("record mode standard scenes pace within 6s including freefall travel", () => {
     const journey = buildChampionJourneyV3(char("yasuo"));
     const standardScenes = journey.scenes.filter(
       (s) => s.type !== "ENDING" && (s.worldScale ?? 1) < 2,
     );
     for (const scene of standardScenes) {
-      expect(totalSceneRecordMs(scene)).toBeLessThanOrEqual(5500);
+      expect(totalSceneRecordMs(scene)).toBeLessThanOrEqual(6000);
     }
   });
 

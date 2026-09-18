@@ -20,7 +20,7 @@ const SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
   "cscene:yasuo-yone:parallel": {
     coordinates: { x: 0, y: 0.2, z: 0 },
     shotType: "DUAL_CHARACTER",
-    cameraPreset: "CURVE_RIGHT",
+    cameraPreset: "FREEFALL_SPIRAL",
     curated: true,
   },
   "cscene:yasuo-yone:invasion": {
@@ -28,7 +28,7 @@ const SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
     shotType: "WIDE_EVENT",
     worldScale: 2.8,
     worldNodeArchetype: "INVASION",
-    cameraPreset: "FAST_APPROACH",
+    cameraPreset: "FREEFALL_DROP",
     curated: true,
   },
   "cscene:yasuo-yone:accusation": {
@@ -40,7 +40,7 @@ const SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
   "cscene:yasuo-yone:duel": {
     coordinates: { x: 0, y: 0.3, z: 32 },
     shotType: "IMPACT",
-    cameraPreset: "FAST_APPROACH",
+    cameraPreset: "FREEFALL_DROP",
     curated: true,
   },
   "cscene:yasuo-yone:fade": {

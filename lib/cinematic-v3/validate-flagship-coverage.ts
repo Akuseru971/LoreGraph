@@ -17,7 +17,7 @@ import type { CinematicValidationIssue } from "./validate-cinematic";
 import { totalIntroMs } from "./intro-outro";
 
 const MAX_RECORD_INTRO_MS = 7000;
-const MAX_STANDARD_SCENE_MS = 5500;
+const MAX_STANDARD_SCENE_MS = 6000;
 const MAX_MAJOR_SCENE_MS = 6500;
 const MIN_AATROX_SILHOUETTE_ANCHORS = 350;
 const MIN_ICONIC_CONNECTIVITY = 95;

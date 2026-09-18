@@ -372,7 +372,10 @@ export type CinematicCameraPreset =
   | "CURVE_RIGHT"
   | "PASS_THROUGH"
   | "PULL_BACK"
-  | "HOLD";
+  | "HOLD"
+  | "FREEFALL"
+  | "FREEFALL_SPIRAL"
+  | "FREEFALL_DROP";
 
 export type AtmospherePreset =
   | "CELESTIAL"
@@ -566,6 +569,8 @@ export interface ChampionConstellation {
   lines?: ConstellationLine[];
   contourGroups?: ConstellationContourGroup[];
   splashFocal?: { x: number; y: number };
+  /** Display name for name-constellation typography (e.g. AATROX). */
+  displayName?: string;
   /** Provenance for splash-derived silhouettes; absent on legacy hand-authored constellations. */
   silhouetteSource?: SilhouetteSourceProvenance;
 }
@@ -590,11 +595,15 @@ export interface CinematicOutroTiming {
   holdMs: number;
 }
 
+export type CinematicIntroType = "SPLASH_TO_CONSTELLATION" | "NAME_CONSTELLATION";
+
 export interface CinematicIntro {
-  type: "SPLASH_TO_CONSTELLATION";
+  type: CinematicIntroType;
   splashAsset: CinematicSceneAsset;
   constellationId: string;
   heroStarId: string;
+  /** Display name for NAME_CONSTELLATION intros (e.g. AATROX). */
+  displayName?: string;
   timing: CinematicIntroTiming;
   recordTiming?: CinematicIntroTiming;
   atmosphere?: AtmospherePreset;
@@ -606,9 +615,12 @@ export interface CinematicIntro {
   splashFocal?: { x: number; y: number };
 }
 
+export type CinematicOutroType = "CONSTELLATION_REFORM" | "NAME_REFORM";
+
 export interface CinematicOutro {
-  type: "CONSTELLATION_REFORM";
+  type: CinematicOutroType;
   constellationId: string;
+  displayName?: string;
   optionalSplashEcho?: CinematicSceneAsset;
   timing: CinematicOutroTiming;
   recordTiming?: CinematicOutroTiming;
@@ -673,6 +685,7 @@ export type CinematicDirectorPreview =
   | "intro"
   | "outro"
   | "scene"
+  | "transition"
   | "full";
 
 export interface CinematicPlayerOptions {

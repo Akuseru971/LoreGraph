@@ -69,6 +69,24 @@ export const CAMERA_PRESETS: Record<CinematicCameraPreset, Omit<CameraMotionConf
     offset: { x: 0, y: 1.5, z: 5 },
     lookAhead: 0.2,
   },
+  FREEFALL: {
+    durationMs: 2000,
+    easing: "easeIn",
+    offset: { x: 0, y: 2.5, z: 8 },
+    lookAhead: 0.85,
+  },
+  FREEFALL_SPIRAL: {
+    durationMs: 2200,
+    easing: "easeIn",
+    offset: { x: 1.2, y: 2.8, z: 7.5 },
+    lookAhead: 0.9,
+  },
+  FREEFALL_DROP: {
+    durationMs: 1800,
+    easing: "easeIn",
+    offset: { x: 0, y: 1.8, z: 6 },
+    lookAhead: 1.0,
+  },
 };
 
 export function getCameraConfig(preset: CinematicCameraPreset): CameraMotionConfig {

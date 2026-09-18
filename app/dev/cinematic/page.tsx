@@ -31,6 +31,7 @@ const AATROX_SCENES = [
   { label: "Scene 6 — Return", index: 6 },
   { label: "Scene 7 — Pantheon", index: 7 },
   { label: "Outro", preview: "outro" as const },
+  { label: "Transition (Scene 2)", preview: "transition" as const, index: 2 },
 ];
 
 export default function CinematicDevPage() {
@@ -231,6 +232,8 @@ export default function CinematicDevPage() {
                     launchDirector("intro");
                   } else if ("preview" in item && item.preview === "outro") {
                     launchDirector("outro");
+                  } else if ("preview" in item && item.preview === "transition" && "index" in item) {
+                    launchDirector("transition", item.index);
                   } else if ("index" in item) {
                     launchDirector("scene", item.index);
                   }

@@ -6,6 +6,7 @@ import * as THREE from "three";
 import {
   interpolateStarPosition,
   cameraFollowPosition,
+  isFreefallPreset,
 } from "@/lib/cinematic-v3/star-path";
 import { shotCameraHints } from "@/lib/cinematic-v3/shot-types";
 import type { CinematicCameraPreset, CinematicCoordinates, CinematicScene } from "@/types";
@@ -65,8 +66,13 @@ export function StarFollowCamera({
 
     const ahead = new THREE.Vector3(star.x, star.y, star.z);
     if (!arrived && transitionProgress < 0.95) {
-      ahead.z -= 0.35 * (1 - transitionProgress);
-      ahead.y += 0.2 * (1 - transitionProgress);
+      if (isFreefallPreset(preset)) {
+        ahead.y -= 0.6 * (1 - transitionProgress);
+        ahead.z -= 0.8 * (1 - transitionProgress);
+      } else {
+        ahead.z -= 0.35 * (1 - transitionProgress);
+        ahead.y += 0.2 * (1 - transitionProgress);
+      }
     }
 
     lookAt.current.lerp(ahead, smooth * 1.2);

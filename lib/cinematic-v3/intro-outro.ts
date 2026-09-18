@@ -8,6 +8,7 @@ import {
   cinematicOutroOverrides,
 } from "@/data/cinematic/intro-outro-overrides";
 import { FLAGSHIP_JOURNEY_IDS } from "@/data/cinematic/flagship-assets";
+import { nameConstellationByCharacterId } from "@/data/cinematic/name-constellations";
 import { getChampionAssetUrl } from "@/lib/assets";
 import { orderedAnchorsByReveal } from "./constellation-builder";
 import type {
@@ -31,6 +32,27 @@ export const DEFAULT_INTRO_TIMING: CinematicIntroTiming = {
   heroSelectMs: 500,
   zoomStarMs: 1200,
   handoffMs: 500,
+};
+
+/** Name constellation intro — faster, splash → name → hero star zoom. */
+export const NAME_RECORD_INTRO_TIMING: CinematicIntroTiming = {
+  splashHoldMs: 900,
+  splashDriftMs: 300,
+  darkenMs: 1000,
+  starsEmergeMs: 1200,
+  linesFormMs: 300,
+  heroSelectMs: 400,
+  zoomStarMs: 1100,
+  handoffMs: 400,
+};
+
+export const NAME_OUTRO_TIMING: CinematicOutroTiming = {
+  pullbackMs: 600,
+  pathRevealMs: 400,
+  nodesConnectMs: 400,
+  constellationReformMs: 800,
+  splashEchoMs: 200,
+  holdMs: 1200,
 };
 
 export const DEFAULT_OUTRO_TIMING: CinematicOutroTiming = {
@@ -77,6 +99,10 @@ export interface IntroPhaseState {
   constellationOpacity: number;
   handoffBlend: number;
   textOpacity: number;
+  /** Luminous contour overtaking splash (name intro). */
+  contourOvertake?: number;
+  nameFormProgress?: number;
+  softenNonHero?: number;
   complete: boolean;
 }
 
@@ -249,43 +275,90 @@ export function computeIntroPhaseState(
   let constellationOpacity = 0;
   let handoffBlend = 0;
   let textOpacity = 0;
+  let contourOvertake = 0;
+  let nameFormProgress = 0;
+  let softenNonHero = 0;
+
+  const isNameIntro = intro.type === "NAME_CONSTELLATION";
 
   if (phase === "splash_hold") {
-    textOpacity = easeOut(phaseProgress) * 0.9;
+    textOpacity = isNameIntro ? 0 : easeOut(phaseProgress) * 0.9;
+    contourOvertake = isNameIntro ? t * 0.08 : 0;
   } else if (phase === "splash_drift") {
-    textOpacity = 0.9 * (1 - t * 0.5);
+    textOpacity = isNameIntro ? 0 : 0.9 * (1 - t * 0.5);
+    contourOvertake = isNameIntro ? 0.08 + t * 0.35 : 0;
+    if (isNameIntro) {
+      starRevealProgress = t * 0.05;
+      constellationOpacity = t * 0.15;
+    }
   } else if (phase === "darken") {
-    backgroundFade = t * 0.65;
-    splashDarken = t * 0.35;
-    colorDrain = t * 0.25;
-    starRevealProgress = t * 0.12;
-    constellationOpacity = t * 0.2;
-    textOpacity = 0.45 * (1 - t);
+    if (isNameIntro) {
+      contourOvertake = 0.43 + t * 0.57;
+      splashOpacity = 1 - t * 0.92;
+      splashDarken = t * 0.5;
+      colorDrain = t * 0.55;
+      backgroundFade = t * 0.85;
+      subjectOpacity = 1 - t * 0.95;
+      starRevealProgress = 0.05 + t * 0.25;
+      constellationOpacity = 0.15 + t * 0.7;
+      nameFormProgress = t * 0.35;
+    } else {
+      backgroundFade = t * 0.65;
+      splashDarken = t * 0.35;
+      colorDrain = t * 0.25;
+      starRevealProgress = t * 0.12;
+      constellationOpacity = t * 0.2;
+      textOpacity = 0.45 * (1 - t);
+    }
   } else if (phase === "stars_emerge") {
-    backgroundFade = 0.65 + t * 0.25;
-    splashDarken = 0.35 + t * 0.35;
-    colorDrain = 0.25 + t * 0.4;
-    subjectOpacity = 1 - t * 0.45;
-    starRevealProgress = 0.08 + t * 0.42;
-    visibleStarCount = Math.max(2, Math.ceil(anchorCount * starRevealProgress));
-    constellationOpacity = 0.2 + t * 0.65;
-    textOpacity = 0;
+    if (isNameIntro) {
+      splashOpacity = 0.08 * (1 - t);
+      subjectOpacity = 0;
+      contourOvertake = 1;
+      backgroundFade = 0.9;
+      starRevealProgress = 0.3 + t * 0.55;
+      nameFormProgress = 0.35 + t * 0.55;
+      visibleStarCount = Math.max(2, Math.ceil(anchorCount * starRevealProgress));
+      constellationOpacity = 0.85 + t * 0.12;
+      lineProgress = t * 0.4;
+    } else {
+      backgroundFade = 0.65 + t * 0.25;
+      splashDarken = 0.35 + t * 0.35;
+      colorDrain = 0.25 + t * 0.4;
+      subjectOpacity = 1 - t * 0.45;
+      starRevealProgress = 0.08 + t * 0.42;
+      visibleStarCount = Math.max(2, Math.ceil(anchorCount * starRevealProgress));
+      constellationOpacity = 0.2 + t * 0.65;
+      textOpacity = 0;
+    }
   } else if (phase === "lines_form") {
-    backgroundFade = 0.9;
-    subjectOpacity = 0.55 * (1 - t * 0.85);
-    splashOpacity = 0.5 * (1 - t * 0.9);
-    starRevealProgress = 0.5 + t * 0.35;
-    visibleStarCount = anchorCount;
-    lineProgress = easeOut(phaseProgress);
-    constellationOpacity = 0.85 + t * 0.12;
+    if (isNameIntro) {
+      splashOpacity = 0;
+      subjectOpacity = 0;
+      starRevealProgress = 0.85 + t * 0.12;
+      nameFormProgress = 0.9 + t * 0.1;
+      visibleStarCount = anchorCount;
+      lineProgress = 0.4 + t * 0.6;
+      constellationOpacity = 0.97;
+    } else {
+      backgroundFade = 0.9;
+      subjectOpacity = 0.55 * (1 - t * 0.85);
+      splashOpacity = 0.5 * (1 - t * 0.9);
+      starRevealProgress = 0.5 + t * 0.35;
+      visibleStarCount = anchorCount;
+      lineProgress = easeOut(phaseProgress);
+      constellationOpacity = 0.85 + t * 0.12;
+    }
   } else if (phase === "hero_select") {
-    splashOpacity = 0.08 * (1 - t);
+    splashOpacity = isNameIntro ? 0 : 0.08 * (1 - t);
     subjectOpacity = 0;
-    starRevealProgress = 0.95 + t * 0.05;
+    starRevealProgress = isNameIntro ? 1 : 0.95 + t * 0.05;
     visibleStarCount = anchorCount;
     lineProgress = 1;
     heroStarIntensity = 0.7 + t * 1.1;
     constellationOpacity = 0.97;
+    softenNonHero = isNameIntro ? t * 0.65 : 0;
+    nameFormProgress = 1;
   } else if (phase === "zoom_star") {
     splashOpacity = 0;
     subjectOpacity = 0;
@@ -324,6 +397,9 @@ export function computeIntroPhaseState(
     constellationOpacity,
     handoffBlend,
     textOpacity,
+    contourOvertake,
+    nameFormProgress,
+    softenNonHero,
     complete,
   };
 }
@@ -462,22 +538,27 @@ export function buildIntroSequence(
   subtitle?: string,
 ): CinematicIntro | undefined {
   const override = cinematicIntroOverrides[characterId];
+  const nameConstellation = nameConstellationByCharacterId.get(characterId);
   const constellation =
+    nameConstellation ??
     (override?.constellationId
       ? constellationById.get(override.constellationId)
-      : undefined) ?? constellationByCharacterId.get(characterId);
+      : undefined) ??
+    constellationByCharacterId.get(characterId);
   if (!constellation) return undefined;
 
   const region = regionBySlug.get(regionSlug);
+  const isNameIntro = Boolean(nameConstellation);
   return {
-    type: "SPLASH_TO_CONSTELLATION",
+    type: isNameIntro ? "NAME_CONSTELLATION" : "SPLASH_TO_CONSTELLATION",
     splashAsset: splashAssetForCharacter(characterId, characterSlug),
     constellationId: constellation.id,
     heroStarId: override?.heroStarId ?? constellation.heroStarId,
+    displayName: nameConstellation?.displayName ?? title.toUpperCase(),
     timing: mergeIntroTiming(override?.timing),
-    recordTiming: override?.recordTiming
-      ? mergeIntroTiming(override.recordTiming)
-      : undefined,
+    recordTiming: mergeIntroTiming(
+      override?.recordTiming ?? (isNameIntro ? NAME_RECORD_INTRO_TIMING : undefined),
+    ),
     atmosphere: override?.atmosphere,
     eyebrow: region?.name ?? regionSlug,
     title,
@@ -496,20 +577,25 @@ export function buildOutroSequence(
   subtitle?: string,
 ): CinematicOutro | undefined {
   const override = cinematicOutroOverrides[characterId];
+  const nameConstellation = nameConstellationByCharacterId.get(characterId);
   const constellation =
+    nameConstellation ??
     (override?.constellationId
       ? constellationById.get(override.constellationId)
-      : undefined) ?? constellationByCharacterId.get(characterId);
+      : undefined) ??
+    constellationByCharacterId.get(characterId);
   if (!constellation) return undefined;
 
+  const isNameOutro = Boolean(nameConstellation);
   return {
-    type: "CONSTELLATION_REFORM",
+    type: isNameOutro ? "NAME_REFORM" : "CONSTELLATION_REFORM",
     constellationId: constellation.id,
+    displayName: nameConstellation?.displayName,
     optionalSplashEcho: splashAssetForCharacter(characterId, characterSlug),
-    timing: mergeOutroTiming(override?.timing),
-    recordTiming: override?.recordTiming
-      ? mergeOutroTiming(override.recordTiming)
-      : undefined,
+    timing: mergeOutroTiming(override?.timing ?? (isNameOutro ? NAME_OUTRO_TIMING : undefined)),
+    recordTiming: mergeOutroTiming(
+      override?.recordTiming ?? (isNameOutro ? NAME_OUTRO_TIMING : undefined),
+    ),
     pathToAnchorMapping: override?.pathToAnchorMapping,
     title,
     subtitle,

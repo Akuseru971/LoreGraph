@@ -9,11 +9,13 @@ import {
   getConstellationForIntro,
   totalIntroMsForMode,
 } from "@/lib/cinematic-v3/intro-outro";
+import { isNameConstellation } from "@/lib/cinematic-v3/name-constellation";
 import type { CinematicIntro } from "@/types";
 import {
   ConstellationSilhouette,
   getHeroAnchorPosition,
 } from "./constellation-silhouette";
+import { NameConstellation } from "./name-constellation";
 
 export function SignatureIntroSequence({
   intro,
@@ -41,9 +43,9 @@ export function SignatureIntroSequence({
   }, [state.complete, onComplete]);
 
   const total = totalIntroMsForMode(intro, recordMode);
-  const driftX = Math.sin(elapsedMs / 3200) * 0.6;
-  const driftY = Math.cos(elapsedMs / 4100) * 0.3;
-  const breathe = 1 + Math.sin(elapsedMs / 2800) * 0.01;
+  const driftX = Math.sin(elapsedMs / 3200) * 0.4;
+  const driftY = Math.cos(elapsedMs / 4100) * 0.2;
+  const breathe = 1 + Math.sin(elapsedMs / 2800) * 0.008;
 
   const showTitle =
     recordMode
@@ -53,10 +55,14 @@ export function SignatureIntroSequence({
   const objectPosition = `${focal.x * 100}% ${focal.y * 100}%`;
   const heroCx = heroPos.x * 100;
   const heroCy = heroPos.y * 100;
+  const isNameIntro = intro.type === "NAME_CONSTELLATION" && constellation && isNameConstellation(constellation);
+  const contourGlow = state.contourOvertake ?? 0;
 
   if (!constellation) return null;
 
-  const subjectMask = `radial-gradient(ellipse 42% 58% at ${heroCx * 0.55 + 22}% ${heroCy * 0.7 + 12}%, black 15%, rgba(0,0,0,0.85) 45%, transparent 72%)`;
+  const subjectMask = isNameIntro
+    ? undefined
+    : `radial-gradient(ellipse 42% 58% at ${heroCx * 0.55 + 22}% ${heroCy * 0.7 + 12}%, black 15%, rgba(0,0,0,0.85) 45%, transparent 72%)`;
 
   return (
     <div
@@ -66,7 +72,7 @@ export function SignatureIntroSequence({
       <div
         className="absolute inset-0"
         style={{
-          opacity: 0.35 + state.backgroundFade * 0.5,
+          opacity: 0.35 + state.backgroundFade * 0.55,
           background: `radial-gradient(ellipse 90% 75% at 50% 38%, ${atmosphere.particleColor}18, ${atmosphere.background} 70%)`,
         }}
       />
@@ -76,9 +82,9 @@ export function SignatureIntroSequence({
         style={{
           opacity: state.splashOpacity * state.subjectOpacity,
           filter: `brightness(${1 - state.splashDarken}) saturate(${1 - state.colorDrain})`,
-          transform: `scale(${breathe * (1 + state.zoomProgress * 0.08)}) translate(${driftX}%, ${driftY}%)`,
-          WebkitMaskImage: state.starRevealProgress > 0.05 ? subjectMask : undefined,
-          maskImage: state.starRevealProgress > 0.05 ? subjectMask : undefined,
+          transform: `scale(${breathe * (1 + state.zoomProgress * 0.06)}) translate(${driftX}%, ${driftY}%)`,
+          WebkitMaskImage: subjectMask,
+          maskImage: subjectMask,
         }}
       >
         <Image
@@ -92,6 +98,18 @@ export function SignatureIntroSequence({
         />
       </div>
 
+      {isNameIntro && contourGlow > 0.05 ? (
+        <div
+          className="pointer-events-none absolute inset-[-3%]"
+          style={{
+            opacity: contourGlow * 0.85,
+            mixBlendMode: "screen",
+            background: `radial-gradient(ellipse 70% 55% at 50% 42%, ${atmosphere.particleColor}55 0%, transparent 65%)`,
+            boxShadow: `inset 0 0 120px ${atmosphere.particleColor}33`,
+          }}
+        />
+      ) : null}
+
       <div
         className="pointer-events-none absolute inset-0"
         style={{
@@ -101,36 +119,50 @@ export function SignatureIntroSequence({
       />
 
       <div
-        className="absolute inset-[-3%]"
+        className="absolute inset-[-2%]"
         style={{
           opacity: state.constellationOpacity,
-          mixBlendMode: state.starRevealProgress > 0.1 ? "screen" : "normal",
-          transform: `scale(${breathe * (1 + state.zoomProgress * 0.08)}) translate(${driftX}%, ${driftY}%)`,
+          mixBlendMode: isNameIntro ? "normal" : state.starRevealProgress > 0.1 ? "screen" : "normal",
+          transform: `scale(${breathe * (1 + state.zoomProgress * 0.06)}) translate(${driftX}%, ${driftY}%)`,
         }}
       >
-        <ConstellationSilhouette
-          constellation={constellation}
-          starRevealProgress={state.starRevealProgress}
-          lineProgress={state.lineProgress}
-          heroStarId={intro.heroStarId}
-          heroIntensity={state.heroStarIntensity}
-          zoomProgress={state.zoomProgress}
-          opacity={1}
-          showLines={state.lineProgress > 0.05}
-          className="h-full w-full"
-        />
+        {isNameIntro ? (
+          <NameConstellation
+            constellation={constellation}
+            starRevealProgress={state.starRevealProgress}
+            lineProgress={state.lineProgress}
+            heroStarId={intro.heroStarId}
+            heroIntensity={state.heroStarIntensity}
+            zoomProgress={state.zoomProgress}
+            softenNonHero={state.softenNonHero ?? 0}
+            opacity={1}
+            className="h-full w-full"
+          />
+        ) : (
+          <ConstellationSilhouette
+            constellation={constellation}
+            starRevealProgress={state.starRevealProgress}
+            lineProgress={state.lineProgress}
+            heroStarId={intro.heroStarId}
+            heroIntensity={state.heroStarIntensity}
+            zoomProgress={state.zoomProgress}
+            opacity={1}
+            showLines={state.lineProgress > 0.05}
+            className="h-full w-full"
+          />
+        )}
       </div>
 
       {state.zoomProgress > 0.05 || state.handoffBlend > 0 ? (
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: `radial-gradient(circle at ${heroCx}% ${heroCy}%, rgba(255,245,225,${(state.zoomProgress * 0.4 + state.handoffBlend * 0.35) * state.heroStarIntensity * 0.15}) 0%, transparent 50%)`,
+            background: `radial-gradient(circle at ${heroCx}% ${heroCy}%, rgba(255,245,225,${(state.zoomProgress * 0.45 + state.handoffBlend * 0.4) * state.heroStarIntensity * 0.18}) 0%, transparent 52%)`,
           }}
         />
       ) : null}
 
-      {showTitle && state.textOpacity > 0.02 ? (
+      {showTitle && !isNameIntro && state.textOpacity > 0.02 ? (
         <div
           className="pointer-events-none absolute inset-x-0 top-[10%] z-10 px-8 text-center"
           style={{ opacity: state.textOpacity }}

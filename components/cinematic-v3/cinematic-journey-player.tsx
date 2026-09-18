@@ -68,7 +68,7 @@ export function CinematicJourneyPlayer({
   const initialPhase: CinematicJourneyPhase =
     directorPreview === "outro"
       ? "outro"
-      : directorPreview === "scene"
+      : directorPreview === "scene" || directorPreview === "transition"
         ? "playing"
         : hasIntro
           ? "intro"
@@ -78,20 +78,24 @@ export function CinematicJourneyPlayer({
   const [outroElapsedMs, setOutroElapsedMs] = React.useState(0);
   const [outroStarted, setOutroStarted] = React.useState(directorPreview === "outro");
   const [sceneIndex, setSceneIndex] = React.useState(
-    directorPreview === "scene"
+    directorPreview === "scene" || directorPreview === "transition"
       ? directorSceneIndex
       : directorPreview === "outro"
         ? journey.scenes.length - 1
         : 0,
   );
-  const [transitionProgress, setTransitionProgress] = React.useState(1);
+  const [transitionProgress, setTransitionProgress] = React.useState(
+    directorPreview === "transition" ? 0.45 : 1,
+  );
   const [graphRevealProgress, setGraphRevealProgress] = React.useState(0);
   const [playing, setPlaying] = React.useState(false);
-  const [arrived, setArrived] = React.useState(!hasIntro);
+  const [arrived, setArrived] = React.useState(
+    directorPreview === "transition" ? false : !hasIntro,
+  );
   const [visitedSceneIndices, setVisitedSceneIndices] = React.useState<number[]>(
     directorPreview === "outro"
       ? journey.scenes.map((_, i) => i)
-      : directorPreview === "scene"
+      : directorPreview === "scene" || directorPreview === "transition"
         ? Array.from({ length: directorSceneIndex + 1 }, (_, i) => i)
         : hasIntro
           ? []
@@ -258,11 +262,17 @@ export function CinematicJourneyPlayer({
     }
     setTransitionProgress(0);
     setArrived(false);
-    const duration = scene?.transitionDurationMs ?? 2600;
+    const duration = scene?.transitionDurationMs ?? 2000;
     const start = performance.now();
     const frame = () => {
       const t = Math.min(1, (performance.now() - start) / duration);
-      setTransitionProgress(1 - Math.pow(1 - t, 3));
+      setTransitionProgress(
+        t < 0.18
+          ? t * 0.12
+          : t < 0.62
+            ? 0.022 + (t - 0.18) * 1.35
+            : 0.616 + (1 - Math.pow(1 - (t - 0.62) / 0.38, 2.8)) * 0.384,
+      );
       if (t < 1) requestAnimationFrame(frame);
       else {
         setArrived(true);

@@ -1,4 +1,4 @@
-import { AATROX_PATH_TO_ANCHOR } from "@/data/cinematic/constellations/aatrox";
+import { NAME_RECORD_INTRO_TIMING, NAME_OUTRO_TIMING } from "@/lib/cinematic-v3/intro-outro";
 import type {
   CinematicIntroTiming,
   CinematicJourney,
@@ -9,43 +9,27 @@ import type {
 
 export const AATROX_JOURNEY_ID = "cinematic:character:aatrox";
 
-/** Record-mode intro ~6.2s — fast enough for content, long enough for splash→constellation read */
-export const AATROX_RECORD_INTRO_TIMING: CinematicIntroTiming = {
-  splashHoldMs: 1000,
-  splashDriftMs: 500,
-  darkenMs: 900,
-  starsEmergeMs: 1100,
-  linesFormMs: 800,
+/** Record-mode name constellation intro ~5.6s */
+export const AATROX_RECORD_INTRO_TIMING: CinematicIntroTiming = NAME_RECORD_INTRO_TIMING;
+
+export const AATROX_INTERACTIVE_INTRO_TIMING: CinematicIntroTiming = {
+  splashHoldMs: 1100,
+  splashDriftMs: 400,
+  darkenMs: 1200,
+  starsEmergeMs: 1400,
+  linesFormMs: 400,
   heroSelectMs: 500,
-  zoomStarMs: 1100,
+  zoomStarMs: 1300,
   handoffMs: 500,
 };
 
-export const AATROX_INTERACTIVE_INTRO_TIMING: CinematicIntroTiming = {
-  splashHoldMs: 1400,
-  splashDriftMs: 700,
-  darkenMs: 1200,
-  starsEmergeMs: 1400,
-  linesFormMs: 1000,
-  heroSelectMs: 600,
-  zoomStarMs: 1400,
-  handoffMs: 600,
-};
-
-export const AATROX_RECORD_OUTRO_TIMING: CinematicOutroTiming = {
-  pullbackMs: 700,
-  pathRevealMs: 500,
-  nodesConnectMs: 500,
-  constellationReformMs: 900,
-  splashEchoMs: 450,
-  holdMs: 1200,
-};
+export const AATROX_RECORD_OUTRO_TIMING: CinematicOutroTiming = NAME_OUTRO_TIMING;
 
 export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
   "cscene:aatrox:origin": {
     coordinates: { x: 0, y: 0.2, z: 0 },
     shotType: "ESTABLISHING",
-    cameraPreset: "SLOW_APPROACH",
+    cameraPreset: "FREEFALL",
     atmosphere: "SHURIMA",
     environmentalMotifs: ["SUN_DISC", "SHURIMA_ARCHES"],
     curated: true,
@@ -55,7 +39,7 @@ export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
     shotType: "REVEAL",
     worldNodeArchetype: "ASCENSION",
     worldScale: 2.8,
-    cameraPreset: "ASCEND",
+    cameraPreset: "FREEFALL_SPIRAL",
     atmosphere: "SHURIMA",
     environmentalMotifs: ["SUN_DISC", "SHURIMA_ARCHES", "CELESTIAL_ORBITS"],
     curated: true,
@@ -65,7 +49,7 @@ export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
     shotType: "WIDE_EVENT",
     worldNodeArchetype: "CATASTROPHE",
     worldScale: 3.2,
-    cameraPreset: "FAST_APPROACH",
+    cameraPreset: "FREEFALL_DROP",
     atmosphere: "VOID",
     environmentalMotifs: ["VOID_RIFT", "VOID_FILAMENTS"],
     curated: true,
@@ -75,7 +59,7 @@ export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
     shotType: "TRANSFORMATION",
     worldNodeArchetype: "MAGICAL_RUPTURE",
     worldScale: 2.2,
-    cameraPreset: "ORBIT",
+    cameraPreset: "FREEFALL_SPIRAL",
     atmosphere: "DARKIN",
     environmentalMotifs: ["VOID_FILAMENTS", "SHURIMA_ARCHES"],
     curated: true,
@@ -85,7 +69,7 @@ export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
     shotType: "WIDE_EVENT",
     worldNodeArchetype: "WAR",
     worldScale: 3,
-    cameraPreset: "CURVE_LEFT",
+    cameraPreset: "FREEFALL",
     atmosphere: "DARKIN",
     environmentalMotifs: ["NOXIAN_ASH", "SHURIMA_ARCHES"],
     curated: true,
@@ -95,7 +79,7 @@ export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
     shotType: "AFTERMATH",
     worldNodeArchetype: "IMPRISONMENT",
     worldScale: 1.8,
-    cameraPreset: "DESCEND",
+    cameraPreset: "FREEFALL_DROP",
     atmosphere: "DARKIN",
     environmentalMotifs: ["SHURIMA_ARCHES"],
     curated: true,
@@ -105,7 +89,7 @@ export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
     shotType: "REVEAL",
     worldNodeArchetype: "RETURN",
     worldScale: 2,
-    cameraPreset: "SLOW_APPROACH",
+    cameraPreset: "FREEFALL",
     atmosphere: "DARKIN",
     environmentalMotifs: ["SHURIMA_ARCHES", "CELESTIAL_ORBITS"],
     curated: true,
@@ -115,7 +99,7 @@ export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
     shotType: "IMPACT",
     worldNodeArchetype: "WAR",
     worldScale: 2.6,
-    cameraPreset: "FAST_APPROACH",
+    cameraPreset: "FREEFALL_DROP",
     atmosphere: "CELESTIAL",
     environmentalMotifs: ["TARGON_CONSTELLATIONS", "CELESTIAL_ORBITS"],
     curated: true,
@@ -151,7 +135,7 @@ export function applyAatroxCinematicDirection(
     ? {
         ...journey.introSequence,
         splashFocal: { x: 0.52, y: 0.3 },
-        recordShowIntroTitle: true,
+        recordShowIntroTitle: false,
         recordTiming: AATROX_RECORD_INTRO_TIMING,
         timing: AATROX_INTERACTIVE_INTRO_TIMING,
         title: "Aatrox",
@@ -162,8 +146,7 @@ export function applyAatroxCinematicDirection(
   const outro = journey.outroSequence
     ? {
         ...journey.outroSequence,
-        pathToAnchorMapping: AATROX_PATH_TO_ANCHOR,
-        recordShowOutroTitle: true,
+        recordShowOutroTitle: false,
         recordTiming: AATROX_RECORD_OUTRO_TIMING,
         timing: AATROX_RECORD_OUTRO_TIMING,
         showText: true,
