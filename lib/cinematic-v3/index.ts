@@ -67,6 +67,11 @@ export {
   AATROX_SCENE_OVERRIDES,
 } from "./aatrox-cinematic-direction";
 export {
+  applyYasuoCinematicDirection,
+  YASUO_JOURNEY_ID,
+} from "./yasuo-cinematic-direction";
+export { polishStoryPanelScenes } from "./story-panel-polish";
+export {
   attachIntroOutroSequences,
   buildIntroSequence,
   buildOutroSequence,
@@ -96,3 +101,8 @@ export {
   HUB_MAX_WIDTH_PCT,
 } from "./name-fit";
 export { evaluateHubMotion, HUB_READABILITY_SAMPLE_T } from "./motion-curve";
+export { validateNameGlyphs } from "./validate-name-glyphs";
+export { isStoryPanelJourney, stripConstellationSequences } from "./story-panel-mode";
+export { validateStoryPanelJourney, validateFlagshipStoryPanels } from "./validate-story-panels";
+export { evaluatePanelTransition, easePanelTravel } from "./panel-transition";
+export { storyPanelPlacement, focalForAspect } from "./story-panel-layout";

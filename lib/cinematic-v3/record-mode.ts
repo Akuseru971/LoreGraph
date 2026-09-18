@@ -1,29 +1,21 @@
-import { computeChapterHubState, type ChapterHubState } from "./chapter-hub";
-import { easeFreefallTravel } from "./star-path";
-import type { ChampionConstellation, CinematicRecordTiming, CinematicScene } from "@/types";
+import { easePanelTravel } from "./panel-transition";
+import type { CinematicJourney, CinematicRecordTiming, CinematicScene } from "@/types";
 
 export const DEFAULT_RECORD_TIMING: CinematicRecordTiming = {
-  travelMs: 2100,
-  arrivalSettleMs: 320,
-  eyebrowRevealMs: 220,
-  titleRevealMs: 320,
-  narrativeRevealMs: 380,
-  readingHoldMs: 2400,
-  departurePrepMs: 250,
+  travelMs: 800,
+  arrivalSettleMs: 500,
+  eyebrowRevealMs: 350,
+  titleRevealMs: 450,
+  narrativeRevealMs: 650,
+  readingHoldMs: 2800,
+  departurePrepMs: 700,
 };
 
-/** Minimum travel for inter-chapter name hub readability (0.6–1.0s name window). */
+/** @deprecated Constellation hub travel floor — not used in story panel mode. */
 export const MIN_CHAPTER_TRAVEL_MS = 2100;
 
-function withChapterTravelFloor(timing: CinematicRecordTiming): CinematicRecordTiming {
-  return {
-    ...timing,
-    travelMs: Math.max(timing.travelMs, MIN_CHAPTER_TRAVEL_MS),
-  };
-}
-
 export function recordTimingForScene(scene: CinematicScene): CinematicRecordTiming {
-  if (scene.recordTiming) return withChapterTravelFloor(scene.recordTiming);
+  if (scene.recordTiming) return scene.recordTiming;
 
   const base = { ...DEFAULT_RECORD_TIMING };
   const isCore = scene.importance === "CORE";
@@ -32,52 +24,51 @@ export function recordTimingForScene(scene: CinematicScene): CinematicRecordTimi
     (scene.worldScale ?? 1) >= 2 || scene.worldNodeArchetype === "INVASION";
 
   if (isEnding) {
-    return withChapterTravelFloor({
+    return {
       ...base,
-      travelMs: 1300,
-      readingHoldMs: 2800,
-      arrivalSettleMs: 350,
-      narrativeRevealMs: 400,
-    });
+      travelMs: 600,
+      readingHoldMs: 3200,
+      arrivalSettleMs: 400,
+      narrativeRevealMs: 700,
+    };
   }
 
   if (scene.shotType === "AFTERMATH") {
-    return withChapterTravelFloor({
+    return {
       ...base,
-      travelMs: 1200,
-      readingHoldMs: 2500,
-      arrivalSettleMs: 300,
-      departurePrepMs: 300,
-      narrativeRevealMs: 400,
-    });
+      travelMs: 700,
+      readingHoldMs: 3000,
+      arrivalSettleMs: 450,
+      departurePrepMs: 750,
+    };
   }
 
   if (isMajorEvent) {
-    return withChapterTravelFloor({
+    return {
       ...base,
-      travelMs: 1500,
-      readingHoldMs: 2700,
-      arrivalSettleMs: 350,
-      narrativeRevealMs: 400,
-    });
+      travelMs: 850,
+      readingHoldMs: 3200,
+      arrivalSettleMs: 550,
+      narrativeRevealMs: 750,
+    };
   }
 
   if (scene.shotType === "IMPACT" || scene.type === "CONFLICT") {
-    return withChapterTravelFloor({
+    return {
       ...base,
-      travelMs: 1200,
-      arrivalSettleMs: 300,
-      readingHoldMs: 2400,
-      narrativeRevealMs: 400,
-    });
+      travelMs: 750,
+      arrivalSettleMs: 450,
+      readingHoldMs: 2800,
+      narrativeRevealMs: 700,
+    };
   }
 
   if (!isCore) {
-    return withChapterTravelFloor({
+    return {
       ...base,
-      travelMs: 1200,
-      readingHoldMs: 2200,
-    });
+      travelMs: 700,
+      readingHoldMs: 2400,
+    };
   }
 
   return base;
@@ -85,12 +76,15 @@ export function recordTimingForScene(scene: CinematicScene): CinematicRecordTimi
 
 export function totalSceneRecordMs(scene: CinematicScene): number {
   const t = recordTimingForScene(scene);
+  const phrases = scene.narrativePhrases?.length
+    ? scene.narrativePhrases
+    : splitNarrativePhrases(scene.narrative);
   return (
     t.travelMs +
     t.arrivalSettleMs +
     t.eyebrowRevealMs +
     t.titleRevealMs +
-    t.narrativeRevealMs +
+    t.narrativeRevealMs * phrases.length +
     t.readingHoldMs +
     t.departurePrepMs
   );
@@ -113,17 +107,13 @@ export interface RecordPhaseState {
   textVisible: boolean;
   arrived: boolean;
   transitionProgress: number;
-  chapterHub?: ChapterHubState;
+  holdProgress: number;
 }
 
 export function computeRecordPhaseState(
   scene: CinematicScene,
   sceneElapsedMs: number,
-  options?: {
-    nameConstellation?: ChampionConstellation;
-    targetSceneIndex?: number;
-    totalScenes?: number;
-  },
+  _options?: { journey?: CinematicJourney; targetSceneIndex?: number },
 ): RecordPhaseState {
   const t = recordTimingForScene(scene);
   const phrases = scene.narrativePhrases?.length
@@ -143,15 +133,6 @@ export function computeRecordPhaseState(
 
   if (elapsed < travelEnd) {
     const p = elapsed / t.travelMs;
-    const chapterHub =
-      options?.nameConstellation && options.targetSceneIndex !== undefined
-        ? computeChapterHubState(
-            p,
-            options.nameConstellation,
-            options.targetSceneIndex,
-            options.totalScenes ?? options.targetSceneIndex + 1,
-          )
-        : undefined;
     return {
       phase: "travel",
       phaseProgress: p,
@@ -159,8 +140,8 @@ export function computeRecordPhaseState(
       narrativePhraseIndex: -1,
       textVisible: false,
       arrived: false,
-      transitionProgress: easeFreefallTravel(p),
-      chapterHub,
+      transitionProgress: easePanelTravel(p),
+      holdProgress: 0,
     };
   }
 
@@ -172,8 +153,9 @@ export function computeRecordPhaseState(
       sceneElapsedMs: elapsed,
       narrativePhraseIndex: -1,
       textVisible: false,
-      arrived: p > 0.85,
+      arrived: p > 0.7,
       transitionProgress: 1,
+      holdProgress: p * 0.15,
     };
   }
 
@@ -187,6 +169,7 @@ export function computeRecordPhaseState(
       textVisible: true,
       arrived: true,
       transitionProgress: 1,
+      holdProgress: 0.15 + p * 0.2,
     };
   }
 
@@ -200,6 +183,7 @@ export function computeRecordPhaseState(
       textVisible: true,
       arrived: true,
       transitionProgress: 1,
+      holdProgress: 0.35 + p * 0.25,
     };
   }
 
@@ -211,6 +195,7 @@ export function computeRecordPhaseState(
       Math.floor(narrativeElapsed / phraseDuration),
     );
     const p = (narrativeElapsed % phraseDuration) / phraseDuration;
+    const narrativeT = phraseIndex / Math.max(1, phrases.length - 1);
     return {
       phase: "narrative",
       phaseProgress: p,
@@ -219,6 +204,7 @@ export function computeRecordPhaseState(
       textVisible: true,
       arrived: true,
       transitionProgress: 1,
+      holdProgress: 0.55 + narrativeT * 0.35,
     };
   }
 
@@ -232,6 +218,7 @@ export function computeRecordPhaseState(
       textVisible: true,
       arrived: true,
       transitionProgress: 1,
+      holdProgress: 0.9 + p * 0.1,
     };
   }
 
@@ -241,9 +228,10 @@ export function computeRecordPhaseState(
     phaseProgress: p,
     sceneElapsedMs: elapsed,
     narrativePhraseIndex: phrases.length - 1,
-    textVisible: p < 0.35,
+    textVisible: p < 0.4,
     arrived: true,
     transitionProgress: 1,
+    holdProgress: 1,
   };
 }
 
@@ -255,8 +243,4 @@ export function splitNarrativePhrases(narrative: string): string[] {
   if (sentences.length <= 1) return [narrative.trim()];
   if (sentences.length === 2) return sentences;
   return [sentences[0], sentences.slice(1).join(" ")];
-}
-
-function easeOutCubic(t: number): number {
-  return 1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 3);
 }

@@ -11,8 +11,11 @@ import {
 import { validateCinematicJourney } from "./validate-cinematic";
 import { resolveCinematicSceneAsset } from "./resolve-scene-asset";
 import {
+  buildIntroSequence,
+  buildOutroSequence,
   computeIntroPhaseState,
   computeOutroPhaseState,
+  NAME_RECORD_INTRO_TIMING,
   totalIntroMs,
   totalOutroMs,
 } from "./intro-outro";
@@ -20,13 +23,15 @@ import { constellationByCharacterId } from "@/data/cinematic/constellation-ancho
 import { validateFlagshipConstellation } from "./validate-constellation";
 import { computeContourConnectivity } from "./constellation-connectivity";
 import { computeFlagshipPremiumMetrics } from "./flagship-premium-metrics";
-import { computeChapterHubState, chapterHubTimingMs } from "./chapter-hub";
+import { computeChapterHubState } from "./chapter-hub";
+import { validateStoryPanelJourney } from "./validate-story-panels";
 import {
   fitConstellationToSafeFrame,
   formatProjectedBounds,
   validateConstellationHubFit,
 } from "./name-fit";
 import { evaluateHubMotion, HUB_READABILITY_SAMPLE_T } from "./motion-curve";
+import { validateNameGlyphs } from "./validate-name-glyphs";
 import { nameConstellationByCharacterId } from "@/data/cinematic/name-constellations";
 import { computeRecordPhaseState, totalSceneRecordMs } from "./record-mode";
 
@@ -149,16 +154,16 @@ describe("Cinematic Journey V3", () => {
     }
   });
 
-  it("flagship champion journeys include signature intro and outro sequences", () => {
+  it("flagship champion journeys use story panel mode without constellation intro", () => {
     const flagshipSlugs = ["aatrox", "yasuo", "yone", "viego", "skarner"];
     for (const slug of flagshipSlugs) {
       const journey = buildChampionJourneyV3(char(slug));
-      expect(journey.introSequence?.type).toBe("NAME_CONSTELLATION");
-      expect(journey.outroSequence?.type).toBe("NAME_REFORM");
-      expect(journey.introSequence?.splashAsset.url).toBeTruthy();
-      expect(journey.introSequence?.heroStarId).toBeTruthy();
-      const constellation = constellationByCharacterId.get(`char:${slug}`);
-      expect(constellation?.anchors.length).toBeGreaterThanOrEqual(6);
+      expect(journey.introSequence).toBeUndefined();
+      expect(journey.outroSequence).toBeUndefined();
+      if (isCinematicReady(char(slug))) {
+        const illustrated = journey.scenes.filter((s) => s.type !== "ENDING" && s.image?.url);
+        expect(illustrated.length).toBeGreaterThanOrEqual(3);
+      }
     }
   });
 
@@ -179,10 +184,8 @@ describe("Cinematic Journey V3", () => {
     expect(validateFlagshipConstellation(constellation).filter((i) => i.level === "ERROR")).toHaveLength(
       0,
     );
-    expect(journey.introSequence?.type).toBe("NAME_CONSTELLATION");
-    expect(journey.introSequence?.displayName).toBe("AATROX");
-    expect(journey.outroSequence?.type).toBe("NAME_REFORM");
-    expect(journey.introSequence?.recordTiming).toBeDefined();
+    expect(journey.introSequence).toBeUndefined();
+    expect(journey.outroSequence).toBeUndefined();
     const duel = journey.scenes.find((s) => s.id === "cscene:aatrox:beat:aatrox-7");
     expect(duel?.image?.url).toContain("aatrox-atreus-duel");
     const blade = journey.scenes.find((s) => s.id === "cscene:aatrox:beat:aatrox-5");
@@ -211,7 +214,13 @@ describe("Cinematic Journey V3", () => {
 
   it("intro phase state progresses through splash to zoom handoff", () => {
     const journey = buildChampionJourneyV3(char("yasuo"));
-    const intro = journey.introSequence!;
+    const intro = buildIntroSequence(
+      journey,
+      "yasuo",
+      "char:yasuo",
+      "ionia",
+      journey.title,
+    )!;
     const anchorCount = constellationByCharacterId.get("char:yasuo")!.anchors.length;
     const early = computeIntroPhaseState(intro, 500, anchorCount);
     expect(early.phase).toBe("splash_hold");
@@ -223,20 +232,17 @@ describe("Cinematic Journey V3", () => {
     expect(late.zoomProgress).toBeGreaterThan(0);
   });
 
-  it("Aatrox record intro timing is 4.5–6s for name constellation pacing", () => {
-    const journey = buildChampionJourneyV3(char("aatrox"));
-    const intro = journey.introSequence!;
-    const recordMs = totalIntroMs(intro.recordTiming ?? intro.timing);
+  it("legacy name intro timing module remains 4.5–6s when used directly", () => {
+    const recordMs = totalIntroMs(NAME_RECORD_INTRO_TIMING);
     expect(recordMs).toBeLessThanOrEqual(6000);
     expect(recordMs).toBeGreaterThanOrEqual(4500);
   });
 
-  it("name constellation builds readable typography for flagship champions", () => {
-    for (const slug of ["aatrox", "yasuo", "yone", "viego", "skarner"]) {
+  it("flagship journeys pass story panel validation", () => {
+    for (const slug of ["aatrox", "yasuo"]) {
       const journey = buildChampionJourneyV3(char(slug));
-      expect(journey.introSequence?.type).toBe("NAME_CONSTELLATION");
-      expect(journey.introSequence?.displayName).toBeTruthy();
-      expect(journey.outroSequence?.type).toBe("NAME_REFORM");
+      const errors = validateStoryPanelJourney(journey).filter((i) => i.level === "ERROR");
+      expect(errors).toHaveLength(0);
     }
   });
 
@@ -270,13 +276,13 @@ describe("Cinematic Journey V3", () => {
     expect(constellation.anchors.length).toBeGreaterThanOrEqual(500);
   });
 
-  it("record mode standard scenes pace within 6s including freefall travel", () => {
+  it("story panel record mode scenes pace within 8s per beat", () => {
     const journey = buildChampionJourneyV3(char("yasuo"));
     const standardScenes = journey.scenes.filter(
       (s) => s.type !== "ENDING" && (s.worldScale ?? 1) < 2,
     );
     for (const scene of standardScenes) {
-      expect(totalSceneRecordMs(scene)).toBeLessThanOrEqual(6000);
+      expect(totalSceneRecordMs(scene)).toBeLessThanOrEqual(8000);
     }
   });
 
@@ -298,7 +304,13 @@ describe("Cinematic Journey V3", () => {
 
   it("name intro fades in globally within stars_emerge phase", () => {
     const journey = buildChampionJourneyV3(char("aatrox"));
-    const intro = journey.introSequence!;
+    const intro = buildIntroSequence(
+      journey,
+      "aatrox",
+      "char:aatrox",
+      "shurima",
+      journey.title,
+    )!;
     const anchorCount = 100;
     const midDarken = computeIntroPhaseState(
       intro,
@@ -373,35 +385,52 @@ describe("Cinematic Journey V3", () => {
     for (const slug of ["aatrox", "yasuo", "yone", "viego", "skarner"]) {
       const c = nameConstellationByCharacterId.get(`char:${slug}`)!;
       expect(c.typographySource).toContain("Instrument Serif");
-      expect(c.anchors.length).toBeGreaterThan(400);
+      expect(c.anchors.length).toBeLessThan(200);
+      expect(c.anchors.length).toBeGreaterThan(60);
     }
   });
 
-  it("record travel phase includes chapter hub state", () => {
-    const journey = buildChampionJourneyV3(char("aatrox"));
-    const scene = journey.scenes[2];
-    const nameConstellation = nameConstellationByCharacterId.get("char:aatrox")!;
-    const state = computeRecordPhaseState(scene, 900, {
-      nameConstellation,
-      targetSceneIndex: 2,
-      totalScenes: journey.scenes.length,
-    });
-    expect(state.phase).toBe("travel");
-    expect(state.chapterHub?.showName).toBe(true);
-    expect(state.chapterHub?.nameOpacity).toBeGreaterThan(0.3);
+  it("simplified name glyphs pass readability validation", () => {
+    const issues = validateNameGlyphs().filter((i) => i.level === "ERROR");
+    expect(issues).toHaveLength(0);
   });
 
-  it("chapter hub timing fits record mode targets", () => {
-    const timing = chapterHubTimingMs(2100);
-    expect(timing.nameReadableMs).toBeGreaterThanOrEqual(450);
-    expect(timing.nameReadableMs).toBeLessThanOrEqual(1000);
-    expect(timing.plungeMs).toBeGreaterThanOrEqual(700);
-    expect(timing.plungeMs).toBeLessThanOrEqual(1600);
+  it("AATROX simplified constellation has readable letter separation", () => {
+    const aatrox = nameConstellationByCharacterId.get("char:aatrox")!;
+    expect(aatrox.contourGroups?.length).toBe(6);
+    const perLetter = aatrox.anchors.length / 6;
+    expect(perLetter).toBeLessThanOrEqual(24);
+    expect(perLetter).toBeGreaterThanOrEqual(8);
+    const letterBounds = (aatrox.contourGroups ?? []).map((g) => {
+      const anchors = aatrox.anchors.filter((a) => a.contourGroup === g.id);
+      const xs = anchors.map((a) => a.x);
+      return { minX: Math.min(...xs), maxX: Math.max(...xs) };
+    });
+    for (let i = 0; i < letterBounds.length - 1; i++) {
+      expect(letterBounds[i + 1].minX - letterBounds[i].maxX).toBeGreaterThan(0.01);
+    }
+  });
+
+  it("record travel phase uses panel transition progress", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const scene = journey.scenes[2];
+    const state = computeRecordPhaseState(scene, 400, { journey });
+    expect(state.phase).toBe("travel");
+    expect(state.transitionProgress).toBeGreaterThan(0.2);
+    expect(state.textVisible).toBe(false);
+  });
+
+  it("story panel record timing fits per-beat targets", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const scene = journey.scenes[1];
+    const ms = totalSceneRecordMs(scene);
+    expect(ms).toBeLessThanOrEqual(7500);
+    expect(ms).toBeGreaterThanOrEqual(4000);
   });
 
   it("outro phase state reforms constellation silhouette", () => {
     const journey = buildChampionJourneyV3(char("aatrox"));
-    const outro = journey.outroSequence!;
+    const outro = buildOutroSequence(journey, "char:aatrox", "aatrox", journey.title)!;
     const early = computeOutroPhaseState(outro, 400);
     expect(early.phase).toBe("pullback");
     const late = computeOutroPhaseState(outro, totalOutroMs(outro.timing) - 200);

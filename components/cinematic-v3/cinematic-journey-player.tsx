@@ -8,12 +8,9 @@ import {
   totalOutroMsForMode,
 } from "@/lib/cinematic-v3/intro-outro";
 import { FLAGSHIP_JOURNEY_IDS } from "@/data/cinematic/flagship-assets";
-import { constellationById } from "@/data/cinematic/constellation-anchors";
 import { preloadSceneImages } from "@/lib/cinematic-v3/scene-image-preload";
-import { computeChapterHubState } from "@/lib/cinematic-v3/chapter-hub";
-import { getHeroAnchorPosition } from "./constellation-silhouette";
-import { ChapterHubOverlay } from "./chapter-hub-overlay";
-import { IntroHandoffStar } from "./intro-handoff-star";
+import { evaluatePanelTransition } from "@/lib/cinematic-v3/panel-transition";
+import { isStoryPanelJourney } from "@/lib/cinematic-v3/story-panel-mode";
 import {
   computeRecordPhaseState,
   totalSceneRecordMs,
@@ -33,8 +30,8 @@ import { JourneyControlsV3 } from "./journey-controls-v3";
 import { RecordModeControls } from "./record-mode-controls";
 import { ReducedMotionJourney } from "./reduced-motion-journey";
 import { SceneNarrativeOverlay } from "./scene-narrative-overlay";
-import { SignatureIntroSequence } from "./signature-intro-sequence";
 import { SceneBackgroundLayer } from "./scene-background-layer";
+import { SignatureIntroSequence } from "./signature-intro-sequence";
 import { SignatureOutroSequence } from "./signature-outro-sequence";
 
 const SOUND_PREF_KEY = "loregraph.journey.sound";
@@ -68,7 +65,9 @@ export function CinematicJourneyPlayer({
     journey.id as (typeof FLAGSHIP_JOURNEY_IDS)[number],
   );
   const use2DBackgrounds = isFlagship && showImages && !environmentOnly;
+  const useStoryPanels = isStoryPanelJourney(journey);
   const hasIntro =
+    !useStoryPanels &&
     Boolean(journey.introSequence) &&
     directorPreview !== "scene" &&
     directorPreview !== "outro" &&
@@ -77,8 +76,11 @@ export function CinematicJourneyPlayer({
     directorPreview !== "departure" &&
     directorPreview !== "motion-loop" &&
     directorPreview !== "background-only" &&
-    directorPreview !== "full-aatrox";
+    directorPreview !== "text-layout" &&
+    directorPreview !== "full-aatrox" &&
+    directorPreview !== "full-yasuo";
   const hasOutro =
+    !useStoryPanels &&
     Boolean(journey.outroSequence) &&
     directorPreview !== "intro" &&
     directorPreview !== "scene" &&
@@ -87,7 +89,9 @@ export function CinematicJourneyPlayer({
     directorPreview !== "departure" &&
     directorPreview !== "motion-loop" &&
     directorPreview !== "background-only" &&
-    directorPreview !== "full-aatrox";
+    directorPreview !== "text-layout" &&
+    directorPreview !== "full-aatrox" &&
+    directorPreview !== "full-yasuo";
 
   const quality = React.useMemo(() => {
     if (recordMode) return "high" as const;
@@ -103,7 +107,10 @@ export function CinematicJourneyPlayer({
           directorPreview === "arrival" ||
           directorPreview === "departure" ||
           directorPreview === "motion-loop" ||
-          directorPreview === "background-only"
+          directorPreview === "background-only" ||
+          directorPreview === "text-layout" ||
+          directorPreview === "full-aatrox" ||
+          directorPreview === "full-yasuo"
         ? "playing"
         : hasIntro
           ? "intro"
@@ -184,51 +191,20 @@ export function CinematicJourneyPlayer({
   const outroTotalMs = journey.outroSequence
     ? totalOutroMsForMode(journey.outroSequence, recordActive)
     : 0;
-  const nameConstellation = React.useMemo(() => {
-    const cid = journey.introSequence?.constellationId;
-    return cid ? constellationById.get(cid) : undefined;
-  }, [journey.introSequence?.constellationId]);
-
-  const heroAnchorPos = React.useMemo(() => {
-    return nameConstellation
-      ? getHeroAnchorPosition(nameConstellation, journey.introSequence?.heroStarId)
-      : { x: 0.64, y: 0.2 };
-  }, [nameConstellation, journey.introSequence?.heroStarId]);
-
   const recordPhase = React.useMemo(() => {
     if (!recordActive || !scene || journeyPhase !== "playing") return undefined;
-    return computeRecordPhaseState(scene, sceneElapsedMs, {
-      nameConstellation,
-      targetSceneIndex: sceneIndex,
-      totalScenes: journey.scenes.length,
-    });
-  }, [recordActive, scene, sceneElapsedMs, journeyPhase, nameConstellation, sceneIndex, journey.scenes.length]);
+    return computeRecordPhaseState(scene, sceneElapsedMs, { journey });
+  }, [recordActive, scene, sceneElapsedMs, journeyPhase, journey]);
 
-  const chapterHubState = React.useMemo(() => {
-    if (!nameConstellation || sceneIndex === 0) return undefined;
-    const traveling = !arrived && journeyPhase === "playing";
-    if (!traveling && !recordPhase?.chapterHub) return undefined;
-    const travelT = recordPhase?.chapterHub
-      ? recordPhase.phaseProgress
-      : transitionProgress;
-    return (
-      recordPhase?.chapterHub ??
-      computeChapterHubState(
-        travelT,
-        nameConstellation,
-        sceneIndex,
-        journey.scenes.length,
-      )
-    );
-  }, [
-    nameConstellation,
-    sceneIndex,
-    arrived,
-    journeyPhase,
-    recordPhase,
-    transitionProgress,
-    journey.scenes.length,
-  ]);
+  const panelTransition = React.useMemo(() => {
+    if (!useStoryPanels) return undefined;
+    const hold = recordPhase?.holdProgress ?? (arrived ? 0.5 : 0);
+    const travelT = recordPhase?.transitionProgress ?? transitionProgress;
+    return evaluatePanelTransition(travelT, hold, sceneIndex);
+  }, [useStoryPanels, recordPhase, transitionProgress, arrived, sceneIndex]);
+
+  const departureProgress =
+    recordPhase?.phase === "departure" ? recordPhase.phaseProgress : 0;
 
   const finishIntro = React.useCallback(() => {
     if (directorPreview === "intro") return;
@@ -302,12 +278,16 @@ export function CinematicJourneyPlayer({
   }, [directorPreview, journeyPhase, journey.scenes.length]);
 
   React.useEffect(() => {
-    if (directorPreview !== "motion-loop" || journeyPhase !== "playing") return;
+    if (
+      (directorPreview !== "motion-loop" && directorPreview !== "transition-loop") ||
+      journeyPhase !== "playing"
+    )
+      return;
     const loopScene = Math.max(1, directorSceneIndex || 2);
     setSceneIndex(loopScene);
     setArrived(false);
     let start = performance.now();
-    const duration = 2800;
+    const duration = useStoryPanels ? 5500 : 2800;
     let raf = 0;
     const tick = () => {
       const t = ((performance.now() - start) % duration) / duration;
@@ -316,7 +296,7 @@ export function CinematicJourneyPlayer({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [directorPreview, journeyPhase, directorSceneIndex]);
+  }, [directorPreview, journeyPhase, directorSceneIndex, useStoryPanels]);
 
   React.useEffect(() => {
     if (startedRef.current) return;
@@ -392,17 +372,13 @@ export function CinematicJourneyPlayer({
     }
     setTransitionProgress(0);
     setArrived(false);
-    const duration = scene?.transitionDurationMs ?? 2000;
+    const duration = useStoryPanels
+      ? 850
+      : (scene?.transitionDurationMs ?? 2000);
     const start = performance.now();
     const frame = () => {
       const t = Math.min(1, (performance.now() - start) / duration);
-      setTransitionProgress(
-        t < 0.18
-          ? t * 0.12
-          : t < 0.62
-            ? 0.022 + (t - 0.18) * 1.35
-            : 0.616 + (1 - Math.pow(1 - (t - 0.62) / 0.38, 2.8)) * 0.384,
-      );
+      setTransitionProgress(t);
       if (t < 1) requestAnimationFrame(frame);
       else {
         setArrived(true);
@@ -412,7 +388,7 @@ export function CinematicJourneyPlayer({
       }
     };
     requestAnimationFrame(frame);
-  }, [sceneIndex, scene?.transitionDurationMs, recordActive, journeyPhase, hasIntro]);
+  }, [sceneIndex, scene?.transitionDurationMs, recordActive, journeyPhase, hasIntro, useStoryPanels, backgroundOnly]);
 
   React.useEffect(() => {
     if (recordMode && !recordActive) setRecordActive(true);
@@ -566,11 +542,12 @@ export function CinematicJourneyPlayer({
 
   if (!scene && journeyPhase === "playing") return null;
 
-  const useWebGL = quality !== "low";
+  const useWebGL = quality !== "low" && !(useStoryPanels && use2DBackgrounds);
   const narrativeVisible =
     journeyPhase === "playing" &&
     !backgroundOnly &&
-    (recordActive ? Boolean(recordPhase?.textVisible) : arrived);
+    (directorPreview === "text-layout" ||
+      (recordActive ? Boolean(recordPhase?.textVisible) : arrived));
   const effectiveAspect = recordActive ? "16:9" : aspectMode;
   const showCanvas = journeyPhase === "playing" || journeyPhase === "outro";
   const outroComplete = outroElapsedMs >= outroTotalMs;
@@ -598,11 +575,17 @@ export function CinematicJourneyPlayer({
                 scene={scene}
                 prevScene={prevScene}
                 nextScene={nextScene}
-                hubState={chapterHubState}
+                panelTransition={panelTransition}
+                travelProgress={transitionProgress}
+                holdProgress={recordPhase?.holdProgress ?? (arrived ? 0.55 : 0)}
+                departureProgress={departureProgress}
+                sceneIndex={sceneIndex}
                 arrived={arrived}
                 traveling={traveling}
                 showImages={showImages}
                 showDiagnostics={showBackgroundDiagnostics}
+                aspectMode={effectiveAspect}
+                storyPanelMode={useStoryPanels}
               />
             ) : null}
           <div className="absolute inset-0" style={{ opacity: canvasOpacity }}>
@@ -619,7 +602,7 @@ export function CinematicJourneyPlayer({
                 environmentOnly={environmentOnly}
                 arrivalPulse={arrivalPulse}
                 use2DBackgrounds={use2DBackgrounds}
-                hubMotion={chapterHubState}
+                hubMotion={undefined}
                 backgroundOnly={backgroundOnly}
               />
             ) : (
@@ -633,7 +616,7 @@ export function CinematicJourneyPlayer({
           <div className="absolute inset-0 z-[70] bg-black" aria-hidden />
         ) : null}
 
-        {journeyPhase === "intro" && journey.introSequence && recordLeadInDone ? (
+        {journeyPhase === "intro" && journey.introSequence && recordLeadInDone && !useStoryPanels ? (
           <SignatureIntroSequence
             intro={journey.introSequence}
             elapsedMs={introElapsedMs}
@@ -642,28 +625,7 @@ export function CinematicJourneyPlayer({
           />
         ) : null}
 
-        {handoffProgress > 0 ? (
-          <IntroHandoffStar
-            progress={handoffProgress}
-            heroX={heroAnchorPos.x}
-            heroY={heroAnchorPos.y}
-            intensity={1.2}
-          />
-        ) : null}
-
-        {nameConstellation &&
-        chapterHubState &&
-        journeyPhase === "playing" &&
-        sceneIndex > 0 &&
-        !backgroundOnly ? (
-          <ChapterHubOverlay
-            constellation={nameConstellation}
-            hubState={chapterHubState}
-            visible={!arrived && chapterHubState.showName}
-          />
-        ) : null}
-
-        {journeyPhase === "outro" && journey.outroSequence ? (
+        {journeyPhase === "outro" && journey.outroSequence && !useStoryPanels ? (
           <SignatureOutroSequence
             outro={journey.outroSequence}
             elapsedMs={outroElapsedMs}
@@ -691,9 +653,10 @@ export function CinematicJourneyPlayer({
             showTitles={recordActive ? recordTitles : showText}
             showNarrative={recordActive ? recordNarrative : showText}
             recordMode={recordActive}
+            storyPanelMode={useStoryPanels}
           />
         ) : null}
-        {!recordActive && journeyPhase === "playing" ? (
+        {!recordActive && journeyPhase === "playing" && !useStoryPanels ? (
           <GraphRevealOverlay
             journey={journey}
             progress={outroStarted && outroComplete ? 1 : graphRevealProgress}

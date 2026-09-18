@@ -12,7 +12,10 @@ import { defaultMotifsForAtmosphere } from "./environmental-motifs";
 import { inferShotType } from "./shot-types";
 import { inferWorldNodeArchetype } from "./world-node-archetypes";
 import { applyAatroxCinematicDirection } from "./aatrox-cinematic-direction";
+import { applyYasuoCinematicDirection } from "./yasuo-cinematic-direction";
 import { attachIntroOutroSequences } from "./intro-outro";
+import { polishStoryPanelScenes } from "./story-panel-polish";
+import { isStoryPanelJourney, stripConstellationSequences } from "./story-panel-mode";
 import { evaluateJourneyReadiness } from "./visual-readiness";
 
 /** Curated staging overrides — flagship journeys only. */
@@ -104,6 +107,7 @@ function manifestToAsset(
     confidence: "HIGH",
     qualityStatus: entry.qualityStatus,
     focalPoint: entry.officialAsset.focalPoint,
+    portraitFocalPoint: entry.officialAsset.portraitFocalPoint,
     aspectRatio: entry.officialAsset.aspectRatio,
     compositionHint: entry.composition,
     source: entry.officialAsset.source,
@@ -193,14 +197,25 @@ export function applyFlagshipCurations(journey: CinematicJourney): CinematicJour
     scenes,
     cinematicReady: journey.cinematicReady,
   };
-  const withSequences = attachIntroOutroSequences(curated);
+  const withSequences = isStoryPanelJourney(curated)
+    ? stripConstellationSequences(curated)
+    : attachIntroOutroSequences(curated);
   const directed =
     withSequences.id === "cinematic:character:aatrox"
       ? applyAatroxCinematicDirection(withSequences)
-      : withSequences;
-  const readiness = evaluateJourneyReadiness(directed);
+      : withSequences.id === "cinematic:character:yasuo"
+        ? applyYasuoCinematicDirection(withSequences)
+        : withSequences;
+  const recured = isFlagship
+    ? {
+        ...directed,
+        scenes: directed.scenes.map((s) => applySceneCurations(s)),
+      }
+    : directed;
+  const polished = polishStoryPanelScenes(recured);
+  const readiness = evaluateJourneyReadiness(polished);
   return {
-    ...directed,
+    ...polished,
     loreReady: journey.cinematicReady,
     visualReady: readiness.visualReady,
     recordReady: readiness.recordReady,

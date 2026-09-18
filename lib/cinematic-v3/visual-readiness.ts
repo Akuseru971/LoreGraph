@@ -1,4 +1,5 @@
 import { flagshipAssetBySceneId } from "@/data/cinematic/flagship-assets";
+import { isStoryPanelJourney } from "./story-panel-mode";
 import type { CinematicJourney, CinematicJourneyReadiness, CinematicScene } from "@/types";
 
 const FLAGSHIP_IDS = new Set([
@@ -84,11 +85,13 @@ export function evaluateJourneyReadiness(
     if (missingCurated.length) {
       blockers.push(`${missingCurated.length} flagship scenes MISSING assets`);
     }
-    if (journey.kind === "CHARACTER" && !journey.introSequence) {
-      blockers.push("flagship CHARACTER journey missing introSequence");
-    }
-    if (journey.kind === "CHARACTER" && !journey.outroSequence) {
-      blockers.push("flagship CHARACTER journey missing outroSequence");
+    if (!isStoryPanelJourney(journey)) {
+      if (journey.kind === "CHARACTER" && !journey.introSequence) {
+        blockers.push("flagship CHARACTER journey missing introSequence");
+      }
+      if (journey.kind === "CHARACTER" && !journey.outroSequence) {
+        blockers.push("flagship CHARACTER journey missing outroSequence");
+      }
     }
   }
 

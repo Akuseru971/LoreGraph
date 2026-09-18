@@ -19,9 +19,21 @@ const MODE_SCALE: Record<NameConstellationMode, number> = {
 };
 
 const MODE_LINE_BOOST: Record<NameConstellationMode, number> = {
-  intro: 1.15,
-  "inter-chapter": 1.08,
-  outro: 1.12,
+  intro: 0.72,
+  "inter-chapter": 0.65,
+  outro: 0.7,
+};
+
+const NAME_LINE_OPACITY: Record<NameConstellationMode, number> = {
+  intro: 0.38,
+  "inter-chapter": 0.28,
+  outro: 0.34,
+};
+
+const NAME_STAR_SCALE: Record<NameConstellationMode, number> = {
+  intro: 1.35,
+  "inter-chapter": 1.28,
+  outro: 1.32,
 };
 
 const HUB_CENTER_Y = 44;
@@ -36,8 +48,9 @@ export function NameConstellation({
   plungeZoom = 0,
   nameBreathing = 1,
   opacity = 1,
-  lineColor = "#e8d4a0",
+  lineColor = "#d4c090",
   starColor = "#fff8ee",
+  minimalStyle = false,
   softenNonHero = 0,
   showStars = true,
   showLines = true,
@@ -61,6 +74,8 @@ export function NameConstellation({
   showStars?: boolean;
   showLines?: boolean;
   enableGlow?: boolean;
+  /** Black-and-white QA — no glow, high contrast stars. */
+  minimalStyle?: boolean;
   className?: string;
 }) {
   if (!isNameConstellation(constellation)) return null;
@@ -123,8 +138,10 @@ export function NameConstellation({
   );
 
   const lineBoost = MODE_LINE_BOOST[mode];
+  const lineOpacityScale = NAME_LINE_OPACITY[mode];
+  const starScale = NAME_STAR_SCALE[mode];
   const effectiveOpacity = opacity * nameOpacity;
-  const glowOn = enableGlow ?? (mode === "intro" || mode === "outro");
+  const glowOn = !minimalStyle && (enableGlow ?? (mode === "intro" || mode === "outro"));
   const filterId = `name-glow-${constellation.id.replace(/[^a-z0-9]/gi, "")}`;
 
   return (
@@ -153,6 +170,45 @@ export function NameConstellation({
           transformOrigin: `${originX}% ${originY}%`,
         }}
       >
+        {showStars &&
+          constellation.anchors.map((anchor) => {
+            const isHero = anchor.id === heroId;
+            const baseRadius = starRadiusForWeight(anchor.visualWeight ?? "MEDIUM");
+            const radius = baseRadius * starScale;
+            const dim = !isHero && softenNonHero > 0 ? 1 - softenNonHero * 0.6 : 1;
+            const heroBoost = isHero ? Math.min(heroIntensity, 1.35) : 1;
+            const isPrimary = anchor.visualWeight === "HIGH" || anchor.visualWeight === "HERO";
+            const starOpacity = nameOpacity * (isHero ? 1 : isPrimary ? 0.95 : 0.72) * dim;
+            const fill = minimalStyle ? (isHero ? "#ffffff" : isPrimary ? "#f0f0f0" : "#aaaaaa") : isHero ? "#ffffff" : starColor;
+            return (
+              <g key={anchor.id}>
+                {isHero && heroIntensity > 1.05 && !minimalStyle ? (
+                  <circle
+                    cx={anchor.x * 100}
+                    cy={anchor.y * 100}
+                    r={radius * 3.2 * heroBoost}
+                    fill="rgba(255,240,200,0.1)"
+                  />
+                ) : null}
+                <circle
+                  cx={anchor.x * 100}
+                  cy={anchor.y * 100}
+                  r={radius * (isHero ? 1.4 * heroBoost : isPrimary ? 1.22 : 0.88)}
+                  fill={fill}
+                  fillOpacity={starOpacity}
+                />
+                {!isHero && !minimalStyle ? (
+                  <circle
+                    cx={anchor.x * 100}
+                    cy={anchor.y * 100}
+                    r={radius * (isPrimary ? 2.2 : 1.6)}
+                    fill={starColor}
+                    fillOpacity={0.08 * dim * nameOpacity}
+                  />
+                ) : null}
+              </g>
+            );
+          })}
         {showLines &&
           lines.map((line) => {
             const from = anchorById.get(line.from);
@@ -167,48 +223,12 @@ export function NameConstellation({
                 y1={from.y * 100}
                 x2={to.x * 100}
                 y2={to.y * 100}
-                stroke={lineColor}
+                stroke={minimalStyle ? "#666666" : lineColor}
                 strokeWidth={stroke.width * lineBoost}
-                strokeOpacity={stroke.opacity * drawT * nameOpacity}
+                strokeOpacity={stroke.opacity * lineOpacityScale * drawT * nameOpacity}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-            );
-          })}
-        {showStars &&
-          constellation.anchors.map((anchor) => {
-            const isHero = anchor.id === heroId;
-            const radius = starRadiusForWeight(anchor.visualWeight ?? "MEDIUM");
-            const dim = !isHero && softenNonHero > 0 ? 1 - softenNonHero * 0.6 : 1;
-            const heroBoost = isHero ? heroIntensity : 1;
-            const starOpacity = nameOpacity * (isHero ? 0.98 : 0.86) * dim;
-            return (
-              <g key={anchor.id}>
-                {isHero && heroIntensity > 1.1 ? (
-                  <circle
-                    cx={anchor.x * 100}
-                    cy={anchor.y * 100}
-                    r={radius * 5 * heroBoost}
-                    fill="rgba(255,240,200,0.14)"
-                  />
-                ) : null}
-                <circle
-                  cx={anchor.x * 100}
-                  cy={anchor.y * 100}
-                  r={radius * (isHero ? 1.55 * heroBoost : 1.08)}
-                  fill={isHero ? "#ffffff" : starColor}
-                  fillOpacity={starOpacity}
-                />
-                {!isHero ? (
-                  <circle
-                    cx={anchor.x * 100}
-                    cy={anchor.y * 100}
-                    r={radius * 2.4}
-                    fill={starColor}
-                    fillOpacity={0.1 * dim * nameOpacity}
-                  />
-                ) : null}
-              </g>
             );
           })}
       </g>

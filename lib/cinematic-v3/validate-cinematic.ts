@@ -7,6 +7,8 @@ import { flagshipAssetBySceneId, FLAGSHIP_JOURNEY_IDS } from "@/data/cinematic/f
 import { constellationById } from "@/data/cinematic/constellation-anchors";
 import { validateFlagshipConstellation } from "./validate-constellation";
 import { validateFlagshipCoverage } from "./validate-flagship-coverage";
+import { validateStoryPanelJourney } from "./validate-story-panels";
+import { isStoryPanelJourney } from "./story-panel-mode";
 import { compositionForScene } from "./composition";
 import { eventSlugFromId } from "./resolve-scene-asset";
 
@@ -361,7 +363,7 @@ export function validateCinematicJourney(journey: CinematicJourney): CinematicVa
   const isFlagship = FLAGSHIP_JOURNEY_IDS.includes(
     journey.id as (typeof FLAGSHIP_JOURNEY_IDS)[number],
   );
-  if (isFlagship && journey.kind === "CHARACTER") {
+  if (isFlagship && journey.kind === "CHARACTER" && !isStoryPanelJourney(journey)) {
     if (!journey.introSequence) {
       issues.push({
         level: "WARNING",
@@ -404,6 +406,16 @@ export function validateCinematicJourney(journey: CinematicJourney): CinematicVa
 
   if (FLAGSHIP_JOURNEY_IDS.includes(journey.id as (typeof FLAGSHIP_JOURNEY_IDS)[number])) {
     issues.push(...validateFlagshipCoverage(journey));
+    if (isStoryPanelJourney(journey)) {
+      for (const sp of validateStoryPanelJourney(journey)) {
+        issues.push({
+          level: sp.level,
+          kind: "story_panel",
+          sceneId: sp.sceneId,
+          message: sp.message,
+        });
+      }
+    }
   }
 
   return issues;

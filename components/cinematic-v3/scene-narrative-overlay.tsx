@@ -1,34 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CAPTION_SAFE_BOTTOM, CINEMATIC_SAFE_AREA } from "@/lib/cinematic-v3/cinematic-frame";
 import {
   compositionForScene,
-  narrativePlacementForComposition,
 } from "@/lib/cinematic-v3/composition";
+import { storyPanelPlacement } from "@/lib/cinematic-v3/story-panel-layout";
 import type { CinematicAspectMode, CinematicScene } from "@/types";
 import type { RecordPhaseState } from "@/lib/cinematic-v3/record-mode";
-
-const POSITION_CLASS: Record<
-  ReturnType<typeof narrativePlacementForComposition>["position"],
-  string
-> = {
-  left: "items-start justify-end",
-  right: "items-end justify-end",
-  "bottom-center": "items-center justify-end",
-  "center-left": "items-start justify-center",
-  "center-right": "items-end justify-center",
-};
-
-const GRADIENT_CLASS: Record<
-  ReturnType<typeof narrativePlacementForComposition>["gradientSide"],
-  string
-> = {
-  left: "bg-gradient-to-r from-ink/55 via-ink/20 to-transparent",
-  right: "bg-gradient-to-l from-ink/55 via-ink/20 to-transparent",
-  bottom: "bg-gradient-to-t from-ink/60 via-ink/15 to-transparent",
-  none: "",
-};
 
 export function SceneNarrativeOverlay({
   scene,
@@ -40,6 +18,7 @@ export function SceneNarrativeOverlay({
   showTitles = true,
   showNarrative = true,
   recordMode = false,
+  storyPanelMode = false,
 }: {
   scene: CinematicScene;
   sceneIndex: number;
@@ -50,11 +29,12 @@ export function SceneNarrativeOverlay({
   showTitles?: boolean;
   showNarrative?: boolean;
   recordMode?: boolean;
+  storyPanelMode?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
   const composition = compositionForScene(scene, scene.image);
-  const placement = narrativePlacementForComposition(composition);
-  const is169 = aspectMode === "16:9" || recordMode;
+  const placement = storyPanelPlacement(aspectMode, composition, recordMode);
+  const isPortrait = aspectMode === "9:16";
 
   const phrases = scene.narrativePhrases?.length
     ? scene.narrativePhrases
@@ -62,74 +42,73 @@ export function SceneNarrativeOverlay({
 
   const phase = recordPhase?.phase ?? (visible ? "hold" : "travel");
   const eyebrowVisible =
-    showTitles && (phase === "eyebrow" || phase === "title" || phase === "narrative" || phase === "hold" || (visible && !recordMode));
+    showTitles &&
+    (phase === "eyebrow" ||
+      phase === "title" ||
+      phase === "narrative" ||
+      phase === "hold" ||
+      (visible && !recordMode));
   const titleVisible =
-    showTitles && (phase === "title" || phase === "narrative" || phase === "hold" || (visible && !recordMode));
+    showTitles &&
+    (phase === "title" ||
+      phase === "narrative" ||
+      phase === "hold" ||
+      (visible && !recordMode));
   const phraseIndex = recordPhase?.narrativePhraseIndex ?? phrases.length - 1;
 
-  const textAlign =
-    placement.align === "center"
+  const textAlignClass =
+    placement.textAlign === "center"
       ? "text-center mx-auto"
-      : placement.align === "end"
+      : placement.textAlign === "right"
         ? "text-right ml-auto"
         : "text-left";
 
-  const padStyle = is169
-    ? {
-        paddingLeft: `${CINEMATIC_SAFE_AREA.left * 100}%`,
-        paddingRight: `${CINEMATIC_SAFE_AREA.right * 100}%`,
-        paddingTop: `${CINEMATIC_SAFE_AREA.top * 100}%`,
-        paddingBottom: `${(CINEMATIC_SAFE_AREA.bottom + CAPTION_SAFE_BOTTOM) * 100}%`,
-      }
-    : undefined;
-
-  const eyebrowSize = is169 ? "text-[clamp(1.1rem,1.4vw,1.75rem)]" : "text-eyebrow";
-  const titleSize = is169
-    ? "text-[clamp(2.5rem,4.2vw,5rem)]"
-    : "text-[clamp(1.75rem,5vw,3rem)]";
-  const bodySize = is169
-    ? "text-[clamp(1.25rem,1.8vw,2.25rem)]"
-    : "text-[0.9375rem] sm:text-base";
-
   if (!visible && recordMode) return null;
+
+  const panelClass = storyPanelMode
+    ? `rounded-sm border border-white/8 bg-black/52 backdrop-blur-[2px] ${placement.panelPadding}`
+    : `rounded-lg px-4 py-5 sm:px-6 bg-gradient-to-t from-ink/60 via-ink/20 to-transparent`;
 
   return (
     <div
-      className={`pointer-events-none absolute inset-0 z-30 flex flex-col ${POSITION_CLASS[placement.position]}`}
-      style={padStyle}
+      className={`pointer-events-none absolute inset-0 z-30 flex flex-col ${placement.positionClass}`}
+      style={placement.safePadding}
       aria-live="polite"
       role="region"
       aria-label={`Scene ${sceneIndex + 1} of ${sceneCount}: ${scene.title}`}
     >
       <motion.div
-        initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-        animate={{ opacity: visible || recordPhase?.textVisible ? 1 : 0, y: 0 }}
-        transition={{ duration: reduceMotion ? 0.15 : 0.55, ease: "easeOut" }}
-        className={`${textAlign} rounded-lg px-4 py-5 sm:px-6 ${GRADIENT_CLASS[placement.gradientSide]}`}
+        initial={reduceMotion ? false : { opacity: 0, y: isPortrait ? 20 : 14 }}
+        animate={{
+          opacity: visible || recordPhase?.textVisible ? 1 : 0,
+          y: 0,
+        }}
+        transition={{ duration: reduceMotion ? 0.15 : 0.5, ease: "easeOut" }}
+        className={`${textAlignClass} ${panelClass}`}
         style={{ maxWidth: placement.maxWidth }}
       >
         {scene.eyebrow && eyebrowVisible ? (
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: recordMode ? 0 : 0.1 }}
-            className={`${eyebrowSize} text-gold/85 mb-2 tracking-[0.2em] uppercase`}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className={`${placement.eyebrowSize} text-gold/90 mb-3 font-medium uppercase`}
           >
             {scene.eyebrow}
           </motion.p>
         ) : null}
         {titleVisible ? (
           <motion.h2
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: recordMode ? 0.05 : 0.2 }}
-            className={`text-monument text-parchment ${titleSize} leading-none`}
+            transition={{ duration: 0.4, ease: "easeOut", delay: recordMode ? 0 : 0.08 }}
+            className={`text-monument text-parchment ${placement.titleSize} leading-[0.95] tracking-tight`}
           >
             {scene.title}
           </motion.h2>
         ) : null}
         {showNarrative ? (
-          <div className="mt-4 space-y-3">
+          <div className="mt-4 space-y-2.5">
             {phrases.map((phrase, i) => {
               const show =
                 !recordMode ||
@@ -140,10 +119,14 @@ export function SceneNarrativeOverlay({
               return (
                 <motion.p
                   key={i}
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: recordMode ? i * 0.15 : 0.35 + i * 0.12 }}
-                  className={`text-parchment/88 ${bodySize} leading-relaxed`}
+                  transition={{
+                    duration: 0.45,
+                    ease: "easeOut",
+                    delay: recordMode ? i * 0.12 : 0.2 + i * 0.1,
+                  }}
+                  className={`text-parchment/90 ${placement.bodySize} leading-relaxed`}
                 >
                   {phrase}
                 </motion.p>
@@ -151,7 +134,7 @@ export function SceneNarrativeOverlay({
             })}
           </div>
         ) : null}
-        {scene.evidenceClass !== "FACT" && showNarrative ? (
+        {scene.evidenceClass !== "FACT" && showNarrative && !storyPanelMode ? (
           <p className="text-muted mt-2 text-xs italic">
             {scene.evidenceClass === "EDITORIAL_TRANSITION"
               ? "Editorial transition"

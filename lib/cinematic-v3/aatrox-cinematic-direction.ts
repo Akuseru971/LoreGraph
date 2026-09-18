@@ -131,32 +131,10 @@ export function applyAatroxCinematicDirection(
     } satisfies CinematicScene;
   });
 
-  const intro = journey.introSequence
-    ? {
-        ...journey.introSequence,
-        splashFocal: { x: 0.52, y: 0.3 },
-        recordShowIntroTitle: false,
-        recordTiming: AATROX_RECORD_INTRO_TIMING,
-        timing: AATROX_INTERACTIVE_INTRO_TIMING,
-        title: "Aatrox",
-        subtitle: "The Darkin Blade",
-      }
-    : undefined;
-
-  const outro = journey.outroSequence
-    ? {
-        ...journey.outroSequence,
-        recordShowOutroTitle: false,
-        recordTiming: AATROX_RECORD_OUTRO_TIMING,
-        timing: AATROX_RECORD_OUTRO_TIMING,
-        showText: true,
-      }
-    : undefined;
-
   return {
     ...journey,
     scenes,
-    introSequence: intro,
-    outroSequence: outro,
+    introSequence: undefined,
+    outroSequence: undefined,
   };
 }
