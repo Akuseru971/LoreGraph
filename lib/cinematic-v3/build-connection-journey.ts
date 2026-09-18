@@ -11,6 +11,7 @@ import type {
 } from "@/types";
 import { atmosphereForRegion } from "./atmosphere";
 import { layoutScenes } from "./layout";
+import { applyFlagshipCurations } from "./apply-flagship";
 import { applySceneAssetAndComposition } from "./resolve-scene-asset";
 import { choreographyForRelationship } from "./scene-typing";
 
@@ -211,7 +212,7 @@ function buildYasuoYoneJourney(
   );
   const laid = layoutScenes(enriched, "cinematic:connection:yasuo:yone");
 
-  return {
+  return applyFlagshipCurations({
     id: "cinematic:connection:yasuo:yone",
     kind: "CONNECTION",
     title: "Yasuo & Yone",
@@ -234,7 +235,7 @@ function buildYasuoYoneJourney(
       "event:noxian-invasion-ionia",
       "event:brothers-duel",
     ],
-  };
+  });
 }
 
 function pathToScenes(
@@ -366,7 +367,7 @@ export function buildConnectionJourneyV3(
     `cinematic:connection:${source.slug}:${target.slug}`,
   );
 
-  return {
+  return applyFlagshipCurations({
     id: `cinematic:connection:${source.slug}:${target.slug}`,
     kind: "CONNECTION",
     title: `${source.name} & ${target.name}`,
@@ -379,7 +380,7 @@ export function buildConnectionJourneyV3(
     cinematicReady: sceneDrafts.length >= 3,
     generatedAt: new Date().toISOString(),
     graphNodeIds: resolvedPath.nodes.map((n) => n.id),
-  };
+  });
 }
 
 export function buildConnectionJourneyV3ById(

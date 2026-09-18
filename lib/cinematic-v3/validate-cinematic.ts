@@ -3,6 +3,7 @@ import { eventAssetByEventId } from "@/data/knowledge/event-assets";
 import { claimById } from "@/data/knowledge/claims";
 import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
 import type { CinematicJourney, CinematicScene } from "@/types";
+import { flagshipAssetBySceneId } from "@/data/cinematic/flagship-assets";
 import { compositionForScene } from "./composition";
 import { eventSlugFromId } from "./resolve-scene-asset";
 
@@ -96,6 +97,72 @@ function validateSceneAssets(
       sceneId: scene.id,
       kind: "composition_focal_conflict",
       message: "LEFT_SUBJECT composition conflicts with right-side focal point",
+    });
+  }
+
+  const manifest = flagshipAssetBySceneId.get(scene.id);
+  if (manifest && !scene.visualSubject) {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "missing_visual_subject",
+      message: "Flagship scene missing visualSubject",
+    });
+  }
+
+  if (manifest?.qualityStatus === "CURATED" && scene.image?.confidence === "LOW") {
+    issues.push({
+      level: "ERROR",
+      sceneId: scene.id,
+      kind: "curated_low_confidence",
+      message: "CURATED scene using LOW-confidence asset",
+    });
+  }
+
+  if (scene.importance === "CORE" && !scene.shotType) {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "missing_shot_type",
+      message: "CORE scene missing shotType",
+    });
+  }
+
+  if (
+    !scene.environmentalMotifs?.length &&
+    scene.type !== "ENDING" &&
+    scene.importance === "CORE"
+  ) {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "missing_environment_motif",
+      message: "CORE scene missing environmental motifs",
+    });
+  }
+
+  if (
+    (scene.worldScale ?? 1) >= 2 &&
+    !scene.worldNodeArchetype &&
+    (scene.type === "EVENT" || scene.type === "CONFLICT")
+  ) {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "missing_world_node_archetype",
+      message: "Major event scene missing WorldNode archetype",
+    });
+  }
+
+  if (
+    journey.recordReady &&
+    manifest?.qualityStatus === "MISSING"
+  ) {
+    issues.push({
+      level: "ERROR",
+      sceneId: scene.id,
+      kind: "record_ready_missing_asset",
+      message: "Record-ready journey has MISSING asset status",
     });
   }
 

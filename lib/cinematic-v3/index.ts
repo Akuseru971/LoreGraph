@@ -46,3 +46,21 @@ export {
   trailLengthForPreset,
   easeStarTravel,
 } from "./star-path";
+export {
+  CINEMATIC_LOGICAL_WIDTH,
+  CINEMATIC_LOGICAL_HEIGHT,
+  CINEMATIC_SAFE_AREA,
+  frameDimensions,
+} from "./cinematic-frame";
+export {
+  recordTimingForScene,
+  computeRecordPhaseState,
+  totalSceneRecordMs,
+} from "./record-mode";
+export { inferShotType, shotCameraHints } from "./shot-types";
+export { evaluateJourneyReadiness } from "./visual-readiness";
+export { applyFlagshipCurations } from "./apply-flagship";
+export {
+  generateAssetCoverageReport,
+  generateVisualQaReport,
+} from "./generate-reports";

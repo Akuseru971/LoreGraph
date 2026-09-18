@@ -7,6 +7,7 @@ import {
   interpolateStarPosition,
   cameraFollowPosition,
 } from "@/lib/cinematic-v3/star-path";
+import { shotCameraHints } from "@/lib/cinematic-v3/shot-types";
 import type { CinematicCameraPreset, CinematicCoordinates, CinematicScene } from "@/types";
 
 export function StarFollowCamera({
@@ -49,10 +50,18 @@ export function StarFollowCamera({
             next,
           );
 
+    const hints = shotCameraHints(scene);
     const t = arrived ? 1 : transitionProgress;
     const desired = cameraFollowPosition(star, preset, t, graphRevealProgress);
-    const smooth = 1 - Math.exp(-4.5 * delta);
+    desired.x *= hints.offsetScale;
+    desired.y *= hints.offsetScale * 0.95;
+    desired.z *= hints.offsetScale;
+    const smooth = 1 - Math.exp(-(4.5 + hints.lookAhead) * delta);
     current.current.lerp(new THREE.Vector3(desired.x, desired.y, desired.z), smooth);
+    if (camera instanceof THREE.PerspectiveCamera) {
+      camera.fov = 45 * hints.fovScale;
+      camera.updateProjectionMatrix();
+    }
 
     const ahead = new THREE.Vector3(star.x, star.y, star.z);
     if (!arrived && transitionProgress < 0.95) {

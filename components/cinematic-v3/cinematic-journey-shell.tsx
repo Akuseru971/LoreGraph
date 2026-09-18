@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import * as React from "react";
-import type { CinematicJourney } from "@/types";
+import type { CinematicJourney, CinematicPlayerOptions } from "@/types";
 import { CinematicJourneyPlayer } from "./cinematic-journey-player";
 
 export function CinematicJourneyShell({
@@ -10,11 +10,13 @@ export function CinematicJourneyShell({
   open,
   onClose,
   onExploreNode,
+  playerOptions,
 }: {
   journey: CinematicJourney | null;
   open: boolean;
   onClose: () => void;
   onExploreNode?: (entityId: string) => void;
+  playerOptions?: CinematicPlayerOptions;
 }) {
   const reduceMotion = useReducedMotion();
   const [entered, setEntered] = React.useState(false);
@@ -55,6 +57,7 @@ export function CinematicJourneyShell({
           journey={journey}
           onClose={onClose}
           onExploreNode={onExploreNode}
+          playerOptions={playerOptions}
         />
       ) : null}
     </>

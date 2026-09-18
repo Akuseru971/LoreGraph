@@ -6,6 +6,31 @@ import * as React from "react";
 import * as THREE from "three";
 import type { CinematicComposition } from "@/types";
 
+const memoryVertex = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const memoryFragment = `
+  uniform sampler2D uMap;
+  uniform float uOpacity;
+  uniform float uTime;
+  varying vec2 vUv;
+  void main() {
+    vec2 uv = vUv;
+    float edgeX = smoothstep(0.0, 0.12, uv.x) * smoothstep(1.0, 0.88, uv.x);
+    float edgeY = smoothstep(0.0, 0.1, uv.y) * smoothstep(1.0, 0.9, uv.y);
+    float mask = edgeX * edgeY;
+    vec4 col = texture2D(uMap, uv);
+    float drift = sin(uTime * 0.3 + uv.x * 3.0) * 0.002;
+    col = texture2D(uMap, uv + vec2(drift, drift * 0.5));
+    gl_FragColor = vec4(col.rgb, col.a * uOpacity * mask);
+  }
+`;
+
 function SceneImageMesh({
   texture,
   position,
@@ -28,6 +53,7 @@ function SceneImageMesh({
   traveling: boolean;
 }) {
   const meshRef = React.useRef<THREE.Mesh>(null);
+  const matRef = React.useRef<THREE.ShaderMaterial>(null);
   texture.colorSpace = THREE.SRGBColorSpace;
 
   const texAspect =
@@ -42,37 +68,38 @@ function SceneImageMesh({
   const fp = focalPoint ?? { x: 0.5, y: 0.5 };
   const offsetX = (0.5 - fp.x) * width * 0.35;
   const offsetY = (0.5 - fp.y) * height * 0.25;
+  const reveal = traveling ? Math.max(0, arrivalProgress * 0.35) : Math.min(1, arrivalProgress);
+  const memoryOpacity = composition === "BACKGROUND_MEMORY" ? opacity * 0.75 : opacity;
 
-  const reveal = traveling
-    ? Math.max(0, arrivalProgress * 0.35)
-    : Math.min(1, arrivalProgress);
-
-  const memoryOpacity =
-    composition === "BACKGROUND_MEMORY" ? opacity * 0.75 : opacity;
-
-  useFrame(() => {
-    if (!meshRef.current) return;
-    const mat = meshRef.current.material as THREE.MeshBasicMaterial;
-    mat.opacity = memoryOpacity * reveal;
-    const depth = traveling ? -0.4 * (1 - arrivalProgress) : 0;
+  useFrame(({ clock }) => {
+    if (!meshRef.current || !matRef.current) return;
+    matRef.current.uniforms.uOpacity.value = memoryOpacity * reveal;
+    matRef.current.uniforms.uTime.value = clock.elapsedTime;
+    const depth = traveling ? -0.5 * (1 - arrivalProgress) : -0.1;
     meshRef.current.position.set(
       position[0] + offsetX,
       position[1] + offsetY,
       position[2] + depth,
     );
-    const s = 0.92 + reveal * 0.08;
+    const s = 0.9 + reveal * 0.1;
     meshRef.current.scale.set(s, s, 1);
+    meshRef.current.rotation.y = Math.sin(clock.elapsedTime * 0.15) * 0.02;
   });
 
   return (
     <mesh ref={meshRef} position={position}>
       <planeGeometry args={[width, height]} />
-      <meshBasicMaterial
-        map={texture}
+      <shaderMaterial
+        ref={matRef}
         transparent
-        opacity={memoryOpacity * reveal}
-        side={THREE.DoubleSide}
         depthWrite={false}
+        uniforms={{
+          uMap: { value: texture },
+          uOpacity: { value: memoryOpacity * reveal },
+          uTime: { value: 0 },
+        }}
+        vertexShader={memoryVertex}
+        fragmentShader={memoryFragment}
       />
     </mesh>
   );

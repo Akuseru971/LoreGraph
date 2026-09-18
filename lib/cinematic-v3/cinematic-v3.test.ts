@@ -107,6 +107,21 @@ describe("Cinematic Journey V3", () => {
     }
   });
 
+  it("Yasuo↔Yone has record readiness metadata after flagship curation", () => {
+    const journey = buildConnectionJourneyV3(char("yasuo"), char("yone"))!;
+    expect(journey.visualReady).toBe(true);
+    expect(journey.scenes.every((s) => s.shotType)).toBe(true);
+    expect(journey.scenes.find((s) => s.id === "cscene:yasuo-yone:invasion")?.worldNodeArchetype).toBe(
+      "INVASION",
+    );
+  });
+
+  it("Aatrox flagship scenes have environmental motifs", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const withMotifs = journey.scenes.filter((s) => s.environmentalMotifs?.length);
+    expect(withMotifs.length).toBeGreaterThan(journey.scenes.length - 2);
+  });
+
   it("showcase connection pairs build successfully", () => {
     for (const [a, b] of SHOWCASE_CONNECTION_PAIRS) {
       const journey = buildConnectionJourneyV3(char(a), char(b));

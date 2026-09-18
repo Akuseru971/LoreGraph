@@ -434,10 +434,13 @@ export interface CinematicSceneAsset {
   sourceEntityId?: string;
   relevance: CinematicSceneAssetRelevance;
   confidence: CinematicSceneAssetConfidence;
+  qualityStatus?: CinematicAssetQualityStatus;
   focalPoint?: { x: number; y: number };
   aspectRatio?: number;
   compositionHint?: CinematicComposition;
   variant?: "splash" | "cinematic" | "hero" | "event";
+  source?: string;
+  assetType?: "event" | "region" | "artifact" | "story" | "champion";
 }
 
 /** @deprecated Use CinematicSceneAsset — kept for gradual migration. */
@@ -483,6 +486,13 @@ export interface CinematicScene {
   worldScale?: number;
   holdDurationMs?: number;
   transitionDurationMs?: number;
+  visualSubject?: string;
+  shotType?: CinematicShotType;
+  worldNodeArchetype?: WorldNodeArchetype;
+  environmentalMotifs?: EnvironmentalMotifType[];
+  narrativePhrases?: string[];
+  recordTiming?: CinematicRecordTiming;
+  curated?: boolean;
 }
 
 export interface CinematicJourney {
@@ -496,11 +506,115 @@ export interface CinematicJourney {
   sourceClaimIds: string[];
   continuity: Continuity;
   cinematicReady: boolean;
+  loreReady?: boolean;
+  visualReady?: boolean;
+  recordReady?: boolean;
+  readiness?: CinematicJourneyReadiness;
   generatedAt: string;
   graphNodeIds: string[];
 }
 
+export interface CinematicPlayerOptions {
+  aspectMode?: CinematicAspectMode;
+  recordMode?: boolean;
+  showText?: boolean;
+  showImages?: boolean;
+  environmentOnly?: boolean;
+  showWatermark?: boolean;
+  deterministic?: boolean;
+}
+
 export type CinematicQualityLevel = "high" | "medium" | "low";
+
+export type CinematicAspectMode = "AUTO" | "16:9" | "9:16";
+
+export interface CinematicSafeArea {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
+export type CinematicShotType =
+  | "ESTABLISHING"
+  | "FOLLOW"
+  | "REVEAL"
+  | "PORTRAIT"
+  | "WIDE_EVENT"
+  | "DUAL_CHARACTER"
+  | "IMPACT"
+  | "AFTERMATH"
+  | "TRANSFORMATION"
+  | "PULLBACK";
+
+export type WorldNodeArchetype =
+  | "WAR"
+  | "INVASION"
+  | "CATASTROPHE"
+  | "ASCENSION"
+  | "MAGICAL_RUPTURE"
+  | "POLITICAL_CHANGE"
+  | "IMPRISONMENT"
+  | "RETURN";
+
+export type EnvironmentalMotifType =
+  | "SUN_DISC"
+  | "SHURIMA_ARCHES"
+  | "VOID_RIFT"
+  | "VOID_FILAMENTS"
+  | "IONIAN_SPIRIT_ARCS"
+  | "IONIAN_FLOATING_LIGHTS"
+  | "CELESTIAL_ORBITS"
+  | "TARGON_CONSTELLATIONS"
+  | "SHADOW_WISPS"
+  | "SHADOW_ARCHES"
+  | "NOXIAN_ASH"
+  | "NOXIAN_MONOLITHS"
+  | "PILTOVER_GEOMETRY"
+  | "ZAUN_SMOKE"
+  | "FRELJORD_ICE_DUST"
+  | "BILGEWATER_MIST";
+
+export type CinematicAssetQualityStatus =
+  | "CURATED"
+  | "ACCEPTABLE"
+  | "ABSTRACT_REQUIRED"
+  | "MISSING";
+
+export interface CinematicRecordTiming {
+  travelMs: number;
+  arrivalSettleMs: number;
+  eyebrowRevealMs: number;
+  titleRevealMs: number;
+  narrativeRevealMs: number;
+  readingHoldMs: number;
+  departurePrepMs: number;
+}
+
+export interface CinematicSceneOverride {
+  coordinates?: CinematicCoordinates;
+  graphTarget?: CinematicCoordinates;
+  shotType?: CinematicShotType;
+  composition?: CinematicComposition;
+  cameraPreset?: CinematicCameraPreset;
+  atmosphere?: AtmospherePreset;
+  worldNodeArchetype?: WorldNodeArchetype;
+  worldScale?: number;
+  environmentalMotifs?: EnvironmentalMotifType[];
+  visualSubject?: string;
+  narrativePhrases?: string[];
+  image?: CinematicSceneAsset;
+  recordTiming?: CinematicRecordTiming;
+  relationshipChoreography?: RelationshipChoreography;
+  curated?: boolean;
+}
+
+export interface CinematicJourneyReadiness {
+  loreReady: boolean;
+  visualReady: boolean;
+  recordReady: boolean;
+  blockers: string[];
+}
 
 /* -------------------------------------------------------------------------- */
 /* Lore content                                                               */

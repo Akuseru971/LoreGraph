@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import * as THREE from "three";
 import { imageOffsetForComposition } from "@/lib/cinematic-v3/composition";
 import { getAtmosphereConfig } from "@/lib/cinematic-v3/atmosphere";
@@ -9,10 +9,21 @@ import { particleCountForQuality } from "@/lib/cinematic-v3/quality";
 import type { CinematicJourney, CinematicQualityLevel, CinematicScene } from "@/types";
 import { AtmosphereParticles } from "./atmosphere-particles";
 import { ConstellationLines } from "./constellation-lines";
+import { EnvironmentalMotifField } from "./environmental-motif-field";
+import { ForegroundDepth } from "./foreground-depth";
 import { SceneImagePlane } from "./scene-image-plane";
 import { StarFollowCamera } from "./star-follow-camera";
 import { TravelingStar } from "./traveling-star";
 import { WorldNode } from "./world-node";
+
+function hashSeed(str: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
 
 function lerpHex(a: string, b: string, t: number): string {
   const ca = new THREE.Color(a);
@@ -32,6 +43,9 @@ function SceneWorld({
   quality,
   arrived,
   visitedSceneIndices,
+  showImages = true,
+  environmentOnly = false,
+  arrivalPulse = 0,
 }: {
   journey: CinematicJourney;
   scene: CinematicScene;
@@ -44,11 +58,15 @@ function SceneWorld({
   quality: CinematicQualityLevel;
   arrived: boolean;
   visitedSceneIndices: number[];
+  showImages?: boolean;
+  environmentOnly?: boolean;
+  arrivalPulse?: number;
 }) {
   const atmosphere = getAtmosphereConfig(scene.atmosphere ?? "CELESTIAL");
   const prevAtmosphere = getAtmosphereConfig(prevScene?.atmosphere ?? scene.atmosphere ?? "CELESTIAL");
   const blend = arrived ? 1 : transitionProgress;
   const traveling = !arrived && sceneIndex > 0;
+  const seed = useMemo(() => hashSeed(journey.id), [journey.id]);
 
   const from = prevScene?.coordinates ?? scene.coordinates;
   const preset = scene.cameraPreset ?? "SLOW_APPROACH";
@@ -57,6 +75,7 @@ function SceneWorld({
   const imageOffset = imageOffsetForComposition(composition, scene.image?.focalPoint);
   const imageOpacity =
     composition === "BACKGROUND_MEMORY" ? 0.42 : composition === "DISTANT_WORLD" ? 0.5 : 0.58;
+  const motifs = scene.environmentalMotifs ?? [];
 
   const bg = lerpHex(prevAtmosphere.background, atmosphere.background, blend);
   const fog = lerpHex(prevAtmosphere.fogColor, atmosphere.fogColor, blend);
@@ -67,12 +86,25 @@ function SceneWorld({
     (atmosphere.ambientIntensity - prevAtmosphere.ambientIntensity) * blend;
 
   const nodeReveal = arrived ? 1 : Math.max(0, (transitionProgress - 0.55) / 0.45);
+  const showWorldNode =
+    (scene.type === "EVENT" || scene.type === "CONFLICT" || scene.worldNodeArchetype) &&
+    worldScale >= 1.4;
 
   return (
     <>
       <color attach="background" args={[bg]} />
       <fog attach="fog" args={[fog, fogNear, fogFar]} />
       <ambientLight intensity={ambient} />
+      <EnvironmentalMotifField
+        motifs={motifs}
+        color={atmosphere.particleColor}
+        intensity={blend}
+        position={[
+          scene.coordinates.x,
+          scene.coordinates.y,
+          scene.coordinates.z - 6,
+        ]}
+      />
       <StarFollowCamera
         scene={scene}
         from={from}
@@ -91,16 +123,19 @@ function SceneWorld({
         blend={blend}
         count={particleCountForQuality(quality)}
       />
-      {(scene.type === "EVENT" || scene.type === "CONFLICT") && worldScale >= 1.4 ? (
+      <ForegroundDepth color={atmosphere.particleColor} count={quality === "high" ? 32 : 18} seed={seed} />
+      {showWorldNode ? (
         <WorldNode
           position={[scene.coordinates.x, scene.coordinates.y - 0.3, scene.coordinates.z - 0.8]}
           color={atmosphere.particleColor}
           arrivalProgress={nodeReveal}
           worldScale={worldScale}
           scale={1.2}
+          scene={scene}
+          archetype={scene.worldNodeArchetype}
         />
       ) : null}
-      {scene.image?.url && composition !== "NO_IMAGE" ? (
+      {showImages && !environmentOnly && scene.image?.url && composition !== "NO_IMAGE" ? (
         <Suspense fallback={null}>
           <SceneImagePlane
             url={scene.image.url}
@@ -128,6 +163,7 @@ function SceneWorld({
         arrived={arrived}
         sceneIndex={sceneIndex}
         starWarmth={atmosphere.starWarmth}
+        arrivalPulse={arrivalPulse}
       />
       <ConstellationLines
         points={journey.scenes.map((s) =>
@@ -155,6 +191,9 @@ export function CinematicSceneCanvas({
   quality,
   arrived,
   visitedSceneIndices,
+  showImages = true,
+  environmentOnly = false,
+  arrivalPulse = 0,
 }: {
   journey: CinematicJourney;
   sceneIndex: number;
@@ -163,6 +202,9 @@ export function CinematicSceneCanvas({
   quality: CinematicQualityLevel;
   arrived: boolean;
   visitedSceneIndices: number[];
+  showImages?: boolean;
+  environmentOnly?: boolean;
+  arrivalPulse?: number;
 }) {
   const scene = journey.scenes[sceneIndex];
   if (!scene) return null;
@@ -193,6 +235,9 @@ export function CinematicSceneCanvas({
         quality={quality}
         arrived={arrived}
         visitedSceneIndices={visitedSceneIndices}
+        showImages={showImages}
+        environmentOnly={environmentOnly}
+        arrivalPulse={arrivalPulse}
       />
     </Canvas>
   );

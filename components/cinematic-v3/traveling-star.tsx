@@ -24,6 +24,7 @@ export function TravelingStar({
   arrived,
   sceneIndex,
   starWarmth,
+  arrivalPulse = 0,
 }: {
   scene: CinematicScene;
   from: CinematicCoordinates;
@@ -33,6 +34,7 @@ export function TravelingStar({
   arrived: boolean;
   sceneIndex: number;
   starWarmth: number;
+  arrivalPulse?: number;
 }) {
   const position = React.useRef(new THREE.Vector3(from.x, from.y, from.z));
   const preset = scene.cameraPreset ?? "SLOW_APPROACH";
@@ -62,6 +64,7 @@ export function TravelingStar({
         traveling={traveling}
         trailLength={trailLengthForPreset(preset)}
         intensity={1.35}
+        arrivalPulse={arrivalPulse}
       />
       {scene.secondaryCharacterIds?.length ? (
         <RelationshipLights

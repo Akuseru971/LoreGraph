@@ -23,11 +23,13 @@ export function CinematicJourneyLazy({
   open,
   onClose,
   onExploreNode,
+  playerOptions,
 }: {
   journey: CinematicJourney | null;
   open: boolean;
   onClose: () => void;
   onExploreNode?: (entityId: string) => void;
+  playerOptions?: import("@/types").CinematicPlayerOptions;
 }) {
   return (
     <Shell
@@ -35,6 +37,7 @@ export function CinematicJourneyLazy({
       open={open}
       onClose={onClose}
       onExploreNode={onExploreNode}
+      playerOptions={playerOptions}
     />
   );
 }

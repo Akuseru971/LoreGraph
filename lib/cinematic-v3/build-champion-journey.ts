@@ -11,6 +11,7 @@ import type {
 import { atmosphereForRegion } from "./atmosphere";
 import { layoutScenes } from "./layout";
 import { evaluateCinematicReadiness } from "./readiness";
+import { applyFlagshipCurations } from "./apply-flagship";
 import { applySceneAssetAndComposition } from "./resolve-scene-asset";
 import {
   cameraForSceneType,
@@ -135,7 +136,7 @@ export function buildChampionJourneyV3(character: Character): CinematicJourney {
   const continuity: Continuity = character.continuity ?? "MAIN_RUNETERRA";
   const sourceClaimIds = trustedBeats.flatMap((b) => b.claimIds ?? []);
 
-  return {
+  return applyFlagshipCurations({
     id: `cinematic:character:${character.slug}`,
     kind: "CHARACTER",
     title: character.name,
@@ -147,5 +148,5 @@ export function buildChampionJourneyV3(character: Character): CinematicJourney {
     cinematicReady: readiness.ready,
     generatedAt: new Date().toISOString(),
     graphNodeIds,
-  };
+  });
 }

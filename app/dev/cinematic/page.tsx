@@ -10,12 +10,30 @@ import {
   SHOWCASE_CHAMPION_SLUGS,
   SHOWCASE_CONNECTION_PAIRS,
 } from "@/lib/cinematic-v3";
+import type { CinematicAspectMode, CinematicPlayerOptions } from "@/types";
 
 export default function CinematicDevPage() {
   const [selected, setSelected] = React.useState<string>("aatrox");
   const [connectionPair, setConnectionPair] = React.useState<string>("yasuo-yone");
   const [open, setOpen] = React.useState(false);
   const [mode, setMode] = React.useState<"character" | "connection">("character");
+  const [aspectMode, setAspectMode] = React.useState<CinematicAspectMode>("AUTO");
+  const [recordMode, setRecordMode] = React.useState(false);
+  const [noText, setNoText] = React.useState(false);
+  const [noImages, setNoImages] = React.useState(false);
+  const [environmentOnly, setEnvironmentOnly] = React.useState(false);
+
+  const playerOptions = React.useMemo<CinematicPlayerOptions>(
+    () => ({
+      aspectMode: recordMode ? "16:9" : aspectMode,
+      recordMode,
+      showText: !noText,
+      showImages: !noImages,
+      environmentOnly,
+      deterministic: recordMode,
+    }),
+    [aspectMode, recordMode, noText, noImages, environmentOnly],
+  );
 
   const journey = React.useMemo(() => {
     if (mode === "connection") {
@@ -34,9 +52,52 @@ export default function CinematicDevPage() {
     <main className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="text-monument text-parchment text-4xl">Cinematic Journey V3</h1>
       <p className="text-muted mt-2 text-sm">
-        Development showcase — not indexed. Open a journey, then use the debug panel scene
-        buttons to jump between beats.
+        QA route — toggle aspect ratio, record mode, and layer visibility before launching.
       </p>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        {(["AUTO", "16:9"] as CinematicAspectMode[]).map((a) => (
+          <button
+            key={a}
+            type="button"
+            className={`rounded-full border px-3 py-1.5 text-xs ${aspectMode === a && !recordMode ? "border-gold text-gold" : "border-line text-muted"}`}
+            onClick={() => {
+              setAspectMode(a);
+              setRecordMode(false);
+            }}
+          >
+            {a}
+          </button>
+        ))}
+        <button
+          type="button"
+          className={`rounded-full border px-3 py-1.5 text-xs ${recordMode ? "border-gold text-gold" : "border-line text-muted"}`}
+          onClick={() => setRecordMode((r) => !r)}
+        >
+          RECORD MODE
+        </button>
+        <button
+          type="button"
+          className={`rounded-full border px-3 py-1.5 text-xs ${noText ? "border-gold text-gold" : "border-line text-muted"}`}
+          onClick={() => setNoText((t) => !t)}
+        >
+          NO TEXT
+        </button>
+        <button
+          type="button"
+          className={`rounded-full border px-3 py-1.5 text-xs ${noImages ? "border-gold text-gold" : "border-line text-muted"}`}
+          onClick={() => setNoImages((i) => !i)}
+        >
+          NO IMAGES
+        </button>
+        <button
+          type="button"
+          className={`rounded-full border px-3 py-1.5 text-xs ${environmentOnly ? "border-gold text-gold" : "border-line text-muted"}`}
+          onClick={() => setEnvironmentOnly((e) => !e)}
+        >
+          ENV ONLY
+        </button>
+      </div>
 
       <div className="mt-8 flex gap-2">
         <button
@@ -74,7 +135,8 @@ export default function CinematicDevPage() {
                 >
                   <span className="text-parchment">{c.name}</span>
                   <span className="text-muted ml-2 text-xs">
-                    {j.scenes.length} scenes · {ready ? "ready" : "not ready"}
+                    {j.scenes.length} scenes · lore {ready ? "✓" : "—"} · visual{" "}
+                    {j.visualReady ? "✓" : "—"} · record {j.recordReady ? "✓" : "—"}
                   </span>
                 </button>
               </li>
@@ -83,24 +145,40 @@ export default function CinematicDevPage() {
         </ul>
       ) : (
         <ul className="mt-6 space-y-2">
-          {SHOWCASE_CONNECTION_PAIRS.map(([a, b]) => (
-            <li key={`${a}-${b}`}>
-              <button
-                type="button"
-                onClick={() => {
-                  setConnectionPair(`${a}-${b}`);
-                  setOpen(true);
-                }}
-                className="w-full rounded border border-line px-4 py-3 text-left hover:border-gold/40"
-              >
-                <span className="text-parchment">{a} ↔ {b}</span>
-              </button>
-            </li>
-          ))}
+          {SHOWCASE_CONNECTION_PAIRS.map(([a, b]) => {
+            const j = buildConnectionJourneyV3(
+              characters.find((c) => c.slug === a)!,
+              characters.find((c) => c.slug === b)!,
+            );
+            return (
+              <li key={`${a}-${b}`}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setConnectionPair(`${a}-${b}`);
+                    setOpen(true);
+                  }}
+                  className="w-full rounded border border-line px-4 py-3 text-left hover:border-gold/40"
+                >
+                  <span className="text-parchment">{a} ↔ {b}</span>
+                  {j ? (
+                    <span className="text-muted ml-2 text-xs">
+                      record {j.recordReady ? "✓" : "—"}
+                    </span>
+                  ) : null}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       )}
 
-      <CinematicJourneyLazy journey={journey} open={open} onClose={() => setOpen(false)} />
+      <CinematicJourneyLazy
+        journey={journey}
+        open={open}
+        onClose={() => setOpen(false)}
+        playerOptions={playerOptions}
+      />
     </main>
   );
 }
