@@ -5,10 +5,12 @@ import { ioniaSeeds } from "./ionia";
 import { noxusDemaciaSeeds } from "./noxus-demacia";
 import { piltoverZaunSeeds } from "./piltover-zaun";
 import { knowledgePackEnrichedSeeds } from "./knowledge-pack-enriched";
+import { phase1CuratedSeeds } from "./phase1-curated";
 import { rosterExpansionSeeds } from "./roster-expansion";
 import { shurimaTargonSeeds } from "./shurima-targon";
 
 const curatedSeeds: CharacterSeed[] = [
+  ...phase1CuratedSeeds,
   ...shurimaTargonSeeds,
   ...ioniaSeeds,
   ...noxusDemaciaSeeds,

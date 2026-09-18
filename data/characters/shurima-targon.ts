@@ -48,7 +48,6 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "Chosen as one of Shurima's god-warriors, given power by the Sun Disc long before the Void catastrophe would test that institution.",
         event: "ascension-ritual",
-        with: ["nasus"],
         sourceIds: ["source:bio-aatrox"],
         claimIds: ["claim:aatrox-was-ascended"],
         canonStatus: "CURRENT_CANON",
@@ -59,7 +58,6 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "Aatrox fought as one of Shurima's defenders against the Void during the ancient incursion.",
         event: "void-incursion",
-        with: ["nasus"],
         sourceIds: ["source:bio-aatrox"],
         claimIds: ["claim:aatrox-participated-void-war"],
         canonStatus: "CURRENT_CANON",
@@ -83,7 +81,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "darkin-war",
         with: ["varus"],
         sourceIds: ["source:bio-aatrox"],
-        claimIds: ["claim:aatrox-became-darkin"],
+        claimIds: ["claim:aatrox-participated-darkin-war"],
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -114,7 +112,11 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "aatrox-pantheon-duel",
         with: ["pantheon"],
         sourceIds: ["source:bio-aatrox", "source:bio-pantheon"],
-        claimIds: ["claim:aatrox-fought-pantheon", "claim:pantheon-aspect-destroyed"],
+        claimIds: [
+          "claim:aatrox-fought-pantheon",
+          "claim:aatrox-aspect-war-destroyed",
+          "claim:pantheon-aspect-destroyed",
+        ],
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -229,6 +231,9 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "Long before nations or names, he shapes stars across the void for no reason other than that he can.",
         event: "celestial-age",
+        sourceIds: ["source:bio-aurelion-sol"],
+        claimIds: ["claim:aurelion-sol-star-forger"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Before Reckoning",
@@ -236,6 +241,9 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "The Aspects of Targon flatter him into an agreement and bind his power to a crown he cannot remove.",
         event: "star-forger-bound",
+        sourceIds: ["source:bio-aurelion-sol"],
+        claimIds: ["claim:aurelion-sol-bound-by-targon"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Modern Runeterra",
@@ -281,6 +289,9 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         title: "Heir to an empire",
         description:
           "Raised to rule the largest empire Runeterra has produced, and quietly intent on reforming it.",
+        sourceIds: ["source:bio-azir", "source:rise"],
+        claimIds: ["claim:azir-emperor-shurima"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Fall of Shurima",
@@ -288,7 +299,10 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "His own Ascension is sabotaged by the man he trusted most. The ritual kills him and drowns the capital.",
         event: "fall-of-shurima",
-        with: ["nasus"],
+        with: ["xerath"],
+        sourceIds: ["source:bio-azir", "source:bio-xerath"],
+        claimIds: ["claim:azir-betrayed-by-xerath", "claim:azir-participated-fall"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Modern Shurima",
@@ -297,6 +311,9 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "He returns Ascended into a world that buried him, and begins reassembling a claim nobody living recognises.",
         event: "shurima-risen",
         with: ["nasus"],
+        sourceIds: ["source:bio-azir", "source:rise"],
+        claimIds: ["claim:azir-returned-ascended"],
+        canonStatus: "CURRENT_CANON",
       },
     ],
   },
@@ -341,9 +358,8 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "Nasus was already Ascended when Shurima deployed god-warriors against the Void.",
         event: "void-incursion",
-        with: ["aatrox"],
         sourceIds: ["source:bio-nasus"],
-        claimIds: ["claim:nasus-was-ascended"],
+        claimIds: ["claim:nasus-was-ascended", "claim:nasus-participated-void-war"],
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -352,7 +368,9 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "In the chaos of the fall he seals a catastrophe away, and loses his brother to it in the process.",
         event: "fall-of-shurima",
+        with: ["renekton", "xerath"],
         sourceIds: ["source:bio-nasus"],
+        claimIds: ["claim:nasus-participated-fall", "claim:nasus-brother-renekton"],
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -515,18 +533,25 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "Her village is taken by a Void incursion. She is the only one who does not stop moving.",
         event: "void-breach-icathia",
+        sourceIds: ["source:bio-kaisa"],
+        claimIds: ["claim:kaisa-survived-void-breach"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Modern Shurima",
         title: "The second skin",
         description:
           "A Void symbiote fuses to her, keeping her alive in the dark and marking her forever on the surface.",
+        sourceIds: ["source:bio-kaisa"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Modern Runeterra",
         title: "Hunting her own reflection",
         description:
           "She kills Void creatures for a world that cannot tell the difference between her and them.",
+        sourceIds: ["source:bio-kaisa"],
+        canonStatus: "CURRENT_CANON",
       },
     ],
   },
@@ -561,12 +586,18 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         title: "Raised Solari",
         description: "Trained as a warrior of the sun faith, and its most convincing believer.",
         with: ["diana"],
+        sourceIds: ["source:bio-leona"],
+        claimIds: ["claim:leona-childhood-friend-diana"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Old Targon",
         title: "Chosen by the Sun",
         description:
           "She climbs, survives, and returns bearing the Aspect of the Sun — and an authority the priesthood cannot overrule.",
+        sourceIds: ["source:bio-leona"],
+        claimIds: ["claim:leona-hosted-aspect-of-sun"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Modern Runeterra",
@@ -574,6 +605,9 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "Her oldest friend returns carrying the faith the Solari erased, and Leona has to choose between them.",
         with: ["diana"],
+        sourceIds: ["source:bio-leona", "source:bio-diana"],
+        claimIds: ["claim:leona-childhood-friend-diana"],
+        canonStatus: "CURRENT_CANON",
       },
     ],
   },
@@ -609,12 +643,18 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         title: "The wrong questions",
         description: "A Solari initiate finds records the order had buried, and refuses to stop reading.",
         with: ["leona"],
+        sourceIds: ["source:bio-diana"],
+        claimIds: ["claim:leona-childhood-friend-diana"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Old Targon",
         title: "Chosen by the Moon",
         description:
           "She climbs Targon and returns carrying the Aspect the Solari insist does not exist.",
+        sourceIds: ["source:bio-diana"],
+        claimIds: ["claim:diana-hosted-aspect-of-moon"],
+        canonStatus: "CURRENT_CANON",
       },
       {
         era: "Modern Runeterra",
@@ -622,6 +662,9 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         description:
           "Branded a heretic, she starts dismantling the order's authority — and collides with Leona.",
         with: ["leona"],
+        sourceIds: ["source:bio-diana", "source:bio-leona"],
+        claimIds: ["claim:leona-childhood-friend-diana"],
+        canonStatus: "CURRENT_CANON",
       },
     ],
   },

@@ -14,7 +14,10 @@
 /coverage
 
 # generated data audit reports
-/reports/
+/reports/*
+!/reports/champions/
+!/reports/champions/**
+!/reports/phase1-champion-canon-review.md
 
 # next.js
 /.next/

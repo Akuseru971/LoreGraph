@@ -1,29 +1,15 @@
 /**
  * Claim source exactness validation.
  */
+import { claimExtensions } from "../data/knowledge/claim-extensions";
 import { claims } from "../data/knowledge/claims";
 import { sourceById } from "../data/sources";
-import { isWikiOnlyClaim, claimSourceAuthority } from "../lib/knowledge/claim-trust";
+import { isWikiOnlyClaim } from "../lib/knowledge/claim-trust";
 
 const errors: string[] = [];
 const warnings: string[] = [];
 
-const EXTENSION_IDS = new Set([
-  "claim:varus-was-ascended",
-  "claim:varus-became-darkin",
-  "claim:varus-sealed-in-bow",
-  "claim:varus-possesses-valmar-kai",
-  "claim:nasus-was-ascended",
-  "claim:nasus-scholar-archivist",
-  "claim:pantheon-hosted-aspect-of-war",
-  "claim:pantheon-aspect-destroyed",
-  "claim:aspect-of-war-sealed-darkin",
-  "claim:shurima-sun-disc-ascension",
-  "claim:rite-elevates-ascended",
-  "claim:shurima-rite-of-ascension",
-  "claim:aatrox-sealed-in-blade",
-  "claim:aatrox-possesses-host",
-]);
+const EXTENSION_IDS = new Set(claimExtensions.map((c) => c.id));
 
 for (const claim of claims.filter((c) => EXTENSION_IDS.has(c.id))) {
   if (!claim.sourceIds.length) {

@@ -20,6 +20,7 @@ export interface RelExpansionSeed {
   connectionType?: ConnectionCategory;
   reviewed?: boolean;
   reviewStatus?: import("@/types").ReviewStatus;
+  editorialNote?: string;
 }
 
 export const relationshipExpansionSeeds: RelExpansionSeed[] = [
@@ -33,7 +34,11 @@ export const relationshipExpansionSeeds: RelExpansionSeed[] = [
     long: "Renekton and Nasus were raised as brothers and both Ascended to defend Shurima. Renekton's mind did not survive what he witnessed in the tomb with Xerath. Their relationship is one of Runeterra's oldest tragedies.",
     importance: 94,
     events: ["fall-of-shurima", "ascension-ritual"],
+    sources: ["source:bio-renekton", "source:bio-nasus"],
+    connectionType: "DIRECT_CANON",
     verified: true,
+    reviewed: true,
+    reviewStatus: "VERIFIED_CANON",
   },
   {
     a: "renekton",
@@ -44,7 +49,11 @@ export const relationshipExpansionSeeds: RelExpansionSeed[] = [
     long: "Xerath's betrayal destroyed Shurima and left Renekton imprisoned with him for millennia. The encounter curdled Renekton's sanity into rage directed at both Xerath and Nasus.",
     importance: 96,
     events: ["fall-of-shurima"],
+    sources: ["source:bio-renekton", "source:bio-xerath"],
+    connectionType: "DIRECT_CANON",
     verified: true,
+    reviewed: true,
+    reviewStatus: "VERIFIED_CANON",
   },
   {
     a: "xerath",
@@ -55,7 +64,11 @@ export const relationshipExpansionSeeds: RelExpansionSeed[] = [
     long: "The most trusted advisor turned on the emperor at the moment Shurima was most vulnerable. Xerath's ritual consumed the capital and ended an empire in a single afternoon.",
     importance: 98,
     events: ["fall-of-shurima"],
+    sources: ["source:bio-xerath", "source:bio-azir"],
+    connectionType: "DIRECT_CANON",
     verified: true,
+    reviewed: true,
+    reviewStatus: "VERIFIED_CANON",
   },
   {
     a: "xerath",
@@ -66,7 +79,11 @@ export const relationshipExpansionSeeds: RelExpansionSeed[] = [
     long: "As Curator of the Sands, Nasus carries institutional memory of Xerath's betrayal and its consequences for his brother.",
     importance: 82,
     events: ["fall-of-shurima"],
+    sources: ["source:bio-nasus", "source:bio-xerath"],
+    connectionType: "DIRECT_CANON",
     verified: true,
+    reviewed: true,
+    reviewStatus: "VERIFIED_CANON",
   },
   {
     a: "sivir",
@@ -87,7 +104,11 @@ export const relationshipExpansionSeeds: RelExpansionSeed[] = [
     short: "Taliyah wrestles with whether Azir's restored empire deserves her loyalty.",
     long: "A young Shuriman mage caught between nomadic freedom and the weight of a resurrected emperor's vision.",
     importance: 68,
+    connectionType: "STRUCTURAL_LORE",
     verified: true,
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
+    editorialNote: "Political tension inferred from shared Shurima context — no documented direct alliance.",
   },
   {
     a: "skarner",

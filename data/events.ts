@@ -76,7 +76,7 @@ const seeds: EventSeed[] = [
     era: "Ancient Shurima",
     order: 40,
     importance: 90,
-    characters: ["aatrox", "nasus", "azir", "renekton"],
+    characters: ["aatrox", "nasus", "renekton"],
     regions: ["shurima"],
   },
   {
@@ -98,7 +98,7 @@ const seeds: EventSeed[] = [
     era: "Ancient Shurima",
     order: 60,
     importance: 95,
-    characters: ["aatrox", "varus", "nasus"],
+    characters: ["aatrox", "varus"],
     regions: ["shurima", "targon"],
   },
   {
