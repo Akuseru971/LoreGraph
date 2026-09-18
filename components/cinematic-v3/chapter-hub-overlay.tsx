@@ -18,31 +18,41 @@ export function ChapterHubOverlay({
   const atmosphere = getAtmosphereConfig("CELESTIAL");
   if (!visible || !hubState.showName) return null;
 
-  const veilOpacity = 0.35 + hubState.dezoomStrength * 0.45 + hubState.nameOpacity * 0.15;
+  const depth = hubState.nameDepth;
+  const scale = hubState.nameScale * (1 + hubState.cameraPullback * 0.08);
+  const starCx = 50;
+  const starCy = 44;
 
   return (
     <div
       className="pointer-events-none absolute inset-0 z-[55]"
-      style={{ opacity: hubState.nameOpacity > 0.02 ? 1 : 0 }}
+      style={{
+        opacity: 1,
+        perspective: "900px",
+        perspectiveOrigin: "50% 42%",
+      }}
       aria-hidden
     >
       <div
         className="absolute inset-0"
         style={{
-          opacity: veilOpacity,
-          background: `radial-gradient(ellipse 95% 80% at 50% 42%, ${atmosphere.background}ee 0%, ${atmosphere.background} 75%)`,
+          opacity: 0.25 + hubState.cameraPullback * 0.35,
+          background: `radial-gradient(ellipse 100% 85% at 50% 42%, ${atmosphere.background}f0 0%, transparent 72%)`,
         }}
       />
       <div
-        className="absolute inset-[-1%]"
+        className="absolute inset-[-2%]"
         style={{
-          opacity: 0.5 + hubState.nameOpacity * 0.5,
+          opacity: hubState.nameOpacity,
+          transform: `translateZ(${depth}px) scale(${scale})`,
+          transformOrigin: `${starCx}% ${starCy}%`,
+          transformStyle: "preserve-3d",
         }}
       >
         <NameConstellation
           constellation={constellation}
           mode="inter-chapter"
-          nameOpacity={hubState.nameOpacity}
+          nameOpacity={1}
           heroStarId={hubState.destinationStarId}
           heroIntensity={hubState.heroIntensity}
           zoomProgress={hubState.zoomProgress}
@@ -50,11 +60,12 @@ export function ChapterHubOverlay({
           className="h-full w-full"
         />
       </div>
-      {hubState.heroIntensity > 1.4 ? (
+      {hubState.starIntensity > 1.3 ? (
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(circle at 50% 42%, rgba(255,245,220,${(hubState.heroIntensity - 1) * 0.08}) 0%, transparent 55%)`,
+            background: `radial-gradient(circle at 50% 42%, rgba(255,245,220,${(hubState.starIntensity - 1) * 0.1}) 0%, transparent 50%)`,
+            opacity: hubState.nameOpacity,
           }}
         />
       ) : null}

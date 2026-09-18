@@ -16,6 +16,7 @@ import { StarFollowCamera } from "./star-follow-camera";
 import { FreefallStreaks } from "./freefall-streaks";
 import { TravelingStar } from "./traveling-star";
 import { WorldNode } from "./world-node";
+import type { HubMotionChannels } from "@/lib/cinematic-v3/motion-curve";
 import { freefallIntensity, isFreefallPreset } from "@/lib/cinematic-v3/star-path";
 
 function hashSeed(str: string): number {
@@ -48,6 +49,9 @@ function SceneWorld({
   showImages = true,
   environmentOnly = false,
   arrivalPulse = 0,
+  use2DBackgrounds = false,
+  hubMotion,
+  backgroundOnly = false,
 }: {
   journey: CinematicJourney;
   scene: CinematicScene;
@@ -63,6 +67,9 @@ function SceneWorld({
   showImages?: boolean;
   environmentOnly?: boolean;
   arrivalPulse?: number;
+  use2DBackgrounds?: boolean;
+  hubMotion?: HubMotionChannels;
+  backgroundOnly?: boolean;
 }) {
   const atmosphere = getAtmosphereConfig(scene.atmosphere ?? "CELESTIAL");
   const prevAtmosphere = getAtmosphereConfig(prevScene?.atmosphere ?? scene.atmosphere ?? "CELESTIAL");
@@ -101,7 +108,9 @@ function SceneWorld({
   const bg = lerpHex(prevAtmosphere.background, atmosphere.background, blend);
   const fog = lerpHex(prevAtmosphere.fogColor, atmosphere.fogColor, blend);
   const fogNear = prevAtmosphere.fogNear + (atmosphere.fogNear - prevAtmosphere.fogNear) * blend;
-  const fogFar = prevAtmosphere.fogFar + (atmosphere.fogFar - prevAtmosphere.fogFar) * blend;
+  const fogFar =
+    (prevAtmosphere.fogFar + (atmosphere.fogFar - prevAtmosphere.fogFar) * blend) *
+    (use2DBackgrounds ? 2.4 : 1);
   const ambient =
     prevAtmosphere.ambientIntensity +
     (atmosphere.ambientIntensity - prevAtmosphere.ambientIntensity) * blend;
@@ -137,22 +146,27 @@ function SceneWorld({
         preset={preset}
         graphRevealProgress={graphRevealProgress}
         graphCenter={new THREE.Vector3(0, 0, journey.scenes[sceneIndex]?.coordinates.z ?? 0)}
+        hubMotion={hubMotion}
       />
-      <AtmosphereParticles
-        config={atmosphere}
-        prevConfig={prevAtmosphere}
-        blend={blend}
-        count={particleCountForQuality(quality)}
-      />
-      {isFreefallPreset(preset) && traveling ? (
+      {!backgroundOnly ? (
+        <AtmosphereParticles
+          config={atmosphere}
+          prevConfig={prevAtmosphere}
+          blend={blend}
+          count={particleCountForQuality(quality)}
+        />
+      ) : null}
+      {!backgroundOnly && isFreefallPreset(preset) && traveling ? (
         <FreefallStreaks
           intensity={freefallFx}
           color={atmosphere.particleColor}
           count={quality === "high" ? 64 : 40}
         />
       ) : null}
-      <ForegroundDepth color={atmosphere.particleColor} count={quality === "high" ? 32 : 18} seed={seed} />
-      {showWorldNode ? (
+      {!backgroundOnly ? (
+        <ForegroundDepth color={atmosphere.particleColor} count={quality === "high" ? 32 : 18} seed={seed} />
+      ) : null}
+      {!backgroundOnly && showWorldNode ? (
         <WorldNode
           position={[scene.coordinates.x, scene.coordinates.y - 0.3, scene.coordinates.z - 0.8]}
           color={atmosphere.particleColor}
@@ -163,7 +177,7 @@ function SceneWorld({
           archetype={scene.worldNodeArchetype}
         />
       ) : null}
-      {showImages && !environmentOnly && traveling && prevScene?.image?.url ? (
+      {!use2DBackgrounds && showImages && !environmentOnly && traveling && prevScene?.image?.url ? (
         <Suspense fallback={null}>
           <SceneImagePlane
             url={prevScene.image.url}
@@ -183,7 +197,7 @@ function SceneWorld({
           />
         </Suspense>
       ) : null}
-      {showImages && !environmentOnly && scene.image?.url && composition !== "NO_IMAGE" ? (
+      {!use2DBackgrounds && showImages && !environmentOnly && scene.image?.url && composition !== "NO_IMAGE" ? (
         <Suspense fallback={null}>
           <SceneImagePlane
             url={scene.image.url}
@@ -207,17 +221,20 @@ function SceneWorld({
           />
         </Suspense>
       ) : null}
-      <TravelingStar
-        scene={scene}
-        from={from}
-        prevPrev={prevPrevScene?.coordinates}
-        next={nextScene?.coordinates}
-        transitionProgress={transitionProgress}
-        arrived={arrived}
-        sceneIndex={sceneIndex}
-        starWarmth={atmosphere.starWarmth}
-        arrivalPulse={arrivalPulse}
-      />
+      {!backgroundOnly ? (
+        <TravelingStar
+          scene={scene}
+          from={from}
+          prevPrev={prevPrevScene?.coordinates}
+          next={nextScene?.coordinates}
+          transitionProgress={transitionProgress}
+          arrived={arrived}
+          sceneIndex={sceneIndex}
+          starWarmth={atmosphere.starWarmth}
+          arrivalPulse={arrivalPulse}
+        />
+      ) : null}
+      {!backgroundOnly ? (
       <ConstellationLines
         points={journey.scenes.map((s) =>
           graphRevealProgress > 0 ? s.graphTarget! : s.coordinates,
@@ -232,6 +249,7 @@ function SceneWorld({
         }
         graphReveal={graphRevealProgress > 0}
       />
+      ) : null}
     </>
   );
 }
@@ -247,6 +265,9 @@ export function CinematicSceneCanvas({
   showImages = true,
   environmentOnly = false,
   arrivalPulse = 0,
+  use2DBackgrounds = false,
+  hubMotion,
+  backgroundOnly = false,
 }: {
   journey: CinematicJourney;
   sceneIndex: number;
@@ -258,6 +279,9 @@ export function CinematicSceneCanvas({
   showImages?: boolean;
   environmentOnly?: boolean;
   arrivalPulse?: number;
+  use2DBackgrounds?: boolean;
+  hubMotion?: HubMotionChannels;
+  backgroundOnly?: boolean;
 }) {
   const scene = journey.scenes[sceneIndex];
   if (!scene) return null;
@@ -291,6 +315,9 @@ export function CinematicSceneCanvas({
         showImages={showImages}
         environmentOnly={environmentOnly}
         arrivalPulse={arrivalPulse}
+        use2DBackgrounds={use2DBackgrounds}
+        hubMotion={hubMotion}
+        backgroundOnly={backgroundOnly}
       />
     </Canvas>
   );

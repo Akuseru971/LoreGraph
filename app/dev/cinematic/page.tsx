@@ -18,6 +18,7 @@ import {
   type ConstellationQaMode,
 } from "@/components/cinematic-v3/constellation-qa-view";
 import { constellationById } from "@/data/cinematic/constellations";
+import { NameTypographyQa } from "@/components/cinematic-v3/name-typography-qa";
 import { validateFlagshipConstellation } from "@/lib/cinematic-v3/validate-constellation";
 import type { CinematicAspectMode, CinematicDirectorPreview, CinematicPlayerOptions } from "@/types";
 
@@ -35,6 +36,8 @@ const AATROX_SCENES = [
   { label: "Scene 6 — Return", index: 6 },
   { label: "Scene 7 — Pantheon", index: 7 },
   { label: "Outro", preview: "outro" as const },
+  { label: "Motion Loop (2↔3)", preview: "motion-loop" as const, index: 2 },
+  { label: "Background Only", preview: "background-only" as const, index: 2 },
 ];
 
 export default function CinematicDevPage() {
@@ -63,6 +66,8 @@ export default function CinematicDevPage() {
       deterministic: recordMode,
       directorPreview,
       directorSceneIndex,
+      backgroundOnly: directorPreview === "background-only",
+      showBackgroundDiagnostics: directorPreview === "background-only",
     }),
     [aspectMode, recordMode, noText, noImages, environmentOnly, directorPreview, directorSceneIndex],
   );
@@ -144,6 +149,8 @@ export default function CinematicDevPage() {
           ENV ONLY
         </button>
       </div>
+
+      {mode === "character" ? <NameTypographyQa /> : null}
 
       {mode === "character" && journey?.introSequence ? (
         <section className="mt-10 rounded border border-line p-4">

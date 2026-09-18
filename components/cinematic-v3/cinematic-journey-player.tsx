@@ -7,7 +7,9 @@ import {
   totalIntroMsForMode,
   totalOutroMsForMode,
 } from "@/lib/cinematic-v3/intro-outro";
+import { FLAGSHIP_JOURNEY_IDS } from "@/data/cinematic/flagship-assets";
 import { constellationById } from "@/data/cinematic/constellation-anchors";
+import { preloadSceneImages } from "@/lib/cinematic-v3/scene-image-preload";
 import { computeChapterHubState } from "@/lib/cinematic-v3/chapter-hub";
 import { getHeroAnchorPosition } from "./constellation-silhouette";
 import { ChapterHubOverlay } from "./chapter-hub-overlay";
@@ -32,6 +34,7 @@ import { RecordModeControls } from "./record-mode-controls";
 import { ReducedMotionJourney } from "./reduced-motion-journey";
 import { SceneNarrativeOverlay } from "./scene-narrative-overlay";
 import { SignatureIntroSequence } from "./signature-intro-sequence";
+import { SceneBackgroundLayer } from "./scene-background-layer";
 import { SignatureOutroSequence } from "./signature-outro-sequence";
 
 const SOUND_PREF_KEY = "loregraph.journey.sound";
@@ -54,25 +57,35 @@ export function CinematicJourneyPlayer({
   const showText = playerOptions.showText ?? true;
   const showImages = playerOptions.showImages ?? true;
   const environmentOnly = playerOptions.environmentOnly ?? false;
-  const showWatermark = playerOptions.showWatermark ?? false;
-  const deterministic = playerOptions.deterministic ?? recordMode;
-
   const directorPreview = playerOptions.directorPreview ?? "full";
   const directorSceneIndex = playerOptions.directorSceneIndex ?? 0;
+  const backgroundOnly =
+    playerOptions.backgroundOnly ?? directorPreview === "background-only";
+  const showBackgroundDiagnostics = playerOptions.showBackgroundDiagnostics ?? false;
+  const showWatermark = playerOptions.showWatermark ?? false;
+  const deterministic = playerOptions.deterministic ?? recordMode;
+  const isFlagship = FLAGSHIP_JOURNEY_IDS.includes(
+    journey.id as (typeof FLAGSHIP_JOURNEY_IDS)[number],
+  );
+  const use2DBackgrounds = isFlagship && showImages && !environmentOnly;
   const hasIntro =
     Boolean(journey.introSequence) &&
     directorPreview !== "scene" &&
     directorPreview !== "outro" &&
     directorPreview !== "inter-chapter" &&
     directorPreview !== "arrival" &&
-    directorPreview !== "departure";
+    directorPreview !== "departure" &&
+    directorPreview !== "motion-loop" &&
+    directorPreview !== "background-only";
   const hasOutro =
     Boolean(journey.outroSequence) &&
     directorPreview !== "intro" &&
     directorPreview !== "scene" &&
     directorPreview !== "inter-chapter" &&
     directorPreview !== "arrival" &&
-    directorPreview !== "departure";
+    directorPreview !== "departure" &&
+    directorPreview !== "motion-loop" &&
+    directorPreview !== "background-only";
 
   const quality = React.useMemo(() => {
     if (recordMode) return "high" as const;
@@ -86,7 +99,9 @@ export function CinematicJourneyPlayer({
           directorPreview === "transition" ||
           directorPreview === "inter-chapter" ||
           directorPreview === "arrival" ||
-          directorPreview === "departure"
+          directorPreview === "departure" ||
+          directorPreview === "motion-loop" ||
+          directorPreview === "background-only"
         ? "playing"
         : hasIntro
           ? "intro"
@@ -100,8 +115,10 @@ export function CinematicJourneyPlayer({
       directorPreview === "transition" ||
       directorPreview === "inter-chapter" ||
       directorPreview === "arrival" ||
-      directorPreview === "departure"
-      ? directorSceneIndex
+      directorPreview === "departure" ||
+      directorPreview === "motion-loop" ||
+      directorPreview === "background-only"
+      ? directorSceneIndex || (directorPreview === "motion-loop" ? 2 : directorSceneIndex)
       : directorPreview === "outro"
         ? journey.scenes.length - 1
         : 0,
@@ -123,7 +140,8 @@ export function CinematicJourneyPlayer({
     directorPreview === "transition" ||
       directorPreview === "inter-chapter" ||
       directorPreview === "arrival" ||
-      directorPreview === "departure"
+      directorPreview === "departure" ||
+      directorPreview === "motion-loop"
       ? false
       : !hasIntro,
   );
@@ -255,6 +273,32 @@ export function CinematicJourneyPlayer({
     setOutroElapsedMs(0);
     outroStart.current = performance.now();
   }, [hasOutro, outroStarted]);
+
+  const prevScene = sceneIndex > 0 ? journey.scenes[sceneIndex - 1] : undefined;
+  const nextScene =
+    sceneIndex < journey.scenes.length - 1 ? journey.scenes[sceneIndex + 1] : undefined;
+  const traveling = !arrived && sceneIndex > 0 && journeyPhase === "playing";
+
+  React.useEffect(() => {
+    if (use2DBackgrounds) preloadSceneImages(journey.scenes);
+  }, [journey.scenes, use2DBackgrounds]);
+
+  React.useEffect(() => {
+    if (directorPreview !== "motion-loop" || journeyPhase !== "playing") return;
+    const loopScene = Math.max(1, directorSceneIndex || 2);
+    setSceneIndex(loopScene);
+    setArrived(false);
+    let start = performance.now();
+    const duration = 2800;
+    let raf = 0;
+    const tick = () => {
+      const t = ((performance.now() - start) % duration) / duration;
+      setTransitionProgress(t);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [directorPreview, journeyPhase, directorSceneIndex]);
 
   React.useEffect(() => {
     if (startedRef.current) return;
@@ -529,6 +573,19 @@ export function CinematicJourneyPlayer({
     >
       <CinematicFrameShell aspectMode={effectiveAspect} className="h-full w-full">
         {showCanvas && scene ? (
+          <>
+            {use2DBackgrounds ? (
+              <SceneBackgroundLayer
+                scene={scene}
+                prevScene={prevScene}
+                nextScene={nextScene}
+                hubState={chapterHubState}
+                arrived={arrived}
+                traveling={traveling}
+                showImages={showImages}
+                showDiagnostics={showBackgroundDiagnostics}
+              />
+            ) : null}
           <div className="absolute inset-0" style={{ opacity: canvasOpacity }}>
             {useWebGL ? (
               <CinematicSceneCanvas
@@ -542,11 +599,15 @@ export function CinematicJourneyPlayer({
                 showImages={showImages && !environmentOnly}
                 environmentOnly={environmentOnly}
                 arrivalPulse={arrivalPulse}
+                use2DBackgrounds={use2DBackgrounds}
+                hubMotion={chapterHubState}
+                backgroundOnly={backgroundOnly}
               />
             ) : (
               <ReducedMotionJourney journey={journey} sceneIndex={sceneIndex} />
             )}
           </div>
+          </>
         ) : null}
 
         {showRecordLeadIn ? (

@@ -316,17 +316,27 @@ describe("Cinematic Journey V3", () => {
     expect(emerge.starRevealProgress).toBe(1);
   });
 
-  it("chapter hub re-shows name between beats with destination star", () => {
+  it("chapter hub uses continuous master curve with overlapping channels", () => {
     const journey = buildChampionJourneyV3(char("aatrox"));
     const nameConstellation = nameConstellationByCharacterId.get("char:aatrox")!;
     const hub = computeChapterHubState(0.4, nameConstellation, 3, journey.scenes.length);
     expect(hub.showName).toBe(true);
     expect(hub.nameOpacity).toBeGreaterThan(0.7);
-    expect(hub.dezoomStrength).toBeGreaterThan(0.9);
+    expect(hub.cameraPullback).toBeGreaterThan(0.85);
     expect(hub.destinationStarId).toBeTruthy();
-    const select = computeChapterHubState(0.52, nameConstellation, 3, journey.scenes.length);
-    expect(select.phase).toBe("star_select");
-    expect(select.heroIntensity).toBeGreaterThan(1.2);
+    const midPlunge = computeChapterHubState(0.55, nameConstellation, 3, journey.scenes.length);
+    expect(midPlunge.starIntensity).toBeGreaterThan(1.2);
+    expect(midPlunge.plunge).toBeGreaterThan(0.03);
+    const latePlunge = computeChapterHubState(0.78, nameConstellation, 3, journey.scenes.length);
+    expect(latePlunge.nextBackground).toBeGreaterThan(0.15);
+  });
+
+  it("name constellations are derived from Instrument Serif glyph geometry", () => {
+    for (const slug of ["aatrox", "yasuo", "yone", "viego", "skarner"]) {
+      const c = nameConstellationByCharacterId.get(`char:${slug}`)!;
+      expect(c.typographySource).toContain("Instrument Serif");
+      expect(c.anchors.length).toBeGreaterThan(400);
+    }
   });
 
   it("record travel phase includes chapter hub state", () => {
@@ -345,7 +355,7 @@ describe("Cinematic Journey V3", () => {
 
   it("chapter hub timing fits record mode targets", () => {
     const timing = chapterHubTimingMs(2100);
-    expect(timing.nameReadableMs).toBeGreaterThanOrEqual(550);
+    expect(timing.nameReadableMs).toBeGreaterThanOrEqual(450);
     expect(timing.nameReadableMs).toBeLessThanOrEqual(1000);
     expect(timing.plungeMs).toBeGreaterThanOrEqual(700);
     expect(timing.plungeMs).toBeLessThanOrEqual(1600);

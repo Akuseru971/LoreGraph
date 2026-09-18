@@ -116,6 +116,13 @@ export function validateFlagshipCoverage(journey: CinematicJourney): CinematicVa
           message: `Name constellation uses progressive reveal (${progressiveGroups.length} phased groups) — should fade globally`,
         });
       }
+      if (!nameConstellation.typographySource) {
+        issues.push({
+          level: "WARNING",
+          kind: "name_missing_font_source",
+          message: "Name constellation lacks font-derived typographySource",
+        });
+      }
     }
   }
 

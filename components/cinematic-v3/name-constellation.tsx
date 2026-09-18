@@ -34,6 +34,9 @@ export function NameConstellation({
   lineColor = "#e8d4a0",
   starColor = "#fff8ee",
   softenNonHero = 0,
+  showStars = true,
+  showLines = true,
+  enableGlow,
   className,
 }: {
   constellation: ChampionConstellation;
@@ -47,6 +50,9 @@ export function NameConstellation({
   lineColor?: string;
   starColor?: string;
   softenNonHero?: number;
+  showStars?: boolean;
+  showLines?: boolean;
+  enableGlow?: boolean;
   className?: string;
 }) {
   if (!isNameConstellation(constellation)) return null;
@@ -79,6 +85,8 @@ export function NameConstellation({
 
   const lineBoost = MODE_LINE_BOOST[mode];
   const effectiveOpacity = opacity * nameOpacity;
+  const glowOn = enableGlow ?? (mode === "intro" || mode === "outro");
+  const filterId = `name-glow-${constellation.id.replace(/[^a-z0-9]/gi, "")}`;
 
   return (
     <svg
@@ -88,23 +96,26 @@ export function NameConstellation({
       style={{ opacity: effectiveOpacity }}
       aria-hidden
     >
-      <defs>
-        <filter id="name-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="0.35" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
+      {glowOn ? (
+        <defs>
+          <filter id={filterId} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="0.35" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      ) : null}
       <g
-        filter={mode === "intro" ? "url(#name-glow)" : undefined}
+        filter={glowOn ? `url(#${filterId})` : undefined}
         style={{
           transform: `translate(${translateX}%, ${translateY}%) scale(${scale})`,
           transformOrigin: `${zoomCx}% ${zoomCy}%`,
         }}
       >
-        {lines.map((line) => {
+        {showLines &&
+          lines.map((line) => {
           const from = anchorById.get(line.from);
           const to = anchorById.get(line.to);
           if (!from || !to) return null;
@@ -124,8 +135,9 @@ export function NameConstellation({
               strokeLinejoin="round"
             />
           );
-        })}
-        {constellation.anchors.map((anchor) => {
+          })}
+        {showStars &&
+          constellation.anchors.map((anchor) => {
           const isHero = anchor.id === heroId;
           const radius = starRadiusForWeight(anchor.visualWeight ?? "MEDIUM");
           const dim = !isHero && softenNonHero > 0 ? 1 - softenNonHero * 0.6 : 1;
@@ -159,7 +171,7 @@ export function NameConstellation({
               ) : null}
             </g>
           );
-        })}
+          })}
       </g>
     </svg>
   );

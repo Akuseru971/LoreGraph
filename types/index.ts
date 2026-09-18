@@ -571,6 +571,8 @@ export interface ChampionConstellation {
   splashFocal?: { x: number; y: number };
   /** Display name for name-constellation typography (e.g. AATROX). */
   displayName?: string;
+  /** Font source for name-constellation typography (e.g. Instrument Serif). */
+  typographySource?: string;
   /** Provenance for splash-derived silhouettes; absent on legacy hand-authored constellations. */
   silhouetteSource?: SilhouetteSourceProvenance;
 }
@@ -689,6 +691,8 @@ export type CinematicDirectorPreview =
   | "inter-chapter"
   | "arrival"
   | "departure"
+  | "motion-loop"
+  | "background-only"
   | "full";
 
 export interface CinematicPlayerOptions {
@@ -701,6 +705,10 @@ export interface CinematicPlayerOptions {
   deterministic?: boolean;
   directorPreview?: CinematicDirectorPreview;
   directorSceneIndex?: number;
+  /** Hide 3D particles/star — show 2D backgrounds only. */
+  backgroundOnly?: boolean;
+  /** Dev overlay for background load diagnostics. */
+  showBackgroundDiagnostics?: boolean;
 }
 
 export type CinematicQualityLevel = "high" | "medium" | "low";

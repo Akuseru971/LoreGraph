@@ -1,16 +1,19 @@
+import { evaluateHubMotion } from "./motion-curve";
 import type { CinematicCameraPreset, CinematicCoordinates } from "@/types";
 
 export function isFreefallPreset(preset: CinematicCameraPreset): boolean {
   return preset === "FREEFALL" || preset === "FREEFALL_SPIRAL" || preset === "FREEFALL_DROP";
 }
 
-/** Stylish dezoom → name hub → plunge → land easing for inter-scene travel. */
+/** Single master-curve travel easing — continuous pullback → plunge → land. */
 export function easeFreefallTravel(t: number): number {
-  const clamped = Math.max(0, Math.min(1, t));
-  if (clamped < 0.15) return clamped * 0.08;
-  if (clamped < 0.52) return 0.012 + (clamped - 0.15) * 0.48;
-  if (clamped < 0.88) return 0.19 + (clamped - 0.52) * 1.42;
-  return 0.702 + (1 - Math.pow(1 - (clamped - 0.88) / 0.12, 2.6)) * 0.298;
+  const m = evaluateHubMotion(t);
+  return (
+    m.plunge * 0.58 +
+    m.cameraPullback * 0.22 +
+    m.arrivalSettle * 0.2 +
+    m.nextBackground * 0.08
+  );
 }
 
 function interpolateFreefall(
