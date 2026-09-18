@@ -498,6 +498,33 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
     /\bsafe from the rest of the world\b/i,
     /\bprotector\b/i,
   ],
+  "claim:viego-caused-ruination": [
+    /\bforced the waters of life\b/i,
+    /\bdrowned the isles in black mist\b/i,
+    /\bmagic did not resurrect isolde\b/i,
+    /\binverted\b.*\bblack mist\b/i,
+    /\bruination\b/i,
+  ],
+  "claim:thresh-blessed-isles-warden": [
+    /\bkeeper on the blessed isles\b/i,
+    /\bwarden of the archives\b/i,
+    /\btrusted with the archives\b/i,
+    /\bblessed isles\b/i,
+  ],
+  "claim:thresh-ruination-consequence": [
+    /\bwhen viego shattered the isles\b/i,
+    /\bshattered the isles\b/i,
+    /\bblack mist\b/i,
+    /\bcollects souls\b/i,
+    /\bcollecting souls\b/i,
+  ],
+  "claim:kalista-ruination-present": [
+    /\bpresent for the ruination\b/i,
+    /\bruination\b/i,
+    /\bspear of vengeance\b/i,
+    /\breturned from the isles\b/i,
+    /\boath-bound revenant\b/i,
+  ],
   "claim:nasus-brother-renekton": [
     /\bbrother\b/i,
     /\brenekton\b/i,

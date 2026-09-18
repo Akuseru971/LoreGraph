@@ -631,4 +631,31 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     shortExcerpt: "Noxian",
     evidenceType: "OFFICIAL_REFERENCE",
   },
+
+  // ── Ruination hub events ───────────────────────────────────────────────
+  {
+    claimId: "claim:viego-caused-ruination",
+    sourceId: "source:bio-viego",
+    normalizedFact:
+      "Viego forced the Waters of Life to undo Isolde's death; the magic inverted and drowned the Isles in Black Mist.",
+    shortExcerpt: "drowned the Isles in Black Mist",
+  },
+  {
+    claimId: "claim:thresh-blessed-isles-warden",
+    sourceId: "source:bio-thresh",
+    normalizedFact: "Thresh was a keeper on the Blessed Isles trusted with the archives.",
+    shortExcerpt: "keeper on the Blessed Isles",
+  },
+  {
+    claimId: "claim:thresh-ruination-consequence",
+    sourceId: "source:bio-thresh",
+    normalizedFact: "When Viego shattered the Isles, Thresh embraced the catastrophe and began collecting souls.",
+    shortExcerpt: "When Viego shattered the Isles",
+  },
+  {
+    claimId: "claim:kalista-ruination-present",
+    sourceId: "source:bio-kalista",
+    normalizedFact: "Kalista was present for the Ruination and returned as the Spear of Vengeance.",
+    shortExcerpt: "present for the Ruination",
+  },
 ];

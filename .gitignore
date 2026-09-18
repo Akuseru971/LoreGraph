@@ -24,6 +24,9 @@
 !/reports/phase1-claim-review.md
 !/reports/phase1-timeline-audit.md
 !/reports/phase1-relationship-audit.md
+!/reports/content-depth-report.md
+!/reports/remediation/
+!/reports/remediation/**
 !/reports/audit/
 
 # next.js

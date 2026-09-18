@@ -92,7 +92,7 @@ export const factions: Faction[] = [
     70,
     "ionia",
     "#7FA8C7",
-    "Ionian guardians of the spirit balance, split between its letter and its spirit.",
+    "Ionia's ancient guardians of spirit balance, led by the Eye of Twilight. The order fractured during the Noxian invasion when Zed broke away and Akali later refused passive observation — leaving Shen to hold the remaining Kinkou together.",
   ),
   f(
     "navori-brotherhood",
@@ -100,7 +100,7 @@ export const factions: Faction[] = [
     56,
     "ionia",
     "#C77FA8",
-    "Ionian insurgents who never stopped fighting after the war formally ended.",
+    "Ionian insurgents from the Navori province who kept fighting after the formal end of the Noxian occupation. They reject the idea that Ionia's spiritual traditions require accepting foreign conquest.",
   ),
   f(
     "order-of-shadow",
@@ -108,7 +108,7 @@ export const factions: Faction[] = [
     54,
     "ionia",
     "#6A5A8C",
-    "A militant doctrine that treats Ionia's restraint as a liability.",
+    "Zed's militant breakaway from the Kinkou, founded when he rejected Shen's doctrine of passive balance. The Order of Shadow treats Ionia's restraint as a liability and uses forbidden shadow techniques to eliminate threats.",
   ),
   f(
     "wardens",
@@ -156,7 +156,7 @@ export const factions: Faction[] = [
     66,
     "targon",
     "#D1A65C",
-    "Targon's sun-worshipping priesthood, and the region's dominant orthodoxy.",
+    "Targon's sun-worshipping priesthood and dominant orthodoxy. The Solari control Mount Targon's temples, interpret celestial signs, and decide who may attempt the dangerous climb toward the Aspects.",
   ),
   f(
     "lunari",
@@ -164,7 +164,7 @@ export const factions: Faction[] = [
     64,
     "targon",
     "#8B7FC7",
-    "The suppressed moon faith the Solari tried to erase from Targon's history.",
+    "Targon's suppressed moon faith, hunted by the Solari for centuries. Lunari worshippers read the night sky and preserve traditions the sun priesthood tried to erase from the mountain's history.",
   ),
   f(
     "aspects",

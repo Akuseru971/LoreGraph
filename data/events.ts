@@ -24,6 +24,7 @@ interface EventSeed {
   importance: number;
   characters: string[];
   regions: RegionSlug[];
+  sourceIds?: string[];
   canonStatus?: LoreEvent["canonStatus"];
   verified?: boolean;
   connectEligible?: boolean;
@@ -61,12 +62,13 @@ const seeds: EventSeed[] = [
     slug: "void-incursion",
     title: "The First Void Incursion",
     description:
-      "Something beneath the world tears through into it. Mortal armies fail, and Shurima is forced to answer with something other than soldiers.",
+      "Something beneath the world tears through into Runeterra. Mortal armies fail against the Void, and Shurima answers by raising Ascended god-warriors through the Sun Disc — defenders who later fight as Shurima's front line against the incursion.",
     era: "Ancient Shurima",
     order: 30,
     importance: 88,
     characters: ["aatrox", "nasus"],
     regions: ["shurima", "void"],
+    sourceIds: ["source:bio-aatrox", "source:bio-nasus"],
   },
   {
     slug: "ascension-ritual",
@@ -94,23 +96,25 @@ const seeds: EventSeed[] = [
     slug: "darkin-war",
     title: "The Darkin War",
     description:
-      "After Shurima's fall, surviving corrupted Ascended war among themselves. Targon intervenes, and the surviving Darkin are sealed inside the weapons they fought with.",
+      "After Shurima's fall, surviving corrupted Ascended — the Darkin — war among themselves across what remains of the empire. Targon intervenes, and the surviving Darkin are sealed inside the weapons they fought with, including Aatrox's blade and Varus's bow.",
     era: "Ancient Shurima",
     order: 60,
     importance: 95,
     characters: ["aatrox", "varus"],
     regions: ["shurima", "targon"],
+    sourceIds: ["source:bio-aatrox", "source:bio-varus", "source:twilight-of-the-gods"],
   },
   {
     slug: "fall-of-shurima",
     title: "The Fall of Shurima",
     description:
-      "On the day of Azir's own Ascension, his most trusted general betrays him. The ritual misfires, the capital sinks, and an empire ends in an afternoon.",
+      "On the day of Azir's own Ascension, Xerath betrays him and sabotages the ritual. The capital sinks into the desert in a single afternoon, ending Shurima's imperial age. Nasus and Renekton seal Xerath in the Tomb of the Emperors as the empire collapses around them.",
     era: "Fall of Shurima",
     order: 70,
     importance: 94,
     characters: ["azir", "nasus", "xerath", "renekton"],
     regions: ["shurima"],
+    sourceIds: ["source:bio-azir", "source:bio-xerath", "source:bio-nasus", "source:rise"],
   },
   {
     slug: "rune-wars",
@@ -149,23 +153,25 @@ const seeds: EventSeed[] = [
     slug: "blessed-isles",
     title: "The Blessed Isles",
     description:
-      "An island kingdom becomes the world's greatest archive of magic, its Waters of Life guarded by the Masks and studied by its keepers.",
+      "Before the Ruination, the Blessed Isles were Runeterra's greatest archive of magic — a kingdom of healers and keepers whose Waters of Life could mend what medicine could not. The Masks guarded the sacred waters; wardens like Thresh maintained the archives and the discipline of the order. Camavor's King Viego came seeking a cure for his dying queen Isolde, and the Isles' keepers understood exactly why what he wanted was forbidden.",
     era: "The Blessed Isles",
     order: 110,
     importance: 82,
     characters: ["viego", "thresh", "kalista", "ryze"],
     regions: ["shadow-isles"],
+    sourceIds: ["source:bio-viego", "source:bio-thresh", "source:bio-kalista"],
   },
   {
     slug: "the-ruination",
     title: "The Ruination",
     description:
-      "A king refuses his wife's death and forces the Waters of Life to undo it. The magic inverts, the Isles drown in Black Mist, and nothing there is allowed to finish dying.",
+      "When Queen Isolde died, King Viego of Camavor refused to accept it. He forced the Waters of Life to undo her death — and the magic inverted. The Blessed Isles drowned in Black Mist, death itself became unreliable across the region, and the kingdom became the Shadow Isles. Viego persisted as the Ruined King; Thresh became the Isles' most deliberate soul collector; Kalista, who had warned him, was swept into the catastrophe as an oath-bound revenant.",
     era: "The Ruination",
     order: 120,
     importance: 96,
     characters: ["viego", "thresh", "kalista", "senna", "lucian", "yorick"],
     regions: ["shadow-isles"],
+    sourceIds: ["source:bio-viego", "source:bio-thresh", "source:bio-kalista", "source:ruination-novel"],
   },
   {
     slug: "thresh-ascent",
@@ -259,7 +265,7 @@ const seeds: EventSeed[] = [
     slug: "noxian-invasion-ionia",
     title: "The Noxian Invasion of Ionia",
     description:
-      "Noxus invades a land with no standing army. Ionia wins, eventually, by becoming something it had spent centuries avoiding.",
+      "Noxus invades Ionia — a province with deep spiritual traditions but no standing army built for imperial war. The invasion fractures Ionian pacifism: Karma unleashes destructive power to stop a fleet, Irelia leads blade-dancer resistance after her community is devastated, and younger champions like Yasuo are pulled into a conflict they were never trained to survive. Noxus does not hold Ionia, but the occupation reshapes every institution that tried to remain neutral.",
     era: "Ionian War",
     order: 210,
     importance: 92,
@@ -276,6 +282,7 @@ const seeds: EventSeed[] = [
       "jhin",
     ],
     regions: ["ionia", "noxus"],
+    sourceIds: ["source:bio-irelia", "source:bio-karma", "source:bio-swain", "source:bio-yasuo"],
   },
   {
     slug: "the-place-of-blood",
@@ -314,12 +321,13 @@ const seeds: EventSeed[] = [
     slug: "kinkou-fracture",
     title: "The Fracture of the Kinkou",
     description:
-      "The Order that guards Ionia's balance splits over whether balance can be defended passively while the province burns.",
+      "The Kinkou Order that guards Ionia's spirit balance splits during the Noxian invasion. Zed breaks away to form the Order of Shadow, rejecting Shen's doctrine of passive observation. Akali later leaves as well, refusing to treat restraint as neutrality while threats kill Ionians. Shen holds the Eye of Twilight and the remaining Kinkou together while Kennen mediates between factions that no longer share one doctrine.",
     era: "Ionian War",
     order: 250,
     importance: 74,
     characters: ["shen", "akali", "zed", "kennen"],
     regions: ["ionia"],
+    sourceIds: ["source:bio-shen", "source:bio-akali", "source:bio-zed", "source:bio-kennen"],
   },
   {
     slug: "syndra-unbound",
@@ -382,12 +390,13 @@ const seeds: EventSeed[] = [
     slug: "shurima-risen",
     title: "Shurima Rises",
     description:
-      "The buried capital pulls itself out of the sand, and the ruler who died beneath it comes back with a claim nobody living recognises.",
+      "The buried Shuriman capital pulls itself out of the sand millennia after the fall. Azir returns Ascended at last, Xerath is freed from the Tomb, and Renekton emerges still hunting the traitor he was left to guard — Shurima's risen age begins with old wounds reopened.",
     era: "Modern Shurima",
     order: 310,
     importance: 90,
     characters: ["azir", "nasus", "xerath", "sivir", "renekton"],
     regions: ["shurima"],
+    sourceIds: ["source:bio-azir", "source:bio-nasus", "source:bio-xerath", "source:rise"],
   },
   {
     slug: "void-breach-icathia",
@@ -503,12 +512,13 @@ const seeds: EventSeed[] = [
     slug: "jhin-released",
     title: "The Golden Demon is Released",
     description:
-      "Ionia's most disciplined murderer is let out of prison by people who think he can be pointed at an enemy.",
+      "Khada Jhin — the Golden Demon — is imprisoned by the Kinkou after years of staged killings. During the Noxian invasion, pragmatic Ionian factions release him as a weapon pointed at Noxus. He accepts the commission and reinterprets the brief, resuming murders designed as performances rather than serving as anyone's leash.",
     era: "Modern Ionia",
     order: 420,
     importance: 70,
     characters: ["jhin", "shen", "zed"],
     regions: ["ionia"],
+    sourceIds: ["source:bio-jhin", "source:bio-shen"],
   },
   {
     slug: "targon-aurelion-loose",
@@ -561,6 +571,7 @@ const coreEvents: LoreEvent[] = seeds.map((s) => {
     importance: s.importance,
     characterIds: s.characters.map(charId),
     regionSlugs: s.regions,
+    sourceIds: s.sourceIds,
     canonStatus: resolveSeedCanonStatus(s.canonStatus, s.verified ?? true),
     verified: s.verified ?? true,
     connectEligible:

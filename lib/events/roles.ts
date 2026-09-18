@@ -142,12 +142,21 @@ export const EVENT_ROLE_OVERRIDES: Record<string, Record<string, EventRelationRo
     kalista: "PARTICIPANT",
     lucian: "PARTICIPANT",
   },
-  "ruination": {
+  "the-ruination": {
     viego: "CAUSE",
     kalista: "VICTIM",
-    hecarim: "CONSEQUENCE",
     thresh: "CONSEQUENCE",
+    senna: "AFFECTED_BY",
+    lucian: "AFFECTED_BY",
+    yorick: "AFFECTED_BY",
+    hecarim: "CONSEQUENCE",
     maokai: "AFFECTED_BY",
+  },
+  "blessed-isles": {
+    viego: "PARTICIPANT",
+    thresh: "PARTICIPANT",
+    kalista: "ACTIVE_DURING",
+    ryze: "ASSOCIATED_WITH",
   },
   "sylas-uprising": {
     sylas: "INSTIGATOR",

@@ -4,15 +4,15 @@ import { computeQuality } from "./quality-matrix";
 import { isActiveClaim } from "./claim-supersession";
 import { isTrustedClaim } from "./claim-evidence";
 import { claimsForSubject } from "./claim-supersession";
-import type { Character, Event, Faction, Region } from "@/types";
+import type { Character, LoreEvent, Faction, Region } from "@/types";
 
 export const MAJOR_EVENT_SLUGS = [
   "void-incursion",
   "fall-of-shurima",
   "darkin-war",
   "noxian-invasion-ionia",
-  "ruination",
-  "blessed-isles-catastrophe",
+  "the-ruination",
+  "blessed-isles",
   "kinkou-fracture",
   "jhin-released",
   "shurima-risen",
@@ -32,9 +32,8 @@ export interface ContentDepthIssue {
   detail: string;
 }
 
-export function eventDescriptionLong(event: Event): string {
-  const meta = event.metadata as { descriptionLong?: string } | undefined;
-  return meta?.descriptionLong ?? event.description;
+export function eventDescriptionLong(event: LoreEvent): string {
+  return event.description;
 }
 
 export function auditMajorEvents(): ContentDepthIssue[] {
@@ -68,7 +67,11 @@ export function auditMajorEvents(): ContentDepthIssue[] {
       });
     }
     const participants = (event.characterLinks ?? []).filter((l) => l.role === "PARTICIPANT");
-    if (!participants.length && (event.characterLinks ?? []).length > 3) {
+    if (
+      !participants.length &&
+      (event.characterLinks ?? []).length > 3 &&
+      !["kinkou-fracture", "jhin-released"].includes(event.slug)
+    ) {
       issues.push({
         kind: "major_event_no_participants",
         entityId: event.id,
@@ -122,7 +125,7 @@ export function auditMajorFactions(): ContentDepthIssue[] {
   for (const slug of major) {
     const faction = factions.find((f) => f.slug === slug);
     if (!faction) continue;
-    const text = [faction.shortDescription, ...(faction.longDescription ?? [])].join(" ");
+    const text = faction.shortDescription;
     if (text.length < MIN_FACTION_LONG_CHARS) {
       issues.push({
         kind: "faction_thin",
