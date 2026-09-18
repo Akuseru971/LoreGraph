@@ -10,36 +10,35 @@ import {
   SHOWCASE_CHAMPION_SLUGS,
   SHOWCASE_CONNECTION_PAIRS,
 } from "@/lib/cinematic-v3";
-import { AATROX_RECORD_INTRO_TIMING, AATROX_RECORD_OUTRO_TIMING } from "@/lib/cinematic-v3/aatrox-cinematic-direction";
-import { totalIntroMs, totalOutroMs } from "@/lib/cinematic-v3/intro-outro";
-import {
-  ConstellationQaView,
-  constellationStats,
-  type ConstellationQaMode,
-} from "@/components/cinematic-v3/constellation-qa-view";
-import { constellationById } from "@/data/cinematic/constellations";
-import { NameFitQa } from "@/components/cinematic-v3/name-fit-qa";
-import { NameTypographyQa } from "@/components/cinematic-v3/name-typography-qa";
-import { validateFlagshipConstellation } from "@/lib/cinematic-v3/validate-constellation";
+import { validateStoryPanelJourney } from "@/lib/cinematic-v3/validate-story-panels";
 import type { CinematicAspectMode, CinematicDirectorPreview, CinematicPlayerOptions } from "@/types";
 
-const AATROX_SCENES = [
-  { label: "Intro", preview: "intro" as const },
-  { label: "Inter-Chapter (→ Scene 2)", preview: "inter-chapter" as const, index: 2 },
-  { label: "Freefall (→ Scene 3)", preview: "transition" as const, index: 3 },
-  { label: "Arrival (Scene 4)", preview: "arrival" as const, index: 4 },
-  { label: "Departure (Scene 4)", preview: "departure" as const, index: 4 },
-  { label: "Scene 1 — Ascension", index: 1 },
-  { label: "Scene 2 — Void War", index: 2 },
-  { label: "Scene 3 — Darkin Turn", index: 3 },
-  { label: "Scene 4 — Darkin War", index: 4 },
-  { label: "Scene 5 — Imprisonment", index: 5 },
-  { label: "Scene 6 — Return", index: 6 },
-  { label: "Scene 7 — Pantheon", index: 7 },
-  { label: "Outro", preview: "outro" as const },
-  { label: "Motion Loop (2↔3)", preview: "motion-loop" as const, index: 2 },
+const AATROX_PANEL_SCENES = [
+  { label: "Beat 1 — God-Warrior", index: 0 },
+  { label: "Beat 2 — Ascension", index: 1 },
+  { label: "Beat 3 — Void War", index: 2 },
+  { label: "Beat 4 — Darkin", index: 3 },
+  { label: "Beat 5 — Darkin War", index: 4 },
+  { label: "Beat 6 — Blade", index: 5 },
+  { label: "Beat 7 — Return", index: 6 },
+  { label: "Beat 8 — Atreus", index: 7 },
+];
+
+const YASUO_PANEL_SCENES = [
+  { label: "Beat 1 — The Prodigy", index: 0 },
+  { label: "Beat 2 — Master Souma", index: 1 },
+  { label: "Beat 3 — Ionian War", index: 2 },
+  { label: "Beat 4 — Accusation", index: 3 },
+  { label: "Beat 5 — Exile", index: 4 },
+  { label: "Beat 6 — Duel", index: 5 },
+  { label: "Beat 7 — Truth", index: 6 },
+  { label: "Beat 8 — Wanderer", index: 7 },
+];
+
+const PANEL_QA_TOOLS = [
+  { label: "Transition Loop", preview: "transition-loop" as const, index: 2 },
   { label: "Background Only", preview: "background-only" as const, index: 0 },
-  { label: "Full Aatrox", preview: "full-aatrox" as const },
+  { label: "Text Layout", preview: "text-layout" as const, index: 1 },
 ];
 
 export default function CinematicDevPage() {
@@ -47,31 +46,26 @@ export default function CinematicDevPage() {
   const [connectionPair, setConnectionPair] = React.useState<string>("yasuo-yone");
   const [open, setOpen] = React.useState(false);
   const [mode, setMode] = React.useState<"character" | "connection">("character");
-  const [aspectMode, setAspectMode] = React.useState<CinematicAspectMode>("AUTO");
+  const [aspectMode, setAspectMode] = React.useState<CinematicAspectMode>("16:9");
   const [recordMode, setRecordMode] = React.useState(false);
   const [noText, setNoText] = React.useState(false);
   const [noImages, setNoImages] = React.useState(false);
-  const [environmentOnly, setEnvironmentOnly] = React.useState(false);
   const [directorPreview, setDirectorPreview] = React.useState<CinematicDirectorPreview>("full");
   const [directorSceneIndex, setDirectorSceneIndex] = React.useState(0);
-  const [constellationQaMode, setConstellationQaMode] =
-    React.useState<ConstellationQaMode>("constellation-only");
-  const [morphProgress, setMorphProgress] = React.useState(0.65);
 
   const playerOptions = React.useMemo<CinematicPlayerOptions>(
     () => ({
       aspectMode: recordMode ? "16:9" : aspectMode,
       recordMode,
-      showText: !noText,
-      showImages: !noImages,
-      environmentOnly,
+      showText: directorPreview !== "background-only" && !noText,
+      showImages: directorPreview !== "text-layout" && !noImages,
       deterministic: recordMode,
       directorPreview,
       directorSceneIndex,
       backgroundOnly: directorPreview === "background-only",
       showBackgroundDiagnostics: directorPreview === "background-only",
     }),
-    [aspectMode, recordMode, noText, noImages, environmentOnly, directorPreview, directorSceneIndex],
+    [aspectMode, recordMode, noText, noImages, directorPreview, directorSceneIndex],
   );
 
   const journey = React.useMemo(() => {
@@ -93,23 +87,18 @@ export default function CinematicDevPage() {
     setOpen(true);
   };
 
-  const aatroxJourney = selected === "aatrox" ? journey : null;
-  const introMs = aatroxJourney?.introSequence
-    ? totalIntroMs(aatroxJourney.introSequence.recordTiming ?? AATROX_RECORD_INTRO_TIMING)
-    : 0;
-  const outroMs = aatroxJourney?.outroSequence
-    ? totalOutroMs(aatroxJourney.outroSequence.recordTiming ?? AATROX_RECORD_OUTRO_TIMING)
-    : 0;
+  const panelValidation =
+    journey && mode === "character" ? validateStoryPanelJourney(journey) : [];
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-monument text-parchment text-4xl">Cinematic Journey V3</h1>
+      <h1 className="text-monument text-parchment text-4xl">Cinematic Story Panels</h1>
       <p className="text-muted mt-2 text-sm">
-        QA route — toggle aspect ratio, record mode, and layer visibility before launching.
+        Image-led lore storytelling — 16:9 and 9:16 record modes, official art per beat.
       </p>
 
       <div className="mt-6 flex flex-wrap gap-2">
-        {(["AUTO", "16:9"] as CinematicAspectMode[]).map((a) => (
+        {(["16:9", "9:16", "AUTO"] as CinematicAspectMode[]).map((a) => (
           <button
             key={a}
             type="button"
@@ -143,115 +132,35 @@ export default function CinematicDevPage() {
         >
           NO IMAGES
         </button>
-        <button
-          type="button"
-          className={`rounded-full border px-3 py-1.5 text-xs ${environmentOnly ? "border-gold text-gold" : "border-line text-muted"}`}
-          onClick={() => setEnvironmentOnly((e) => !e)}
-        >
-          ENV ONLY
-        </button>
       </div>
 
-      {mode === "character" ? (
-        <>
-          <NameFitQa />
-          <div className="mt-6" />
-          <NameTypographyQa />
-        </>
-      ) : null}
-
-      {mode === "character" && journey?.introSequence ? (
-        <section className="mt-10 rounded border border-line p-4">
-          <h2 className="text-eyebrow text-parchment tracking-[0.2em] uppercase">
-            Constellation QA — {selected}
-          </h2>
-          {(() => {
-            const constellation = constellationById.get(
-              journey.introSequence!.constellationId,
-            );
-            if (!constellation) return null;
-            const stats = constellationStats(constellation);
-            const validation = validateFlagshipConstellation(constellation);
-            const errors = validation.filter((v) => v.level === "ERROR");
-            const warnings = validation.filter((v) => v.level === "WARNING");
-            return (
-              <p className="text-muted mt-2 text-xs">
-                {stats.total} anchors · {stats.contour} contour · {stats.iconic} iconic ·{" "}
-                {stats.structural} structural · {stats.detail} detail · {stats.lines} lines ·{" "}
-                {stats.groups} groups
-                {errors.length ? ` · ${errors.length} validation errors` : ""}
-                {warnings.length ? ` · ${warnings.length} warnings` : ""}
-              </p>
-            );
-          })()}
-          <div className="mt-3 flex flex-wrap gap-2">
-            {(
-              [
-                "mask-only",
-                "mask-splash",
-                "contour-over-splash",
-                "stars-over-splash",
-                "constellation-only",
-                "splash-only",
-                "contour-only",
-                "iconic-lines",
-                "full",
-                "morph-progress",
-              ] as ConstellationQaMode[]
-            ).map((m) => (
-              <button
-                key={m}
-                type="button"
-                className={`rounded-full border px-3 py-1 text-xs ${constellationQaMode === m ? "border-gold text-gold" : "border-line text-muted"}`}
-                onClick={() => setConstellationQaMode(m)}
-              >
-                {m}
-              </button>
-            ))}
-          </div>
-          {constellationQaMode === "morph-progress" ? (
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={morphProgress * 100}
-              onChange={(e) => setMorphProgress(Number(e.target.value) / 100)}
-              className="mt-3 w-full"
-            />
-          ) : null}
-          <div className="mt-4">
-            <ConstellationQaView
-              constellationId={journey.introSequence!.constellationId}
-              intro={journey.introSequence}
-              mode={constellationQaMode}
-              morphProgress={morphProgress}
-            />
-          </div>
-        </section>
-      ) : null}
-
-      {selected === "aatrox" && mode === "character" && aatroxJourney ? (
+      {(selected === "aatrox" || selected === "yasuo") && mode === "character" && journey ? (
         <section className="mt-10 rounded border border-gold/30 bg-gold/5 p-4">
           <h2 className="text-eyebrow text-gold tracking-[0.2em] uppercase">
-            Aatrox Director QA
+            {selected === "aatrox" ? "Aatrox" : "Yasuo"} Story Panel QA
           </h2>
           <p className="text-muted mt-2 text-xs">
-            Record intro ~{(introMs / 1000).toFixed(1)}s · outro ~{(outroMs / 1000).toFixed(1)}s ·
-            anchors {aatroxJourney.introSequence?.constellationId}
+            {panelValidation.filter((i) => i.level === "ERROR").length} errors ·{" "}
+            {panelValidation.filter((i) => i.level === "WARNING").length} warnings ·{" "}
+            {journey.scenes.filter((s) => s.type !== "ENDING").length} beats
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
-            {AATROX_SCENES.map((item) => (
+            {(selected === "yasuo" ? YASUO_PANEL_SCENES : AATROX_PANEL_SCENES).map((item) => (
               <button
                 key={item.label}
                 type="button"
                 className="rounded-full border border-line px-3 py-1.5 text-xs text-parchment hover:border-gold/50"
-                onClick={() => {
-                  if ("preview" in item && item.preview) {
-                    launchDirector(item.preview, "index" in item ? item.index : 0);
-                  } else if ("index" in item) {
-                    launchDirector("scene", item.index);
-                  }
-                }}
+                onClick={() => launchDirector("scene", item.index)}
+              >
+                {item.label}
+              </button>
+            ))}
+            {PANEL_QA_TOOLS.map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                className="rounded-full border border-line px-3 py-1.5 text-xs text-parchment hover:border-gold/50"
+                onClick={() => launchDirector(item.preview, item.index)}
               >
                 {item.label}
               </button>
@@ -259,25 +168,17 @@ export default function CinematicDevPage() {
             <button
               type="button"
               className="rounded-full border border-gold/60 px-3 py-1.5 text-xs text-gold"
-              onClick={() => launchDirector("full-aatrox")}
-            >
-              Full Aatrox Journey
-            </button>
-            <button
-              type="button"
-              className="rounded-full border border-line px-3 py-1.5 text-xs text-parchment hover:border-gold/50"
               onClick={() => {
                 setRecordMode(true);
-                launchDirector("full");
+                launchDirector(selected === "aatrox" ? "full-aatrox" : "full-yasuo");
               }}
             >
-              Full Record Mode
+              Record Full Journey
             </button>
           </div>
-          {aatroxJourney.scenes.map((scene) => (
+          {journey.scenes.map((scene) => (
             <p key={scene.id} className="text-muted mt-1 font-mono text-[10px]">
-              {scene.id} · {scene.shotType} · {scene.worldNodeArchetype ?? "—"} ·{" "}
-              {scene.image?.url ? "CURATED_IMAGE" : "CURATED_ABSTRACT"}
+              {scene.eyebrow ?? "—"} · {scene.title} · {scene.image?.url?.split("/").pop() ?? "NO IMAGE"}
             </p>
           ))}
         </section>
@@ -320,7 +221,7 @@ export default function CinematicDevPage() {
                 >
                   <span className="text-parchment">{c.name}</span>
                   <span className="text-muted ml-2 text-xs">
-                    {j.scenes.length} scenes · lore {ready ? "✓" : "—"} · visual{" "}
+                    {j.scenes.length} panels · lore {ready ? "✓" : "—"} · visual{" "}
                     {j.visualReady ? "✓" : "—"} · record {j.recordReady ? "✓" : "—"}
                   </span>
                 </button>

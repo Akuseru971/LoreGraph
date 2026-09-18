@@ -440,6 +440,8 @@ export interface CinematicSceneAsset {
   confidence: CinematicSceneAssetConfidence;
   qualityStatus?: CinematicAssetQualityStatus;
   focalPoint?: { x: number; y: number };
+  /** Portrait 9:16 crop focal — defaults to adjusted landscape focal. */
+  portraitFocalPoint?: { x: number; y: number };
   aspectRatio?: number;
   compositionHint?: CinematicComposition;
   variant?: "splash" | "cinematic" | "hero" | "event";
@@ -692,9 +694,11 @@ export type CinematicDirectorPreview =
   | "arrival"
   | "departure"
   | "motion-loop"
+  | "transition-loop"
   | "background-only"
-  | "name-fit"
+  | "text-layout"
   | "full-aatrox"
+  | "full-yasuo"
   | "full";
 
 export interface CinematicPlayerOptions {

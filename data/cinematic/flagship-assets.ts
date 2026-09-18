@@ -23,6 +23,7 @@ export interface FlagshipSceneAssetEntry {
     assetKey?: string;
     relevance: CinematicSceneAssetRelevance;
     focalPoint?: { x: number; y: number };
+    portraitFocalPoint?: { x: number; y: number };
     aspectRatio?: number;
     source?: string;
     assetType?: "event" | "region" | "artifact" | "story" | "champion";
@@ -68,6 +69,7 @@ export const FLAGSHIP_SCENE_ASSETS: FlagshipSceneAssetEntry[] = [
       sourceEntityId: "char:aatrox",
       relevance: "THEMATIC_OFFICIAL",
       focalPoint: { x: 0.52, y: 0.3 },
+      portraitFocalPoint: { x: 0.5, y: 0.26 },
       aspectRatio: 16 / 9,
       source: "Riot Games — Aatrox splash",
       assetType: "champion",
@@ -334,10 +336,87 @@ export const FLAGSHIP_SCENE_ASSETS: FlagshipSceneAssetEntry[] = [
       sourceEntityId: "char:yasuo",
       relevance: "CHARACTER_CONTEXT",
       focalPoint: { x: 0.42, y: 0.35 },
+      portraitFocalPoint: { x: 0.48, y: 0.28 },
       aspectRatio: 16 / 9,
       source: "Riot Games — Yasuo splash",
       assetType: "champion",
     },
+    narrativePhrases: [
+      "Elder Souma was dead by a wind technique.",
+      "Yasuo was blamed — and refused to defend himself.",
+    ],
+  },
+  {
+    sceneId: "cscene:yasuo:beat:yasuo-4",
+    journeyId: "cinematic:character:yasuo",
+    visualSubject: "Exile across Ionia",
+    requiredVisualSubject: "Yasuo exile",
+    shotType: "ESTABLISHING",
+    environmentalMotifs: ["IONIAN_SPIRIT_ARCS", "IONIAN_FLOATING_LIGHTS"],
+    composition: "FULL_BLEED",
+    qualityStatus: "CURATED_PREMIUM",
+    officialAsset: {
+      url: `${REGION}/ionia.webp`,
+      sourceEntityId: "region:ionia",
+      relevance: "THEMATIC_OFFICIAL",
+      focalPoint: { x: 0.5, y: 0.32 },
+      portraitFocalPoint: { x: 0.5, y: 0.28 },
+      aspectRatio: 16 / 9,
+      source: "Riot Games — Ionia",
+      assetType: "region",
+    },
+    narrativePhrases: [
+      "Ionia sent hunters after him.",
+      "Yasuo fled rather than accept a sentence he could not bear.",
+    ],
+  },
+  {
+    sceneId: "cscene:yasuo:beat:yasuo-5",
+    journeyId: "cinematic:character:yasuo",
+    visualSubject: "Duel with Yone",
+    requiredVisualSubject: "Yasuo Yone duel",
+    shotType: "IMPACT",
+    environmentalMotifs: ["IONIAN_SPIRIT_ARCS"],
+    composition: "FULL_BLEED",
+    qualityStatus: "CURATED_PREMIUM",
+    officialAsset: {
+      url: `${EVENT}/yasuo-yone-duel.webp`,
+      sourceEntityId: "event:yasuo-yone-duel",
+      relevance: "EXACT_EVENT",
+      focalPoint: { x: 0.5, y: 0.38 },
+      portraitFocalPoint: { x: 0.5, y: 0.35 },
+      aspectRatio: 16 / 9,
+      source: "Riot Games — Yasuo & Yone duel",
+      assetType: "event",
+    },
+    narrativePhrases: [
+      "Yone was sent to bring him in.",
+      "Yasuo won the duel — the worst possible outcome for both of them.",
+    ],
+  },
+  {
+    sceneId: "cscene:yasuo:beat:yasuo-6",
+    journeyId: "cinematic:character:yasuo",
+    visualSubject: "Truth and regret",
+    requiredVisualSubject: "Yasuo modern wandering",
+    shotType: "AFTERMATH",
+    environmentalMotifs: ["IONIAN_FLOATING_LIGHTS"],
+    composition: "FULL_BLEED",
+    qualityStatus: "CURATED_PREMIUM",
+    officialAsset: {
+      url: `${CHAMPION}/yasuo-hero-16x9.webp`,
+      sourceEntityId: "char:yasuo",
+      relevance: "CHARACTER_CONTEXT",
+      focalPoint: { x: 0.45, y: 0.38 },
+      portraitFocalPoint: { x: 0.5, y: 0.3 },
+      aspectRatio: 16 / 9,
+      source: "Riot Games — Yasuo splash",
+      assetType: "champion",
+    },
+    narrativePhrases: [
+      "Years later he learned who truly killed the elder.",
+      "Exoneration and forgiveness are not the same thing.",
+    ],
   },
   {
     sceneId: "cscene:yasuo:ending",

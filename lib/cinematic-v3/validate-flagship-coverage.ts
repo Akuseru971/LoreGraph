@@ -12,7 +12,7 @@ import { computeContourConnectivity } from "./constellation-connectivity";
 import { compositionForScene } from "./composition";
 import { nameConstellationByCharacterId } from "@/data/cinematic/name-constellations";
 import { chapterHubTimingMs, CHAPTER_HUB_TIMING } from "./chapter-hub";
-import { validateConstellationHubFit } from "./name-fit";
+import { isStoryPanelJourney } from "./story-panel-mode";
 import { DEFAULT_INTRO_TIMING } from "./intro-outro";
 import { DEFAULT_RECORD_TIMING, recordTimingForScene, totalSceneRecordMs } from "./record-mode";
 import type { CinematicJourney } from "@/types";
@@ -105,7 +105,11 @@ export function validateFlagshipCoverage(journey: CinematicJourney): CinematicVa
     }
   }
 
-  if (journey.introSequence?.type === "NAME_CONSTELLATION" && journey.primaryCharacterId) {
+  if (
+    !isStoryPanelJourney(journey) &&
+    journey.introSequence?.type === "NAME_CONSTELLATION" &&
+    journey.primaryCharacterId
+  ) {
     const nameConstellation = nameConstellationByCharacterId.get(journey.primaryCharacterId);
     if (nameConstellation) {
       const progressiveGroups =
@@ -124,25 +128,19 @@ export function validateFlagshipCoverage(journey: CinematicJourney): CinematicVa
           message: "Name constellation lacks font-derived typographySource",
         });
       }
-      const hubFitIssue = validateConstellationHubFit(nameConstellation);
-      if (hubFitIssue) {
-        issues.push({
-          level: "ERROR",
-          kind: "name_hub_fit",
-          message: `${hubFitIssue.displayName} hub fit failed: ${hubFitIssue.message}`,
-        });
-      }
     }
   }
 
-  const travelMs = recordTimingForScene(journey.scenes[1] ?? journey.scenes[0]).travelMs;
-  const hubTiming = chapterHubTimingMs(travelMs);
-  if (hubTiming.nameReadableMs < CHAPTER_HUB_TIMING.nameReadableMs.min) {
-    issues.push({
-      level: "WARNING",
-      kind: "inter_chapter_name_too_fast",
-      message: `Inter-chapter name readable window ${hubTiming.nameReadableMs}ms below ${CHAPTER_HUB_TIMING.nameReadableMs.min}ms`,
-    });
+  if (!isStoryPanelJourney(journey)) {
+    const travelMs = recordTimingForScene(journey.scenes[1] ?? journey.scenes[0]).travelMs;
+    const hubTiming = chapterHubTimingMs(travelMs);
+    if (hubTiming.nameReadableMs < CHAPTER_HUB_TIMING.nameReadableMs.min) {
+      issues.push({
+        level: "WARNING",
+        kind: "inter_chapter_name_too_fast",
+        message: `Inter-chapter name readable window ${hubTiming.nameReadableMs}ms below ${CHAPTER_HUB_TIMING.nameReadableMs.min}ms`,
+      });
+    }
   }
 
   for (const scene of journey.scenes) {
@@ -158,7 +156,7 @@ export function validateFlagshipCoverage(journey: CinematicJourney): CinematicVa
     }
   }
 
-  if (journey.id === "cinematic:character:aatrox") {
+  if (!isStoryPanelJourney(journey) && journey.id === "cinematic:character:aatrox") {
     const constellation = constellationByCharacterId.get("char:aatrox");
     if (constellation && constellation.anchors.length < MIN_AATROX_SILHOUETTE_ANCHORS) {
       issues.push({
