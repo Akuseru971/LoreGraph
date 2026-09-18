@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import * as React from "react";
-import { factionBySlug, regionBySlug } from "@/data";
+import { regionBySlug } from "@/data";
 import { useProgress } from "@/components/providers";
 import { EntityPortrait } from "@/components/entity-portrait";
 import { ProgressRing } from "@/components/ui/progress-ring";
@@ -30,14 +30,7 @@ export function CharacterCard({
   const level = progressLevelFor(knowledge);
 
   const region = regionBySlug.get(character.region);
-  const primaryFaction = character.factions[0]
-    ? factionBySlug.get(character.factions[0].replace("faction:", ""))
-    : undefined;
-
-  const meta = [region?.name, primaryFaction?.name]
-    .filter(Boolean)
-    .join(" · ")
-    .toUpperCase();
+  const regionLabel = region?.name ?? character.region;
 
   return (
     <motion.div
@@ -61,9 +54,9 @@ export function CharacterCard({
             assetKey={character.assetKey}
             name={character.name}
             accentColor={character.accentColor}
-            variant={size === "lg" ? "splash" : "portrait"}
+            variant={size === "lg" ? "splash" : "card"}
             rounded="rounded-none"
-            className="absolute inset-0 size-full"
+            className="absolute inset-0 size-full transition-transform duration-500 group-hover:scale-[1.03]"
             priority={priority}
             sizes={
               size === "lg"
@@ -122,13 +115,13 @@ export function CharacterCard({
 
         <div className="flex items-center justify-between gap-2 border-t border-line px-4 py-3">
           <span
-            className="text-eyebrow truncate"
+            className="text-eyebrow truncate capitalize"
             style={{ color: hexToRgba(character.accentColor, 0.85) }}
           >
-            {meta}
+            {regionLabel}
           </span>
           <span className="text-eyebrow text-muted shrink-0">
-            {connections} {connections === 1 ? "link" : "links"}
+            {connections} {connections === 1 ? "connection" : "connections"}
           </span>
         </div>
 

@@ -36,7 +36,7 @@ export const factions: Faction[] = [
     86,
     "shurima",
     "#D1A65C",
-    "Mortals elevated to god-warriors by Shurima's Sun Disc to fight the Void.",
+    "Mortals elevated to god-warriors by Shurima's Sun Disc — later deployed against the Void during Icathia's catastrophe.",
   ),
   f(
     "black-rose",
@@ -237,6 +237,14 @@ export const factions: Faction[] = [
     "runeterra",
     "#D8C878",
     "A scattered order dedicated to pushing back the Black Mist wherever it lands.",
+  ),
+  f(
+    "medarda",
+    "House Medarda",
+    74,
+    "noxus",
+    "#A03041",
+    "A Noxian noble house whose influence spans generals, diplomats, and heirs trained in political ruthlessness.",
   ),
 ];
 

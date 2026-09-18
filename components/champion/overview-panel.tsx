@@ -6,7 +6,8 @@ import * as React from "react";
 import { regionBySlug, sourceById } from "@/data";
 import { EntityPortrait } from "@/components/entity-portrait";
 import { FactionBadge } from "@/components/region-badge";
-import { CanonBadge } from "@/components/ui/badge";
+import { connectionEvidenceLine, CONNECTION_EVIDENCE_LABEL } from "@/lib/truth/evidence";
+import { sourceMaterialLine } from "@/lib/truth/evidence";
 import { GROUP_COLOR, RELATIONSHIP_LABEL, relationshipGroup } from "@/lib/graph/style";
 import { hexToRgba } from "@/lib/utils";
 import type { Character, Relationship } from "@/types";
@@ -47,7 +48,10 @@ export function OverviewPanel({
     },
     { label: "Species", value: character.species },
     { label: "Status", value: character.status },
-    { label: "Roles", value: character.roles.join(", ") },
+    {
+      label: "Roles",
+      value: character.roles.length > 0 ? character.roles.join(", ") : "—",
+    },
     {
       label: "Aliases",
       value: character.aliases.length > 0 ? character.aliases.join(", ") : "—",
@@ -203,21 +207,29 @@ function CoreRelationshipCard({
               color,
             }}
           >
+            {CONNECTION_EVIDENCE_LABEL[relationship.connectionType]}
+          </span>
+          <span className="text-muted-dim text-[0.625rem]">
             {relationship.label || RELATIONSHIP_LABEL[relationship.type]}
           </span>
+        </p>
+        <p className="text-muted mt-1 line-clamp-1 text-[0.6875rem]">
+          {connectionEvidenceLine(relationship.connectionType, relationship.confidence)}
         </p>
         <p className="text-muted mt-1.5 line-clamp-2 text-xs leading-relaxed">
           {relationship.shortExplanation}
         </p>
-        <div className="mt-2.5 flex items-center gap-2">
+        <div className="mt-2.5 flex flex-col gap-1">
           <button
             type="button"
             onClick={onSelect}
-            className="text-eyebrow text-gold/80 hover:text-gold transition-colors"
+            className="text-eyebrow text-gold/80 hover:text-gold text-left transition-colors"
           >
             What connects them?
           </button>
-          <CanonBadge status={relationship.canonStatus} className="scale-90" />
+          <p className="text-muted-dim text-[0.625rem]">
+            {sourceMaterialLine(relationship.canonStatus)}
+          </p>
         </div>
       </div>
       <Link

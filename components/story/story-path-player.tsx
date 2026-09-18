@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Check, Sparkles, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, Sparkles, X } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import { characterById, eventById } from "@/data";
@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/dialog";
 import { generateArtwork } from "@/lib/assets";
 import { track } from "@/lib/analytics";
+import { EVIDENCE_CLASS_LABEL } from "@/lib/story-path/classify";
+import { publicNarrativeBlocks } from "@/lib/story-path/blocks";
 import { cn, hexToRgba } from "@/lib/utils";
 import type { StoryPath } from "@/types";
 
@@ -47,6 +49,7 @@ function StoryPathPlayerInner({
   const completed = state?.completedChapterIds ?? [];
   const resumeIndex = path.chapters.findIndex((c) => !completed.includes(c.id));
   const [index, setIndex] = React.useState(resumeIndex === -1 ? 0 : resumeIndex);
+  const [showProvenance, setShowProvenance] = React.useState(false);
 
   React.useEffect(() => {
     track({ name: "story_start", slug: path.slug });
@@ -57,6 +60,8 @@ function StoryPathPlayerInner({
   }, [index]);
 
   const chapter = path.chapters[index];
+  const displayBlocks = publicNarrativeBlocks(chapter.blocks ?? []);
+  const hiddenUnresolved = (chapter.blocks?.length ?? 0) - displayBlocks.length;
   const isLast = index === path.chapters.length - 1;
   const artwork = generateArtwork(chapter.assetKey, path.accentColor, "story");
 
@@ -147,7 +152,7 @@ function StoryPathPlayerInner({
             </p>
 
             <div className="mt-8 space-y-5">
-              {chapter.body.map((paragraph, i) => (
+              {displayBlocks.map((block, i) => (
                 <p
                   key={i}
                   className={cn(
@@ -155,10 +160,43 @@ function StoryPathPlayerInner({
                     i === 0 ? "text-[1.0625rem] sm:text-lg" : "text-[0.9375rem] sm:text-base",
                   )}
                 >
-                  {paragraph}
+                  {block.text}
                 </p>
               ))}
+              {hiddenUnresolved > 0 ? (
+                <p className="text-muted border-l border-gold/40 py-1 pl-3 text-xs italic">
+                  {hiddenUnresolved} passage{hiddenUnresolved === 1 ? "" : "s"} withheld pending source review.
+                </p>
+              ) : null}
             </div>
+
+            <section className="mt-8">
+              <button
+                type="button"
+                onClick={() => setShowProvenance((v) => !v)}
+                className="text-muted hover:text-parchment flex items-center gap-2 text-xs transition-colors"
+              >
+                <ChevronDown
+                  className={cn("size-3.5 transition-transform", showProvenance && "rotate-180")}
+                  aria-hidden
+                />
+                Sources &amp; interpretation
+              </button>
+              {showProvenance ? (
+                <ul className="mt-3 space-y-2 rounded-lg border border-line/60 bg-surface/30 p-4 text-xs">
+                  {(chapter.blocks ?? []).map((block, i) => (
+                    <li key={i} className="text-muted">
+                      <span className="text-parchment/80">{EVIDENCE_CLASS_LABEL[block.evidenceClass]}</span>
+                      {block.claimIds?.length ? (
+                        <span className="ml-2 opacity-70">
+                          · {block.claimIds.length} claim{block.claimIds.length === 1 ? "" : "s"}
+                        </span>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </section>
 
             {cast.length > 0 ? (
               <section className="mt-10">

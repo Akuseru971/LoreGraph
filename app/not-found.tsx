@@ -6,11 +6,11 @@ export default function NotFound() {
     <div className="mx-auto flex min-h-[60vh] w-full max-w-lg flex-col items-center justify-center px-4 text-center">
       <p className="text-eyebrow text-gold">404</p>
       <h1 className="text-monument mt-4 text-4xl sm:text-5xl">
-        Lost in the mist
+        This story hasn&apos;t been written here yet.
       </h1>
       <p className="text-muted mt-4 text-sm leading-relaxed">
-        No story begins at this address. The champion, path or page you wanted
-        is not in the archive yet.
+        The champion, path or page you wanted is not in the archive. Try
+        Discover or Connect to find your way back.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-2">
         <Button asChild variant="primary">

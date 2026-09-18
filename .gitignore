@@ -13,12 +13,24 @@
 # testing
 /coverage
 
+# generated data audit reports
+/reports/*
+!/reports/champions/
+!/reports/champions/**
+!/reports/phase1-champion-canon-review.md
+!/reports/173-champion-tier-a-progress.md
+!/reports/173-champion-tier-a-progress.json
+!/reports/audit/
+
 # next.js
 /.next/
 /out/
 
 # production
 /build
+
+# asset download cache (masters re-used across ingest runs)
+.cache/
 
 # misc
 .DS_Store

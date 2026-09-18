@@ -18,14 +18,15 @@ import {
   sourceById,
   storyPaths,
 } from "../data";
+import { EXPECTED_ROSTER_COUNT } from "../data/roster";
 import { buildLoreGraph, findPaths } from "../lib/graph";
 
 const problems: string[] = [];
 const warn = (message: string) => problems.push(message);
 
 /* ------------------------------------------------------------- characters */
-if (characters.length !== 50) {
-  warn(`Expected 50 characters, found ${characters.length}`);
+if (characters.length !== EXPECTED_ROSTER_COUNT) {
+  warn(`Expected ${EXPECTED_ROSTER_COUNT} characters, found ${characters.length}`);
 }
 
 const slugs = new Set<string>();

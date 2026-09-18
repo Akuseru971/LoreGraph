@@ -1,0 +1,9 @@
+﻿topic,status,note,source_url
+Wiki crawl constraint,IMPORTANT,The official League Wiki blocks direct automated crawl in this environment. Pages are discoverable via web search; Cursor should crawl only where permitted and respect robots/rate limits.,https://wiki.leagueoflegends.com/
+Official Wiki timeline,DISCOVERED,"Wiki search indexing exposes historical timeline entries including Creation of the Universe, Formation of Runeterra, Titan War, Freljord founding, Three Sisters, Shurima, Void War, Darkin War, Ruination, Rune Wars and recent history.",https://wiki.leagueoflegends.com/en-us/Universe%3ARecent_History
+Runeterra Prime,DISCOVERED,"Official Wiki describes Runeterra Prime as the primary/canon universe and separates physical, spirit, celestial realms and the Void.",https://wiki.leagueoflegends.com/en-us/Universe%3ARuneterra_Prime
+Harrowing,DISCOVERED,"Official Wiki describes the Harrowing as recurring Black Mist incursions beyond the Shadow Isles, especially affecting Bilgewater.",https://wiki.leagueoflegends.com/en-us/Universe%3AHarrowing
+Yunara,VERIFIED_PRIMARY,Current Riot champion page states Yunara spent centuries in the spirit realm and wields the legendary Kinkou relic Aion Er'na.,https://www.leagueoflegends.com/en-us/champions/yunara/
+Locke,VERIFIED_PRIMARY,"Current Riot champion page identifies Corvin Locke as the Ashen Exorcist, a Demacian occultist/exorcist using forbidden rites.",https://www.leagueoflegends.com/en-us/champions/locke/
+Zaahen,VERIFIED_PRIMARY,"Current Riot champion page identifies Zaahen as the Unsundered, a fallen god/Darkin hunter who was willingly sealed within his glaive.",https://www.leagueoflegends.com/en-us/champions/zaahen/
+Data Dragon current patch,VERIFIED_PRIMARY,Riot developer documentation shows Data Dragon 16.18.1 as current for patch 26.18 and documents champion JSON/static assets.,https://developer.riotgames.com/docs/lol

@@ -1,0 +1,25 @@
+﻿faction_id,name,region,description,canon_status,wiki_url,primary_riot_url,image_status,image_url,needs_review
+faction:ascended,Ascended,Shurima,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AAscended,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:darkin,Darkin,Shurima / Runeterra,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ADarkin,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:black-rose,Black Rose,Noxus,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ABlack_Rose,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:kinkou,Kinkou Order,Ionia,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AKinkou_Order,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:order-shadow,Order of Shadow,Ionia,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AOrder_of_Shadow,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:sentinels-light,Sentinels of Light,Runeterra,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ASentinels_of_Light,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:solari,Solari,Targon,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ASolari,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:lunari,Lunari,Targon,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ALunari,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:frostguard,Frostguard,Freljord,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AFrostguard,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:avarosan,Avarosan,Freljord,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AAvarosan,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:winter-claw,Winter's Claw,Freljord,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AWinter's_Claw,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:noxus,Noxian Empire,Noxus,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ANoxian_Empire,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:trifarix,Trifarix,Noxus,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ATrifarix,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:demacia,Demacian State,Demacia,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ADemacian_State,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:mageseekers,Mageseekers,Demacia,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AMageseekers,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:wardens,Piltover Wardens,Piltover,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3APiltover_Wardens,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:chem-barons,Chem-Barons,Zaun,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AChem-Barons,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:glasc,Glasc Industries,Zaun,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AGlasc_Industries,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:buhru,Buhru,Bilgewater,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ABuhru,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:mistborn,Black Mist / Shadow Isles,Shadow Isles,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ABlack_Mist_%2F_Shadow_Isles,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:medarda,House Medarda,Noxus / Piltover,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AHouse_Medarda,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:du-couteau,Du Couteau Family,Noxus,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ADu_Couteau_Family,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:crownguard,House Crownguard,Demacia,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AHouse_Crownguard,,NEEDS_OFFICIAL_ASSET,,TRUE
+faction:ferros,Clan Ferros,Piltover,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AClan_Ferros,,NEEDS_OFFICIAL_ASSET,,TRUE

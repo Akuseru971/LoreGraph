@@ -1,17 +1,20 @@
 import type { MetadataRoute } from "next";
 import { characters } from "@/data";
-import { siteUrl } from "@/lib/seo";
+import { getSiteUrl, isProductionIndexable } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  if (!isProductionIndexable()) return [];
+
   const now = new Date();
+  const origin = getSiteUrl();
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${siteUrl}`, lastModified: now, changeFrequency: "daily", priority: 1 },
-    { url: `${siteUrl}/connect`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${siteUrl}/me`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${origin}`, lastModified: now, changeFrequency: "daily", priority: 1 },
+    { url: `${origin}/connect`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${origin}/me`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
   ];
 
   const championRoutes = characters.map((character) => ({
-    url: `${siteUrl}/champion/${character.slug}`,
+    url: `${origin}/champion/${character.slug}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: character.featured ? 0.9 : 0.7,

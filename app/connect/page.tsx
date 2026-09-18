@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ConnectExperience } from "@/components/connect/connect-experience";
+import { parseConnectParams } from "@/lib/connect/inspiration";
 import { dailyConnection } from "@/lib/data/daily";
 import { loreRepository } from "@/lib/data/lore-repository";
 import { findPaths } from "@/lib/graph";
@@ -21,8 +23,7 @@ export default async function ConnectPage({
   searchParams,
 }: PageProps<"/connect">) {
   const params = await searchParams;
-  const aSlug = typeof params.a === "string" ? params.a : null;
-  const bSlug = typeof params.b === "string" ? params.b : null;
+  const { a: aSlug, b: bSlug } = parseConnectParams(params);
 
   const a = aSlug ? loreRepository.getCharacter(aSlug) : null;
   const b = bSlug ? loreRepository.getCharacter(bSlug) : null;
@@ -33,11 +34,13 @@ export default async function ConnectPage({
   const daily = dailyConnection();
 
   return (
-    <ConnectExperience
-      initialA={a?.slug ?? null}
-      initialB={b?.slug ?? null}
-      initialPaths={paths}
-      daily={daily}
-    />
+    <Suspense fallback={null}>
+      <ConnectExperience
+        initialA={a?.slug ?? null}
+        initialB={b?.slug ?? null}
+        initialPaths={paths}
+        daily={daily}
+      />
+    </Suspense>
   );
 }

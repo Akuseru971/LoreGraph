@@ -1,0 +1,11 @@
+﻿artifact_id,name,region,description,canon_status,wiki_url,primary_riot_url,image_status,image_url,needs_review
+artifact:sun-disc,Sun Disc,Shurima,Ascension structure tied to ancient Shurima.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ASun_Disc,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:world-runes,World Runes,Runeterra,Primal runes whose power shaped Runeterra and drove the Rune Wars.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AWorld_Runes,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:aion-erna,Aion Er'na,Ionia,Legendary Kinkou relic wielded by Yunara.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AAion_Er'na,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:darkin-blade-aatrox,Aatrox's Blade,Darkin,Weapon-prison that contains Aatrox.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AAatrox's_Blade,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:rhaast-scythe,Rhaast,Darkin,Darkin scythe wielded by Kayn.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ARhaast,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:varus-bow,Varus's Bow,Darkin,Darkin weapon/entity associated with Varus.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AVarus's_Bow,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:petricite,Petricite,Demacia,Magic-absorbing material central to Demacian society.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3APetricite,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:hexcore,Hexcore,Piltover / Zaun,Arcane/hextech construct associated with Viktor; continuity requires review.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AHexcore,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:lantern-thresh,Thresh's Lantern,Shadow Isles,"Thresh's lantern imprisons souls, including Senna's before her escape.",CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AThresh's_Lantern,,NEEDS_OFFICIAL_ASSET,,TRUE
+artifact:blade-ruined-king,Blade of the Ruined King,Camavor / Shadow Isles,Weapon associated with Viego.,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ABlade_of_the_Ruined_King,,NEEDS_OFFICIAL_ASSET,,TRUE

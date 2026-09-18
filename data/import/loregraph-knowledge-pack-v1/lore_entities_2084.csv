@@ -1,0 +1,10 @@
+﻿entity_id,name,entity_type,description,region,canon_status,needs_review,source_url
+entity:rhaast,Rhaast,DARKIN_ENTITY,The Darkin within Kayn's scythe.,Shurima / Darkin,CURRENT_OR_REVIEW,TRUE,
+entity:alune,Alune,SPIRIT_CHARACTER,Aphelios's twin sister who guides him from the spirit realm.,Targon / Spirit Realm,CURRENT_OR_REVIEW,TRUE,
+entity:tybaulk,Tybaulk,DEMON,A demon tied to Annie and the form known as Tibbers.,Noxus / Spirit Realm,CURRENT_OR_REVIEW,TRUE,
+entity:ashlesh,Ashlesh,DEMON,A powerful demon of joy bound to Nilah.,Kathkan / Spirit Realm,CURRENT_OR_REVIEW,TRUE,
+entity:aspect-of-war,Aspect of War,CELESTIAL_ASPECT,The celestial Aspect that inhabited Atreus before Aatrox killed it.,Targon,CURRENT_OR_REVIEW,TRUE,
+entity:the-void,The Void,COSMIC_CONCEPT,The unknowable nothing outside existence that breaches Runeterra through Void incursions.,The Void,CURRENT_OR_REVIEW,TRUE,
+artifact:world-runes,World Runes,ARTIFACT,Primal runes of immense power tied to Runeterra's formation and the Rune Wars.,Runeterra,CURRENT_OR_REVIEW,TRUE,
+artifact:aion-erna,Aion Er'na,ARTIFACT,A legendary Kinkou relic associated with Yunara.,Ionia,CURRENT_OR_REVIEW,TRUE,
+artifact:sun-disc,Sun Disc,ARTIFACT,The Shuriman construct used in the Ascension ritual.,Shurima,CURRENT_OR_REVIEW,TRUE,

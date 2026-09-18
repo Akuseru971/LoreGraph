@@ -9,7 +9,9 @@
  */
 
 export type AnalyticsEvent =
+  | { name: "page_view"; path: string; title?: string }
   | { name: "champion_view"; slug: string; region: string; source?: string }
+  | { name: "graph_open"; characterSlug: string }
   | { name: "relationship_open"; relationshipId: string; from: string; to: string }
   | { name: "graph_node_click"; nodeId: string; nodeType: string; depth: number }
   | {
@@ -18,6 +20,14 @@ export type AnalyticsEvent =
       to: string;
       strategy: string;
       hops: number | null;
+      found: boolean;
+    }
+  | {
+      name: "connection_complete";
+      from: string;
+      to: string;
+      strategy: string;
+      hops: number;
       found: boolean;
     }
   | { name: "connection_share"; from: string; to: string; format: string }
@@ -30,7 +40,71 @@ export type AnalyticsEvent =
   | { name: "region_filter"; region: string }
   | { name: "signup"; method: string }
   | { name: "return_visit"; daysSinceFirst: number }
-  | { name: "xp_awarded"; amount: number; reason: string };
+  | { name: "xp_awarded"; amount: number; reason: string }
+  | {
+      name: "cinematic_start";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_complete";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_scene_view";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_skip";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_replay";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_recording_mode";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_format_select";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    }
+  | {
+      name: "cinematic_share";
+      journeyType: string;
+      sourceChampion: string;
+      targetChampion: string;
+      sceneCount: number;
+      completionPercent: number;
+    };
 
 export type AnalyticsSink = (event: AnalyticsEvent, context: EventContext) => void;
 
