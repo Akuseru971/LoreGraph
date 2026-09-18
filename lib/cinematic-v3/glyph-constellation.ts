@@ -3,6 +3,15 @@ import type {
   ConstellationContourGroup,
   ConstellationLine,
 } from "@/types";
+import {
+  layoutSimplifiedGlyphs,
+  normalizeGlyphContours,
+  primaryStarIndices,
+  simplifyGlyphContours,
+  validateGlyphLayout,
+  WORD_TARGET_HEIGHT,
+  type PlacedGlyph,
+} from "./glyph-simplify";
 
 export interface GlyphPoint {
   x: number;
@@ -199,10 +208,11 @@ export interface BuildGlyphConstellationOptions {
   heroStarId: string;
   layout: FontLayoutResult;
   targetWidth?: number;
+  targetHeight?: number;
   centerY?: number;
 }
 
-/** Convert laid-out glyph contours into constellation anchor/line data. */
+/** Convert laid-out glyph contours into simplified constellation anchor/line data. */
 export function buildConstellationFromGlyphs(
   opts: BuildGlyphConstellationOptions,
 ): {
@@ -210,53 +220,73 @@ export function buildConstellationFromGlyphs(
   lines: ConstellationLine[];
   contourGroups: ConstellationContourGroup[];
 } {
-  const targetWidth = opts.targetWidth ?? 0.72;
+  const targetWidth = opts.targetWidth ?? 0.7;
+  const targetHeight = opts.targetHeight ?? WORD_TARGET_HEIGHT;
   const centerY = opts.centerY ?? 0.44;
-  const { glyphs, bounds, totalWidth } = opts.layout;
-  const scale = targetWidth / Math.max(1e-6, totalWidth);
-  const height = (bounds.maxY - bounds.minY) * scale;
-  const yOffset = centerY - (bounds.minY * scale + height / 2);
-  let xCursor = 0.5 - (totalWidth * scale) / 2;
+
+  const simplifiedGlyphs = opts.layout.glyphs.map((g) => ({
+    char: g.char,
+    advance: g.advance,
+    contours: normalizeGlyphContours(simplifyGlyphContours(g.char, g.contours)),
+  }));
+
+  const { placed, totalWidth } = layoutSimplifiedGlyphs(simplifiedGlyphs);
+  const layoutIssues = validateGlyphLayout(placed);
+  if (layoutIssues.length) {
+    console.warn(`[${opts.displayName}] glyph layout issues:`, layoutIssues.map((i) => i.message));
+  }
+
+  const wordBounds = boundsFromPlaced(placed);
+  const scaleX = targetWidth / Math.max(1e-6, totalWidth);
+  const scaleY = targetHeight / Math.max(1e-6, wordBounds.height);
+  const yOffset = centerY - (wordBounds.minY * scaleY + wordBounds.height * scaleY) / 2;
+  const xOffset = 0.5 - (totalWidth * scaleX) / 2;
 
   const anchors: ChampionConstellationAnchor[] = [];
   const contourGroups: ConstellationContourGroup[] = [];
-  const strokeLinks: Array<{ from: string; to: string }> = [];
+  const strokeLinks: Array<{ from: string; to: string; weight: ConstellationLine["weight"] }> = [];
 
-  for (let li = 0; li < glyphs.length; li++) {
-    const { char, contours, advance } = glyphs[li];
+  for (let li = 0; li < placed.length; li++) {
+    const { char, contours } = placed[li];
     const groupId = `letter-${li}`;
     contourGroups.push({ id: groupId, label: char, revealPhase: 1 });
 
     for (let ci = 0; ci < contours.length; ci++) {
       const contour = contours[ci];
       const prefix = `${groupId}-c${ci}`;
+      const primaries = primaryStarIndices(contour.points, contour.closed);
+      const lineWeight = contour.role === "primary" ? "SUBTLE" : "SUBTLE";
+
       for (let pi = 0; pi < contour.points.length; pi++) {
         const p = contour.points[pi];
         const id = `${prefix}-p${pi}`;
-        const isTerminal = pi === 0 || pi === contour.points.length - 1;
+        const isPrimary = primaries.has(pi);
         anchors.push({
           id,
-          x: round4(xCursor + p.x * scale),
-          y: round4(yOffset + p.y * scale),
-          category: "CONTOUR",
-          visualWeight: isTerminal ? "HIGH" : "MEDIUM",
+          x: round4(xOffset + p.x * scaleX),
+          y: round4(yOffset + p.y * scaleY),
+          category: isPrimary ? "ICONIC" : "CONTOUR",
+          visualWeight: isPrimary ? "HIGH" : "LOW",
           revealPhase: 1,
           contourGroup: groupId,
-          lineWeight: ci === 0 ? "ICONIC" : "NORMAL",
+          lineWeight,
           connectsTo: [],
         });
         if (pi < contour.points.length - 1) {
-          strokeLinks.push({ from: id, to: `${prefix}-p${pi + 1}` });
+          strokeLinks.push({
+            from: id,
+            to: `${prefix}-p${pi + 1}`,
+            weight: lineWeight,
+          });
         }
         if (contour.closed && pi === contour.points.length - 1 && contour.points.length > 2) {
-          strokeLinks.push({ from: id, to: `${prefix}-p0` });
+          strokeLinks.push({ from: id, to: `${prefix}-p0`, weight: lineWeight });
         }
       }
     }
-    xCursor += advance * scale + 0.02 * scale;
   }
 
-  const midLetter = Math.floor(glyphs.length / 2);
+  const midLetter = Math.floor(placed.length / 2);
   const midGroup = `letter-${midLetter}`;
   const midAnchors = anchors.filter((a) => a.contourGroup === midGroup);
   const heroAnchor =
@@ -269,7 +299,7 @@ export function buildConstellationFromGlyphs(
     heroAnchor.id = opts.heroStarId;
     heroAnchor.category = "ICONIC";
     heroAnchor.visualWeight = "HERO";
-    heroAnchor.lineWeight = "ICONIC";
+    heroAnchor.lineWeight = "SUBTLE";
     for (const link of strokeLinks) {
       if (link.from === oldId) link.from = opts.heroStarId;
       if (link.to === oldId) link.to = opts.heroStarId;
@@ -281,19 +311,32 @@ export function buildConstellationFromGlyphs(
     if (from) from.connectsTo = [...(from.connectsTo ?? []), link.to];
   }
 
-  const lines: ConstellationLine[] = [];
-  for (const a of anchors) {
-    for (const to of a.connectsTo ?? []) {
-      lines.push({
-        from: a.id,
-        to,
-        weight: a.lineWeight ?? "NORMAL",
-        category: a.category,
-      });
-    }
-  }
+  const lines: ConstellationLine[] = strokeLinks.map((link) => ({
+    from: link.from,
+    to: link.to,
+    weight: link.weight,
+    category: "CONTOUR",
+  }));
 
   return { anchors, lines, contourGroups };
+}
+
+function boundsFromPlaced(placed: PlacedGlyph[]) {
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (const g of placed) {
+    for (const c of g.contours) {
+      for (const p of c.points) {
+        minX = Math.min(minX, p.x);
+        maxX = Math.max(maxX, p.x);
+        minY = Math.min(minY, p.y);
+        maxY = Math.max(maxY, p.y);
+      }
+    }
+  }
+  return { minX, maxX, minY, maxY, width: maxX - minX, height: maxY - minY };
 }
 
 function round4(n: number): number {

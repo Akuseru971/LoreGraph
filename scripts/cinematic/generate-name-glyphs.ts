@@ -16,7 +16,7 @@ const FONT_PATH = path.join(process.cwd(), "public/fonts/InstrumentSerif-Regular
 const OUT_PATH = path.join(process.cwd(), "data/cinematic/name-glyphs.generated.ts");
 
 const SPECS = [
-  { id: "name:aatrox", characterId: "char:aatrox", displayName: "AATROX", heroStarId: "name-hero", targetWidth: 0.74 },
+  { id: "name:aatrox", characterId: "char:aatrox", displayName: "AATROX", heroStarId: "name-hero", targetWidth: 0.7 },
   { id: "name:yasuo", characterId: "char:yasuo", displayName: "YASUO", heroStarId: "name-hero", targetWidth: 0.7 },
   { id: "name:yone", characterId: "char:yone", displayName: "YONE", heroStarId: "name-hero", targetWidth: 0.68 },
   { id: "name:viego", characterId: "char:viego", displayName: "VIEGO", heroStarId: "name-hero", targetWidth: 0.7 },
@@ -24,7 +24,7 @@ const SPECS = [
 ];
 
 const FONT_SIZE = 120;
-const TRACKING = 0.04;
+const TRACKING = 0.12;
 
 function main() {
   const font = opentype.parse(fs.readFileSync(FONT_PATH)) as Font;

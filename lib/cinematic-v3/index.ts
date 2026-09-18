@@ -96,3 +96,4 @@ export {
   HUB_MAX_WIDTH_PCT,
 } from "./name-fit";
 export { evaluateHubMotion, HUB_READABILITY_SAMPLE_T } from "./motion-curve";
+export { validateNameGlyphs } from "./validate-name-glyphs";
