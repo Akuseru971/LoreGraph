@@ -8,6 +8,7 @@ import {
   linesForVisibleAnchors,
   starRadiusForWeight,
 } from "@/lib/cinematic-v3/constellation-builder";
+import { fitConstellationToSafeFrame } from "@/lib/cinematic-v3/name-fit";
 import { isNameConstellation } from "@/lib/cinematic-v3/name-constellation";
 import type { ChampionConstellation } from "@/types";
 
@@ -23,6 +24,8 @@ const MODE_LINE_BOOST: Record<NameConstellationMode, number> = {
   outro: 1.12,
 };
 
+const HUB_CENTER_Y = 44;
+
 export function NameConstellation({
   constellation,
   mode = "intro",
@@ -30,6 +33,8 @@ export function NameConstellation({
   heroStarId,
   heroIntensity = 1,
   zoomProgress = 0,
+  plungeZoom = 0,
+  nameBreathing = 1,
   opacity = 1,
   lineColor = "#e8d4a0",
   starColor = "#fff8ee",
@@ -41,11 +46,14 @@ export function NameConstellation({
 }: {
   constellation: ChampionConstellation;
   mode?: NameConstellationMode;
-  /** Global fade for entire word — all stars/lines appear together. */
   nameOpacity?: number;
   heroStarId?: string;
   heroIntensity?: number;
+  /** Legacy plunge zoom — use plungeZoom when set. */
   zoomProgress?: number;
+  /** 0 during readable hub; ramps only after full name is visible. */
+  plungeZoom?: number;
+  nameBreathing?: number;
   opacity?: number;
   lineColor?: string;
   starColor?: string;
@@ -65,12 +73,43 @@ export function NameConstellation({
   const heroId = heroStarId ?? constellation.heroStarId;
   const heroPos = getHeroAnchorPosition(constellation, heroId);
 
+  const hubFit = React.useMemo(
+    () => (mode === "inter-chapter" ? fitConstellationToSafeFrame(constellation) : null),
+    [constellation, mode],
+  );
+
+  const effectivePlunge = plungeZoom > 0 ? plungeZoom : zoomProgress;
   const modeScale = MODE_SCALE[mode];
-  const zoomCx = heroPos.x * 100;
-  const zoomCy = heroPos.y * 100;
-  const scale = (1 + zoomProgress * 3.2) * modeScale;
-  const translateX = zoomProgress * (50 - zoomCx) * 0.9;
-  const translateY = zoomProgress * (50 - zoomCy) * 0.9;
+  const heroCx = heroPos.x * 100;
+  const heroCy = heroPos.y * 100;
+
+  let scale = (1 + effectivePlunge * 3.2) * modeScale;
+  let translateX = effectivePlunge * (50 - heroCx) * 0.9;
+  let translateY = effectivePlunge * (50 - heroCy) * 0.9;
+  let originX = heroCx;
+  let originY = heroCy;
+
+  if (mode === "inter-chapter" && hubFit) {
+    const fitScale = hubFit.scale * nameBreathing;
+    const centerOriginX = hubFit.bounds.centerX * 100;
+    const centerOriginY = hubFit.bounds.centerY * 100;
+
+    if (effectivePlunge < 0.08) {
+      scale = fitScale;
+      translateX = hubFit.offsetX * 100;
+      translateY = hubFit.offsetY * 100;
+      originX = centerOriginX;
+      originY = centerOriginY;
+    } else {
+      const plungeT = (effectivePlunge - 0.08) / 0.92;
+      const plungeScale = fitScale * (1 + plungeT * 1.8);
+      scale = plungeScale;
+      originX = centerOriginX + (heroCx - centerOriginX) * plungeT;
+      originY = centerOriginY + (heroCy - centerOriginY) * plungeT;
+      translateX = hubFit.offsetX * 100 * (1 - plungeT) + plungeT * (50 - heroCx) * 0.75;
+      translateY = hubFit.offsetY * 100 * (1 - plungeT) + plungeT * (HUB_CENTER_Y - heroCy) * 0.75;
+    }
+  }
 
   const anchorById = React.useMemo(
     () => new Map(constellation.anchors.map((a) => [a.id, a])),
@@ -111,66 +150,66 @@ export function NameConstellation({
         filter={glowOn ? `url(#${filterId})` : undefined}
         style={{
           transform: `translate(${translateX}%, ${translateY}%) scale(${scale})`,
-          transformOrigin: `${zoomCx}% ${zoomCy}%`,
+          transformOrigin: `${originX}% ${originY}%`,
         }}
       >
         {showLines &&
           lines.map((line) => {
-          const from = anchorById.get(line.from);
-          const to = anchorById.get(line.to);
-          if (!from || !to) return null;
-          const stroke = lineStrokeForWeight(line.weight);
-          const drawT = globalReveal ? 1 : line.drawT;
-          return (
-            <line
-              key={`${line.from}:${line.to}`}
-              x1={from.x * 100}
-              y1={from.y * 100}
-              x2={to.x * 100}
-              y2={to.y * 100}
-              stroke={lineColor}
-              strokeWidth={stroke.width * lineBoost}
-              strokeOpacity={stroke.opacity * drawT * nameOpacity}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          );
+            const from = anchorById.get(line.from);
+            const to = anchorById.get(line.to);
+            if (!from || !to) return null;
+            const stroke = lineStrokeForWeight(line.weight);
+            const drawT = globalReveal ? 1 : line.drawT;
+            return (
+              <line
+                key={`${line.from}:${line.to}`}
+                x1={from.x * 100}
+                y1={from.y * 100}
+                x2={to.x * 100}
+                y2={to.y * 100}
+                stroke={lineColor}
+                strokeWidth={stroke.width * lineBoost}
+                strokeOpacity={stroke.opacity * drawT * nameOpacity}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            );
           })}
         {showStars &&
           constellation.anchors.map((anchor) => {
-          const isHero = anchor.id === heroId;
-          const radius = starRadiusForWeight(anchor.visualWeight ?? "MEDIUM");
-          const dim = !isHero && softenNonHero > 0 ? 1 - softenNonHero * 0.6 : 1;
-          const heroBoost = isHero ? heroIntensity : 1;
-          const starOpacity = nameOpacity * (isHero ? 0.98 : 0.86) * dim;
-          return (
-            <g key={anchor.id}>
-              {isHero && heroIntensity > 1.1 ? (
+            const isHero = anchor.id === heroId;
+            const radius = starRadiusForWeight(anchor.visualWeight ?? "MEDIUM");
+            const dim = !isHero && softenNonHero > 0 ? 1 - softenNonHero * 0.6 : 1;
+            const heroBoost = isHero ? heroIntensity : 1;
+            const starOpacity = nameOpacity * (isHero ? 0.98 : 0.86) * dim;
+            return (
+              <g key={anchor.id}>
+                {isHero && heroIntensity > 1.1 ? (
+                  <circle
+                    cx={anchor.x * 100}
+                    cy={anchor.y * 100}
+                    r={radius * 5 * heroBoost}
+                    fill="rgba(255,240,200,0.14)"
+                  />
+                ) : null}
                 <circle
                   cx={anchor.x * 100}
                   cy={anchor.y * 100}
-                  r={radius * 5 * heroBoost}
-                  fill="rgba(255,240,200,0.14)"
+                  r={radius * (isHero ? 1.55 * heroBoost : 1.08)}
+                  fill={isHero ? "#ffffff" : starColor}
+                  fillOpacity={starOpacity}
                 />
-              ) : null}
-              <circle
-                cx={anchor.x * 100}
-                cy={anchor.y * 100}
-                r={radius * (isHero ? 1.55 * heroBoost : 1.08)}
-                fill={isHero ? "#ffffff" : starColor}
-                fillOpacity={starOpacity}
-              />
-              {!isHero ? (
-                <circle
-                  cx={anchor.x * 100}
-                  cy={anchor.y * 100}
-                  r={radius * 2.4}
-                  fill={starColor}
-                  fillOpacity={0.1 * dim * nameOpacity}
-                />
-              ) : null}
-            </g>
-          );
+                {!isHero ? (
+                  <circle
+                    cx={anchor.x * 100}
+                    cy={anchor.y * 100}
+                    r={radius * 2.4}
+                    fill={starColor}
+                    fillOpacity={0.1 * dim * nameOpacity}
+                  />
+                ) : null}
+              </g>
+            );
           })}
       </g>
     </svg>

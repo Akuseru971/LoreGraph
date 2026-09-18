@@ -76,7 +76,8 @@ export function CinematicJourneyPlayer({
     directorPreview !== "arrival" &&
     directorPreview !== "departure" &&
     directorPreview !== "motion-loop" &&
-    directorPreview !== "background-only";
+    directorPreview !== "background-only" &&
+    directorPreview !== "full-aatrox";
   const hasOutro =
     Boolean(journey.outroSequence) &&
     directorPreview !== "intro" &&
@@ -85,7 +86,8 @@ export function CinematicJourneyPlayer({
     directorPreview !== "arrival" &&
     directorPreview !== "departure" &&
     directorPreview !== "motion-loop" &&
-    directorPreview !== "background-only";
+    directorPreview !== "background-only" &&
+    directorPreview !== "full-aatrox";
 
   const quality = React.useMemo(() => {
     if (recordMode) return "high" as const;
@@ -125,7 +127,7 @@ export function CinematicJourneyPlayer({
   );
   const previewTravelProgress =
     directorPreview === "inter-chapter"
-      ? 0.38
+      ? 0.42
       : directorPreview === "arrival"
         ? 0.92
         : directorPreview === "departure"
@@ -284,6 +286,22 @@ export function CinematicJourneyPlayer({
   }, [journey.scenes, use2DBackgrounds]);
 
   React.useEffect(() => {
+    if (directorPreview !== "background-only" || journeyPhase !== "playing") return;
+    setArrived(true);
+    setTransitionProgress(1);
+    const cycleMs = 4000;
+    let idx = 0;
+    const tick = () => {
+      idx = (idx + 1) % journey.scenes.length;
+      setSceneIndex(idx);
+      setArrived(true);
+      setTransitionProgress(1);
+    };
+    const interval = window.setInterval(tick, cycleMs);
+    return () => window.clearInterval(interval);
+  }, [directorPreview, journeyPhase, journey.scenes.length]);
+
+  React.useEffect(() => {
     if (directorPreview !== "motion-loop" || journeyPhase !== "playing") return;
     const loopScene = Math.max(1, directorSceneIndex || 2);
     setSceneIndex(loopScene);
@@ -359,7 +377,7 @@ export function CinematicJourneyPlayer({
   }, [journeyPhase, outroTotalMs]);
 
   React.useEffect(() => {
-    if (recordActive || journeyPhase !== "playing") return;
+    if (recordActive || journeyPhase !== "playing" || backgroundOnly) return;
     if (sceneIndex === 0 && hasIntro) {
       setTransitionProgress(1);
       setArrived(true);
@@ -551,6 +569,7 @@ export function CinematicJourneyPlayer({
   const useWebGL = quality !== "low";
   const narrativeVisible =
     journeyPhase === "playing" &&
+    !backgroundOnly &&
     (recordActive ? Boolean(recordPhase?.textVisible) : arrived);
   const effectiveAspect = recordActive ? "16:9" : aspectMode;
   const showCanvas = journeyPhase === "playing" || journeyPhase === "outro";
@@ -632,7 +651,11 @@ export function CinematicJourneyPlayer({
           />
         ) : null}
 
-        {nameConstellation && chapterHubState && journeyPhase === "playing" && sceneIndex > 0 ? (
+        {nameConstellation &&
+        chapterHubState &&
+        journeyPhase === "playing" &&
+        sceneIndex > 0 &&
+        !backgroundOnly ? (
           <ChapterHubOverlay
             constellation={nameConstellation}
             hubState={chapterHubState}

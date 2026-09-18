@@ -18,34 +18,30 @@ export function ChapterHubOverlay({
   const atmosphere = getAtmosphereConfig("CELESTIAL");
   if (!visible || !hubState.showName) return null;
 
-  const depth = hubState.nameDepth;
-  const scale = hubState.nameScale * (1 + hubState.cameraPullback * 0.08);
-  const starCx = 50;
-  const starCy = 44;
+  const depth = hubState.nameDepth * 0.6;
 
   return (
     <div
       className="pointer-events-none absolute inset-0 z-[55]"
       style={{
         opacity: 1,
-        perspective: "900px",
-        perspectiveOrigin: "50% 42%",
+        perspective: "1000px",
+        perspectiveOrigin: "50% 44%",
       }}
       aria-hidden
     >
       <div
         className="absolute inset-0"
         style={{
-          opacity: 0.25 + hubState.cameraPullback * 0.35,
-          background: `radial-gradient(ellipse 100% 85% at 50% 42%, ${atmosphere.background}f0 0%, transparent 72%)`,
+          opacity: 0.15 + hubState.cameraPullback * 0.2,
+          background: `radial-gradient(ellipse 90% 70% at 50% 44%, ${atmosphere.background}cc 0%, transparent 68%)`,
         }}
       />
       <div
-        className="absolute inset-[-2%]"
+        className="absolute inset-0 flex items-center justify-center"
         style={{
           opacity: hubState.nameOpacity,
-          transform: `translateZ(${depth}px) scale(${scale})`,
-          transformOrigin: `${starCx}% ${starCy}%`,
+          transform: `translateZ(${depth}px)`,
           transformStyle: "preserve-3d",
         }}
       >
@@ -55,16 +51,17 @@ export function ChapterHubOverlay({
           nameOpacity={1}
           heroStarId={hubState.destinationStarId}
           heroIntensity={hubState.heroIntensity}
-          zoomProgress={hubState.zoomProgress}
+          plungeZoom={hubState.plungeZoom}
+          nameBreathing={hubState.nameBreathing}
           softenNonHero={hubState.softenNonHero}
           className="h-full w-full"
         />
       </div>
-      {hubState.starIntensity > 1.3 ? (
+      {hubState.starIntensity > 1.25 && hubState.plungeZoom < 0.15 ? (
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(circle at 50% 42%, rgba(255,245,220,${(hubState.starIntensity - 1) * 0.1}) 0%, transparent 50%)`,
+            background: `radial-gradient(circle at 50% 44%, rgba(255,245,220,${(hubState.starIntensity - 1) * 0.08}) 0%, transparent 48%)`,
             opacity: hubState.nameOpacity,
           }}
         />

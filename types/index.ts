@@ -693,6 +693,8 @@ export type CinematicDirectorPreview =
   | "departure"
   | "motion-loop"
   | "background-only"
+  | "name-fit"
+  | "full-aatrox"
   | "full";
 
 export interface CinematicPlayerOptions {

@@ -85,3 +85,14 @@ export {
   generateAssetCoverageReport,
   generateVisualQaReport,
 } from "./generate-reports";
+export {
+  fitConstellationToSafeFrame,
+  validateConstellationHubFit,
+  formatProjectedBounds,
+  getConstellationBounds,
+  targetWidthForName,
+  HUB_HORIZONTAL_MARGIN,
+  HUB_VERTICAL_MARGIN,
+  HUB_MAX_WIDTH_PCT,
+} from "./name-fit";
+export { evaluateHubMotion, HUB_READABILITY_SAMPLE_T } from "./motion-curve";

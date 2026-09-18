@@ -12,6 +12,7 @@ import { computeContourConnectivity } from "./constellation-connectivity";
 import { compositionForScene } from "./composition";
 import { nameConstellationByCharacterId } from "@/data/cinematic/name-constellations";
 import { chapterHubTimingMs, CHAPTER_HUB_TIMING } from "./chapter-hub";
+import { validateConstellationHubFit } from "./name-fit";
 import { DEFAULT_INTRO_TIMING } from "./intro-outro";
 import { DEFAULT_RECORD_TIMING, recordTimingForScene, totalSceneRecordMs } from "./record-mode";
 import type { CinematicJourney } from "@/types";
@@ -121,6 +122,14 @@ export function validateFlagshipCoverage(journey: CinematicJourney): CinematicVa
           level: "WARNING",
           kind: "name_missing_font_source",
           message: "Name constellation lacks font-derived typographySource",
+        });
+      }
+      const hubFitIssue = validateConstellationHubFit(nameConstellation);
+      if (hubFitIssue) {
+        issues.push({
+          level: "ERROR",
+          kind: "name_hub_fit",
+          message: `${hubFitIssue.displayName} hub fit failed: ${hubFitIssue.message}`,
         });
       }
     }

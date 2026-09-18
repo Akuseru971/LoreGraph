@@ -50,7 +50,7 @@ export function computeChapterHubState(
 }
 
 export const CHAPTER_HUB_TIMING = {
-  nameReadableMs: { min: 600, max: 1000 },
+  nameReadableMs: { min: 450, max: 750 },
   starSelectMs: { min: 250, max: 450 },
   plungeMs: { min: 900, max: 1600 },
   arrivalMs: { min: 250, max: 450 },

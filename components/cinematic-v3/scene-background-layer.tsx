@@ -134,9 +134,10 @@ export function SceneBackgroundLayer({
     prevBlur = hub.sceneDissolve * 6;
     prevScale = 1 + hub.sceneDissolve * 0.06;
 
-    currentOpacity = hub.nextBackground * settledOpacity;
-    currentBlur = Math.max(0, (1 - hub.nextBackground) * 12);
-    currentScale = 1.08 - hub.arrivalSettle * 0.06;
+    const plungePreview = hub.plunge * 0.18;
+    currentOpacity = Math.min(settledOpacity, (hub.nextBackground * 0.88 + plungePreview) * settledOpacity);
+    currentBlur = Math.max(0, (1 - hub.nextBackground) * 10 - hub.plunge * 2);
+    currentScale = 1.04 + hub.plunge * 0.1 - hub.arrivalSettle * 0.06;
   } else if (arrived) {
     currentOpacity = settledOpacity;
   }
@@ -169,9 +170,9 @@ export function SceneBackgroundLayer({
         style={{
           background:
             textGradientSide === "left"
-              ? "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.28) 35%, transparent 62%)"
-              : "linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.45) 100%)",
-          opacity: arrived ? 0.85 : 0.5 + (hub?.nextBackground ?? 0) * 0.35,
+              ? "linear-gradient(90deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.18) 32%, transparent 58%)"
+              : "linear-gradient(180deg, transparent 52%, rgba(0,0,0,0.32) 100%)",
+          opacity: arrived ? 0.5 : 0.22 + (hub?.nextBackground ?? 0) * 0.18,
         }}
       />
       {showDiagnostics && process.env.NODE_ENV !== "production" ? (

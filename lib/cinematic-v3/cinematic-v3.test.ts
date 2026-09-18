@@ -21,6 +21,12 @@ import { validateFlagshipConstellation } from "./validate-constellation";
 import { computeContourConnectivity } from "./constellation-connectivity";
 import { computeFlagshipPremiumMetrics } from "./flagship-premium-metrics";
 import { computeChapterHubState, chapterHubTimingMs } from "./chapter-hub";
+import {
+  fitConstellationToSafeFrame,
+  formatProjectedBounds,
+  validateConstellationHubFit,
+} from "./name-fit";
+import { evaluateHubMotion, HUB_READABILITY_SAMPLE_T } from "./motion-curve";
 import { nameConstellationByCharacterId } from "@/data/cinematic/name-constellations";
 import { computeRecordPhaseState, totalSceneRecordMs } from "./record-mode";
 
@@ -324,11 +330,43 @@ describe("Cinematic Journey V3", () => {
     expect(hub.nameOpacity).toBeGreaterThan(0.7);
     expect(hub.cameraPullback).toBeGreaterThan(0.85);
     expect(hub.destinationStarId).toBeTruthy();
+    const readable = computeChapterHubState(
+      HUB_READABILITY_SAMPLE_T,
+      nameConstellation,
+      3,
+      journey.scenes.length,
+    );
+    expect(readable.plungeZoom).toBe(0);
+    expect(readable.nameReadable).toBeGreaterThan(0.85);
     const midPlunge = computeChapterHubState(0.55, nameConstellation, 3, journey.scenes.length);
     expect(midPlunge.starIntensity).toBeGreaterThan(1.2);
     expect(midPlunge.plunge).toBeGreaterThan(0.03);
+    expect(midPlunge.plungeZoom).toBeGreaterThan(0.04);
     const latePlunge = computeChapterHubState(0.78, nameConstellation, 3, journey.scenes.length);
-    expect(latePlunge.nextBackground).toBeGreaterThan(0.15);
+    expect(latePlunge.nextBackground).toBeGreaterThan(0.35);
+  });
+
+  it("flagship name constellations fit safe frame at readability sample", () => {
+    for (const slug of ["aatrox", "yasuo", "yone", "viego", "skarner"]) {
+      const constellation = nameConstellationByCharacterId.get(`char:${slug}`)!;
+      const issue = validateConstellationHubFit(constellation);
+      expect(issue).toBeNull();
+      const fit = fitConstellationToSafeFrame(constellation);
+      expect(fit.projected.width).toBeLessThanOrEqual(0.78);
+      expect(fit.projected.minX).toBeGreaterThanOrEqual(0.08);
+      expect(fit.projected.maxX).toBeLessThanOrEqual(0.92);
+    }
+  });
+
+  it("motion curve separates readable name from plunge zoom", () => {
+    const readable = evaluateHubMotion(HUB_READABILITY_SAMPLE_T);
+    expect(readable.plungeZoom).toBe(0);
+    expect(readable.nameReadable).toBeGreaterThan(0.8);
+    const plunge = evaluateHubMotion(0.55);
+    expect(plunge.plungeZoom).toBeGreaterThan(0.02);
+    expect(plunge.nextBackground).toBeGreaterThan(0.01);
+    const earlyBg = evaluateHubMotion(0.53);
+    expect(earlyBg.nextBackground).toBeGreaterThan(0);
   });
 
   it("name constellations are derived from Instrument Serif glyph geometry", () => {

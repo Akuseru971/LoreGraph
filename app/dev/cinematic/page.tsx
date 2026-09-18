@@ -18,6 +18,7 @@ import {
   type ConstellationQaMode,
 } from "@/components/cinematic-v3/constellation-qa-view";
 import { constellationById } from "@/data/cinematic/constellations";
+import { NameFitQa } from "@/components/cinematic-v3/name-fit-qa";
 import { NameTypographyQa } from "@/components/cinematic-v3/name-typography-qa";
 import { validateFlagshipConstellation } from "@/lib/cinematic-v3/validate-constellation";
 import type { CinematicAspectMode, CinematicDirectorPreview, CinematicPlayerOptions } from "@/types";
@@ -37,7 +38,8 @@ const AATROX_SCENES = [
   { label: "Scene 7 — Pantheon", index: 7 },
   { label: "Outro", preview: "outro" as const },
   { label: "Motion Loop (2↔3)", preview: "motion-loop" as const, index: 2 },
-  { label: "Background Only", preview: "background-only" as const, index: 2 },
+  { label: "Background Only", preview: "background-only" as const, index: 0 },
+  { label: "Full Aatrox", preview: "full-aatrox" as const },
 ];
 
 export default function CinematicDevPage() {
@@ -150,7 +152,13 @@ export default function CinematicDevPage() {
         </button>
       </div>
 
-      {mode === "character" ? <NameTypographyQa /> : null}
+      {mode === "character" ? (
+        <>
+          <NameFitQa />
+          <div className="mt-6" />
+          <NameTypographyQa />
+        </>
+      ) : null}
 
       {mode === "character" && journey?.introSequence ? (
         <section className="mt-10 rounded border border-line p-4">
@@ -251,6 +259,13 @@ export default function CinematicDevPage() {
             <button
               type="button"
               className="rounded-full border border-gold/60 px-3 py-1.5 text-xs text-gold"
+              onClick={() => launchDirector("full-aatrox")}
+            >
+              Full Aatrox Journey
+            </button>
+            <button
+              type="button"
+              className="rounded-full border border-line px-3 py-1.5 text-xs text-parchment hover:border-gold/50"
               onClick={() => {
                 setRecordMode(true);
                 launchDirector("full");
