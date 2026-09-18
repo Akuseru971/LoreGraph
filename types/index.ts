@@ -495,7 +495,10 @@ export interface CinematicScene {
   curated?: boolean;
 }
 
-export type ChampionConstellationAnchorImportance = "PRIMARY" | "SECONDARY";
+export type ChampionConstellationAnchorImportance =
+  | "PRIMARY"
+  | "SECONDARY"
+  | "MICRO";
 
 export interface ChampionConstellationAnchor {
   id: string;
@@ -538,11 +541,13 @@ export interface CinematicIntro {
   constellationId: string;
   heroStarId: string;
   timing: CinematicIntroTiming;
+  recordTiming?: CinematicIntroTiming;
   atmosphere?: AtmospherePreset;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
   showText?: boolean;
+  recordShowIntroTitle?: boolean;
   splashFocal?: { x: number; y: number };
 }
 
@@ -551,9 +556,12 @@ export interface CinematicOutro {
   constellationId: string;
   optionalSplashEcho?: CinematicSceneAsset;
   timing: CinematicOutroTiming;
+  recordTiming?: CinematicOutroTiming;
+  pathToAnchorMapping?: Record<string, string>;
   title?: string;
   subtitle?: string;
   showText?: boolean;
+  recordShowOutroTitle?: boolean;
   showSplashEcho?: boolean;
 }
 
@@ -561,17 +569,27 @@ export interface CinematicIntroOverride {
   constellationId?: string;
   heroStarId?: string;
   timing?: Partial<CinematicIntroTiming>;
+  recordTiming?: Partial<CinematicIntroTiming>;
   atmosphere?: AtmospherePreset;
   splashFocal?: { x: number; y: number };
   showText?: boolean;
+  recordShowIntroTitle?: boolean;
 }
 
 export interface CinematicOutroOverride {
   constellationId?: string;
   timing?: Partial<CinematicOutroTiming>;
+  recordTiming?: Partial<CinematicOutroTiming>;
+  pathToAnchorMapping?: Record<string, string>;
   showSplashEcho?: boolean;
   showText?: boolean;
+  recordShowOutroTitle?: boolean;
 }
+
+export type CinematicVisualStatus =
+  | "CURATED_IMAGE"
+  | "CURATED_ABSTRACT"
+  | "NEEDS_WORK";
 
 export type CinematicJourneyPhase = "intro" | "playing" | "outro";
 
@@ -596,6 +614,12 @@ export interface CinematicJourney {
   outroSequence?: CinematicOutro;
 }
 
+export type CinematicDirectorPreview =
+  | "intro"
+  | "outro"
+  | "scene"
+  | "full";
+
 export interface CinematicPlayerOptions {
   aspectMode?: CinematicAspectMode;
   recordMode?: boolean;
@@ -604,6 +628,8 @@ export interface CinematicPlayerOptions {
   environmentOnly?: boolean;
   showWatermark?: boolean;
   deterministic?: boolean;
+  directorPreview?: CinematicDirectorPreview;
+  directorSceneIndex?: number;
 }
 
 export type CinematicQualityLevel = "high" | "medium" | "low";

@@ -4,9 +4,12 @@ import { useReducedMotion } from "framer-motion";
 import * as React from "react";
 import { track } from "@/lib/analytics";
 import {
-  totalIntroMs,
-  totalOutroMs,
+  totalIntroMsForMode,
+  totalOutroMsForMode,
 } from "@/lib/cinematic-v3/intro-outro";
+import { constellationById } from "@/data/cinematic/constellation-anchors";
+import { getHeroAnchorPosition } from "./constellation-silhouette";
+import { IntroHandoffStar } from "./intro-handoff-star";
 import {
   computeRecordPhaseState,
   totalSceneRecordMs,
@@ -30,6 +33,7 @@ import { SignatureIntroSequence } from "./signature-intro-sequence";
 import { SignatureOutroSequence } from "./signature-outro-sequence";
 
 const SOUND_PREF_KEY = "loregraph.journey.sound";
+const RECORD_LEAD_IN_MS = 400;
 
 export function CinematicJourneyPlayer({
   journey,
@@ -51,27 +55,47 @@ export function CinematicJourneyPlayer({
   const showWatermark = playerOptions.showWatermark ?? false;
   const deterministic = playerOptions.deterministic ?? recordMode;
 
-  const hasIntro = Boolean(journey.introSequence);
-  const hasOutro = Boolean(journey.outroSequence);
+  const directorPreview = playerOptions.directorPreview ?? "full";
+  const directorSceneIndex = playerOptions.directorSceneIndex ?? 0;
+  const hasIntro = Boolean(journey.introSequence) && directorPreview !== "scene" && directorPreview !== "outro";
+  const hasOutro = Boolean(journey.outroSequence) && directorPreview !== "intro" && directorPreview !== "scene";
 
   const quality = React.useMemo(() => {
     if (recordMode) return "high" as const;
     return detectCinematicQuality(Boolean(reduceMotion));
   }, [reduceMotion, recordMode]);
 
-  const [journeyPhase, setJourneyPhase] = React.useState<CinematicJourneyPhase>(
-    hasIntro ? "intro" : "playing",
-  );
+  const initialPhase: CinematicJourneyPhase =
+    directorPreview === "outro"
+      ? "outro"
+      : directorPreview === "scene"
+        ? "playing"
+        : hasIntro
+          ? "intro"
+          : "playing";
+  const [journeyPhase, setJourneyPhase] = React.useState<CinematicJourneyPhase>(initialPhase);
   const [introElapsedMs, setIntroElapsedMs] = React.useState(0);
   const [outroElapsedMs, setOutroElapsedMs] = React.useState(0);
-  const [outroStarted, setOutroStarted] = React.useState(false);
-  const [sceneIndex, setSceneIndex] = React.useState(0);
+  const [outroStarted, setOutroStarted] = React.useState(directorPreview === "outro");
+  const [sceneIndex, setSceneIndex] = React.useState(
+    directorPreview === "scene"
+      ? directorSceneIndex
+      : directorPreview === "outro"
+        ? journey.scenes.length - 1
+        : 0,
+  );
   const [transitionProgress, setTransitionProgress] = React.useState(1);
   const [graphRevealProgress, setGraphRevealProgress] = React.useState(0);
   const [playing, setPlaying] = React.useState(false);
   const [arrived, setArrived] = React.useState(!hasIntro);
   const [visitedSceneIndices, setVisitedSceneIndices] = React.useState<number[]>(
-    hasIntro ? [] : [0],
+    directorPreview === "outro"
+      ? journey.scenes.map((_, i) => i)
+      : directorPreview === "scene"
+        ? Array.from({ length: directorSceneIndex + 1 }, (_, i) => i)
+        : hasIntro
+          ? []
+          : [0],
   );
   const [controlsVisible, setControlsVisible] = React.useState(!recordMode);
   const [soundEnabled, setSoundEnabled] = React.useState(false);
@@ -82,6 +106,8 @@ export function CinematicJourneyPlayer({
   const [recordWatermark, setRecordWatermark] = React.useState(showWatermark);
   const [sceneElapsedMs, setSceneElapsedMs] = React.useState(0);
   const [arrivalPulse, setArrivalPulse] = React.useState(0);
+  const [handoffProgress, setHandoffProgress] = React.useState(0);
+  const [recordLeadInDone, setRecordLeadInDone] = React.useState(!recordMode);
   const startedRef = React.useRef(false);
   const hideTimer = React.useRef<number | null>(null);
   const recordRaf = React.useRef<number | null>(null);
@@ -94,11 +120,18 @@ export function CinematicJourneyPlayer({
   const scene = journey.scenes[sceneIndex];
   const isEnding = scene?.type === "ENDING";
   const introTotalMs = journey.introSequence
-    ? totalIntroMs(journey.introSequence.timing)
+    ? totalIntroMsForMode(journey.introSequence, recordActive)
     : 0;
   const outroTotalMs = journey.outroSequence
-    ? totalOutroMs(journey.outroSequence.timing)
+    ? totalOutroMsForMode(journey.outroSequence, recordActive)
     : 0;
+  const heroAnchorPos = React.useMemo(() => {
+    const cid = journey.introSequence?.constellationId;
+    const c = cid ? constellationById.get(cid) : undefined;
+    return c
+      ? getHeroAnchorPosition(c, journey.introSequence?.heroStarId)
+      : { x: 0.64, y: 0.2 };
+  }, [journey.introSequence]);
 
   const recordPhase = React.useMemo(() => {
     if (!recordActive || !scene || journeyPhase !== "playing") return undefined;
@@ -106,26 +139,37 @@ export function CinematicJourneyPlayer({
   }, [recordActive, scene, sceneElapsedMs, journeyPhase]);
 
   const finishIntro = React.useCallback(() => {
+    if (directorPreview === "intro") return;
     setJourneyPhase("playing");
     setSceneIndex(0);
-    setTransitionProgress(0);
+    setTransitionProgress(0.15);
     setArrived(false);
     setVisitedSceneIndices([0]);
     setSceneElapsedMs(0);
-    setArrivalPulse(0);
-    const duration = journey.scenes[0]?.transitionDurationMs ?? 2800;
-    const start = performance.now();
-    const frame = () => {
-      const t = Math.min(1, (performance.now() - start) / duration);
-      setTransitionProgress(1 - Math.pow(1 - t, 3));
-      if (t < 1) requestAnimationFrame(frame);
+    setArrivalPulse(0.4);
+    setHandoffProgress(1);
+    const handoffStart = performance.now();
+    const handoffDuration = 700;
+    const travelDuration = journey.scenes[0]?.transitionDurationMs ?? 2400;
+    const travelStart = performance.now();
+    const handoffFrame = () => {
+      const ht = Math.min(1, (performance.now() - handoffStart) / handoffDuration);
+      setHandoffProgress(1 - ht);
+      if (ht < 1) requestAnimationFrame(handoffFrame);
+    };
+    requestAnimationFrame(handoffFrame);
+    const travelFrame = () => {
+      const t = Math.min(1, (performance.now() - travelStart) / travelDuration);
+      setTransitionProgress(0.15 + (1 - Math.pow(1 - t, 3)) * 0.85);
+      if (t < 1) requestAnimationFrame(travelFrame);
       else {
         setArrived(true);
-        setArrivalPulse(0.6);
+        setArrivalPulse(0.65);
+        setHandoffProgress(0);
       }
     };
-    requestAnimationFrame(frame);
-  }, [journey.scenes]);
+    requestAnimationFrame(travelFrame);
+  }, [journey.scenes, directorPreview]);
 
   const skipIntro = React.useCallback(() => {
     if (journeyPhase !== "intro" || recordActive) return;
@@ -157,7 +201,16 @@ export function CinematicJourneyPlayer({
   }, []);
 
   React.useEffect(() => {
-    if (journeyPhase !== "intro") return;
+    if (!recordMode) {
+      setRecordLeadInDone(true);
+      return;
+    }
+    const t = window.setTimeout(() => setRecordLeadInDone(true), RECORD_LEAD_IN_MS);
+    return () => window.clearTimeout(t);
+  }, [recordMode]);
+
+  React.useEffect(() => {
+    if (journeyPhase !== "intro" || !recordLeadInDone) return;
     introStart.current = performance.now();
     const tick = () => {
       const elapsed = performance.now() - introStart.current;
@@ -172,7 +225,7 @@ export function CinematicJourneyPlayer({
     return () => {
       if (introRaf.current) cancelAnimationFrame(introRaf.current);
     };
-  }, [journeyPhase, introTotalMs, finishIntro]);
+  }, [journeyPhase, introTotalMs, finishIntro, recordLeadInDone]);
 
   React.useEffect(() => {
     if (journeyPhase !== "outro") return;
@@ -322,6 +375,8 @@ export function CinematicJourneyPlayer({
     setTransitionProgress(hasIntro ? 0 : 1);
     setSceneElapsedMs(0);
     setArrivalPulse(0);
+    setHandoffProgress(0);
+    setRecordLeadInDone(!recordMode);
   };
 
   const jumpToScene = React.useCallback(
@@ -379,7 +434,14 @@ export function CinematicJourneyPlayer({
   const showCanvas = journeyPhase === "playing" || journeyPhase === "outro";
   const outroComplete = outroElapsedMs >= outroTotalMs;
   const canvasOpacity =
-    journeyPhase === "outro" ? Math.max(0.15, 1 - outroElapsedMs / (outroTotalMs * 0.6)) : 1;
+    journeyPhase === "outro"
+      ? Math.max(0.15, 1 - outroElapsedMs / (outroTotalMs * 0.6))
+      : handoffProgress > 0
+        ? 0.2 + (1 - handoffProgress) * 0.8
+        : journeyPhase === "intro"
+          ? 0
+          : 1;
+  const showRecordLeadIn = recordActive && !recordLeadInDone;
 
   return (
     <div
@@ -409,12 +471,25 @@ export function CinematicJourneyPlayer({
           </div>
         ) : null}
 
-        {journeyPhase === "intro" && journey.introSequence ? (
+        {showRecordLeadIn ? (
+          <div className="absolute inset-0 z-[70] bg-black" aria-hidden />
+        ) : null}
+
+        {journeyPhase === "intro" && journey.introSequence && recordLeadInDone ? (
           <SignatureIntroSequence
             intro={journey.introSequence}
             elapsedMs={introElapsedMs}
             recordMode={recordActive}
             onComplete={finishIntro}
+          />
+        ) : null}
+
+        {handoffProgress > 0 ? (
+          <IntroHandoffStar
+            progress={handoffProgress}
+            heroX={heroAnchorPos.x}
+            heroY={heroAnchorPos.y}
+            intensity={1.2}
           />
         ) : null}
 
@@ -424,6 +499,7 @@ export function CinematicJourneyPlayer({
             elapsedMs={outroElapsedMs}
             pathPoints={journey.scenes.map((s) => s.coordinates)}
             visitedIndices={visitedSceneIndices}
+            scenes={journey.scenes}
             recordMode={recordActive}
           />
         ) : null}
@@ -480,6 +556,7 @@ export function CinematicJourneyPlayer({
         />
       ) : null}
 
+      {!recordMode ? (
       <RecordModeControls
         active={recordActive}
         paused={recordPaused}
@@ -501,8 +578,9 @@ export function CinematicJourneyPlayer({
         onToggleNarrative={() => setRecordNarrative((n) => !n)}
         onToggleWatermark={() => setRecordWatermark((w) => !w)}
       />
+      ) : null}
 
-      {process.env.NODE_ENV !== "production" && !recordActive ? (
+      {process.env.NODE_ENV !== "production" && !recordActive && !recordMode ? (
         <CinematicDebugPanel
           journey={journey}
           sceneIndex={sceneIndex}

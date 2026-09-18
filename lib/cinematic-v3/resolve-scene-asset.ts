@@ -20,7 +20,7 @@ const EVENT_ASSET_ALIASES: Record<string, string> = {
   "darkin-corruption": "great-darkin-war",
   "the-ruination": "ruination-helia",
   "aatrox-return": "darkin-blade-aatrox",
-  "aatrox-pantheon-duel": "great-darkin-war",
+  "aatrox-pantheon-duel": "aatrox-atreus-duel",
   "brothers-duel": "noxian-invasion-ionia",
 };
 

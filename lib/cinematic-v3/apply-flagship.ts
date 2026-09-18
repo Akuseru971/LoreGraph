@@ -11,6 +11,7 @@ import type {
 import { defaultMotifsForAtmosphere } from "./environmental-motifs";
 import { inferShotType } from "./shot-types";
 import { inferWorldNodeArchetype } from "./world-node-archetypes";
+import { applyAatroxCinematicDirection } from "./aatrox-cinematic-direction";
 import { attachIntroOutroSequences } from "./intro-outro";
 import { evaluateJourneyReadiness } from "./visual-readiness";
 
@@ -193,9 +194,13 @@ export function applyFlagshipCurations(journey: CinematicJourney): CinematicJour
     cinematicReady: journey.cinematicReady,
   };
   const withSequences = attachIntroOutroSequences(curated);
-  const readiness = evaluateJourneyReadiness(withSequences);
+  const directed =
+    withSequences.id === "cinematic:character:aatrox"
+      ? applyAatroxCinematicDirection(withSequences)
+      : withSequences;
+  const readiness = evaluateJourneyReadiness(directed);
   return {
-    ...withSequences,
+    ...directed,
     loreReady: journey.cinematicReady,
     visualReady: readiness.visualReady,
     recordReady: readiness.recordReady,

@@ -61,6 +61,12 @@ export { inferShotType, shotCameraHints } from "./shot-types";
 export { evaluateJourneyReadiness } from "./visual-readiness";
 export { applyFlagshipCurations } from "./apply-flagship";
 export {
+  applyAatroxCinematicDirection,
+  AATROX_RECORD_INTRO_TIMING,
+  AATROX_RECORD_OUTRO_TIMING,
+  AATROX_SCENE_OVERRIDES,
+} from "./aatrox-cinematic-direction";
+export {
   attachIntroOutroSequences,
   buildIntroSequence,
   buildOutroSequence,
@@ -68,6 +74,10 @@ export {
   computeOutroPhaseState,
   totalIntroMs,
   totalOutroMs,
+  totalIntroMsForMode,
+  totalOutroMsForMode,
+  effectiveIntroTiming,
+  effectiveOutroTiming,
   DEFAULT_INTRO_TIMING,
   DEFAULT_OUTRO_TIMING,
 } from "./intro-outro";

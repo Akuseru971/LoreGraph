@@ -113,17 +113,18 @@ export function LoreLight({
 
     const scale = variant === "secondary" ? 0.75 : variant === "transform" ? 1.15 : 1;
 
-    coreRef.current?.scale.setScalar(0.032 * pulse * scale * flicker);
-    innerRef.current?.scale.setScalar(0.1 * breathe * scale);
-    coronaRef.current?.scale.setScalar((0.22 + Math.sin(t.current * 2.7) * 0.03) * breathe * scale);
+    const minCore = 0.038;
+    coreRef.current?.scale.setScalar(minCore * pulse * scale * flicker);
+    innerRef.current?.scale.setScalar(0.12 * breathe * scale);
+    coronaRef.current?.scale.setScalar((0.26 + Math.sin(t.current * 2.7) * 0.03) * breathe * scale);
 
     if (hFlareRef.current) {
-      hFlareRef.current.scale.set(1.8 * flareLen * scale, 0.12 * scale, 1);
-      (hFlareRef.current.material as THREE.SpriteMaterial).opacity = 0.35 * flicker;
+      hFlareRef.current.scale.set(2.2 * flareLen * scale, 0.1 * scale, 1);
+      (hFlareRef.current.material as THREE.SpriteMaterial).opacity = 0.42 * flicker;
     }
     if (vFlareRef.current) {
-      vFlareRef.current.scale.set(0.08 * scale, 0.55 * breathe * scale, 1);
-      (vFlareRef.current.material as THREE.SpriteMaterial).opacity = 0.22 * flicker;
+      vFlareRef.current.scale.set(0.07 * scale, 0.42 * breathe * scale, 1);
+      (vFlareRef.current.material as THREE.SpriteMaterial).opacity = 0.28 * flicker;
     }
     if (spikeRef.current) spikeRef.current.rotation.z = t.current * 0.15;
     if (spriteRef.current) {

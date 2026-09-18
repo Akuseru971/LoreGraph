@@ -6,12 +6,9 @@ export const cinematicIntroOverrides: Record<string, CinematicIntroOverride> = {
     constellationId: "constellation:aatrox",
     heroStarId: "blade-core",
     atmosphere: "DARKIN",
-    splashFocal: { x: 0.5, y: 0.35 },
+    splashFocal: { x: 0.52, y: 0.3 },
     showText: true,
-    timing: {
-      splashHoldMs: 2200,
-      zoomStarMs: 2400,
-    },
+    recordShowIntroTitle: true,
   },
   "char:yasuo": {
     constellationId: "constellation:yasuo",
@@ -56,7 +53,7 @@ export const cinematicOutroOverrides: Record<string, CinematicOutroOverride> = {
     constellationId: "constellation:aatrox",
     showSplashEcho: true,
     showText: true,
-    timing: { holdMs: 3200 },
+    recordShowOutroTitle: true,
   },
   "char:yasuo": {
     constellationId: "constellation:yasuo",

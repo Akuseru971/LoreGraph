@@ -150,6 +150,23 @@ describe("Cinematic Journey V3", () => {
     }
   });
 
+  it("Aatrox constellation has high-fidelity anchor count and path mapping", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const constellation = constellationByCharacterId.get("char:aatrox")!;
+    expect(constellation.anchors.length).toBeGreaterThanOrEqual(40);
+    expect(constellation.anchors.filter((a) => a.importance === "MICRO").length).toBeGreaterThan(10);
+    expect(journey.introSequence?.recordShowIntroTitle).toBe(true);
+    expect(journey.outroSequence?.pathToAnchorMapping?.["cscene:aatrox:beat:aatrox-5"]).toBe(
+      "blade-core",
+    );
+    expect(journey.introSequence?.recordTiming).toBeDefined();
+    const duel = journey.scenes.find((s) => s.id === "cscene:aatrox:beat:aatrox-7");
+    expect(duel?.image?.url).toContain("aatrox-atreus-duel");
+    const blade = journey.scenes.find((s) => s.id === "cscene:aatrox:beat:aatrox-5");
+    expect(blade?.image?.url).toBeTruthy();
+    expect(blade?.composition).not.toBe("NO_IMAGE");
+  });
+
   it("intro phase state progresses through splash to zoom handoff", () => {
     const journey = buildChampionJourneyV3(char("yasuo"));
     const intro = journey.introSequence!;

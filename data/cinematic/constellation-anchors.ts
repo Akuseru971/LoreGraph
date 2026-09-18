@@ -1,26 +1,9 @@
+import { AATROX_CONSTELLATION } from "./aatrox-constellation";
 import type { ChampionConstellation } from "@/types";
 
 /** Hand-curated constellation silhouettes for flagship champion intros/outros. */
 export const CHAMPION_CONSTELLATIONS: ChampionConstellation[] = [
-  {
-    id: "constellation:aatrox",
-    characterId: "char:aatrox",
-    heroStarId: "blade-core",
-    anchors: [
-      { id: "crown", x: 0.5, y: 0.1, importance: "SECONDARY", connectsTo: ["left-shoulder", "right-shoulder"] },
-      { id: "left-wing", x: 0.1, y: 0.34, importance: "SECONDARY", connectsTo: ["left-shoulder", "left-claw"] },
-      { id: "right-wing", x: 0.9, y: 0.34, importance: "SECONDARY", connectsTo: ["right-shoulder", "right-claw"] },
-      { id: "left-shoulder", x: 0.3, y: 0.26, importance: "SECONDARY", connectsTo: ["crown", "body-core"] },
-      { id: "right-shoulder", x: 0.7, y: 0.26, importance: "SECONDARY", connectsTo: ["crown", "body-core"] },
-      { id: "blade-tip", x: 0.74, y: 0.14, importance: "SECONDARY", connectsTo: ["blade-core"] },
-      { id: "blade-core", x: 0.56, y: 0.4, importance: "PRIMARY", connectsTo: ["body-core", "blade-tip"] },
-      { id: "body-core", x: 0.5, y: 0.52, importance: "SECONDARY", connectsTo: ["left-foot", "right-foot"] },
-      { id: "left-claw", x: 0.18, y: 0.52, importance: "SECONDARY", connectsTo: ["left-wing"] },
-      { id: "right-claw", x: 0.82, y: 0.52, importance: "SECONDARY", connectsTo: ["right-wing"] },
-      { id: "left-foot", x: 0.36, y: 0.88, importance: "SECONDARY", connectsTo: ["body-core"] },
-      { id: "right-foot", x: 0.64, y: 0.88, importance: "SECONDARY", connectsTo: ["body-core"] },
-    ],
-  },
+  AATROX_CONSTELLATION,
   {
     id: "constellation:yasuo",
     characterId: "char:yasuo",
