@@ -4,10 +4,15 @@ import {
   verifyEvidenceAgainstSnapshot,
 } from "@/lib/knowledge/source-snapshot";
 import type { SourceEvidence } from "@/types";
+import { batch1IoniaEvidenceSeeds } from "./batch1-ionia-seeds";
 import { curatedEvidenceSeeds } from "./curated-seeds";
 import { phase1EvidenceSeeds } from "./phase1-seeds";
 
-const allEvidenceSeeds = [...phase1EvidenceSeeds, ...curatedEvidenceSeeds];
+const allEvidenceSeeds = [
+  ...phase1EvidenceSeeds,
+  ...curatedEvidenceSeeds,
+  ...batch1IoniaEvidenceSeeds,
+];
 
 function evidenceId(claimId: string, sourceId: string, index: number): string {
   const claimPart = claimId.replace(/^claim:/, "").replace(/:/g, "-");

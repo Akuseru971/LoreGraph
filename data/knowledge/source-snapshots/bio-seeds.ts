@@ -11,6 +11,8 @@ import { shurimaTargonSeeds } from "@/data/characters/shurima-targon";
 
 /** Seed-only aggregation — avoids characters → completeness → claims import cycle. */
 export function allCharacterSeeds(): CharacterSeed[] {
+  const remediatedBySlug = new Map(remediatedSeeds.map((s) => [s.slug, s]));
+  const remSlugs = new Set(remediatedBySlug.keys());
   const curated: CharacterSeed[] = [
     ...phase1CuratedSeeds,
     ...shurimaTargonSeeds,
@@ -19,11 +21,11 @@ export function allCharacterSeeds(): CharacterSeed[] {
     ...piltoverZaunSeeds,
     ...frostIslesSeeds,
     ...knowledgePackEnrichedSeeds,
-    ...remediatedSeeds,
-  ];
-  const curatedSlugs = new Set(curated.map((s) => s.slug));
+  ].filter((s) => !remSlugs.has(s.slug));
+  const curatedSlugs = new Set([...curated, ...remediatedSeeds].map((s) => s.slug));
   return [
     ...curated,
+    ...remediatedSeeds,
     ...rosterExpansionSeeds.filter((s) => !curatedSlugs.has(s.slug)),
   ];
 }

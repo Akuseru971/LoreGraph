@@ -2,26 +2,6 @@ import type { EvidenceSeed } from "./phase1-seeds";
 
 /** Source evidence for CURATED_PROVENANCE_GAP / FULL_TIER_A_BUILD remediations. */
 export const curatedEvidenceSeeds: EvidenceSeed[] = [
-  // Ahri
-  {
-    claimId: "claim:ahri-vastaya-essence-magic",
-    sourceId: "source:bio-ahri",
-    normalizedFact: "Ahri is a vastaya whose magic is tied to life essence and memories.",
-    shortExcerpt: "vastaya whose magic is tied to life essence",
-  },
-  {
-    claimId: "claim:ahri-struggles-consuming-essence",
-    sourceId: "source:bio-ahri",
-    normalizedFact: "Ahri drains essence from others and inherits what each taking carries.",
-    shortExcerpt: "drain essence from others to learn who she is",
-  },
-  {
-    claimId: "claim:ahri-seeks-origins",
-    sourceId: "source:bio-ahri",
-    normalizedFact: "Ahri seeks understanding of her origins among the vastaya.",
-    shortExcerpt: "seeks understanding of her origins among the vastaya",
-  },
-
   // Skarner (post-VGU)
   {
     claimId: "claim:skarner-yun-tal-founder",

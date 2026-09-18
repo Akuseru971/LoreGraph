@@ -15,7 +15,7 @@ import { dailyConnection } from "../lib/data/daily";
 
 const PHASE1 = [
   "aatrox", "pantheon", "varus", "nasus", "renekton", "azir", "xerath",
-  "kaisa", "kassadin", "malzahar", "bel'veth", "aurelion-sol", "leona", "diana", "zoe",
+  "kaisa", "kassadin", "malzahar", "belveth", "aurelion-sol", "leona", "diana", "zoe",
 ];
 
 const storyResult = validateStoryPaths();
@@ -39,14 +39,27 @@ const reviewedClaims = claims.filter((c) => c.reviewed && !c.needsReview);
 const pendingClaims = claims.filter((c) => c.needsReview || !c.reviewed);
 const editorialClaims = claims.filter((c) => c.certainty === "INTERPRETIVE");
 
-let timelineReviewed = 0;
-let timelineSourced = 0;
-let timelineHidden = 0;
+let globalTimelineReviewed = 0;
+let globalTimelineSourced = 0;
+let globalTimelineHidden = 0;
 for (const c of characters) {
   for (const beat of c.timeline) {
-    timelineReviewed++;
-    if (beat.sourceIds?.length) timelineSourced++;
-    if (!isTrustedTimelineBeat(beat)) timelineHidden++;
+    globalTimelineReviewed++;
+    if (beat.sourceIds?.length) globalTimelineSourced++;
+    if (!isTrustedTimelineBeat(beat)) globalTimelineHidden++;
+  }
+}
+
+let phase1TimelineReviewed = 0;
+let phase1TimelineSourced = 0;
+let phase1TimelineHidden = 0;
+for (const slug of PHASE1) {
+  const c = characters.find((ch) => ch.slug === slug);
+  if (!c) continue;
+  for (const beat of c.timeline) {
+    phase1TimelineReviewed++;
+    if (beat.sourceIds?.length) phase1TimelineSourced++;
+    if (!isTrustedTimelineBeat(beat)) phase1TimelineHidden++;
   }
 }
 
@@ -152,9 +165,17 @@ writeFileSync(
     "",
     `Generated: ${new Date().toISOString()}`,
     "",
-    `Timeline beats reviewed: ${timelineReviewed}`,
-    `Beats with exact sourceIds: ${timelineSourced}`,
-    `Beats hidden/downgraded (fail trust): ${timelineHidden}`,
+    "## Global roster timeline metrics",
+    "",
+    `Timeline beats reviewed (all champions): ${globalTimelineReviewed}`,
+    `Beats with exact sourceIds: ${globalTimelineSourced}`,
+    `Beats hidden/downgraded (fail trust): ${globalTimelineHidden}`,
+    "",
+    "## Phase 1 champion timeline metrics (15 champions only)",
+    "",
+    `Phase 1 timeline beats: ${phase1TimelineReviewed}`,
+    `Phase 1 beats with sourceIds: ${phase1TimelineSourced}`,
+    `Phase 1 beats hidden/downgraded: ${phase1TimelineHidden}`,
     "",
     "Varus Void War: **downgraded** (removed)",
     "Pantheon/Aurelion synthetic beat: **removed**",

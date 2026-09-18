@@ -10,7 +10,17 @@ import { remediatedSeeds } from "./remediated";
 import { rosterExpansionSeeds } from "./roster-expansion";
 import { shurimaTargonSeeds } from "./shurima-targon";
 
-const curatedSeeds: CharacterSeed[] = [
+const remediatedBySlug = new Map(remediatedSeeds.map((s) => [s.slug, s]));
+
+function withRemediatedOverrides(seeds: CharacterSeed[]): CharacterSeed[] {
+  const remSlugs = new Set(remediatedBySlug.keys());
+  return [
+    ...seeds.filter((s) => !remSlugs.has(s.slug)),
+    ...remediatedSeeds,
+  ];
+}
+
+const curatedSeeds: CharacterSeed[] = withRemediatedOverrides([
   ...phase1CuratedSeeds,
   ...shurimaTargonSeeds,
   ...ioniaSeeds,
@@ -18,8 +28,7 @@ const curatedSeeds: CharacterSeed[] = [
   ...piltoverZaunSeeds,
   ...frostIslesSeeds,
   ...knowledgePackEnrichedSeeds,
-  ...remediatedSeeds,
-];
+]);
 
 const curatedSlugs = new Set(curatedSeeds.map((s) => s.slug));
 

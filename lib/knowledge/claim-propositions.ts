@@ -190,6 +190,296 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
     /\bunderstanding\b/i,
     /\bwhere she came from\b/i,
   ],
+  "claim:ahri-spirit-identity-search": [
+    /\bspirit identity\b/i,
+    /\bdefining herself\b/i,
+    /\bendless consumption\b/i,
+  ],
+  "claim:akali-former-kinkou-fist": [
+    /\bfist of shadow\b/i,
+    /\binherited\b.*\btitle\b/i,
+    /\bkinkou order\b/i,
+  ],
+  "claim:akali-left-kinkou-independence": [
+    /\bleft the kinkou\b/i,
+    /\bact independently\b/i,
+    /\babandons the kinkou\b/i,
+  ],
+  "claim:akali-kinkou-shen-history": [
+    /\bhistory with shen\b/i,
+    /\bkennen\b/i,
+    /\bkinkou\b/i,
+  ],
+  "claim:akali-shadow-assassin-method": [
+    /\bhunts\b.*\bthreats\b/i,
+    /\bown authority\b/i,
+    /\bworking alone\b/i,
+  ],
+  "claim:irelia-blade-dancer-resistance": [
+    /\bblade dancer\b/i,
+    /\bbladesmiths\b/i,
+    /\bdancer\b/i,
+  ],
+  "claim:irelia-noxian-invasion-loss": [
+    /\bnoxus invaded\b/i,
+    /\bnoxian invasion\b/i,
+    /\bfamily scattered\b/i,
+  ],
+  "claim:irelia-resistance-leader": [
+    /\bresistance leader\b/i,
+    /\bblade dancer\b/i,
+    /\bresistance can follow\b/i,
+  ],
+  "claim:irelia-severed-swain-arm": [
+    /\bsevered swain'?s arm\b/i,
+    /\bswain'?s arm\b/i,
+    /\bconfrontation with noxian\b/i,
+  ],
+  "claim:jhin-khada-jhin-identity": [
+    /\bkhada jhin\b/i,
+    /\bstagehand\b/i,
+    /\bgolden demon\b/i,
+  ],
+  "claim:jhin-serial-killer-artist": [
+    /\bcrimes were designed\b/i,
+    /\bstaged\b/i,
+    /\barranged\b/i,
+    /\bperformance\b/i,
+  ],
+  "claim:jhin-kinkou-capture": [
+    /\bimprisoned\b/i,
+    /\bkusho\b/i,
+    /\bshen\b/i,
+    /\bzed\b/i,
+  ],
+  "claim:jhin-released-weaponized": [
+    /\breleased\b/i,
+    /\bpointed at noxus\b/i,
+    /\bfreed\b/i,
+  ],
+  "claim:karma-spiritual-mantle-incarnation": [
+    /\bincarnation\b/i,
+    /\bspiritual mantle\b/i,
+    /\bspiritual leader\b/i,
+  ],
+  "claim:karma-darha-identity": [
+    /\bdarha\b/i,
+    /\bknown in this life\b/i,
+  ],
+  "claim:karma-noxian-invasion-violence": [
+    /\bnoxian invasion\b/i,
+    /\bfull power\b/i,
+    /\bweapon\b/i,
+    /\bfleet\b/i,
+  ],
+  "claim:karma-pacifism-challenged": [
+    /\bpacifist tradition\b/i,
+    /\bchallenged\b/i,
+    /\brestraint\b/i,
+  ],
+  "claim:shen-eye-of-twilight": [
+    /\beye of twilight\b/i,
+    /\binherited\b/i,
+  ],
+  "claim:shen-kinkou-leader": [
+    /\bleads the kinkou\b/i,
+    /\bkinkou order\b/i,
+    /\beye of twilight\b/i,
+  ],
+  "claim:shen-son-of-kusho": [
+    /\bfather kusho\b/i,
+    /\bkusho was killed\b/i,
+    /\bson of kusho\b/i,
+  ],
+  "claim:shen-zed-kinkou-history": [
+    /\bhistory with zed\b/i,
+    /\bzed\b.*\bkinkou\b/i,
+    /\bfellow student\b/i,
+  ],
+  "claim:shen-spirit-balance-guardian": [
+    /\bspirit balance\b/i,
+    /\bmaterial and spirit\b/i,
+    /\bspirit realms\b/i,
+  ],
+  "claim:zed-order-of-shadow-leader": [
+    /\border of shadow\b/i,
+    /\bleads\b/i,
+    /\bfounded\b/i,
+  ],
+  "claim:zed-former-kinkou-student": [
+    /\bkinkou student\b/i,
+    /\balongside shen\b/i,
+    /\btrained under kusho\b/i,
+  ],
+  "claim:zed-forbidden-shadow-magic": [
+    /\bforbidden shadow magic\b/i,
+    /\bshadow magic\b/i,
+    /\bunlock\b/i,
+  ],
+  "claim:zed-kusho-jhin-capture": [
+    /\bimprison khada jhin\b/i,
+    /\bhelped kusho\b/i,
+    /\bcapture\b/i,
+  ],
+  "claim:yasuo-wind-prodigy": [
+    /\bwind technique\b/i,
+    /\bprodigy\b/i,
+    /\bmaster\b/i,
+  ],
+  "claim:yasuo-elder-souma-guard": [
+    /\belder souma\b/i,
+    /\bguard\b/i,
+    /\bassigned\b/i,
+  ],
+  "claim:yasuo-blamed-elder-death": [
+    /\bblamed\b/i,
+    /\bsouma'?s death\b/i,
+    /\belder is dead\b/i,
+  ],
+  "claim:yasuo-killed-yone-duel": [
+    /\byasuo killed\b/i,
+    /\bkilled him\b/i,
+    /\bduel\b/i,
+    /\byone\b/i,
+  ],
+  "claim:yone-yasuo-brother": [
+    /\byasuo'?s older brother\b/i,
+    /\bold brother\b/i,
+    /\bbrother\b/i,
+  ],
+  "claim:yone-killed-by-yasuo": [
+    /\bkilled by yasuo\b/i,
+    /\bdies on yasuo'?s blade\b/i,
+    /\blost the duel\b/i,
+  ],
+  "claim:yone-azakana-mask": [
+    /\bazakana\b/i,
+    /\btook its mask\b/i,
+    /\bmask\b/i,
+  ],
+  "claim:yone-hunts-azakana": [
+    /\bhunts azakana\b/i,
+    /\bhunting demons\b/i,
+    /\bspirit worlds\b/i,
+  ],
+  "claim:yunara-kinkou-devotee": [
+    /\bionian devotee\b/i,
+    /\bkinkou\b/i,
+    /\bbalance\b/i,
+  ],
+  "claim:yunara-centuries-spirit-realm": [
+    /\bcenturies\b/i,
+    /\bspirit realm\b/i,
+    /\bspent\b/i,
+  ],
+  "claim:yunara-wields-aion-erna": [
+    /\baion er'?na\b/i,
+    /\brelic\b/i,
+    /\bartifact\b/i,
+  ],
+  "claim:yunara-returned-changed-ionia": [
+    /\breturns to\b/i,
+    /\bchanged\b/i,
+    /\bnot the one she left\b/i,
+  ],
+  "claim:xayah-vastayan-revolutionary": [
+    /\bvastayan revolutionary\b/i,
+    /\brevolutionary\b/i,
+    /\brebel\b/i,
+  ],
+  "claim:xayah-partner-rakan": [
+    /\bpartner rakan\b/i,
+    /\brakan\b/i,
+    /\bpartner\b/i,
+  ],
+  "claim:xayah-fights-vastayan-freedom": [
+    /\bvastayan freedom\b/i,
+    /\bfights for\b/i,
+    /\bvastayan magic\b/i,
+  ],
+  "claim:xayah-lhotlan-vastaya": [
+    /\blhotlan vastaya\b/i,
+    /\blhotlan\b/i,
+  ],
+  "claim:kayn-zed-student": [
+    /\bzed took him in\b/i,
+    /\bzed\b/i,
+    /\bchild soldier\b/i,
+  ],
+  "claim:kayn-order-of-shadow": [
+    /\border of shadow\b/i,
+    /\bmember\b/i,
+    /\btrained\b/i,
+  ],
+  "claim:kayn-wields-rhaast": [
+    /\bwields\b.*\brhaast\b/i,
+    /\bdarkin\b/i,
+    /\bscythe\b/i,
+  ],
+  "claim:kayn-rhaast-control-struggle": [
+    /\bstruggle\b.*\brhaast\b/i,
+    /\bcontrol\b/i,
+    /\bcorruption\b/i,
+  ],
+  "claim:master-yi-wuju-master": [
+    /\bwuju\b/i,
+    /\blast master\b/i,
+    /\bmaster of wuju\b/i,
+  ],
+  "claim:master-yi-noxian-devastation": [
+    /\bnoxian attack\b/i,
+    /\bdevastated\b/i,
+    /\bwuju order\b/i,
+  ],
+  "claim:master-yi-wuju-survivor": [
+    /\bsurvivors\b/i,
+    /\bpreserving\b/i,
+    /\blast guardians\b/i,
+  ],
+  "claim:master-yi-trained-wukong": [
+    /\btrained wukong\b/i,
+    /\bwukong\b/i,
+    /\bwuju arts\b/i,
+  ],
+  "claim:hwei-ionian-painter-mage": [
+    /\bionian painter\b/i,
+    /\bpainter and mage\b/i,
+    /\bmage\b/i,
+  ],
+  "claim:hwei-art-emotional-magic": [
+    /\bemotional\b/i,
+    /\bmagical expression\b/i,
+    /\bart\b/i,
+  ],
+  "claim:hwei-jhin-attack-trauma": [
+    /\bjhin'?s attack\b/i,
+    /\btrauma\b/i,
+    /\bgolden demon\b/i,
+  ],
+  "claim:hwei-master-death": [
+    /\bmaster'?s death\b/i,
+    /\bmaster\b.*\bdeath\b/i,
+    /\bjhin\b/i,
+  ],
+  "claim:kennen-yordle-kinkou": [
+    /\byordle\b/i,
+    /\bkinkou\b/i,
+    /\bonly yordle\b/i,
+  ],
+  "claim:kennen-heart-of-tempest": [
+    /\bheart of the tempest\b/i,
+    /\btempest\b/i,
+  ],
+  "claim:kennen-kinkou-enforcer": [
+    /\benforcer\b/i,
+    /\blightning\b/i,
+    /\bbalance\b/i,
+  ],
+  "claim:kennen-shen-akali-mentor": [
+    /\btrained akali\b/i,
+    /\bshen\b/i,
+    /\bmentor\b/i,
+  ],
   "claim:skarner-yun-tal-founder": [
     /\bfounding member\b/i,
     /\byun tal\b/i,

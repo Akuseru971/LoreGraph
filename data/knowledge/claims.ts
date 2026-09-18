@@ -7,6 +7,7 @@ import { mergedClaims } from "./generated/claims-merged";
 import { applyClaimPatches } from "./claim-patches";
 import { applyClaimSupersession } from "./claim-supersession";
 import { claimExtensions } from "./claim-extensions";
+import { ioniaBatch1Claims } from "./claim-extensions-ionia-batch1";
 import type { Claim } from "@/types";
 
 function attachEvidenceRefs(claim: Claim): Claim {
@@ -28,6 +29,9 @@ const mergedById = new Map(
     .map((c) => [c.id, attachEvidenceRefs(c)]),
 );
 for (const ext of claimExtensions) {
+  mergedById.set(ext.id, attachEvidenceRefs(ext));
+}
+for (const ext of ioniaBatch1Claims) {
   mergedById.set(ext.id, attachEvidenceRefs(ext));
 }
 export const claims: Claim[] = [...mergedById.values()];
