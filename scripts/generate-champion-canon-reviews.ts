@@ -78,8 +78,10 @@ for (const slug of PHASE1) {
       r.connectionType === "THEMATIC_PARALLEL",
   );
 
-  const pathAppearances = storyPaths.filter((p) =>
-    p.chapters.some((ch) => ch.blocks.some((b) => b.characterIds?.includes(c.id))),
+  const pathAppearances = storyPaths.filter(
+    (p) =>
+      p.characterIds.includes(c.id) ||
+      p.chapters.some((ch) => ch.characterIds.includes(c.id)),
   );
 
   const remainingRisks: string[] = [];
