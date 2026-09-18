@@ -1,379 +1,97 @@
-import { buildConstellationFromPaths, type ContourPathDef } from "@/lib/cinematic-v3/constellation-builder";
-import type { ConstellationContourGroup, ConstellationLine } from "@/types";
+import extracted from "./aatrox-silhouette.json";
+import { buildConstellationFromExtractedDeterministic } from "@/lib/cinematic-v3/silhouette-constellation";
+import type { ExtractedSilhouetteData } from "@/lib/cinematic-v3/silhouette-constellation";
+import type { ChampionConstellation } from "@/types";
 
-/** Splash crop focal: 0.52, 0.30 — traced from Aatrox splash art silhouette */
-const GROUPS: ConstellationContourGroup[] = [
-  { id: "head-horns", label: "Head & horns", revealPhase: 1 },
-  { id: "left-wing", label: "Left wing", revealPhase: 1 },
-  { id: "right-wing", label: "Right wing", revealPhase: 2 },
-  { id: "blade", label: "Darkin blade", revealPhase: 2 },
-  { id: "left-arm", label: "Left arm & claw", revealPhase: 2 },
-  { id: "torso", label: "Torso", revealPhase: 3 },
-  { id: "legs", label: "Legs", revealPhase: 3 },
-  { id: "cape-lower", label: "Lower cape", revealPhase: 4 },
-];
+const SILHOUETTE = extracted as ExtractedSilhouetteData;
 
-const PATHS: ContourPathDef[] = [
-  {
-    groupId: "head-horns",
-    prefix: "hd",
-    category: "CONTOUR",
-    revealPhase: 1,
-    visualWeight: "HIGH",
-    lineWeight: "EMPHATIC",
-    spacing: 0.009,
-    points: [
-      { x: 0.38, y: 0.09 },
-      { x: 0.42, y: 0.06 },
-      { x: 0.46, y: 0.04 },
-      { x: 0.5, y: 0.035 },
-      { x: 0.54, y: 0.04 },
-      { x: 0.58, y: 0.06 },
-      { x: 0.62, y: 0.09 },
-      { x: 0.6, y: 0.12 },
-      { x: 0.56, y: 0.14 },
-      { x: 0.5, y: 0.145 },
-      { x: 0.44, y: 0.14 },
-      { x: 0.4, y: 0.12 },
-    ],
-    closed: true,
-  },
-  {
-    groupId: "left-wing",
-    prefix: "lw-o",
-    category: "CONTOUR",
-    revealPhase: 1,
-    visualWeight: "HIGH",
-    lineWeight: "EMPHATIC",
-    spacing: 0.008,
-    points: [
-      { x: 0.28, y: 0.2 },
-      { x: 0.22, y: 0.22 },
-      { x: 0.16, y: 0.25 },
-      { x: 0.1, y: 0.28 },
-      { x: 0.06, y: 0.31 },
-      { x: 0.03, y: 0.34 },
-      { x: 0.02, y: 0.37 },
-      { x: 0.025, y: 0.4 },
-      { x: 0.04, y: 0.42 },
-      { x: 0.06, y: 0.4 },
-      { x: 0.08, y: 0.37 },
-      { x: 0.1, y: 0.34 },
-      { x: 0.14, y: 0.31 },
-      { x: 0.18, y: 0.28 },
-      { x: 0.22, y: 0.26 },
-      { x: 0.26, y: 0.24 },
-    ],
-  },
-  {
-    groupId: "left-wing",
-    prefix: "lw-i",
-    category: "CONTOUR",
-    revealPhase: 1,
-    visualWeight: "MEDIUM",
-    lineWeight: "NORMAL",
-    spacing: 0.01,
-    points: [
-      { x: 0.26, y: 0.24 },
-      { x: 0.2, y: 0.27 },
-      { x: 0.14, y: 0.3 },
-      { x: 0.1, y: 0.33 },
-      { x: 0.12, y: 0.35 },
-      { x: 0.18, y: 0.32 },
-      { x: 0.24, y: 0.28 },
-    ],
-  },
-  {
-    groupId: "right-wing",
-    prefix: "rw-o",
-    category: "CONTOUR",
-    revealPhase: 2,
-    visualWeight: "HIGH",
-    lineWeight: "EMPHATIC",
-    spacing: 0.009,
-    points: [
-      { x: 0.72, y: 0.2 },
-      { x: 0.78, y: 0.22 },
-      { x: 0.84, y: 0.25 },
-      { x: 0.9, y: 0.28 },
-      { x: 0.94, y: 0.31 },
-      { x: 0.97, y: 0.34 },
-      { x: 0.98, y: 0.37 },
-      { x: 0.96, y: 0.39 },
-      { x: 0.92, y: 0.38 },
-      { x: 0.88, y: 0.35 },
-      { x: 0.84, y: 0.32 },
-      { x: 0.8, y: 0.29 },
-      { x: 0.76, y: 0.26 },
-    ],
-  },
-  {
-    groupId: "blade",
-    prefix: "bl-o",
-    category: "CONTOUR",
-    revealPhase: 2,
-    visualWeight: "HIGH",
-    lineWeight: "ICONIC",
-    spacing: 0.008,
-    points: [
-      { x: 0.58, y: 0.24 },
-      { x: 0.62, y: 0.2 },
-      { x: 0.66, y: 0.15 },
-      { x: 0.7, y: 0.1 },
-      { x: 0.74, y: 0.06 },
-      { x: 0.78, y: 0.035 },
-      { x: 0.82, y: 0.02 },
-      { x: 0.8, y: 0.04 },
-      { x: 0.76, y: 0.08 },
-      { x: 0.72, y: 0.12 },
-      { x: 0.68, y: 0.16 },
-      { x: 0.64, y: 0.2 },
-      { x: 0.6, y: 0.23 },
-    ],
-  },
-  {
-    groupId: "blade",
-    prefix: "bl-i",
-    category: "CONTOUR",
-    revealPhase: 2,
-    visualWeight: "MEDIUM",
-    lineWeight: "EMPHATIC",
-    spacing: 0.009,
-    points: [
-      { x: 0.56, y: 0.26 },
-      { x: 0.6, y: 0.22 },
-      { x: 0.64, y: 0.17 },
-      { x: 0.68, y: 0.13 },
-      { x: 0.72, y: 0.09 },
-      { x: 0.76, y: 0.06 },
-      { x: 0.74, y: 0.1 },
-      { x: 0.7, y: 0.14 },
-      { x: 0.66, y: 0.18 },
-      { x: 0.62, y: 0.22 },
-    ],
-  },
-  {
-    groupId: "left-arm",
-    prefix: "la",
-    category: "CONTOUR",
-    revealPhase: 2,
-    visualWeight: "HIGH",
-    lineWeight: "EMPHATIC",
-    spacing: 0.009,
-    points: [
-      { x: 0.3, y: 0.24 },
-      { x: 0.28, y: 0.28 },
-      { x: 0.26, y: 0.32 },
-      { x: 0.24, y: 0.36 },
-      { x: 0.22, y: 0.4 },
-      { x: 0.2, y: 0.43 },
-      { x: 0.18, y: 0.45 },
-      { x: 0.16, y: 0.44 },
-      { x: 0.18, y: 0.4 },
-      { x: 0.22, y: 0.36 },
-      { x: 0.26, y: 0.32 },
-      { x: 0.3, y: 0.28 },
-    ],
-    closed: true,
-  },
-  {
-    groupId: "torso",
-    prefix: "to-l",
-    category: "CONTOUR",
-    revealPhase: 3,
-    visualWeight: "MEDIUM",
-    lineWeight: "NORMAL",
-    spacing: 0.01,
-    points: [
-      { x: 0.4, y: 0.16 },
-      { x: 0.38, y: 0.22 },
-      { x: 0.36, y: 0.28 },
-      { x: 0.38, y: 0.34 },
-      { x: 0.4, y: 0.4 },
-      { x: 0.42, y: 0.46 },
-      { x: 0.44, y: 0.5 },
-    ],
-  },
-  {
-    groupId: "torso",
-    prefix: "to-r",
-    category: "CONTOUR",
-    revealPhase: 3,
-    visualWeight: "MEDIUM",
-    lineWeight: "NORMAL",
-    spacing: 0.01,
-    points: [
-      { x: 0.6, y: 0.16 },
-      { x: 0.62, y: 0.22 },
-      { x: 0.64, y: 0.28 },
-      { x: 0.62, y: 0.34 },
-      { x: 0.6, y: 0.4 },
-      { x: 0.58, y: 0.46 },
-      { x: 0.56, y: 0.5 },
-    ],
-  },
-  {
-    groupId: "torso",
-    prefix: "to-m",
-    category: "DETAIL",
-    revealPhase: 4,
-    visualWeight: "LOW",
-    lineWeight: "SUBTLE",
-    spacing: 0.012,
-    points: [
-      { x: 0.48, y: 0.2 },
-      { x: 0.5, y: 0.28 },
-      { x: 0.52, y: 0.36 },
-      { x: 0.5, y: 0.44 },
-    ],
-  },
-  {
-    groupId: "legs",
-    prefix: "lg-l",
-    category: "CONTOUR",
-    revealPhase: 3,
-    visualWeight: "MEDIUM",
-    lineWeight: "EMPHATIC",
-    spacing: 0.009,
-    points: [
-      { x: 0.44, y: 0.5 },
-      { x: 0.42, y: 0.56 },
-      { x: 0.4, y: 0.62 },
-      { x: 0.38, y: 0.68 },
-      { x: 0.36, y: 0.74 },
-      { x: 0.34, y: 0.8 },
-      { x: 0.33, y: 0.86 },
-      { x: 0.34, y: 0.9 },
-      { x: 0.36, y: 0.88 },
-      { x: 0.38, y: 0.82 },
-      { x: 0.4, y: 0.76 },
-      { x: 0.42, y: 0.7 },
-      { x: 0.44, y: 0.64 },
-    ],
-  },
-  {
-    groupId: "legs",
-    prefix: "lg-r",
-    category: "CONTOUR",
-    revealPhase: 3,
-    visualWeight: "MEDIUM",
-    lineWeight: "EMPHATIC",
-    spacing: 0.009,
-    points: [
-      { x: 0.56, y: 0.5 },
-      { x: 0.58, y: 0.56 },
-      { x: 0.6, y: 0.62 },
-      { x: 0.62, y: 0.68 },
-      { x: 0.64, y: 0.74 },
-      { x: 0.66, y: 0.8 },
-      { x: 0.67, y: 0.86 },
-      { x: 0.66, y: 0.9 },
-      { x: 0.64, y: 0.88 },
-      { x: 0.62, y: 0.82 },
-      { x: 0.6, y: 0.76 },
-      { x: 0.58, y: 0.7 },
-      { x: 0.56, y: 0.64 },
-    ],
-  },
-  {
-    groupId: "cape-lower",
-    prefix: "cp",
-    category: "CONTOUR",
-    revealPhase: 4,
-    visualWeight: "LOW",
-    lineWeight: "SUBTLE",
-    spacing: 0.011,
-    points: [
-      { x: 0.36, y: 0.52 },
-      { x: 0.34, y: 0.58 },
-      { x: 0.32, y: 0.64 },
-      { x: 0.3, y: 0.7 },
-      { x: 0.32, y: 0.74 },
-      { x: 0.36, y: 0.7 },
-      { x: 0.4, y: 0.64 },
-      { x: 0.44, y: 0.58 },
-    ],
-  },
-];
+/** Find nearest extracted star to a normalized frame position. */
+function nearestStarId(nx: number, ny: number): string {
+  let best = SILHOUETTE.stars[0];
+  let bestD = Infinity;
+  for (const s of SILHOUETTE.stars) {
+    const d = (s.x - nx) ** 2 + (s.y - ny) ** 2;
+    if (d < bestD) {
+      bestD = d;
+      best = s;
+    }
+  }
+  return best.id;
+}
 
-const EXTRA_LINES: ConstellationLine[] = [
-  { from: "blade-core", to: "bl-o-0", weight: "ICONIC", category: "ICONIC" },
-  { from: "horn-peak", to: "lw-o-0", weight: "NORMAL", category: "STRUCTURAL" },
-  { from: "horn-peak", to: "rw-o-0", weight: "NORMAL", category: "STRUCTURAL" },
-];
+/** Highest-curvature star within a bounding region. */
+function iconicStarInRegion(
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+  fallback: { x: number; y: number },
+): string {
+  const inRegion = SILHOUETTE.stars.filter(
+    (s) => s.x >= x0 && s.x <= x1 && s.y >= y0 && s.y <= y1,
+  );
+  if (!inRegion.length) return nearestStarId(fallback.x, fallback.y);
+  const best = inRegion.reduce((a, b) => (a.curvature >= b.curvature ? a : b));
+  return best.id;
+}
 
-export const AATROX_CONSTELLATION = buildConstellationFromPaths(
+const BLADE_CORE_ID = iconicStarInRegion(0.58, 0.08, 0.78, 0.35, { x: 0.68, y: 0.2 });
+const HORN_PEAK_ID = iconicStarInRegion(0.42, 0.02, 0.62, 0.18, { x: 0.52, y: 0.08 });
+const LEFT_WING_ID = iconicStarInRegion(0.02, 0.18, 0.28, 0.48, { x: 0.12, y: 0.32 });
+const BLADE_TIP_ID = iconicStarInRegion(0.62, 0.0, 0.82, 0.12, { x: 0.72, y: 0.04 });
+const CLAW_ID = iconicStarInRegion(0.12, 0.38, 0.32, 0.58, { x: 0.2, y: 0.48 });
+
+const bladeCoreStar = SILHOUETTE.stars.find((s) => s.id === BLADE_CORE_ID)!;
+
+export const AATROX_CONSTELLATION: ChampionConstellation = buildConstellationFromExtractedDeterministic(
+  SILHOUETTE,
   {
     id: "constellation:aatrox",
     characterId: "char:aatrox",
     heroStarId: "blade-core",
     splashFocal: { x: 0.52, y: 0.3 },
+    lineSkipProbability: 0.42,
+    iconicAnchors: [
+      {
+        id: "blade-core",
+        x: bladeCoreStar.x,
+        y: bladeCoreStar.y,
+        category: "ICONIC",
+        visualWeight: "HERO",
+        revealPhase: 2,
+        contourGroup: "contour-0",
+        lineWeight: "ICONIC",
+        connectsTo: [BLADE_TIP_ID],
+      },
+    ],
+    detailAnchors: [
+      {
+        id: "chest-core",
+        x: 0.48,
+        y: 0.38,
+        category: "DETAIL",
+        visualWeight: "MEDIUM",
+        revealPhase: 4,
+        contourGroup: "contour-0",
+        connectsTo: [nearestStarId(0.46, 0.36)],
+        lineWeight: "SUBTLE",
+      },
+    ],
+    extraLines: [
+      { from: HORN_PEAK_ID, to: LEFT_WING_ID, weight: "NORMAL", category: "STRUCTURAL" },
+    ],
   },
-  PATHS,
-  [
-    {
-      id: "blade-core",
-      x: 0.64,
-      y: 0.18,
-      revealPhase: 2,
-      visualWeight: "HERO",
-      contourGroup: "blade",
-      connectsTo: ["bl-o-4", "bl-i-3"],
-      lineWeight: "ICONIC",
-    },
-    {
-      id: "horn-peak",
-      x: 0.5,
-      y: 0.035,
-      revealPhase: 1,
-      visualWeight: "HIGH",
-      contourGroup: "head-horns",
-    },
-    {
-      id: "left-wing-apex",
-      x: 0.02,
-      y: 0.37,
-      revealPhase: 1,
-      visualWeight: "HIGH",
-      contourGroup: "left-wing",
-    },
-    {
-      id: "blade-tip",
-      x: 0.82,
-      y: 0.02,
-      revealPhase: 2,
-      visualWeight: "HIGH",
-      contourGroup: "blade",
-    },
-    {
-      id: "left-claw-tip",
-      x: 0.16,
-      y: 0.45,
-      revealPhase: 2,
-      visualWeight: "HIGH",
-      contourGroup: "left-arm",
-    },
-  ],
-  [
-    {
-      id: "chest-core",
-      x: 0.5,
-      y: 0.3,
-      revealPhase: 3,
-      contourGroup: "torso",
-      connectsTo: ["to-m-1"],
-    },
-  ],
-  EXTRA_LINES,
-  GROUPS,
 );
 
 export const AATROX_PATH_TO_ANCHOR: Record<string, string> = {
-  "cscene:aatrox:beat:aatrox-1": "horn-peak",
-  "cscene:aatrox:beat:aatrox-2": "left-wing-apex",
+  "cscene:aatrox:beat:aatrox-1": HORN_PEAK_ID,
+  "cscene:aatrox:beat:aatrox-2": LEFT_WING_ID,
   "cscene:aatrox:beat:aatrox-3": "chest-core",
-  "cscene:aatrox:beat:aatrox-4": "rw-o-6",
+  "cscene:aatrox:beat:aatrox-4": nearestStarId(0.72, 0.38),
   "cscene:aatrox:beat:aatrox-5": "blade-core",
-  "cscene:aatrox:beat:aatrox-6": "bl-o-0",
-  "cscene:aatrox:beat:aatrox-7": "blade-tip",
+  "cscene:aatrox:beat:aatrox-6": nearestStarId(0.58, 0.22),
+  "cscene:aatrox:beat:aatrox-7": BLADE_TIP_ID,
 };
+
+export const AATROX_MASK_ASSET = SILHOUETTE.provenance.maskAssetPath;
+export const AATROX_SILHOUETTE_PROVENANCE = SILHOUETTE.provenance;

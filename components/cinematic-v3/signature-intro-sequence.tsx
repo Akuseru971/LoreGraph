@@ -101,10 +101,11 @@ export function SignatureIntroSequence({
       />
 
       <div
-        className="absolute inset-[6%] sm:inset-[8%]"
+        className="absolute inset-[-3%]"
         style={{
           opacity: state.constellationOpacity,
           mixBlendMode: state.starRevealProgress > 0.1 ? "screen" : "normal",
+          transform: `scale(${breathe * (1 + state.zoomProgress * 0.08)}) translate(${driftX}%, ${driftY}%)`,
         }}
       >
         <ConstellationSilhouette

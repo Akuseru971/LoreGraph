@@ -176,7 +176,7 @@ export function SignatureOutroSequence({
       </svg>
 
       <div
-        className="absolute inset-[8%] sm:inset-[10%]"
+        className="absolute inset-[-3%]"
         style={{
           opacity: state.constellationOpacity,
           transform: `scale(${1 / state.pullbackScale})`,

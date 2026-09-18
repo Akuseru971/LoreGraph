@@ -539,6 +539,24 @@ export interface ChampionConstellationAnchor {
   importance?: ChampionConstellationAnchorImportance;
 }
 
+export interface SilhouetteSourceProvenance {
+  splashAssetKey: string;
+  splashAssetPath: string;
+  maskAssetPath: string;
+  crop: {
+    focal: { x: number; y: number };
+    aspectRatio: number;
+    preCropped: boolean;
+  };
+  contourVersion: string;
+  extractionMethod: string;
+  imageWidth: number;
+  imageHeight: number;
+  rawContourPoints: number;
+  simplifiedContourPoints: number;
+  extractedAt: string;
+}
+
 export interface ChampionConstellation {
   id: string;
   characterId: string;
@@ -547,6 +565,8 @@ export interface ChampionConstellation {
   lines?: ConstellationLine[];
   contourGroups?: ConstellationContourGroup[];
   splashFocal?: { x: number; y: number };
+  /** Provenance for splash-derived silhouettes; absent on legacy hand-authored constellations. */
+  silhouetteSource?: SilhouetteSourceProvenance;
 }
 
 export interface CinematicIntroTiming {

@@ -38,7 +38,24 @@ export function validateFlagshipConstellation(
     });
   }
 
-  if ((constellation.contourGroups?.length ?? 0) < MIN_CONTOUR_GROUPS) {
+  if (constellation.silhouetteSource) {
+    if (!constellation.silhouetteSource.maskAssetPath) {
+      issues.push({
+        level: "ERROR",
+        constellationId: constellation.id,
+        kind: "missing_mask_asset",
+        message: "Splash-derived constellation missing maskAssetPath",
+      });
+    }
+    if (!constellation.silhouetteSource.splashAssetPath) {
+      issues.push({
+        level: "ERROR",
+        constellationId: constellation.id,
+        kind: "missing_splash_provenance",
+        message: "Splash-derived constellation missing splashAssetPath",
+      });
+    }
+  } else if ((constellation.contourGroups?.length ?? 0) < MIN_CONTOUR_GROUPS) {
     issues.push({
       level: "WARNING",
       constellationId: constellation.id,

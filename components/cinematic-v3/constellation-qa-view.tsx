@@ -2,12 +2,20 @@
 
 import Image from "next/image";
 import * as React from "react";
+import { AATROX_MASK_ASSET } from "@/data/cinematic/constellations/aatrox";
 import { constellationById } from "@/data/cinematic/constellations";
 import type { ChampionConstellation, CinematicIntro } from "@/types";
 import { ConstellationSilhouette } from "./constellation-silhouette";
 
+/** Shared cinematic frame — constellation coords map 1:1 to splash image space. */
+const SPLASH_FRAME_CLASS = "absolute inset-0";
+
 export type ConstellationQaMode =
   | "splash-only"
+  | "mask-only"
+  | "mask-splash"
+  | "contour-over-splash"
+  | "stars-over-splash"
   | "splash-anchors"
   | "constellation-only"
   | "contour-only"
@@ -29,46 +37,59 @@ export function ConstellationQaView({
   const constellation = constellationById.get(constellationId);
   const focal = intro?.splashFocal ?? constellation?.splashFocal ?? { x: 0.52, y: 0.3 };
   const splashUrl = intro?.splashAsset.url;
+  const maskUrl =
+    constellation?.silhouetteSource?.maskAssetPath ??
+    (constellationId === "constellation:aatrox" ? AATROX_MASK_ASSET : undefined);
 
   if (!constellation) return null;
 
   const showSplash =
     mode === "splash-only" ||
+    mode === "mask-splash" ||
+    mode === "contour-over-splash" ||
+    mode === "stars-over-splash" ||
     mode === "splash-anchors" ||
     mode === "morph-progress";
+
+  const showMask =
+    mode === "mask-only" || mode === "mask-splash";
+
   const showConstellation =
-    mode !== "splash-only" &&
-    (mode === "constellation-only" ||
-      mode === "contour-only" ||
-      mode === "iconic-lines" ||
-      mode === "full" ||
-      mode === "splash-anchors" ||
-      mode === "morph-progress");
+    mode === "constellation-only" ||
+    mode === "contour-only" ||
+    mode === "iconic-lines" ||
+    mode === "full" ||
+    mode === "contour-over-splash" ||
+    mode === "stars-over-splash" ||
+    mode === "splash-anchors" ||
+    mode === "morph-progress";
 
   const splashOpacity =
-    mode === "morph-progress" ? Math.max(0, 1 - morphProgress * 1.1) : 1;
-  const starReveal =
-    mode === "morph-progress" ? morphProgress : 1;
+    mode === "contour-over-splash" || mode === "stars-over-splash"
+      ? 0.5
+      : mode === "morph-progress"
+        ? Math.max(0, 1 - morphProgress * 1.1)
+        : mode === "mask-splash"
+          ? 0.45
+          : 1;
+
+  const maskOpacity = mode === "mask-splash" ? 0.55 : 1;
+  const starReveal = mode === "morph-progress" ? morphProgress : 1;
+
   const lineFilter: "all" | "contour" | "iconic" | "none" =
-    mode === "contour-only"
+    mode === "contour-only" || mode === "contour-over-splash"
       ? "contour"
       : mode === "iconic-lines"
         ? "iconic"
         : "all";
 
+  const showLines =
+    mode !== "stars-over-splash" && mode !== "splash-anchors";
+
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded border border-line bg-black">
       {showSplash && splashUrl ? (
-        <div
-          className="absolute inset-0"
-          style={{
-            opacity: splashOpacity,
-            WebkitMaskImage:
-              mode === "morph-progress"
-                ? `radial-gradient(ellipse 45% 58% at ${focal.x * 100}% ${focal.y * 100}%, black 20%, transparent 75%)`
-                : undefined,
-          }}
-        >
+        <div className={SPLASH_FRAME_CLASS} style={{ opacity: splashOpacity }}>
           <Image
             src={splashUrl}
             alt=""
@@ -79,8 +100,28 @@ export function ConstellationQaView({
           />
         </div>
       ) : null}
+
+      {showMask && maskUrl ? (
+        <div
+          className={SPLASH_FRAME_CLASS}
+          style={{
+            opacity: maskOpacity,
+            mixBlendMode: mode === "mask-splash" ? "screen" : "normal",
+          }}
+        >
+          <Image
+            src={maskUrl}
+            alt=""
+            fill
+            className="object-cover object-center"
+            style={{ filter: "invert(1) brightness(1.8)" }}
+            sizes="800px"
+          />
+        </div>
+      ) : null}
+
       {showConstellation ? (
-        <div className="absolute inset-[6%]">
+        <div className={SPLASH_FRAME_CLASS}>
           <ConstellationSilhouette
             constellation={constellation}
             starRevealProgress={starReveal}
@@ -88,12 +129,17 @@ export function ConstellationQaView({
             heroStarId={constellation.heroStarId}
             heroIntensity={0.9}
             lineFilter={lineFilter}
+            showLines={showLines}
             className="h-full w-full"
           />
         </div>
       ) : null}
+
       <div className="absolute bottom-2 left-2 rounded bg-black/70 px-2 py-1 font-mono text-[10px] text-parchment/70">
         {constellation.anchors.length} anchors · {mode}
+        {constellation.silhouetteSource
+          ? ` · ${constellation.silhouetteSource.extractionMethod.slice(0, 24)}…`
+          : ""}
       </div>
     </div>
   );
@@ -111,5 +157,8 @@ export function constellationStats(c: ChampionConstellation) {
     atmospheric: byCategory("ATMOSPHERIC"),
     groups: c.contourGroups?.length ?? 0,
     lines: c.lines?.length ?? 0,
+    hasSilhouetteSource: Boolean(c.silhouetteSource),
+    rawContourPoints: c.silhouetteSource?.rawContourPoints ?? 0,
+    simplifiedContourPoints: c.silhouetteSource?.simplifiedContourPoints ?? 0,
   };
 }

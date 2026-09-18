@@ -32,6 +32,7 @@
     "validate:supersession": "tsx scripts/validate-supersession.ts",
     "validate:content-depth": "tsx scripts/validate-content-depth.ts",
     "validate:cinematic": "tsx scripts/validate-cinematic.ts",
+    "cinematic:extract-aatrox": "tsx scripts/cinematic/extract-aatrox-silhouette.ts",
     "report:cinematic": "tsx scripts/generate-cinematic-reports.ts",
     "validate:tier-a": "tsx scripts/validate-tier-a.ts",
     "report:quality": "tsx scripts/report-quality.ts",

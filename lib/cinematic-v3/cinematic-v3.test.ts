@@ -151,15 +151,20 @@ describe("Cinematic Journey V3", () => {
     }
   });
 
-  it("Aatrox constellation has splash-traced silhouette fidelity and path mapping", () => {
+  it("Aatrox constellation is splash-mask derived with aligned silhouette provenance", () => {
     const journey = buildChampionJourneyV3(char("aatrox"));
     const constellation = constellationByCharacterId.get("char:aatrox")!;
-    expect(constellation.anchors.length).toBeGreaterThanOrEqual(150);
+    expect(constellation.silhouetteSource).toBeDefined();
+    expect(constellation.silhouetteSource!.splashAssetPath).toContain("aatrox-hero-16x9");
+    expect(constellation.silhouetteSource!.maskAssetPath).toContain("aatrox-hero-16x9-mask");
+    expect(constellation.silhouetteSource!.imageWidth).toBe(1600);
+    expect(constellation.silhouetteSource!.imageHeight).toBe(900);
+    expect(constellation.silhouetteSource!.simplifiedContourPoints).toBeGreaterThan(50);
+    expect(constellation.anchors.length).toBeGreaterThanOrEqual(100);
     expect(constellation.anchors.filter((a) => a.category === "CONTOUR").length).toBeGreaterThanOrEqual(
-      100,
+      80,
     );
-    expect(constellation.contourGroups?.length).toBeGreaterThanOrEqual(6);
-    expect(constellation.lines?.length).toBeGreaterThan(50);
+    expect(constellation.lines?.length).toBeGreaterThan(30);
     expect(validateFlagshipConstellation(constellation).filter((i) => i.level === "ERROR")).toHaveLength(
       0,
     );
@@ -183,7 +188,11 @@ describe("Cinematic Journey V3", () => {
       expect(constellation.anchors.filter((a) => a.category === "CONTOUR").length).toBeGreaterThanOrEqual(
         30,
       );
-      expect(constellation.contourGroups?.length).toBeGreaterThanOrEqual(4);
+      if (!constellation.silhouetteSource) {
+        expect(constellation.contourGroups?.length).toBeGreaterThanOrEqual(4);
+      } else {
+        expect(constellation.silhouetteSource.maskAssetPath).toBeTruthy();
+      }
       expect(validateFlagshipConstellation(constellation).filter((i) => i.level === "ERROR")).toHaveLength(
         0,
       );

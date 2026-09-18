@@ -168,9 +168,12 @@ export default function CinematicDevPage() {
           <div className="mt-3 flex flex-wrap gap-2">
             {(
               [
+                "mask-only",
+                "mask-splash",
+                "contour-over-splash",
+                "stars-over-splash",
                 "constellation-only",
                 "splash-only",
-                "splash-anchors",
                 "contour-only",
                 "iconic-lines",
                 "full",
