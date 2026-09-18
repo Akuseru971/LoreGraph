@@ -21,9 +21,9 @@ const memoryFragment = `
   varying vec2 vUv;
   void main() {
     vec2 uv = vUv;
-    float edgeX = smoothstep(0.0, 0.12, uv.x) * smoothstep(1.0, 0.88, uv.x);
-    float edgeY = smoothstep(0.0, 0.1, uv.y) * smoothstep(1.0, 0.9, uv.y);
-    float mask = edgeX * edgeY;
+    float edgeX = smoothstep(0.0, 0.06, uv.x) * smoothstep(1.0, 0.94, uv.x);
+    float edgeY = smoothstep(0.0, 0.05, uv.y) * smoothstep(1.0, 0.95, uv.y);
+    float mask = max(0.9, edgeX * edgeY);
     vec4 col = texture2D(uMap, uv);
     float drift = sin(uTime * 0.3 + uv.x * 3.0) * 0.002;
     col = texture2D(uMap, uv + vec2(drift, drift * 0.5));
@@ -77,7 +77,7 @@ function SceneImageMesh({
     : Math.max(0, arrivalProgress * 0.55);
   const reveal = traveling ? travelReveal : Math.min(1, arrivalProgress);
   const memoryOpacity =
-    composition === "BACKGROUND_MEMORY" ? opacity * 0.82 : opacity;
+    composition === "BACKGROUND_MEMORY" ? opacity * 0.88 : opacity;
   const exitFade = fadeOut > 0 ? Math.max(0, 1 - fadeOut * 1.15) : 1;
 
   useFrame(({ clock }) => {

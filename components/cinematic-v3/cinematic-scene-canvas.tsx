@@ -78,12 +78,12 @@ function SceneWorld({
   const imageOffset = imageOffsetForComposition(composition, scene.image?.focalPoint);
   const imageOpacity =
     composition === "BACKGROUND_MEMORY"
-      ? 0.48
+      ? 0.58
       : composition === "DISTANT_WORLD"
-        ? 0.52
+        ? 0.62
         : composition === "FULL_BLEED"
-          ? 0.72
-          : 0.58;
+          ? 0.86
+          : 0.68;
   const prevComposition =
     prevScene?.composition ?? prevScene?.image?.compositionHint ?? "BACKGROUND_MEMORY";
   const prevImageOffset = imageOffsetForComposition(
@@ -92,10 +92,10 @@ function SceneWorld({
   );
   const prevImageOpacity =
     prevComposition === "BACKGROUND_MEMORY"
-      ? 0.48
+      ? 0.58
       : prevComposition === "FULL_BLEED"
-        ? 0.72
-        : 0.58;
+        ? 0.86
+        : 0.68;
   const motifs = scene.environmentalMotifs ?? [];
 
   const bg = lerpHex(prevAtmosphere.background, atmosphere.background, blend);

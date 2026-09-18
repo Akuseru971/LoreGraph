@@ -1,18 +1,29 @@
+import { computeChapterHubState, type ChapterHubState } from "./chapter-hub";
 import { easeFreefallTravel } from "./star-path";
-import type { CinematicRecordTiming, CinematicScene } from "@/types";
+import type { ChampionConstellation, CinematicRecordTiming, CinematicScene } from "@/types";
 
 export const DEFAULT_RECORD_TIMING: CinematicRecordTiming = {
-  travelMs: 1900,
-  arrivalSettleMs: 300,
-  eyebrowRevealMs: 250,
-  titleRevealMs: 400,
-  narrativeRevealMs: 450,
-  readingHoldMs: 2200,
-  departurePrepMs: 300,
+  travelMs: 2100,
+  arrivalSettleMs: 320,
+  eyebrowRevealMs: 220,
+  titleRevealMs: 320,
+  narrativeRevealMs: 380,
+  readingHoldMs: 2400,
+  departurePrepMs: 250,
 };
 
+/** Minimum travel for inter-chapter name hub readability (0.6–1.0s name window). */
+export const MIN_CHAPTER_TRAVEL_MS = 2100;
+
+function withChapterTravelFloor(timing: CinematicRecordTiming): CinematicRecordTiming {
+  return {
+    ...timing,
+    travelMs: Math.max(timing.travelMs, MIN_CHAPTER_TRAVEL_MS),
+  };
+}
+
 export function recordTimingForScene(scene: CinematicScene): CinematicRecordTiming {
-  if (scene.recordTiming) return scene.recordTiming;
+  if (scene.recordTiming) return withChapterTravelFloor(scene.recordTiming);
 
   const base = { ...DEFAULT_RECORD_TIMING };
   const isCore = scene.importance === "CORE";
@@ -21,52 +32,52 @@ export function recordTimingForScene(scene: CinematicScene): CinematicRecordTimi
     (scene.worldScale ?? 1) >= 2 || scene.worldNodeArchetype === "INVASION";
 
   if (isEnding) {
-    return {
+    return withChapterTravelFloor({
       ...base,
       travelMs: 1300,
       readingHoldMs: 2800,
       arrivalSettleMs: 350,
       narrativeRevealMs: 400,
-    };
+    });
   }
 
   if (scene.shotType === "AFTERMATH") {
-    return {
+    return withChapterTravelFloor({
       ...base,
       travelMs: 1200,
-      readingHoldMs: 2600,
+      readingHoldMs: 2500,
       arrivalSettleMs: 300,
       departurePrepMs: 300,
       narrativeRevealMs: 400,
-    };
+    });
   }
 
   if (isMajorEvent) {
-    return {
+    return withChapterTravelFloor({
       ...base,
       travelMs: 1500,
-      readingHoldMs: 3000,
+      readingHoldMs: 2700,
       arrivalSettleMs: 350,
       narrativeRevealMs: 400,
-    };
+    });
   }
 
   if (scene.shotType === "IMPACT" || scene.type === "CONFLICT") {
-    return {
+    return withChapterTravelFloor({
       ...base,
       travelMs: 1200,
       arrivalSettleMs: 300,
-      readingHoldMs: 2500,
+      readingHoldMs: 2400,
       narrativeRevealMs: 400,
-    };
+    });
   }
 
   if (!isCore) {
-    return {
+    return withChapterTravelFloor({
       ...base,
       travelMs: 1200,
       readingHoldMs: 2200,
-    };
+    });
   }
 
   return base;
@@ -102,11 +113,17 @@ export interface RecordPhaseState {
   textVisible: boolean;
   arrived: boolean;
   transitionProgress: number;
+  chapterHub?: ChapterHubState;
 }
 
 export function computeRecordPhaseState(
   scene: CinematicScene,
   sceneElapsedMs: number,
+  options?: {
+    nameConstellation?: ChampionConstellation;
+    targetSceneIndex?: number;
+    totalScenes?: number;
+  },
 ): RecordPhaseState {
   const t = recordTimingForScene(scene);
   const phrases = scene.narrativePhrases?.length
@@ -126,6 +143,15 @@ export function computeRecordPhaseState(
 
   if (elapsed < travelEnd) {
     const p = elapsed / t.travelMs;
+    const chapterHub =
+      options?.nameConstellation && options.targetSceneIndex !== undefined
+        ? computeChapterHubState(
+            p,
+            options.nameConstellation,
+            options.targetSceneIndex,
+            options.totalScenes ?? options.targetSceneIndex + 1,
+          )
+        : undefined;
     return {
       phase: "travel",
       phaseProgress: p,
@@ -134,6 +160,7 @@ export function computeRecordPhaseState(
       textVisible: false,
       arrived: false,
       transitionProgress: easeFreefallTravel(p),
+      chapterHub,
     };
   }
 

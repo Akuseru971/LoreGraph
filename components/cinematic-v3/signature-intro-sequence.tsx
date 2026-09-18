@@ -129,8 +129,8 @@ export function SignatureIntroSequence({
         {isNameIntro ? (
           <NameConstellation
             constellation={constellation}
-            starRevealProgress={state.starRevealProgress}
-            lineProgress={state.lineProgress}
+            mode="intro"
+            nameOpacity={state.nameOpacity ?? state.nameFormProgress ?? 1}
             heroStarId={intro.heroStarId}
             heroIntensity={state.heroStarIntensity}
             zoomProgress={state.zoomProgress}

@@ -4,12 +4,13 @@ export function isFreefallPreset(preset: CinematicCameraPreset): boolean {
   return preset === "FREEFALL" || preset === "FREEFALL_SPIRAL" || preset === "FREEFALL_DROP";
 }
 
-/** Stylish dezoom → plunge → land easing for inter-scene travel. */
+/** Stylish dezoom → name hub → plunge → land easing for inter-scene travel. */
 export function easeFreefallTravel(t: number): number {
   const clamped = Math.max(0, Math.min(1, t));
-  if (clamped < 0.18) return clamped * 0.12;
-  if (clamped < 0.62) return 0.022 + (clamped - 0.18) * 1.35;
-  return 0.616 + (1 - Math.pow(1 - (clamped - 0.62) / 0.38, 2.8)) * 0.384;
+  if (clamped < 0.15) return clamped * 0.08;
+  if (clamped < 0.52) return 0.012 + (clamped - 0.15) * 0.48;
+  if (clamped < 0.88) return 0.19 + (clamped - 0.52) * 1.42;
+  return 0.702 + (1 - Math.pow(1 - (clamped - 0.88) / 0.12, 2.6)) * 0.298;
 }
 
 function interpolateFreefall(
@@ -19,22 +20,25 @@ function interpolateFreefall(
   variant: CinematicCameraPreset,
 ): CinematicCoordinates {
   const eased = easeFreefallTravel(t);
-  const dezoom = t < 0.22 ? t / 0.22 : 1;
-  const plunge = t < 0.22 ? 0 : t < 0.68 ? (t - 0.22) / 0.46 : 1;
-  const land = t < 0.68 ? 0 : (t - 0.68) / 0.32;
+  const dezoom = t < 0.36 ? t / 0.36 : 1;
+  const plunge = t < 0.52 ? 0 : t < 0.88 ? (t - 0.52) / 0.36 : 1;
+  const land = t < 0.88 ? 0 : (t - 0.88) / 0.12;
 
   const spiral =
-    variant === "FREEFALL_SPIRAL" ? Math.sin(plunge * Math.PI * 4) * 0.6 * (1 - land) : 0;
-  const dropBoost = variant === "FREEFALL_DROP" ? plunge * 1.4 : plunge;
+    variant === "FREEFALL_SPIRAL" ? Math.sin(plunge * Math.PI * 4) * 0.65 * (1 - land) : 0;
+  const dropBoost = variant === "FREEFALL_DROP" ? plunge * 1.55 : plunge;
+
+  const dezoomY = dezoom * 11;
+  const dezoomZ = dezoom * 22;
 
   return {
     x:
       from.x * (1 - eased) +
       to.x * eased +
       spiral +
-      (variant === "FREEFALL_SPIRAL" ? Math.cos(plunge * Math.PI * 3) * 0.35 * (1 - land) : 0),
-    y: from.y + dezoom * 6 + dropBoost * 10 + (to.y - from.y) * eased * land,
-    z: from.z - dezoom * 14 - dropBoost * 8 + (to.z - from.z) * eased,
+      (variant === "FREEFALL_SPIRAL" ? Math.cos(plunge * Math.PI * 3) * 0.4 * (1 - land) : 0),
+    y: from.y + dezoomY + dropBoost * 12 + (to.y - from.y) * eased * land,
+    z: from.z - dezoomZ - dropBoost * 10 + (to.z - from.z) * eased,
   };
 }
 
@@ -175,8 +179,8 @@ export function cameraFollowPosition(
   }[preset];
 
   const settle = Math.min(1, t * 1.2);
-  const pullZ = graphRevealProgress * 14;
-  const pullY = graphRevealProgress * 6;
+  const pullZ = graphRevealProgress * 18;
+  const pullY = graphRevealProgress * 8;
 
   return {
     x: star.x + config.x * (1 - settle * 0.25),

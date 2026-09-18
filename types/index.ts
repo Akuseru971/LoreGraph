@@ -686,6 +686,9 @@ export type CinematicDirectorPreview =
   | "outro"
   | "scene"
   | "transition"
+  | "inter-chapter"
+  | "arrival"
+  | "departure"
   | "full";
 
 export interface CinematicPlayerOptions {

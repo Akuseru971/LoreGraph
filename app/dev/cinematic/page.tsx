@@ -23,6 +23,10 @@ import type { CinematicAspectMode, CinematicDirectorPreview, CinematicPlayerOpti
 
 const AATROX_SCENES = [
   { label: "Intro", preview: "intro" as const },
+  { label: "Inter-Chapter (→ Scene 2)", preview: "inter-chapter" as const, index: 2 },
+  { label: "Freefall (→ Scene 3)", preview: "transition" as const, index: 3 },
+  { label: "Arrival (Scene 4)", preview: "arrival" as const, index: 4 },
+  { label: "Departure (Scene 4)", preview: "departure" as const, index: 4 },
   { label: "Scene 1 — Ascension", index: 1 },
   { label: "Scene 2 — Void War", index: 2 },
   { label: "Scene 3 — Darkin Turn", index: 3 },
@@ -31,7 +35,6 @@ const AATROX_SCENES = [
   { label: "Scene 6 — Return", index: 6 },
   { label: "Scene 7 — Pantheon", index: 7 },
   { label: "Outro", preview: "outro" as const },
-  { label: "Transition (Scene 2)", preview: "transition" as const, index: 2 },
 ];
 
 export default function CinematicDevPage() {
@@ -228,12 +231,8 @@ export default function CinematicDevPage() {
                 type="button"
                 className="rounded-full border border-line px-3 py-1.5 text-xs text-parchment hover:border-gold/50"
                 onClick={() => {
-                  if ("preview" in item && item.preview === "intro") {
-                    launchDirector("intro");
-                  } else if ("preview" in item && item.preview === "outro") {
-                    launchDirector("outro");
-                  } else if ("preview" in item && item.preview === "transition" && "index" in item) {
-                    launchDirector("transition", item.index);
+                  if ("preview" in item && item.preview) {
+                    launchDirector(item.preview, "index" in item ? item.index : 0);
                   } else if ("index" in item) {
                     launchDirector("scene", item.index);
                   }

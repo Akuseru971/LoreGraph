@@ -34,16 +34,16 @@ export const DEFAULT_INTRO_TIMING: CinematicIntroTiming = {
   handoffMs: 500,
 };
 
-/** Name constellation intro — faster, splash → name → hero star zoom. */
+/** Name constellation intro — splash → global name fade → hero star zoom. */
 export const NAME_RECORD_INTRO_TIMING: CinematicIntroTiming = {
-  splashHoldMs: 900,
-  splashDriftMs: 300,
-  darkenMs: 1000,
-  starsEmergeMs: 1200,
-  linesFormMs: 300,
-  heroSelectMs: 400,
+  splashHoldMs: 850,
+  splashDriftMs: 280,
+  darkenMs: 950,
+  starsEmergeMs: 500,
+  linesFormMs: 180,
+  heroSelectMs: 420,
   zoomStarMs: 1100,
-  handoffMs: 400,
+  handoffMs: 420,
 };
 
 export const NAME_OUTRO_TIMING: CinematicOutroTiming = {
@@ -102,6 +102,8 @@ export interface IntroPhaseState {
   /** Luminous contour overtaking splash (name intro). */
   contourOvertake?: number;
   nameFormProgress?: number;
+  /** Global name opacity — entire word fades in together. */
+  nameOpacity?: number;
   softenNonHero?: number;
   complete: boolean;
 }
@@ -277,9 +279,14 @@ export function computeIntroPhaseState(
   let textOpacity = 0;
   let contourOvertake = 0;
   let nameFormProgress = 0;
+  let nameOpacity = 0;
   let softenNonHero = 0;
 
   const isNameIntro = intro.type === "NAME_CONSTELLATION";
+
+  function globalNameFade(t: number): number {
+    return 1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 3.2);
+  }
 
   if (phase === "splash_hold") {
     textOpacity = isNameIntro ? 0 : easeOut(phaseProgress) * 0.9;
@@ -288,8 +295,9 @@ export function computeIntroPhaseState(
     textOpacity = isNameIntro ? 0 : 0.9 * (1 - t * 0.5);
     contourOvertake = isNameIntro ? 0.08 + t * 0.35 : 0;
     if (isNameIntro) {
-      starRevealProgress = t * 0.05;
-      constellationOpacity = t * 0.15;
+      starRevealProgress = 1;
+      constellationOpacity = t * 0.12;
+      nameOpacity = t * 0.08;
     }
   } else if (phase === "darken") {
     if (isNameIntro) {
@@ -299,9 +307,10 @@ export function computeIntroPhaseState(
       colorDrain = t * 0.55;
       backgroundFade = t * 0.85;
       subjectOpacity = 1 - t * 0.95;
-      starRevealProgress = 0.05 + t * 0.25;
-      constellationOpacity = 0.15 + t * 0.7;
-      nameFormProgress = t * 0.35;
+      starRevealProgress = 1;
+      constellationOpacity = 0.12 + t * 0.55;
+      nameFormProgress = t * 0.25;
+      nameOpacity = globalNameFade(t * 0.35);
     } else {
       backgroundFade = t * 0.65;
       splashDarken = t * 0.35;
@@ -316,11 +325,12 @@ export function computeIntroPhaseState(
       subjectOpacity = 0;
       contourOvertake = 1;
       backgroundFade = 0.9;
-      starRevealProgress = 0.3 + t * 0.55;
-      nameFormProgress = 0.35 + t * 0.55;
-      visibleStarCount = Math.max(2, Math.ceil(anchorCount * starRevealProgress));
-      constellationOpacity = 0.85 + t * 0.12;
-      lineProgress = t * 0.4;
+      starRevealProgress = 1;
+      nameFormProgress = 0.25 + t * 0.75;
+      nameOpacity = globalNameFade(0.25 + t * 0.75);
+      visibleStarCount = anchorCount;
+      constellationOpacity = 0.67 + t * 0.3;
+      lineProgress = nameOpacity;
     } else {
       backgroundFade = 0.65 + t * 0.25;
       splashDarken = 0.35 + t * 0.35;
@@ -335,10 +345,11 @@ export function computeIntroPhaseState(
     if (isNameIntro) {
       splashOpacity = 0;
       subjectOpacity = 0;
-      starRevealProgress = 0.85 + t * 0.12;
-      nameFormProgress = 0.9 + t * 0.1;
+      starRevealProgress = 1;
+      nameFormProgress = 1;
+      nameOpacity = 1;
       visibleStarCount = anchorCount;
-      lineProgress = 0.4 + t * 0.6;
+      lineProgress = 1;
       constellationOpacity = 0.97;
     } else {
       backgroundFade = 0.9;
@@ -352,23 +363,25 @@ export function computeIntroPhaseState(
   } else if (phase === "hero_select") {
     splashOpacity = isNameIntro ? 0 : 0.08 * (1 - t);
     subjectOpacity = 0;
-    starRevealProgress = isNameIntro ? 1 : 0.95 + t * 0.05;
+    starRevealProgress = 1;
     visibleStarCount = anchorCount;
     lineProgress = 1;
     heroStarIntensity = 0.7 + t * 1.1;
     constellationOpacity = 0.97;
     softenNonHero = isNameIntro ? t * 0.65 : 0;
     nameFormProgress = 1;
+    nameOpacity = 1;
   } else if (phase === "zoom_star") {
     splashOpacity = 0;
     subjectOpacity = 0;
     starRevealProgress = 1;
     visibleStarCount = anchorCount;
-    lineProgress = 1 - t * 0.4;
+    lineProgress = 1;
     heroStarIntensity = 1.8 + t * 1.4;
     zoomProgress = easeOut(phaseProgress);
     constellationOpacity = 1;
     handoffBlend = t * 0.35;
+    nameOpacity = 1;
   } else {
     zoomProgress = 1;
     heroStarIntensity = 2.4;
@@ -378,6 +391,7 @@ export function computeIntroPhaseState(
     handoffBlend = 0.35 + t * 0.65;
     splashOpacity = 0;
     subjectOpacity = 0;
+    nameOpacity = 1 - t * 0.4;
   }
 
   return {
@@ -399,6 +413,7 @@ export function computeIntroPhaseState(
     textOpacity,
     contourOvertake,
     nameFormProgress,
+    nameOpacity,
     softenNonHero,
     complete,
   };

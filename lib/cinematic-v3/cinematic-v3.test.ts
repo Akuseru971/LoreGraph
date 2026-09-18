@@ -20,7 +20,9 @@ import { constellationByCharacterId } from "@/data/cinematic/constellation-ancho
 import { validateFlagshipConstellation } from "./validate-constellation";
 import { computeContourConnectivity } from "./constellation-connectivity";
 import { computeFlagshipPremiumMetrics } from "./flagship-premium-metrics";
-import { totalSceneRecordMs } from "./record-mode";
+import { computeChapterHubState, chapterHubTimingMs } from "./chapter-hub";
+import { nameConstellationByCharacterId } from "@/data/cinematic/name-constellations";
+import { computeRecordPhaseState, totalSceneRecordMs } from "./record-mode";
 
 beforeEach(() => {
   resetLoreGraphCache();
@@ -277,6 +279,76 @@ describe("Cinematic Journey V3", () => {
     expect(metrics.horizontalAssetPct).toBeGreaterThanOrEqual(90);
     expect(metrics.nineSixteenFallbackCount).toBe(0);
     expect(metrics.aatroxLineSkipDefault).toBeLessThanOrEqual(0.1);
+  });
+
+  it("name constellation uses global reveal (no progressive letter groups)", () => {
+    for (const slug of ["aatrox", "yasuo", "yone", "viego", "skarner"]) {
+      const nameConstellation = nameConstellationByCharacterId.get(`char:${slug}`)!;
+      const phased = nameConstellation.contourGroups?.filter((g) => (g.revealPhase ?? 1) > 1) ?? [];
+      expect(phased).toHaveLength(0);
+      expect(nameConstellation.displayName).toBeTruthy();
+    }
+  });
+
+  it("name intro fades in globally within stars_emerge phase", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const intro = journey.introSequence!;
+    const anchorCount = 100;
+    const midDarken = computeIntroPhaseState(
+      intro,
+      intro.recordTiming!.splashHoldMs +
+        intro.recordTiming!.splashDriftMs +
+        intro.recordTiming!.darkenMs * 0.7,
+      anchorCount,
+      true,
+    );
+    expect(midDarken.starRevealProgress).toBe(1);
+    const emerge = computeIntroPhaseState(
+      intro,
+      intro.recordTiming!.splashHoldMs +
+        intro.recordTiming!.splashDriftMs +
+        intro.recordTiming!.darkenMs +
+        intro.recordTiming!.starsEmergeMs * 0.85,
+      anchorCount,
+      true,
+    );
+    expect(emerge.nameOpacity).toBeGreaterThan(0.85);
+    expect(emerge.starRevealProgress).toBe(1);
+  });
+
+  it("chapter hub re-shows name between beats with destination star", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const nameConstellation = nameConstellationByCharacterId.get("char:aatrox")!;
+    const hub = computeChapterHubState(0.4, nameConstellation, 3, journey.scenes.length);
+    expect(hub.showName).toBe(true);
+    expect(hub.nameOpacity).toBeGreaterThan(0.7);
+    expect(hub.dezoomStrength).toBeGreaterThan(0.9);
+    expect(hub.destinationStarId).toBeTruthy();
+    const select = computeChapterHubState(0.52, nameConstellation, 3, journey.scenes.length);
+    expect(select.phase).toBe("star_select");
+    expect(select.heroIntensity).toBeGreaterThan(1.2);
+  });
+
+  it("record travel phase includes chapter hub state", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const scene = journey.scenes[2];
+    const nameConstellation = nameConstellationByCharacterId.get("char:aatrox")!;
+    const state = computeRecordPhaseState(scene, 900, {
+      nameConstellation,
+      targetSceneIndex: 2,
+      totalScenes: journey.scenes.length,
+    });
+    expect(state.phase).toBe("travel");
+    expect(state.chapterHub?.showName).toBe(true);
+    expect(state.chapterHub?.nameOpacity).toBeGreaterThan(0.3);
+  });
+
+  it("chapter hub timing fits record mode targets", () => {
+    const timing = chapterHubTimingMs(2100);
+    expect(timing.nameReadableMs).toBeGreaterThanOrEqual(550);
+    expect(timing.nameReadableMs).toBeLessThanOrEqual(1000);
+    expect(timing.plungeMs).toBeGreaterThanOrEqual(700);
+    expect(timing.plungeMs).toBeLessThanOrEqual(1600);
   });
 
   it("outro phase state reforms constellation silhouette", () => {

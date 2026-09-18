@@ -10,6 +10,8 @@ import {
 } from "./aatrox-cinematic-direction";
 import { computeContourConnectivity } from "./constellation-connectivity";
 import { compositionForScene } from "./composition";
+import { nameConstellationByCharacterId } from "@/data/cinematic/name-constellations";
+import { chapterHubTimingMs, CHAPTER_HUB_TIMING } from "./chapter-hub";
 import { DEFAULT_INTRO_TIMING } from "./intro-outro";
 import { DEFAULT_RECORD_TIMING, recordTimingForScene, totalSceneRecordMs } from "./record-mode";
 import type { CinematicJourney } from "@/types";
@@ -91,6 +93,51 @@ export function validateFlagshipCoverage(journey: CinematicJourney): CinematicVa
         level: "WARNING",
         kind: "intro_timing_too_slow",
         message: `Record intro ${introMs}ms exceeds ${MAX_RECORD_INTRO_MS}ms target`,
+      });
+    }
+    if (introMs < 4500 || introMs > 5800) {
+      issues.push({
+        level: "WARNING",
+        kind: "intro_timing_out_of_band",
+        message: `Record intro ${introMs}ms outside 4.5–5.8s target band`,
+      });
+    }
+  }
+
+  if (journey.introSequence?.type === "NAME_CONSTELLATION" && journey.primaryCharacterId) {
+    const nameConstellation = nameConstellationByCharacterId.get(journey.primaryCharacterId);
+    if (nameConstellation) {
+      const progressiveGroups =
+        nameConstellation.contourGroups?.filter((g) => (g.revealPhase ?? 1) > 1) ?? [];
+      if (progressiveGroups.length > 0) {
+        issues.push({
+          level: "WARNING",
+          kind: "name_progressive_reveal",
+          message: `Name constellation uses progressive reveal (${progressiveGroups.length} phased groups) — should fade globally`,
+        });
+      }
+    }
+  }
+
+  const travelMs = recordTimingForScene(journey.scenes[1] ?? journey.scenes[0]).travelMs;
+  const hubTiming = chapterHubTimingMs(travelMs);
+  if (hubTiming.nameReadableMs < CHAPTER_HUB_TIMING.nameReadableMs.min) {
+    issues.push({
+      level: "WARNING",
+      kind: "inter_chapter_name_too_fast",
+      message: `Inter-chapter name readable window ${hubTiming.nameReadableMs}ms below ${CHAPTER_HUB_TIMING.nameReadableMs.min}ms`,
+    });
+  }
+
+  for (const scene of journey.scenes) {
+    if (scene.type === "ENDING") continue;
+    const comp = scene.composition ?? compositionForScene(scene, scene.image);
+    if (scene.image?.url && comp === "BACKGROUND_MEMORY" && scene.importance === "CORE") {
+      issues.push({
+        level: "WARNING",
+        sceneId: scene.id,
+        kind: "weak_background_composition",
+        message: "CORE flagship beat uses BACKGROUND_MEMORY — prefer FULL_BLEED for illustrated presence",
       });
     }
   }

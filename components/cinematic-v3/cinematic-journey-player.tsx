@@ -8,7 +8,9 @@ import {
   totalOutroMsForMode,
 } from "@/lib/cinematic-v3/intro-outro";
 import { constellationById } from "@/data/cinematic/constellation-anchors";
+import { computeChapterHubState } from "@/lib/cinematic-v3/chapter-hub";
 import { getHeroAnchorPosition } from "./constellation-silhouette";
+import { ChapterHubOverlay } from "./chapter-hub-overlay";
 import { IntroHandoffStar } from "./intro-handoff-star";
 import {
   computeRecordPhaseState,
@@ -57,8 +59,20 @@ export function CinematicJourneyPlayer({
 
   const directorPreview = playerOptions.directorPreview ?? "full";
   const directorSceneIndex = playerOptions.directorSceneIndex ?? 0;
-  const hasIntro = Boolean(journey.introSequence) && directorPreview !== "scene" && directorPreview !== "outro";
-  const hasOutro = Boolean(journey.outroSequence) && directorPreview !== "intro" && directorPreview !== "scene";
+  const hasIntro =
+    Boolean(journey.introSequence) &&
+    directorPreview !== "scene" &&
+    directorPreview !== "outro" &&
+    directorPreview !== "inter-chapter" &&
+    directorPreview !== "arrival" &&
+    directorPreview !== "departure";
+  const hasOutro =
+    Boolean(journey.outroSequence) &&
+    directorPreview !== "intro" &&
+    directorPreview !== "scene" &&
+    directorPreview !== "inter-chapter" &&
+    directorPreview !== "arrival" &&
+    directorPreview !== "departure";
 
   const quality = React.useMemo(() => {
     if (recordMode) return "high" as const;
@@ -68,7 +82,11 @@ export function CinematicJourneyPlayer({
   const initialPhase: CinematicJourneyPhase =
     directorPreview === "outro"
       ? "outro"
-      : directorPreview === "scene" || directorPreview === "transition"
+      : directorPreview === "scene" ||
+          directorPreview === "transition" ||
+          directorPreview === "inter-chapter" ||
+          directorPreview === "arrival" ||
+          directorPreview === "departure"
         ? "playing"
         : hasIntro
           ? "intro"
@@ -78,19 +96,36 @@ export function CinematicJourneyPlayer({
   const [outroElapsedMs, setOutroElapsedMs] = React.useState(0);
   const [outroStarted, setOutroStarted] = React.useState(directorPreview === "outro");
   const [sceneIndex, setSceneIndex] = React.useState(
-    directorPreview === "scene" || directorPreview === "transition"
+    directorPreview === "scene" ||
+      directorPreview === "transition" ||
+      directorPreview === "inter-chapter" ||
+      directorPreview === "arrival" ||
+      directorPreview === "departure"
       ? directorSceneIndex
       : directorPreview === "outro"
         ? journey.scenes.length - 1
         : 0,
   );
-  const [transitionProgress, setTransitionProgress] = React.useState(
-    directorPreview === "transition" ? 0.45 : 1,
-  );
+  const previewTravelProgress =
+    directorPreview === "inter-chapter"
+      ? 0.38
+      : directorPreview === "arrival"
+        ? 0.92
+        : directorPreview === "departure"
+          ? 0.08
+          : directorPreview === "transition"
+            ? 0.45
+            : 1;
+  const [transitionProgress, setTransitionProgress] = React.useState(previewTravelProgress);
   const [graphRevealProgress, setGraphRevealProgress] = React.useState(0);
   const [playing, setPlaying] = React.useState(false);
   const [arrived, setArrived] = React.useState(
-    directorPreview === "transition" ? false : !hasIntro,
+    directorPreview === "transition" ||
+      directorPreview === "inter-chapter" ||
+      directorPreview === "arrival" ||
+      directorPreview === "departure"
+      ? false
+      : !hasIntro,
   );
   const [visitedSceneIndices, setVisitedSceneIndices] = React.useState<number[]>(
     directorPreview === "outro"
@@ -129,18 +164,51 @@ export function CinematicJourneyPlayer({
   const outroTotalMs = journey.outroSequence
     ? totalOutroMsForMode(journey.outroSequence, recordActive)
     : 0;
-  const heroAnchorPos = React.useMemo(() => {
+  const nameConstellation = React.useMemo(() => {
     const cid = journey.introSequence?.constellationId;
-    const c = cid ? constellationById.get(cid) : undefined;
-    return c
-      ? getHeroAnchorPosition(c, journey.introSequence?.heroStarId)
+    return cid ? constellationById.get(cid) : undefined;
+  }, [journey.introSequence?.constellationId]);
+
+  const heroAnchorPos = React.useMemo(() => {
+    return nameConstellation
+      ? getHeroAnchorPosition(nameConstellation, journey.introSequence?.heroStarId)
       : { x: 0.64, y: 0.2 };
-  }, [journey.introSequence]);
+  }, [nameConstellation, journey.introSequence?.heroStarId]);
 
   const recordPhase = React.useMemo(() => {
     if (!recordActive || !scene || journeyPhase !== "playing") return undefined;
-    return computeRecordPhaseState(scene, sceneElapsedMs);
-  }, [recordActive, scene, sceneElapsedMs, journeyPhase]);
+    return computeRecordPhaseState(scene, sceneElapsedMs, {
+      nameConstellation,
+      targetSceneIndex: sceneIndex,
+      totalScenes: journey.scenes.length,
+    });
+  }, [recordActive, scene, sceneElapsedMs, journeyPhase, nameConstellation, sceneIndex, journey.scenes.length]);
+
+  const chapterHubState = React.useMemo(() => {
+    if (!nameConstellation || sceneIndex === 0) return undefined;
+    const traveling = !arrived && journeyPhase === "playing";
+    if (!traveling && !recordPhase?.chapterHub) return undefined;
+    const travelT = recordPhase?.chapterHub
+      ? recordPhase.phaseProgress
+      : transitionProgress;
+    return (
+      recordPhase?.chapterHub ??
+      computeChapterHubState(
+        travelT,
+        nameConstellation,
+        sceneIndex,
+        journey.scenes.length,
+      )
+    );
+  }, [
+    nameConstellation,
+    sceneIndex,
+    arrived,
+    journeyPhase,
+    recordPhase,
+    transitionProgress,
+    journey.scenes.length,
+  ]);
 
   const finishIntro = React.useCallback(() => {
     if (directorPreview === "intro") return;
@@ -500,6 +568,14 @@ export function CinematicJourneyPlayer({
             heroX={heroAnchorPos.x}
             heroY={heroAnchorPos.y}
             intensity={1.2}
+          />
+        ) : null}
+
+        {nameConstellation && chapterHubState && journeyPhase === "playing" && sceneIndex > 0 ? (
+          <ChapterHubOverlay
+            constellation={nameConstellation}
+            hubState={chapterHubState}
+            visible={!arrived && chapterHubState.showName}
           />
         ) : null}
 

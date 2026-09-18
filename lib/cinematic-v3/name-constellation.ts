@@ -7,11 +7,13 @@ import type {
 } from "@/types";
 import { densifyPolyline } from "./constellation-builder";
 
-const LETTER_WIDTH = 0.11;
-const LETTER_HEIGHT = 0.22;
-const NAME_Y = 0.38;
+/** Monumental display scale — name dominates the frame. */
+const LETTER_WIDTH = 0.138;
+const LETTER_HEIGHT = 0.30;
+const NAME_Y = 0.36;
+const DEFAULT_LETTER_SPACING = 0.016;
 
-function layoutLetters(displayName: string, letterSpacing = 0.012) {
+function layoutLetters(displayName: string, letterSpacing = DEFAULT_LETTER_SPACING) {
   const chars = displayName.split("");
   const totalWidth = chars.length * LETTER_WIDTH + (chars.length - 1) * letterSpacing;
   const startX = 0.5 - totalWidth / 2;
@@ -19,6 +21,7 @@ function layoutLetters(displayName: string, letterSpacing = 0.012) {
     char,
     x0: startX + i * (LETTER_WIDTH + letterSpacing),
     y0: NAME_Y,
+    index: i,
   }));
 }
 
@@ -38,12 +41,12 @@ export function buildNameConstellation(spec: NameConstellationSpec): ChampionCon
     contourGroups.push({
       id: groupId,
       label: char,
-      revealPhase: li < 2 ? 1 : li < 4 ? 2 : 3,
+      revealPhase: 1,
     });
 
     for (let si = 0; si < strokes.length; si++) {
       const stroke = strokes[si];
-      const local = densifyPolyline(stroke, 0.13, false);
+      const local = densifyPolyline(stroke, 0.11, false);
       const prefix = `${groupId}-s${si}`;
 
       for (let pi = 0; pi < local.length; pi++) {
@@ -54,9 +57,9 @@ export function buildNameConstellation(spec: NameConstellationSpec): ChampionCon
           y: round4(y0 + local[pi].y * LETTER_HEIGHT),
           category: "CONTOUR",
           visualWeight: pi === 0 || pi === local.length - 1 ? "HIGH" : "MEDIUM",
-          revealPhase: contourGroups.find((g) => g.id === groupId)?.revealPhase ?? 2,
+          revealPhase: 1,
           contourGroup: groupId,
-          lineWeight: "NORMAL",
+          lineWeight: si === 0 ? "ICONIC" : "NORMAL",
           connectsTo: [],
         });
         if (pi < local.length - 1) {
@@ -120,6 +123,29 @@ export function getNameConstellationHeroPosition(
   const id = heroStarId ?? constellation.heroStarId;
   const hero = constellation.anchors.find((a) => a.id === id);
   return hero ? { x: hero.x, y: hero.y } : { x: 0.5, y: 0.42 };
+}
+
+/** Pick the destination star within the name for a target scene beat. */
+export function getDestinationStarForScene(
+  constellation: ChampionConstellation,
+  targetSceneIndex: number,
+  totalScenes: number,
+): string {
+  const letterGroups =
+    constellation.contourGroups?.filter((g) => g.id.startsWith("letter-")) ?? [];
+  const letterCount = letterGroups.length || 1;
+  const denom = Math.max(1, totalScenes - 1);
+  const letterIndex = Math.min(
+    letterCount - 1,
+    Math.floor((targetSceneIndex / denom) * letterCount),
+  );
+  const groupId = `letter-${letterIndex}`;
+  const groupAnchors = constellation.anchors.filter((a) => a.contourGroup === groupId);
+  const prominent =
+    groupAnchors.find((a) => a.visualWeight === "HIGH" && a.id !== constellation.heroStarId) ??
+    groupAnchors[Math.floor(groupAnchors.length * 0.45)] ??
+    groupAnchors[0];
+  return prominent?.id ?? constellation.heroStarId;
 }
 
 export function isNameConstellation(constellation: ChampionConstellation): boolean {

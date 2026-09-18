@@ -190,10 +190,10 @@ export function SignatureOutroSequence({
         {isNameOutro ? (
           <NameConstellation
             constellation={constellation}
-            starRevealProgress={revealProgress}
-            lineProgress={Math.min(1, state.secondaryStarProgress + 0.35)}
+            mode="outro"
+            nameOpacity={Math.min(1, state.constellationOpacity * 0.35 + revealProgress * 0.75)}
             heroStarId={constellation.heroStarId}
-            heroIntensity={0.85}
+            heroIntensity={0.85 + state.secondaryStarProgress * 0.4}
             opacity={1}
             className="h-full w-full"
           />
