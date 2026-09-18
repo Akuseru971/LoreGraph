@@ -1,3 +1,4 @@
+import { resolveSeedCanonStatus } from "@/lib/canon/model";
 import type { QuizQuestion, QuizQuestionKind, RegionSlug } from "@/types";
 import { RUNETERRA_ID } from "./universes";
 
@@ -12,6 +13,7 @@ interface QSeed {
   regions?: RegionSlug[];
   difficulty?: 1 | 2 | 3 | 4 | 5;
   verified?: boolean;
+  canonStatus?: string;
 }
 
 const seeds: QSeed[] = [
@@ -20,7 +22,7 @@ const seeds: QSeed[] = [
     kind: "WHO_AM_I",
     prompt: "Who am I?",
     clues: [
-      "I was once an Ascended warrior, raised to fight the Void.",
+      "I was once an Ascended warrior who defended Shurima against the Void.",
       "Centuries of war hollowed me out, and my own empire turned against me.",
       "I could not be killed, so I was imprisoned inside my own weapon.",
     ],
@@ -43,7 +45,7 @@ const seeds: QSeed[] = [
     options: ["Pantheon", "Leona", "Diana", "Garen"],
     correct: 0,
     explanation:
-      "Atreus carried the Aspect of War until Aatrox destroyed it. He survived, kept a fragment, and now fights as a mortal rather than a vessel.",
+      "Atreus carried the Aspect of War until Aatrox destroyed it. He survived and now fights as a mortal wielding the fallen Aspect's weapons through his own will.",
     chars: ["pantheon"],
     regions: ["targon"],
     verified: true,
@@ -328,7 +330,7 @@ const seeds: QSeed[] = [
     options: ["True", "False"],
     correct: 0,
     explanation:
-      "Both were raised by Shurima's Sun Disc to fight the Void, and both were later sealed inside their own weapons after the Darkin corruption.",
+      "Both were Shuriman Ascended who later became Darkin and were sealed inside their own weapons after the corruption.",
     chars: ["aatrox", "varus"],
     regions: ["shurima"],
     verified: true,
@@ -416,7 +418,7 @@ const seeds: QSeed[] = [
     options: ["True", "False"],
     correct: 1,
     explanation:
-      "Aatrox destroyed the Aspect. What remains is Atreus, a mortal carrying a fragment of a dead god — which is the entire point of the character.",
+      "Aatrox destroyed the Aspect. What remains is Atreus — a mortal who kept fighting with the fallen Aspect's weapons through his own will.",
     chars: ["pantheon", "aatrox"],
     regions: ["targon"],
     verified: true,
@@ -884,19 +886,20 @@ const seeds: QSeed[] = [
       "Pre-2018 lore tied Aatrox to celestial conflict alongside Kayle and Morgana. His rewrite made him a Shuriman Darkin, so LoreGraph flags that edge OLD_LORE.",
     chars: ["aatrox", "kayle", "morgana"],
     verified: true,
+    canonStatus: "LEGACY_LORE",
   },
   {
     kind: "CANON_OR_NOT",
-    prompt: "How does LoreGraph classify Arcane relative to Runeterra's main timeline?",
+    prompt: "How does LoreGraph classify Arcane relative to current Runeterra canon?",
     options: [
-      "A separate continuity that shares characters",
+      "Partially reconciled with current Runeterra canon",
       "Fully identical canon",
       "Non-canonical fan work",
       "A prequel to the Rune Wars",
     ],
     correct: 0,
     explanation:
-      "Arcane shares characters with the main timeline but not every event. LoreGraph marks Arcane-derived connections so you always know which body of material a claim comes from.",
+      "Arcane is not a wholly separate universe. Riot has reconciled some Arcane material into current canon while other details remain pending — LoreGraph marks those cases RECONCILIATION PENDING rather than pretending they are identical.",
     chars: ["jinx", "vi", "viktor", "mel"],
     verified: true,
   },
@@ -942,7 +945,7 @@ const seeds: QSeed[] = [
     ],
     correct: 0,
     explanation:
-      "Aatrox killed the Aspect. Atreus survived, kept a fragment, and now fights as a man — which is the whole point of the modern character.",
+      "Aatrox destroyed the Aspect. Atreus survived and now fights as a man wielding celestial weapons through mortal will.",
     chars: ["pantheon", "aatrox"],
     verified: true,
   },
@@ -977,6 +980,7 @@ export const quizQuestions: QuizQuestion[] = seeds.map((s, i) => ({
   difficulty: s.difficulty ?? 2,
   xp: 25,
   verified: s.verified ?? false,
+  canonStatus: resolveSeedCanonStatus(s.canonStatus, s.verified ?? false),
 }));
 
 export const quizQuestionById = new Map(quizQuestions.map((q) => [q.id, q]));

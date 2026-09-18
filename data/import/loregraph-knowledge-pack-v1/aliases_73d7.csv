@@ -1,0 +1,219 @@
+﻿entity_id,canonical_name,alias,alias_type
+char:aatrox,Aatrox,aatrox,SEARCH_ALIAS
+char:ahri,Ahri,ahri,SEARCH_ALIAS
+char:akali,Akali,akali,SEARCH_ALIAS
+char:akshan,Akshan,akshan,SEARCH_ALIAS
+char:alistar,Alistar,alistar,SEARCH_ALIAS
+char:ambessa,Ambessa,ambessa,SEARCH_ALIAS
+char:amumu,Amumu,amumu,SEARCH_ALIAS
+char:anivia,Anivia,anivia,SEARCH_ALIAS
+char:annie,Annie,annie,SEARCH_ALIAS
+char:aphelios,Aphelios,aphelios,SEARCH_ALIAS
+char:ashe,Ashe,ashe,SEARCH_ALIAS
+char:aurelion-sol,Aurelion Sol,A Sol,SEARCH_ALIAS
+char:aurelion-sol,Aurelion Sol,ASol,SEARCH_ALIAS
+char:aurelion-sol,Aurelion Sol,aurelion sol,SEARCH_ALIAS
+char:aurelion-sol,Aurelion Sol,aurelionsol,SEARCH_ALIAS
+char:aurora,Aurora,aurora,SEARCH_ALIAS
+char:azir,Azir,azir,SEARCH_ALIAS
+char:bard,Bard,bard,SEARCH_ALIAS
+char:bel-veth,Bel'Veth,BelVeth,SEARCH_ALIAS
+char:bel-veth,Bel'Veth,Belveth,SEARCH_ALIAS
+char:bel-veth,Bel'Veth,bel'veth,SEARCH_ALIAS
+char:bel-veth,Bel'Veth,belveth,SEARCH_ALIAS
+char:blitzcrank,Blitzcrank,blitzcrank,SEARCH_ALIAS
+char:brand,Brand,brand,SEARCH_ALIAS
+char:braum,Braum,braum,SEARCH_ALIAS
+char:briar,Briar,briar,SEARCH_ALIAS
+char:caitlyn,Caitlyn,caitlyn,SEARCH_ALIAS
+char:camille,Camille,camille,SEARCH_ALIAS
+char:cassiopeia,Cassiopeia,cassiopeia,SEARCH_ALIAS
+char:cho-gath,Cho'Gath,ChoGath,SEARCH_ALIAS
+char:cho-gath,Cho'Gath,Chogath,SEARCH_ALIAS
+char:cho-gath,Cho'Gath,cho'gath,SEARCH_ALIAS
+char:cho-gath,Cho'Gath,chogath,SEARCH_ALIAS
+char:corki,Corki,corki,SEARCH_ALIAS
+char:darius,Darius,darius,SEARCH_ALIAS
+char:diana,Diana,diana,SEARCH_ALIAS
+char:dr-mundo,Dr. Mundo,Dr Mundo,SEARCH_ALIAS
+char:dr-mundo,Dr. Mundo,Mundo,SEARCH_ALIAS
+char:dr-mundo,Dr. Mundo,dr. mundo,SEARCH_ALIAS
+char:dr-mundo,Dr. Mundo,drmundo,SEARCH_ALIAS
+char:draven,Draven,draven,SEARCH_ALIAS
+char:ekko,Ekko,ekko,SEARCH_ALIAS
+char:elise,Elise,elise,SEARCH_ALIAS
+char:evelynn,Evelynn,evelynn,SEARCH_ALIAS
+char:ezreal,Ezreal,ezreal,SEARCH_ALIAS
+char:fiddlesticks,Fiddlesticks,fiddlesticks,SEARCH_ALIAS
+char:fiora,Fiora,fiora,SEARCH_ALIAS
+char:fizz,Fizz,fizz,SEARCH_ALIAS
+char:galio,Galio,galio,SEARCH_ALIAS
+char:gangplank,Gangplank,gangplank,SEARCH_ALIAS
+char:garen,Garen,garen,SEARCH_ALIAS
+char:gnar,Gnar,gnar,SEARCH_ALIAS
+char:gragas,Gragas,gragas,SEARCH_ALIAS
+char:graves,Graves,graves,SEARCH_ALIAS
+char:gwen,Gwen,gwen,SEARCH_ALIAS
+char:hecarim,Hecarim,hecarim,SEARCH_ALIAS
+char:heimerdinger,Heimerdinger,heimerdinger,SEARCH_ALIAS
+char:hwei,Hwei,hwei,SEARCH_ALIAS
+char:illaoi,Illaoi,illaoi,SEARCH_ALIAS
+char:irelia,Irelia,irelia,SEARCH_ALIAS
+char:ivern,Ivern,ivern,SEARCH_ALIAS
+char:janna,Janna,janna,SEARCH_ALIAS
+char:jarvan-iv,Jarvan IV,J4,SEARCH_ALIAS
+char:jarvan-iv,Jarvan IV,Jarvan,SEARCH_ALIAS
+char:jarvan-iv,Jarvan IV,jarvan iv,SEARCH_ALIAS
+char:jarvan-iv,Jarvan IV,jarvaniv,SEARCH_ALIAS
+char:jax,Jax,jax,SEARCH_ALIAS
+char:jayce,Jayce,jayce,SEARCH_ALIAS
+char:jhin,Jhin,jhin,SEARCH_ALIAS
+char:jinx,Jinx,jinx,SEARCH_ALIAS
+char:k-sante,K'Sante,KSante,SEARCH_ALIAS
+char:k-sante,K'Sante,k'sante,SEARCH_ALIAS
+char:k-sante,K'Sante,ksante,SEARCH_ALIAS
+char:kai-sa,Kai'Sa,KaiSa,SEARCH_ALIAS
+char:kai-sa,Kai'Sa,Kaisa,SEARCH_ALIAS
+char:kai-sa,Kai'Sa,kai'sa,SEARCH_ALIAS
+char:kai-sa,Kai'Sa,kaisa,SEARCH_ALIAS
+char:kalista,Kalista,kalista,SEARCH_ALIAS
+char:karma,Karma,karma,SEARCH_ALIAS
+char:karthus,Karthus,karthus,SEARCH_ALIAS
+char:kassadin,Kassadin,kassadin,SEARCH_ALIAS
+char:katarina,Katarina,katarina,SEARCH_ALIAS
+char:kayle,Kayle,kayle,SEARCH_ALIAS
+char:kayn,Kayn,kayn,SEARCH_ALIAS
+char:kennen,Kennen,kennen,SEARCH_ALIAS
+char:kha-zix,Kha'Zix,KhaZix,SEARCH_ALIAS
+char:kha-zix,Kha'Zix,Khazix,SEARCH_ALIAS
+char:kha-zix,Kha'Zix,kha'zix,SEARCH_ALIAS
+char:kha-zix,Kha'Zix,khazix,SEARCH_ALIAS
+char:kindred,Kindred,kindred,SEARCH_ALIAS
+char:kled,Kled,kled,SEARCH_ALIAS
+char:kog-maw,Kog'Maw,KogMaw,SEARCH_ALIAS
+char:kog-maw,Kog'Maw,kog'maw,SEARCH_ALIAS
+char:kog-maw,Kog'Maw,kogmaw,SEARCH_ALIAS
+char:leblanc,LeBlanc,Leblanc,SEARCH_ALIAS
+char:leblanc,LeBlanc,leblanc,SEARCH_ALIAS
+char:lee-sin,Lee Sin,lee sin,SEARCH_ALIAS
+char:lee-sin,Lee Sin,leesin,SEARCH_ALIAS
+char:leona,Leona,leona,SEARCH_ALIAS
+char:lillia,Lillia,lillia,SEARCH_ALIAS
+char:lissandra,Lissandra,lissandra,SEARCH_ALIAS
+char:locke,Locke,locke,SEARCH_ALIAS
+char:lucian,Lucian,lucian,SEARCH_ALIAS
+char:lulu,Lulu,lulu,SEARCH_ALIAS
+char:lux,Lux,lux,SEARCH_ALIAS
+char:malphite,Malphite,malphite,SEARCH_ALIAS
+char:malzahar,Malzahar,malzahar,SEARCH_ALIAS
+char:maokai,Maokai,maokai,SEARCH_ALIAS
+char:master-yi,Master Yi,master yi,SEARCH_ALIAS
+char:master-yi,Master Yi,masteryi,SEARCH_ALIAS
+char:mel,Mel,mel,SEARCH_ALIAS
+char:milio,Milio,milio,SEARCH_ALIAS
+char:miss-fortune,Miss Fortune,MF,SEARCH_ALIAS
+char:miss-fortune,Miss Fortune,miss fortune,SEARCH_ALIAS
+char:miss-fortune,Miss Fortune,missfortune,SEARCH_ALIAS
+char:mordekaiser,Mordekaiser,mordekaiser,SEARCH_ALIAS
+char:morgana,Morgana,morgana,SEARCH_ALIAS
+char:naafiri,Naafiri,naafiri,SEARCH_ALIAS
+char:nami,Nami,nami,SEARCH_ALIAS
+char:nasus,Nasus,nasus,SEARCH_ALIAS
+char:nautilus,Nautilus,nautilus,SEARCH_ALIAS
+char:neeko,Neeko,neeko,SEARCH_ALIAS
+char:nidalee,Nidalee,nidalee,SEARCH_ALIAS
+char:nilah,Nilah,nilah,SEARCH_ALIAS
+char:nocturne,Nocturne,nocturne,SEARCH_ALIAS
+char:nunu,Nunu & Willump,Nunu,SEARCH_ALIAS
+char:nunu,Nunu & Willump,nunu & willump,SEARCH_ALIAS
+char:nunu,Nunu & Willump,nunuwillump,SEARCH_ALIAS
+char:olaf,Olaf,olaf,SEARCH_ALIAS
+char:orianna,Orianna,orianna,SEARCH_ALIAS
+char:ornn,Ornn,ornn,SEARCH_ALIAS
+char:pantheon,Pantheon,pantheon,SEARCH_ALIAS
+char:poppy,Poppy,poppy,SEARCH_ALIAS
+char:pyke,Pyke,pyke,SEARCH_ALIAS
+char:qiyana,Qiyana,qiyana,SEARCH_ALIAS
+char:quinn,Quinn,quinn,SEARCH_ALIAS
+char:rakan,Rakan,rakan,SEARCH_ALIAS
+char:rammus,Rammus,rammus,SEARCH_ALIAS
+char:rek-sai,Rek'Sai,RekSai,SEARCH_ALIAS
+char:rek-sai,Rek'Sai,Reksai,SEARCH_ALIAS
+char:rek-sai,Rek'Sai,rek'sai,SEARCH_ALIAS
+char:rek-sai,Rek'Sai,reksai,SEARCH_ALIAS
+char:rell,Rell,rell,SEARCH_ALIAS
+char:renata-glasc,Renata Glasc,Renata,SEARCH_ALIAS
+char:renata-glasc,Renata Glasc,renata glasc,SEARCH_ALIAS
+char:renata-glasc,Renata Glasc,renataglasc,SEARCH_ALIAS
+char:renekton,Renekton,renekton,SEARCH_ALIAS
+char:rengar,Rengar,rengar,SEARCH_ALIAS
+char:riven,Riven,riven,SEARCH_ALIAS
+char:rumble,Rumble,rumble,SEARCH_ALIAS
+char:ryze,Ryze,ryze,SEARCH_ALIAS
+char:samira,Samira,samira,SEARCH_ALIAS
+char:sejuani,Sejuani,sejuani,SEARCH_ALIAS
+char:senna,Senna,senna,SEARCH_ALIAS
+char:seraphine,Seraphine,seraphine,SEARCH_ALIAS
+char:sett,Sett,sett,SEARCH_ALIAS
+char:shaco,Shaco,shaco,SEARCH_ALIAS
+char:shen,Shen,shen,SEARCH_ALIAS
+char:shyvana,Shyvana,shyvana,SEARCH_ALIAS
+char:singed,Singed,singed,SEARCH_ALIAS
+char:sion,Sion,sion,SEARCH_ALIAS
+char:sivir,Sivir,sivir,SEARCH_ALIAS
+char:skarner,Skarner,skarner,SEARCH_ALIAS
+char:smolder,Smolder,smolder,SEARCH_ALIAS
+char:sona,Sona,sona,SEARCH_ALIAS
+char:soraka,Soraka,soraka,SEARCH_ALIAS
+char:swain,Swain,swain,SEARCH_ALIAS
+char:sylas,Sylas,sylas,SEARCH_ALIAS
+char:syndra,Syndra,syndra,SEARCH_ALIAS
+char:tahm-kench,Tahm Kench,tahm kench,SEARCH_ALIAS
+char:tahm-kench,Tahm Kench,tahmkench,SEARCH_ALIAS
+char:taliyah,Taliyah,taliyah,SEARCH_ALIAS
+char:talon,Talon,talon,SEARCH_ALIAS
+char:taric,Taric,taric,SEARCH_ALIAS
+char:teemo,Teemo,teemo,SEARCH_ALIAS
+char:thresh,Thresh,thresh,SEARCH_ALIAS
+char:tristana,Tristana,tristana,SEARCH_ALIAS
+char:trundle,Trundle,trundle,SEARCH_ALIAS
+char:tryndamere,Tryndamere,tryndamere,SEARCH_ALIAS
+char:twisted-fate,Twisted Fate,TF,SEARCH_ALIAS
+char:twisted-fate,Twisted Fate,twisted fate,SEARCH_ALIAS
+char:twisted-fate,Twisted Fate,twistedfate,SEARCH_ALIAS
+char:twitch,Twitch,twitch,SEARCH_ALIAS
+char:udyr,Udyr,udyr,SEARCH_ALIAS
+char:urgot,Urgot,urgot,SEARCH_ALIAS
+char:varus,Varus,varus,SEARCH_ALIAS
+char:vayne,Vayne,vayne,SEARCH_ALIAS
+char:veigar,Veigar,veigar,SEARCH_ALIAS
+char:vel-koz,Vel'Koz,VelKoz,SEARCH_ALIAS
+char:vel-koz,Vel'Koz,Velkoz,SEARCH_ALIAS
+char:vel-koz,Vel'Koz,vel'koz,SEARCH_ALIAS
+char:vel-koz,Vel'Koz,velkoz,SEARCH_ALIAS
+char:vex,Vex,vex,SEARCH_ALIAS
+char:vi,Vi,vi,SEARCH_ALIAS
+char:viego,Viego,viego,SEARCH_ALIAS
+char:viktor,Viktor,viktor,SEARCH_ALIAS
+char:vladimir,Vladimir,vladimir,SEARCH_ALIAS
+char:volibear,Volibear,volibear,SEARCH_ALIAS
+char:warwick,Warwick,warwick,SEARCH_ALIAS
+char:wukong,Wukong,Monkey King,SEARCH_ALIAS
+char:wukong,Wukong,wukong,SEARCH_ALIAS
+char:xayah,Xayah,xayah,SEARCH_ALIAS
+char:xerath,Xerath,xerath,SEARCH_ALIAS
+char:xin-zhao,Xin Zhao,xin zhao,SEARCH_ALIAS
+char:xin-zhao,Xin Zhao,xinzhao,SEARCH_ALIAS
+char:yasuo,Yasuo,yasuo,SEARCH_ALIAS
+char:yone,Yone,yone,SEARCH_ALIAS
+char:yorick,Yorick,yorick,SEARCH_ALIAS
+char:yunara,Yunara,yunara,SEARCH_ALIAS
+char:yuumi,Yuumi,yuumi,SEARCH_ALIAS
+char:zaahen,Zaahen,zaahen,SEARCH_ALIAS
+char:zac,Zac,zac,SEARCH_ALIAS
+char:zed,Zed,zed,SEARCH_ALIAS
+char:zeri,Zeri,zeri,SEARCH_ALIAS
+char:ziggs,Ziggs,ziggs,SEARCH_ALIAS
+char:zilean,Zilean,zilean,SEARCH_ALIAS
+char:zoe,Zoe,zoe,SEARCH_ALIAS
+char:zyra,Zyra,zyra,SEARCH_ALIAS

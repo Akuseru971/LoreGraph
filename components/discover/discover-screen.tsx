@@ -12,6 +12,7 @@ import {
   trendingCharacterSlugs,
 } from "@/data";
 import { CharacterCard } from "@/components/character-card";
+import { ConnectHeroDemo } from "@/components/discover/connect-hero-demo";
 import { HeroConstellation } from "@/components/discover/hero-constellation";
 import { useSearchDialog } from "@/components/providers";
 import { StoryPathCard } from "@/components/story/story-path-card";
@@ -139,15 +140,17 @@ export function DiscoverScreen({
           <div className="mt-6 flex animate-fade-up flex-wrap gap-2.5 [animation-delay:240ms]">
             <Button asChild variant="primary" size="lg">
               <Link href="/connect">
-                Explore the graph
+                Connect champions
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
             <Button asChild variant="secondary" size="lg">
-              <Link href="/me">Try Daily Lore</Link>
+              <Link href="/me">Daily Lore</Link>
             </Button>
           </div>
         </div>
+
+        <ConnectHeroDemo />
       </section>
 
       {/* --------------------------------------------------------- trending */}
@@ -157,10 +160,10 @@ export function DiscoverScreen({
       >
         <div className="flex items-baseline justify-between gap-4">
           <h2 id="trending-heading" className="font-display text-parchment text-2xl sm:text-3xl">
-            Trending in Runeterra
+            Featured champions
           </h2>
           <span className="text-eyebrow text-muted-dim hidden sm:inline">
-            Most explored this week
+            Start here
           </span>
         </div>
 

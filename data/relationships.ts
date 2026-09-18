@@ -1,4 +1,14 @@
-import type { CanonStatus, Relationship, RelationshipType } from "@/types";
+import type {
+  ConnectionCategory,
+  Relationship,
+  RelationshipType,
+} from "@/types";
+import { resolveSeedCanonStatus } from "@/lib/canon/model";
+import { inferConfidence, inferConnectionCategory } from "@/lib/truth/layer";
+import { deriveNeedsReview, deriveReviewStatus } from "@/lib/truth/review";
+import { dedupeRelationshipSeeds } from "@/lib/relationships/dedupe";
+import { packRelationshipSeeds } from "./knowledge/generated/relationships-pack";
+import { relationshipExpansionSeeds } from "./relationships-expansion";
 import { bioSourceId } from "./sources";
 import { RUNETERRA_ID } from "./universes";
 
@@ -11,10 +21,16 @@ interface RelSeed {
   short: string;
   long: string;
   importance: number;
-  canon?: CanonStatus;
+  canon?: string;
   events?: string[];
   sources?: string[];
   verified?: boolean;
+  /** Explicit Truth Layer override when auto-classification is insufficient. */
+  connectionType?: ConnectionCategory;
+  needsReview?: boolean;
+  reviewed?: boolean;
+  reviewStatus?: import("@/types").ReviewStatus;
+  editorialNote?: string;
 }
 
 /**
@@ -22,7 +38,7 @@ interface RelSeed {
  * (shared region / faction / event) are derived in lib/graph/build.ts so they
  * never get confused with these.
  */
-const seeds: RelSeed[] = [
+const baseSeeds: RelSeed[] = [
   /* ---------------------------------------------------------------- Darkin */
   {
     a: "aatrox",
@@ -30,12 +46,15 @@ const seeds: RelSeed[] = [
     type: "enemy",
     label: "Mortal Enemies",
     short:
-      "Pantheon's Aspect helped seal Aatrox inside his own sword. Aatrox came back and killed it.",
-    long: "During the Darkin War, the Aspect of War fought alongside Shurima and Targon to stop the corrupted Ascended. Aatrox could not be killed, so he was bound into his blade — and Targon's involvement is the reason he holds a grudge measured in millennia. When he returned, he hunted the Aspect of War down and destroyed the celestial, leaving the mortal host Atreus alive on the ground. That survival is the twist: the man got up, kept a fragment of the dead god, and is now the only mortal who has fought Aatrox and remained himself afterwards.",
+      "Aatrox returned and destroyed the Aspect of War; the mortal host Atreus survived and became Pantheon.",
+    long: "The Aspect of War helped seal Aatrox during the Darkin War — long before Atreus was born. Millennia later, Aatrox hunted down that same celestial and destroyed it while it rode Atreus, leaving the mortal alive on the ground. That survival is the twist: Atreus got up, still able to wield the fallen Aspect's weapons through his own will, and is now the only mortal who has fought Aatrox and remained himself afterwards.",
     importance: 98,
-    events: ["darkin-war", "aatrox-pantheon-duel", "pantheon-reborn"],
-    sources: ["source:twilight-of-the-gods"],
+    events: ["aatrox-pantheon-duel", "pantheon-reborn"],
+    sources: ["source:twilight-of-the-gods", "source:bio-pantheon"],
+    connectionType: "DIRECT_CANON",
     verified: true,
+    reviewed: true,
+    reviewStatus: "VERIFIED_CANON",
   },
   {
     a: "aatrox",
@@ -47,7 +66,10 @@ const seeds: RelSeed[] = [
     long: "Aatrox and Varus fought the same war, suffered the same corruption and received the same sentence: imprisonment inside the weapon each of them had become. They are not allies in any warm sense — Darkin are not sociable — but they are the same category of catastrophe, and the mortals who study one inevitably end up studying the other. Their methods differ sharply: Aatrox destroys his hosts, while Varus shares a body with the two lovers who lifted his bow.",
     importance: 88,
     events: ["darkin-corruption", "darkin-war"],
+    connectionType: "STRUCTURAL_LORE",
     verified: true,
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
   },
   {
     a: "aatrox",
@@ -55,11 +77,14 @@ const seeds: RelSeed[] = [
     type: "formerAlly",
     label: "Fellow Ascended",
     short:
-      "They were raised by the same Sun Disc and fought the same Void war, before one of them turned.",
-    long: "Nasus and Aatrox were both elevated by Shurima's Rite of Ascension to fight the Void, and for centuries they were on the same side of the line. The Darkin corruption split that permanently. Nasus stayed a scholar who remembers; Aatrox became the thing Shurima had to be defended from. Their relationship is the cleanest illustration of what Ascension actually cost the empire.",
+      "Both belong to Shurima's Ascended lineage and the same broad historical era — not a documented personal alliance.",
+    long: "Nasus and Aatrox share the Ascended institution and the ancient wars that followed Icathia's catastrophe. Riot sources establish both as god-warriors of that era, but do not document a personal relationship between them. LoreGraph links them structurally through Shurima's history, not as confirmed allies who fought side by side.",
     importance: 76,
     events: ["ascension-ritual", "void-incursion", "darkin-corruption"],
+    connectionType: "STRUCTURAL_LORE",
     verified: true,
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
   },
   {
     a: "aatrox",
@@ -67,9 +92,10 @@ const seeds: RelSeed[] = [
     type: "formerAlly",
     label: "Servants of the Same Empire",
     short: "Both belonged to Shurima at its height — one as its weapon, one as its throne.",
-    long: "Azir's empire built the Ascended, and Aatrox was among the first and greatest of them. By the time Azir came to the throne the Darkin problem had already reshaped Shurima's relationship to its own gods. They are connected through the institution rather than through personal history, but that institution is the single most consequential thing either of them belongs to.",
+    long: "The Ascended institution predates Azir by millennia, and Aatrox was among its earliest and greatest products. Azir ruled during Shurima's late imperial period; the Darkin crisis unfolded after the empire's fall. They are connected structurally through Shurima's history, not through documented personal interaction.",
     importance: 68,
     events: ["ascension-ritual", "darkin-war"],
+    connectionType: "STRUCTURAL_LORE",
   },
   {
     a: "aatrox",
@@ -106,21 +132,11 @@ const seeds: RelSeed[] = [
   },
   {
     a: "varus",
-    b: "pantheon",
-    type: "fought",
-    label: "Sealed by Targon",
-    short: "Targon's intervention in the Darkin War ended with Varus bound inside his bow.",
-    long: "The Aspect of War was central to the campaign that defeated the Darkin, and Varus received the same sentence as Aatrox: imprisonment inside his own weapon. Varus has had far less opportunity to act on that grievance, largely because it took considerably longer for anyone to pick up his bow.",
-    importance: 68,
-    events: ["darkin-war"],
-  },
-  {
-    a: "varus",
     b: "nasus",
     type: "formerAlly",
     label: "Ascended Together",
     short: "Two of Shurima's god-warriors, only one of whom survived the centuries intact.",
-    long: "Both were raised by the Sun Disc to fight the Void. Nasus retained himself; Varus did not. The Curator of the Sands keeps records of what the Darkin were before they were Darkin, which makes him one of the few sources on Varus's original identity.",
+    long: "Both belong to Shurima's Ascended lineage. Nasus retained himself; Varus became Darkin. The Curator of the Sands keeps records of what the Darkin were before they were Darkin, which makes him one of the few sources on Varus's original identity — a structural link, not a documented personal bond.",
     importance: 58,
     events: ["void-incursion", "darkin-corruption"],
   },
@@ -136,7 +152,11 @@ const seeds: RelSeed[] = [
     long: "Leona and Diana grew up together inside the Solari. Diana found records the priesthood had buried, climbed Targon, and returned as the Aspect of the Moon — which the Solari were obliged to call heresy, because the alternative was admitting the suppression. Leona became the Aspect of the Sun and the order's most convincing believer. Their conflict is genuinely tragic rather than ideological: neither of them wrote the doctrine they are enforcing.",
     importance: 88,
     events: ["targon-solari-purge"],
+    sources: ["source:bio-leona", "source:bio-diana"],
+    connectionType: "DIRECT_CANON",
     verified: true,
+    reviewed: true,
+    reviewStatus: "VERIFIED_CANON",
   },
   {
     a: "pantheon",
@@ -144,9 +164,13 @@ const seeds: RelSeed[] = [
     type: "ally",
     label: "Fellow Aspect Hosts",
     short: "Two mortals who carried celestial Aspects, and both survived the experience differently.",
-    long: "Leona still carries the Aspect of the Sun. Pantheon's Aspect of War was destroyed, and he continues with only a fragment of it. That difference makes him uniquely qualified to tell her something no other Targonian can: that the celestials are not guaranteed, and the mortal underneath matters.",
-    importance: 70,
-    events: ["targon-aurelion-loose"],
+    long: "Leona still carries the Aspect of the Sun. Pantheon's Aspect of War was destroyed, and Atreus continues wielding its weapons through mortal will alone. That difference makes him uniquely qualified to tell her something no other Targonian can: that the celestials are not guaranteed, and the mortal underneath matters.",
+    importance: 72,
+    connectionType: "SHARED_FACTION",
+    verified: true,
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
+    editorialNote: "Both are Targonian Aspect hosts — no documented direct interaction.",
   },
   {
     a: "pantheon",
@@ -157,7 +181,7 @@ const seeds: RelSeed[] = [
       "Both ended up opposing Targon's establishment — one by discovery, one by being discarded.",
     long: "Diana's heresy was archival: she found what the Solari buried. Pantheon's is structural: he learned that an Aspect can die and that mortals are treated as equipment. They arrive at similar conclusions about Targon's authority from completely different directions.",
     importance: 58,
-    events: ["targon-aurelion-loose"],
+    events: [],
   },
   {
     a: "pantheon",
@@ -168,7 +192,10 @@ const seeds: RelSeed[] = [
       "Aurelion Sol was bound into service by the Aspects. Pantheon carried one of them.",
     long: "The Star Forger's binding is the Aspects' most embarrassing achievement, and Pantheon spent years as the Aspect of War's vessel. That makes him complicit by association in the dragon's eyes — although Pantheon's subsequent decision to bury his own god is exactly the kind of precedent Aurelion Sol finds encouraging.",
     importance: 72,
-    events: ["star-forger-bound", "targon-aurelion-loose"],
+    events: ["star-forger-bound"],
+    connectionType: "STRUCTURAL_LORE",
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
   },
   {
     a: "leona",
@@ -223,8 +250,11 @@ const seeds: RelSeed[] = [
     long: "Nasus served Azir's empire and survived its collapse; Azir did not, until he did. When Shurima rose again, the emperor returned to a continent where the only institutional memory of his reign was the Ascended scholar who had been curating it. Their alliance is real but asymmetric — Azir wants to rebuild, and Nasus has an unusually detailed record of why it fell.",
     importance: 86,
     events: ["fall-of-shurima", "shurima-risen"],
-    sources: ["source:rise"],
+    sources: ["source:rise", "source:bio-nasus", "source:bio-azir"],
+    connectionType: "DIRECT_CANON",
     verified: true,
+    reviewed: true,
+    reviewStatus: "VERIFIED_CANON",
   },
   {
     a: "azir",
@@ -254,9 +284,13 @@ const seeds: RelSeed[] = [
     label: "Two Answers to the Void",
     short:
       "Shurima's response to the Void produced the Ascended. Its modern response produced a survivor.",
-    long: "Aatrox exists because the empire decided to manufacture gods to fight the Void, and that decision eventually cost it everything. Kai'Sa exists because the Void came back and one child refused to stop moving. Setting them beside each other is the clearest way to understand what Shurima gained and lost by answering the Void with power rather than survival.",
+    long: "Aatrox belongs to ancient Shurima's Ascended wars against the Void. Kai'Sa belongs to a modern Void incursion thousands of years later. They share no documented meeting — only a structural historical thread through the Void itself.",
     importance: 50,
     events: ["void-incursion", "void-breach-icathia"],
+    connectionType: "THEMATIC_PARALLEL",
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
+    editorialNote: "Editorial comparison — no documented direct relationship.",
   },
   {
     a: "kaisa",
@@ -1835,35 +1869,168 @@ const seeds: RelSeed[] = [
     importance: 24,
     canon: "ALTERNATE_UNIVERSE",
   },
+  /* ------------------------------------------------------- V1 enrichment */
   {
-    a: "thresh",
-    b: "lucian-placeholder",
-    type: "enemy",
-    label: "The Sentinel He Made",
-    short: "Placeholder edge retained for a champion outside the current 50-character seed.",
-    long: "Thresh's most defining modern conflict involves Lucian, who is not part of this seed. The edge is kept in the data with a placeholder target so that the omission is explicit rather than silent, and it is filtered out of the live graph.",
-    importance: 10,
-    canon: "AMBIGUOUS",
+    a: "leona",
+    b: "kayle",
+    type: "related",
+    label: "Celestial Judgement",
+    short:
+      "Both wield power tied to Targon's celestial order, but Kayle is not an Aspect host like Leona.",
+    long: "Leona carries the Aspect of the Sun. Kayle's power descends from Targon through her mother, but their relationship is categorical rather than a documented personal alliance. LoreGraph marks this as structural context, not a direct canon encounter.",
+    importance: 44,
+    connectionType: "STRUCTURAL_LORE",
+    verified: false,
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
+  },
+  {
+    a: "diana",
+    b: "aurelion-sol",
+    type: "related",
+    label: "Targonian Scale",
+    short:
+      "Diana's Aspect draws her into the same cosmic order Aurelion Sol was chained to serve.",
+    long: "The Lunari faith Diana carries points toward celestial mechanics far older than Runeterra. Aurelion Sol is one of the beings those mechanics were built to control.",
+    importance: 62,
+    verified: true,
+  },
+  {
+    a: "leblanc",
+    b: "mordekaiser",
+    type: "political",
+    label: "Noxian Chess",
+    short:
+      "LeBlanc's Black Rose has spent centuries maneuvering around the threat Mordekaiser represents.",
+    long: "Mordekaiser is the empire's oldest nightmare — a conqueror who treats death as territory. LeBlanc's entire institution exists partly to ensure he never returns uncontrolled.",
+    importance: 86,
+    events: ["iron-revenant-empire"],
+    verified: true,
+  },
+  {
+    a: "leblanc",
+    b: "katarina",
+    type: "political",
+    label: "Black Rose & Du Couteau",
+    short:
+      "LeBlanc cultivates Noxian blades; Katarina is the finest one the empire produced.",
+    long: "The Black Rose does not own Katarina, but it has spent years positioning her family and her loyalties. Their relationship is manipulation measured in generations.",
+    importance: 74,
+    verified: true,
+  },
+  {
+    a: "azir",
+    b: "kaisa",
+    type: "related",
+    label: "Shared Shuriman Context",
+    short:
+      "Both belong to Shurima's story — one as its restored emperor, one as a survivor the Void remade.",
+    long: "Kai'Sa comes from the Shuriman desert and Azir leads a restored Shuriman empire, but no official source documents a direct political or personal relationship between them. LoreGraph records this as structural context through Shurima and the Void, not as a verified encounter.",
+    importance: 52,
+    connectionType: "STRUCTURAL_LORE",
+    reviewed: true,
+    reviewStatus: "APPROVED_EDITORIAL",
+    editorialNote: "Geographic and thematic overlap only — not a documented direct relationship.",
+  },
+  {
+    a: "nasus",
+    b: "kaisa",
+    type: "related",
+    label: "Shuriman Survivors",
+    short:
+      "Nasus kept the libraries of a dead empire; Kaisa lived what killed it from the inside.",
+    long: "They represent Shurima's two responses to catastrophe: scholarship and survival at any cost.",
+    importance: 64,
+    verified: true,
+  },
+  {
+    a: "lux",
+    b: "jinx",
+    type: "unknown",
+    label: "Order and Chaos",
+    short:
+      "No direct canon bond — often paired as Runeterra's contrast between institutional hope and anarchic destruction.",
+    long: "Recorded as a weak contextual association for crossover material and player intuition, not a documented relationship.",
+    importance: 28,
+    canon: "ALTERNATE_UNIVERSE",
   },
 ];
+
+const packSeeds: RelSeed[] = packRelationshipSeeds.map((s) => ({
+  a: s.a,
+  b: s.b,
+  type: s.type,
+  label: s.label,
+  short: s.short,
+  long: s.long,
+  importance: s.importance,
+  canon: s.canon,
+  sources: s.sources,
+  verified: s.verified ?? false,
+  connectionType: s.connectionType,
+  needsReview: s.needsReview,
+  reviewed: s.reviewed,
+  reviewStatus: s.reviewStatus as RelSeed["reviewStatus"],
+  editorialNote: s.editorialNote,
+}));
+
+const seeds: RelSeed[] = dedupeRelationshipSeeds([
+  ...baseSeeds,
+  ...relationshipExpansionSeeds,
+  ...packSeeds,
+]);
 
 export const relationships: Relationship[] = seeds
   // Placeholder rows document known gaps without polluting the live graph.
   .filter((s) => !s.a.endsWith("-placeholder") && !s.b.endsWith("-placeholder"))
-  .map((s, index) => ({
-    id: `rel:${s.a}-${s.b}-${index}`,
-    universeId: RUNETERRA_ID,
-    sourceCharacterId: `char:${s.a}`,
-    targetCharacterId: `char:${s.b}`,
-    type: s.type,
-    label: s.label,
-    shortExplanation: s.short,
-    longExplanation: s.long,
-    importanceScore: s.importance,
-    canonStatus: s.canon ?? "CANON",
-    sourceIds: s.sources ?? [bioSourceId(s.a), bioSourceId(s.b)],
-    eventIds: (s.events ?? []).map((e) => `event:${e}`),
-    verified: s.verified ?? false,
-  }));
+  .map((s, index) => {
+    const verified = s.verified ?? false;
+    let connectionType = inferConnectionCategory(s);
+    if (connectionType === "DIRECT_CANON" && !verified) {
+      connectionType =
+        s.type === "faction" ||
+        s.type === "political" ||
+        s.type === "formerAlly"
+          ? "STRUCTURAL_LORE"
+          : "AMBIGUOUS";
+    }
+    const sourceIds = s.sources ?? [bioSourceId(s.a), bioSourceId(s.b)];
+    const confidence = inferConfidence(connectionType, verified, sourceIds.length > 0);
+
+    const base = {
+      id: `rel:${s.a}-${s.b}-${index}`,
+      universeId: RUNETERRA_ID,
+      sourceCharacterId: `char:${s.a}`,
+      targetCharacterId: `char:${s.b}`,
+      type: s.type,
+      connectionType,
+      confidence,
+      label: s.label,
+      shortExplanation: s.short,
+      longExplanation: s.long,
+      importanceScore: s.importance,
+      canonStatus: resolveSeedCanonStatus(s.canon, verified),
+      sourceIds,
+      eventIds: (s.events ?? []).map((e) => `event:${e}`),
+      factionIds: [],
+      regionIds: [],
+      verified,
+      reviewed: s.reviewed ?? false,
+      reviewStatus: s.reviewStatus,
+      editorialNote: s.editorialNote,
+    };
+
+    const reviewStatus = deriveReviewStatus(base);
+    const relationship = {
+      ...base,
+      reviewStatus,
+      needsReview: false,
+    };
+
+    return {
+      ...relationship,
+      needsReview: deriveNeedsReview(relationship),
+    };
+  });
 
 export const relationshipById = new Map(relationships.map((r) => [r.id, r]));

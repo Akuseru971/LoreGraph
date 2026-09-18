@@ -1,0 +1,122 @@
+{
+  "void-incursion": [
+    "char:aatrox",
+    "char:nasus",
+    "char:renekton",
+    "char:jax",
+    "char:zilean"
+  ],
+  "shurima-fall": [
+    "char:azir",
+    "char:xerath",
+    "char:nasus",
+    "char:renekton",
+    "char:sivir"
+  ],
+  "darkin-war": [
+    "char:aatrox",
+    "char:varus",
+    "char:naafiri",
+    "char:zaahen"
+  ],
+  "ruination-helia": [
+    "char:viego",
+    "char:kalista",
+    "char:hecarim",
+    "char:thresh",
+    "char:maokai"
+  ],
+  "rune-wars": [
+    "char:ryze",
+    "char:brand"
+  ],
+  "noxian-invasion-ionia": [
+    "char:swain",
+    "char:irelia",
+    "char:karma",
+    "char:riven",
+    "char:yasuo",
+    "char:master-yi",
+    "char:kayn",
+    "char:zed",
+    "char:shen"
+  ],
+  "rebirth-sun-disc": [
+    "char:azir",
+    "char:sivir",
+    "char:nasus",
+    "char:renekton",
+    "char:xerath"
+  ],
+  "return-ruined-king": [
+    "char:viego",
+    "char:senna",
+    "char:lucian",
+    "char:gwen",
+    "char:thresh",
+    "char:miss-fortune",
+    "char:pyke",
+    "char:vayne",
+    "char:riven",
+    "char:diana",
+    "char:irelia",
+    "char:olaf",
+    "char:graves"
+  ],
+  "great-mage-rebellion": [
+    "char:sylas",
+    "char:lux",
+    "char:garen",
+    "char:jarvan-iv"
+  ],
+  "swain-coup": [
+    "char:swain",
+    "char:darius"
+  ],
+  "yasuo-yone-duel": [
+    "char:yasuo",
+    "char:yone"
+  ],
+  "kayle-morgana-conflict": [
+    "char:kayle",
+    "char:morgana"
+  ],
+  "aatrox-pantheon-duel": [
+    "char:aatrox",
+    "char:pantheon"
+  ],
+  "harrowing": [
+    "char:thresh",
+    "char:hecarim",
+    "char:kalista",
+    "char:karthus",
+    "char:yorick",
+    "char:maokai"
+  ],
+  "war-three-sisters": [
+    "char:lissandra"
+  ],
+  "golden-age-shurima": [
+    "char:azir",
+    "char:nasus",
+    "char:renekton",
+    "char:xerath"
+  ],
+  "medarda-succession-war": [
+    "char:ambessa",
+    "char:mel"
+  ],
+  "era-hextech": [
+    "char:jayce",
+    "char:viktor",
+    "char:heimerdinger",
+    "char:caitlyn",
+    "char:vi",
+    "char:jinx",
+    "char:ekko",
+    "char:mel",
+    "char:ambessa",
+    "char:singed",
+    "char:warwick"
+  ]
+}

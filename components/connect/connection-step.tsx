@@ -1,15 +1,17 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import * as React from "react";
-import { relationshipById } from "@/data";
-import { CanonBadge } from "@/components/ui/badge";
-import { RELATIONSHIP_LABEL, edgeStroke } from "@/lib/graph/style";
+import { relationshipById, sourceById } from "@/data";
+import { explainStep } from "@/lib/graph/explanations";
+import { edgeStroke } from "@/lib/graph/style";
+import { edgeEvidencePresentation } from "@/lib/truth/evidence";
+import { edgeCategory } from "@/lib/truth/layer";
 import { cn, hexToRgba } from "@/lib/utils";
 import type { PathStep } from "@/types";
+import { ConnectionCategoryBadge } from "./connection-category-badge";
 
-/** One hop, explained. The graph is the hook; these cards are the payoff. */
 export function ConnectionStep({
   step,
   index,
@@ -27,11 +29,17 @@ export function ConnectionStep({
   const relationship = step.edge.relationshipId
     ? relationshipById.get(step.edge.relationshipId)
     : undefined;
+  const narrative = explainStep(step);
+  const evidence = edgeEvidencePresentation(step.edge);
 
   const label =
-    step.edge.connectionKind === "direct"
-      ? (relationship?.label ?? RELATIONSHIP_LABEL[step.edge.relationship])
+    step.edge.connectionKind === "direct" && relationship
+      ? relationship.label
       : step.edge.label;
+
+  const sources = (step.edge.sourceIds ?? relationship?.sourceIds ?? [])
+    .map((id) => sourceById.get(id))
+    .filter(Boolean);
 
   return (
     <motion.li
@@ -68,56 +76,82 @@ export function ConnectionStep({
         </span>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-parchment flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.9375rem] font-medium tracking-wide uppercase">
-            {step.from.name}
-            <ArrowRight className="text-muted size-3.5 shrink-0" aria-hidden />
-            {step.to.name}
+          <h3 className="text-parchment text-[0.9375rem] font-medium tracking-wide uppercase">
+            {narrative.kind === "indirect" && step.to.type !== "character"
+              ? step.to.name
+              : `${step.from.name} → ${step.to.name}`}
           </h3>
 
-          <p className="text-muted mt-2 text-sm leading-relaxed">
-            {relationship?.shortExplanation ?? step.edge.description}
-          </p>
+          <p className="text-muted mt-2 text-sm leading-relaxed">{narrative.body}</p>
 
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span
-              className="text-eyebrow rounded-full border px-2 py-1"
-              style={{
-                borderColor: hexToRgba(color, 0.35),
-                backgroundColor: hexToRgba(color, 0.1),
-                color,
-              }}
-            >
-              {label}
-            </span>
-            <span className="text-eyebrow text-muted-dim rounded-full border border-line px-2 py-1">
-              {step.edge.connectionKind === "direct" ? "Direct" : "Indirect"}
-            </span>
-            <CanonBadge status={step.edge.canonStatus} />
+          <div className="mt-3 space-y-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <ConnectionCategoryBadge edge={step.edge} />
+              <span
+                className="text-eyebrow rounded-full border px-2 py-1"
+                style={{
+                  borderColor: hexToRgba(color, 0.35),
+                  backgroundColor: hexToRgba(color, 0.1),
+                  color,
+                }}
+              >
+                {label}
+              </span>
+            </div>
+            <p className="text-muted text-xs">{evidence.evidenceLine}</p>
           </div>
 
-          {relationship?.longExplanation ? (
-            <>
-              <button
-                type="button"
-                onClick={() => setExpanded((value) => !value)}
-                aria-expanded={expanded}
-                className="text-eyebrow text-muted hover:text-gold mt-3 inline-flex items-center gap-1.5 transition-colors"
-              >
-                Why it matters
-                <ChevronDown
-                  aria-hidden
-                  className={cn(
-                    "size-3 transition-transform",
-                    expanded && "rotate-180",
-                  )}
-                />
-              </button>
-              {expanded ? (
-                <p className="text-parchment/80 mt-2 border-l border-line pl-3 text-sm leading-relaxed">
-                  {relationship.longExplanation}
+          <button
+            type="button"
+            onClick={() => setExpanded((value) => !value)}
+            aria-expanded={expanded}
+            className="text-eyebrow text-muted hover:text-gold mt-3 inline-flex items-center gap-1.5 transition-colors"
+          >
+            Why this connection?
+            <ChevronDown
+              aria-hidden
+              className={cn("size-3 transition-transform", expanded && "rotate-180")}
+            />
+          </button>
+
+          {expanded ? (
+            <div className="text-parchment/80 mt-2 space-y-2 border-l border-line pl-3 text-sm leading-relaxed">
+              <p>{relationship?.longExplanation ?? step.edge.description}</p>
+              <p className="text-muted text-xs">
+                Connection: {evidence.connectionLabel} · {evidence.evidenceLine}
+              </p>
+              <p className="text-muted text-xs">{evidence.sourceLine}</p>
+              {relationship?.editorialNote ? (
+                <p className="text-muted text-xs italic">{relationship.editorialNote}</p>
+              ) : null}
+              {step.from.type === "character" &&
+              step.to.type === "character" &&
+              edgeCategory(step.edge) !== "DIRECT_CANON" ? (
+                <p className="text-muted text-xs">
+                  There is no documented direct relationship between these
+                  characters — this step is inferred from shared lore structure.
                 </p>
               ) : null}
-            </>
+              {sources.length > 0 ? (
+                <ul className="text-muted text-xs">
+                  <li className="text-eyebrow text-muted-dim mb-1">Sources</li>
+                  {sources.map((s) => (
+                    <li key={s!.id}>
+                      <a
+                        href={s!.url}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="hover:text-gold underline-offset-2 hover:underline"
+                      >
+                        {s!.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-muted text-xs">No source reference attached.</p>
+              )}
+            </div>
           ) : null}
         </div>
       </div>
