@@ -27,6 +27,7 @@ import {
   validateConstellationHubFit,
 } from "./name-fit";
 import { evaluateHubMotion, HUB_READABILITY_SAMPLE_T } from "./motion-curve";
+import { validateNameGlyphs } from "./validate-name-glyphs";
 import { nameConstellationByCharacterId } from "@/data/cinematic/name-constellations";
 import { computeRecordPhaseState, totalSceneRecordMs } from "./record-mode";
 
@@ -373,7 +374,29 @@ describe("Cinematic Journey V3", () => {
     for (const slug of ["aatrox", "yasuo", "yone", "viego", "skarner"]) {
       const c = nameConstellationByCharacterId.get(`char:${slug}`)!;
       expect(c.typographySource).toContain("Instrument Serif");
-      expect(c.anchors.length).toBeGreaterThan(400);
+      expect(c.anchors.length).toBeLessThan(200);
+      expect(c.anchors.length).toBeGreaterThan(60);
+    }
+  });
+
+  it("simplified name glyphs pass readability validation", () => {
+    const issues = validateNameGlyphs().filter((i) => i.level === "ERROR");
+    expect(issues).toHaveLength(0);
+  });
+
+  it("AATROX simplified constellation has readable letter separation", () => {
+    const aatrox = nameConstellationByCharacterId.get("char:aatrox")!;
+    expect(aatrox.contourGroups?.length).toBe(6);
+    const perLetter = aatrox.anchors.length / 6;
+    expect(perLetter).toBeLessThanOrEqual(24);
+    expect(perLetter).toBeGreaterThanOrEqual(8);
+    const letterBounds = (aatrox.contourGroups ?? []).map((g) => {
+      const anchors = aatrox.anchors.filter((a) => a.contourGroup === g.id);
+      const xs = anchors.map((a) => a.x);
+      return { minX: Math.min(...xs), maxX: Math.max(...xs) };
+    });
+    for (let i = 0; i < letterBounds.length - 1; i++) {
+      expect(letterBounds[i + 1].minX - letterBounds[i].maxX).toBeGreaterThan(0.01);
     }
   });
 
