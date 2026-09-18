@@ -8,6 +8,7 @@ export interface ConstellationValidationIssue {
 }
 
 const MIN_FLAGSHIP_ANCHORS = 60;
+const MIN_SPLASH_DERIVED_ANCHORS = 350;
 const MIN_CONTOUR_ANCHORS = 30;
 const MIN_CONTOUR_GROUPS = 4;
 
@@ -20,12 +21,15 @@ export function validateFlagshipConstellation(
   const withReveal = constellation.anchors.filter((a) => a.revealPhase != null);
   const hero = constellation.anchors.find((a) => a.id === constellation.heroStarId);
 
-  if (constellation.anchors.length < MIN_FLAGSHIP_ANCHORS) {
+  const minAnchors = constellation.silhouetteSource
+    ? MIN_SPLASH_DERIVED_ANCHORS
+    : MIN_FLAGSHIP_ANCHORS;
+  if (constellation.anchors.length < minAnchors) {
     issues.push({
       level: "WARNING",
       constellationId: constellation.id,
       kind: "low_anchor_count",
-      message: `${constellation.anchors.length} anchors — flagship silhouettes need ≥${MIN_FLAGSHIP_ANCHORS}`,
+      message: `${constellation.anchors.length} anchors — need ≥${minAnchors} for recognition`,
     });
   }
 

@@ -412,6 +412,7 @@ export type CinematicSceneAssetRelevance =
   | "EXACT_STORY"
   | "EXACT_LOCATION"
   | "EXACT_ARTIFACT"
+  | "THEMATIC_OFFICIAL"
   | "CHARACTER_CONTEXT"
   | "REGION_CONTEXT"
   | "FALLBACK";

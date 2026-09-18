@@ -23,23 +23,23 @@ import type {
 } from "@/types";
 
 export const DEFAULT_INTRO_TIMING: CinematicIntroTiming = {
-  splashHoldMs: 2000,
-  splashDriftMs: 1200,
-  darkenMs: 2200,
-  starsEmergeMs: 2000,
-  linesFormMs: 1600,
-  heroSelectMs: 1000,
-  zoomStarMs: 2200,
-  handoffMs: 800,
+  splashHoldMs: 1000,
+  splashDriftMs: 600,
+  darkenMs: 1000,
+  starsEmergeMs: 1200,
+  linesFormMs: 900,
+  heroSelectMs: 500,
+  zoomStarMs: 1200,
+  handoffMs: 500,
 };
 
 export const DEFAULT_OUTRO_TIMING: CinematicOutroTiming = {
-  pullbackMs: 1800,
-  pathRevealMs: 1600,
-  nodesConnectMs: 1400,
-  constellationReformMs: 2800,
-  splashEchoMs: 1400,
-  holdMs: 2400,
+  pullbackMs: 900,
+  pathRevealMs: 700,
+  nodesConnectMs: 700,
+  constellationReformMs: 1200,
+  splashEchoMs: 600,
+  holdMs: 900,
 };
 
 export type IntroPhase =

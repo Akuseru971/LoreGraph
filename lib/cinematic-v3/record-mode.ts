@@ -1,13 +1,13 @@
 import type { CinematicRecordTiming, CinematicScene } from "@/types";
 
 export const DEFAULT_RECORD_TIMING: CinematicRecordTiming = {
-  travelMs: 2800,
-  arrivalSettleMs: 700,
-  eyebrowRevealMs: 400,
-  titleRevealMs: 650,
-  narrativeRevealMs: 900,
-  readingHoldMs: 4500,
-  departurePrepMs: 600,
+  travelMs: 1500,
+  arrivalSettleMs: 400,
+  eyebrowRevealMs: 300,
+  titleRevealMs: 450,
+  narrativeRevealMs: 500,
+  readingHoldMs: 2800,
+  departurePrepMs: 350,
 };
 
 export function recordTimingForScene(scene: CinematicScene): CinematicRecordTiming {
@@ -22,45 +22,49 @@ export function recordTimingForScene(scene: CinematicScene): CinematicRecordTimi
   if (isEnding) {
     return {
       ...base,
-      travelMs: 4200,
-      readingHoldMs: 6500,
-      arrivalSettleMs: 900,
+      travelMs: 1500,
+      readingHoldMs: 3000,
+      arrivalSettleMs: 450,
+      narrativeRevealMs: 450,
     };
   }
 
   if (scene.shotType === "AFTERMATH") {
     return {
       ...base,
-      travelMs: 2400,
-      readingHoldMs: 5500,
-      arrivalSettleMs: 900,
-      departurePrepMs: 800,
+      travelMs: 1400,
+      readingHoldMs: 2700,
+      arrivalSettleMs: 400,
+      departurePrepMs: 350,
+      narrativeRevealMs: 450,
     };
   }
 
   if (isMajorEvent) {
     return {
       ...base,
-      travelMs: 3200,
-      readingHoldMs: 5200,
-      arrivalSettleMs: 800,
+      travelMs: 1600,
+      readingHoldMs: 2400,
+      arrivalSettleMs: 400,
+      narrativeRevealMs: 400,
     };
   }
 
   if (scene.shotType === "IMPACT" || scene.type === "CONFLICT") {
     return {
       ...base,
-      travelMs: 2200,
-      arrivalSettleMs: 500,
-      readingHoldMs: 4000,
+      travelMs: 1300,
+      arrivalSettleMs: 350,
+      readingHoldMs: 2600,
+      narrativeRevealMs: 400,
     };
   }
 
   if (!isCore) {
     return {
       ...base,
-      travelMs: 2200,
-      readingHoldMs: 3200,
+      travelMs: 1300,
+      readingHoldMs: 2400,
     };
   }
 

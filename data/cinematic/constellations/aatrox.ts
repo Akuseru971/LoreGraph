@@ -50,7 +50,7 @@ export const AATROX_CONSTELLATION: ChampionConstellation = buildConstellationFro
     characterId: "char:aatrox",
     heroStarId: "blade-core",
     splashFocal: { x: 0.52, y: 0.3 },
-    lineSkipProbability: 0.42,
+    lineSkipProbability: 0.25,
     iconicAnchors: [
       {
         id: "blade-core",

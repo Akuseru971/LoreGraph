@@ -160,9 +160,9 @@ describe("Cinematic Journey V3", () => {
     expect(constellation.silhouetteSource!.imageWidth).toBe(1600);
     expect(constellation.silhouetteSource!.imageHeight).toBe(900);
     expect(constellation.silhouetteSource!.simplifiedContourPoints).toBeGreaterThan(50);
-    expect(constellation.anchors.length).toBeGreaterThanOrEqual(100);
+    expect(constellation.anchors.length).toBeGreaterThanOrEqual(350);
     expect(constellation.anchors.filter((a) => a.category === "CONTOUR").length).toBeGreaterThanOrEqual(
-      80,
+      340,
     );
     expect(constellation.lines?.length).toBeGreaterThan(30);
     expect(validateFlagshipConstellation(constellation).filter((i) => i.level === "ERROR")).toHaveLength(
@@ -206,11 +206,33 @@ describe("Cinematic Journey V3", () => {
     const early = computeIntroPhaseState(intro, 500, anchorCount);
     expect(early.phase).toBe("splash_hold");
     expect(early.splashOpacity).toBeGreaterThan(0.9);
-    const mid = computeIntroPhaseState(intro, 6000, anchorCount);
-    expect(["darken", "stars_emerge", "lines_form"]).toContain(mid.phase);
+    const mid = computeIntroPhaseState(intro, Math.floor(totalIntroMs(intro.timing) * 0.45), anchorCount);
+    expect(["darken", "stars_emerge", "lines_form", "hero_select"]).toContain(mid.phase);
     const late = computeIntroPhaseState(intro, totalIntroMs(intro.timing) - 100, anchorCount);
     expect(["zoom_star", "handoff"]).toContain(late.phase);
     expect(late.zoomProgress).toBeGreaterThan(0);
+  });
+
+  it("Aatrox record intro timing is under 7s for content pacing", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const intro = journey.introSequence!;
+    const recordMs = totalIntroMs(intro.recordTiming ?? intro.timing);
+    expect(recordMs).toBeLessThanOrEqual(7000);
+    expect(recordMs).toBeGreaterThanOrEqual(5000);
+  });
+
+  it("flagship journeys have official background on all curated scenes", () => {
+    const flagshipSlugs = ["aatrox", "yasuo", "yone", "viego", "skarner"];
+    for (const slug of flagshipSlugs) {
+      const journey = buildChampionJourneyV3(char(slug));
+      const withoutImage = journey.scenes.filter(
+        (s) => !s.image?.url && s.type !== "ENDING",
+      );
+      expect(withoutImage).toHaveLength(0);
+    }
+    const conn = buildConnectionJourneyV3(char("yasuo"), char("yone"))!;
+    const connWithout = conn.scenes.filter((s) => !s.image?.url);
+    expect(connWithout).toHaveLength(0);
   });
 
   it("outro phase state reforms constellation silhouette", () => {

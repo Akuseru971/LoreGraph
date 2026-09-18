@@ -74,7 +74,8 @@ async function main() {
   const contours: ExtractedSilhouetteData["contours"] = [];
   const stars: ExtractedSilhouetteData["stars"] = [];
 
-  const rdpEpsilon = Math.max(2.5, width * 0.002);
+  // Light simplification — preserve silhouette fidelity for recognizability
+  const rdpEpsilon = Math.max(1.0, width * 0.0009);
 
   for (const c of rawContours) {
     rawPointCount += c.points.length;
@@ -82,11 +83,14 @@ async function main() {
     simplifiedPointCount += simplified.length;
 
     const sampled = adaptiveSampleContour(simplified, true, width, height, {
-      minSpacing: width * 0.008,
-      maxSpacing: width * 0.028,
-      curvatureBoost: 0.75,
-      highCurvatureThreshold: 1.2,
+      minSpacing: width * 0.0035,
+      maxSpacing: width * 0.013,
+      curvatureBoost: 0.92,
+      highCurvatureThreshold: 0.75,
     });
+
+    // Extra stars at sharpest curvature peaks (horns, blade, wing tips)
+    const boosted = boostHighCurvatureStars(sampled, simplified, true, width, height);
 
     const normPoints = simplified.map((p) => ({ x: round4(p.x / width), y: round4(p.y / height) }));
     contours.push({
@@ -97,11 +101,11 @@ async function main() {
     });
 
     // Percentile-based visual weight — avoid marking every point HIGH
-    const curvatures = sampled.map((s) => s.curvature).sort((a, b) => a - b);
+    const curvatures = boosted.map((s) => s.curvature).sort((a, b) => a - b);
     const p85 = curvatures[Math.floor(curvatures.length * 0.85)] ?? 1.5;
     const p55 = curvatures[Math.floor(curvatures.length * 0.55)] ?? 0.8;
 
-    sampled.forEach((s, idx) => {
+    boosted.forEach((s, idx) => {
       const weight =
         s.curvature >= p85 ? "HIGH" : s.curvature >= p55 ? "MEDIUM" : "LOW";
       stars.push({
@@ -254,6 +258,53 @@ async function renderOverlay(
 
 function round4(n: number): number {
   return Math.round(n * 10000) / 10000;
+}
+
+/** Insert additional stars at local curvature maxima along the contour. */
+function boostHighCurvatureStars(
+  stars: ReturnType<typeof adaptiveSampleContour>,
+  contour: Point2D[],
+  closed: boolean,
+  width: number,
+  height: number,
+): ReturnType<typeof adaptiveSampleContour> {
+  const extra: ReturnType<typeof adaptiveSampleContour> = [];
+  const n = contour.length;
+  for (let i = 0; i < n; i++) {
+    const curv = curvatureAt(contour, i, closed);
+    if (curv < 1.0) continue;
+    const p = contour[i];
+    const nx = p.x / width;
+    const ny = p.y / height;
+    const tooClose = stars.some(
+      (s) => Math.hypot(s.x - nx, s.y - ny) < 0.008,
+    );
+    if (!tooClose) {
+      extra.push({ x: nx, y: ny, curvature: curv, visualWeight: "HIGH" });
+    }
+  }
+  return [...stars, ...extra];
+}
+
+function curvatureAt(
+  points: Point2D[],
+  i: number,
+  closed: boolean,
+): number {
+  const n = points.length;
+  if (n < 3) return 0;
+  const prev = points[closed ? (i - 1 + n) % n : Math.max(0, i - 1)];
+  const curr = points[i];
+  const next = points[closed ? (i + 1) % n : Math.min(n - 1, i + 1)];
+  const v1x = curr.x - prev.x;
+  const v1y = curr.y - prev.y;
+  const v2x = next.x - curr.x;
+  const v2y = next.y - curr.y;
+  const len1 = Math.hypot(v1x, v1y);
+  const len2 = Math.hypot(v2x, v2y);
+  if (len1 < 1e-6 || len2 < 1e-6) return 0;
+  const dot = (v1x * v2x + v1y * v2y) / (len1 * len2);
+  return Math.acos(Math.max(-1, Math.min(1, dot)));
 }
 
 main().catch((err) => {

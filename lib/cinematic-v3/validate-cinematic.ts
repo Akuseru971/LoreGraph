@@ -6,6 +6,7 @@ import type { CinematicJourney, CinematicScene } from "@/types";
 import { flagshipAssetBySceneId, FLAGSHIP_JOURNEY_IDS } from "@/data/cinematic/flagship-assets";
 import { constellationById } from "@/data/cinematic/constellation-anchors";
 import { validateFlagshipConstellation } from "./validate-constellation";
+import { validateFlagshipCoverage } from "./validate-flagship-coverage";
 import { compositionForScene } from "./composition";
 import { eventSlugFromId } from "./resolve-scene-asset";
 
@@ -386,6 +387,10 @@ export function validateCinematicJourney(journey: CinematicJourney): CinematicVa
         message: "Flagship CHARACTER journey missing outroSequence",
       });
     }
+  }
+
+  if (FLAGSHIP_JOURNEY_IDS.includes(journey.id as (typeof FLAGSHIP_JOURNEY_IDS)[number])) {
+    issues.push(...validateFlagshipCoverage(journey));
   }
 
   return issues;

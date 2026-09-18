@@ -7,6 +7,9 @@ import { compositionForScene } from "./composition";
 import { inferShotType } from "./shot-types";
 import { inferWorldNodeArchetype } from "./world-node-archetypes";
 import { evaluateJourneyReadiness } from "./visual-readiness";
+import { flagshipTimingSummary } from "./validate-flagship-coverage";
+import { recordTimingForScene, totalSceneRecordMs } from "./record-mode";
+import { totalIntroMs, totalIntroMsForMode } from "./intro-outro";
 
 const FLAGSHIP_SLUGS = ["aatrox", "yasuo", "yone", "viego", "skarner"] as const;
 
@@ -96,6 +99,59 @@ export function generateVisualQaReport(): string {
       lines.push(`| Quality | ${scene.image?.qualityStatus ?? manifest?.qualityStatus ?? "—"} |`);
       lines.push(`| Curated | ${scene.curated ? "yes" : "no"} |`);
       lines.push(`| Visual issue | ${readiness.blockers.some((b) => b.startsWith(scene.id)) ? "review" : "ok"} |`);
+      lines.push("");
+    }
+  }
+
+  return lines.join("\n");
+}
+
+export function generateFlagshipSceneCoverageReport(): string {
+  const timing = flagshipTimingSummary();
+  const lines: string[] = [
+    "# Cinematic Flagship Scene Coverage",
+    "",
+    `Generated: ${new Date().toISOString()}`,
+    "",
+    "## Timing summary",
+    "",
+    `- Default intro: **${timing.defaultIntroMs}ms**`,
+    `- Aatrox record intro: **${timing.aatroxRecordIntroMs}ms**`,
+    `- Aatrox record outro: **${timing.aatroxRecordOutroMs}ms**`,
+    `- Default scene (record): **${timing.defaultSceneMs}ms**`,
+    "",
+  ];
+
+  const journeys = [
+    ...FLAGSHIP_SLUGS.map((s) => ({ slug: s, journey: buildFlagshipJourney(s) })),
+    { slug: "yasuo-yone", journey: buildFlagshipJourney("yasuo-yone") },
+  ];
+
+  for (const { slug, journey } of journeys) {
+    lines.push(`## Journey: ${slug}`);
+    lines.push("");
+    const introMs = journey.introSequence
+      ? totalIntroMsForMode(journey.introSequence, true)
+      : 0;
+    lines.push(`- Record intro: ${introMs}ms`);
+    lines.push("");
+
+    for (const scene of journey.scenes) {
+      const manifest = flagshipAssetBySceneId.get(scene.id);
+      const rt = recordTimingForScene(scene);
+      const sceneMs = totalSceneRecordMs(scene);
+      lines.push(`### ${scene.id}`);
+      lines.push("");
+      lines.push(`| Field | Value |`);
+      lines.push(`|-------|-------|`);
+      lines.push(`| Visual subject | ${manifest?.visualSubject ?? scene.visualSubject ?? scene.title} |`);
+      lines.push(`| Has background | ${scene.image?.url ? "yes" : "no"} |`);
+      lines.push(`| Asset | ${scene.image?.url ?? manifest?.officialAsset?.url ?? "—"} |`);
+      lines.push(`| Relevance | ${scene.image?.relevance ?? manifest?.officialAsset?.relevance ?? "—"} |`);
+      lines.push(`| Quality | ${scene.image?.qualityStatus ?? manifest?.qualityStatus ?? "—"} |`);
+      lines.push(`| Composition | ${scene.composition ?? manifest?.composition ?? "—"} |`);
+      lines.push(`| Record scene ms | ${sceneMs} |`);
+      lines.push(`| Travel / hold | ${rt.travelMs} / ${rt.readingHoldMs} |`);
       lines.push("");
     }
   }

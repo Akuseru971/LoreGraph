@@ -9,35 +9,36 @@ import type {
 
 export const AATROX_JOURNEY_ID = "cinematic:character:aatrox";
 
+/** Record-mode intro ~6.2s — fast enough for content, long enough for splash→constellation read */
 export const AATROX_RECORD_INTRO_TIMING: CinematicIntroTiming = {
-  splashHoldMs: 1500,
-  splashDriftMs: 600,
-  darkenMs: 1400,
-  starsEmergeMs: 1800,
-  linesFormMs: 900,
-  heroSelectMs: 700,
-  zoomStarMs: 1800,
-  handoffMs: 600,
+  splashHoldMs: 1000,
+  splashDriftMs: 500,
+  darkenMs: 900,
+  starsEmergeMs: 1100,
+  linesFormMs: 800,
+  heroSelectMs: 500,
+  zoomStarMs: 1100,
+  handoffMs: 500,
 };
 
 export const AATROX_INTERACTIVE_INTRO_TIMING: CinematicIntroTiming = {
-  splashHoldMs: 2200,
-  splashDriftMs: 1000,
-  darkenMs: 2000,
-  starsEmergeMs: 2200,
-  linesFormMs: 1400,
-  heroSelectMs: 900,
-  zoomStarMs: 2200,
-  handoffMs: 800,
+  splashHoldMs: 1400,
+  splashDriftMs: 700,
+  darkenMs: 1200,
+  starsEmergeMs: 1400,
+  linesFormMs: 1000,
+  heroSelectMs: 600,
+  zoomStarMs: 1400,
+  handoffMs: 600,
 };
 
 export const AATROX_RECORD_OUTRO_TIMING: CinematicOutroTiming = {
-  pullbackMs: 1500,
-  pathRevealMs: 1000,
-  nodesConnectMs: 1000,
-  constellationReformMs: 2000,
-  splashEchoMs: 1000,
-  holdMs: 1500,
+  pullbackMs: 900,
+  pathRevealMs: 700,
+  nodesConnectMs: 700,
+  constellationReformMs: 1200,
+  splashEchoMs: 600,
+  holdMs: 800,
 };
 
 export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {
