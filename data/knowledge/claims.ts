@@ -5,6 +5,7 @@
 import { claimEvidenceBindings } from "./evidence";
 import { mergedClaims } from "./generated/claims-merged";
 import { applyClaimPatches } from "./claim-patches";
+import { applyClaimSupersession } from "./claim-supersession";
 import { claimExtensions } from "./claim-extensions";
 import type { Claim } from "@/types";
 
@@ -22,7 +23,9 @@ function attachEvidenceRefs(claim: Claim): Claim {
 }
 
 const mergedById = new Map(
-  applyClaimPatches(mergedClaims).map((c) => [c.id, attachEvidenceRefs(c)]),
+  applyClaimPatches(mergedClaims)
+    .map(applyClaimSupersession)
+    .map((c) => [c.id, attachEvidenceRefs(c)]),
 );
 for (const ext of claimExtensions) {
   mergedById.set(ext.id, attachEvidenceRefs(ext));

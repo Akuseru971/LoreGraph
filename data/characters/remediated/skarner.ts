@@ -25,7 +25,7 @@ export const skarnerRemediatedSeed: CharacterSeed = {
   long: [
     "Skarner is an ancient, colossal brackern revered in Ixtal as a founding member of the Yun Tal, the ruling caste that has kept the nation's magic hidden from the outside world.",
     "He dwells in a chamber beneath Ixaocan where he senses disturbances through the earth — a living early-warning system for threats to Ixtal's isolation.",
-    "His worldview is isolationist and protective: the outside world has proven repeatedly that it will exploit Ixtali power if given the chance.",
+    "His worldview is isolationist and protective: he is devoted to keeping Ixtal safe from the rest of the world.",
     "Post-VGU canon positions Skarner as an Ixtali guardian rooted in earth magic and Yun Tal authority — not the legacy Crystal Scar hextech-soul narrative.",
   ],
   timeline: [

@@ -1,5 +1,6 @@
 import type { Claim } from "@/types";
 import { isTrustedClaim } from "./claim-evidence";
+import { isActiveClaim } from "./claim-supersession";
 import {
   claimSourceAuthority,
   evaluateClaimTrust,
@@ -46,6 +47,7 @@ export function breakdownClaims(charClaims: Claim[]): ClaimMetricBreakdown {
   };
 
   for (const claim of charClaims) {
+    if (!isActiveClaim(claim)) continue;
     if (claim.needsReview || !claim.reviewed) {
       breakdown.pendingClaims++;
       continue;

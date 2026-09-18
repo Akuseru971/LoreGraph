@@ -175,17 +175,41 @@ export type SourceEvidenceType =
   | "OFFICIAL_REFERENCE"
   | "CONTEXT_ONLY";
 
+export type EvidenceReviewStatus =
+  | "VERIFIED"
+  | "REVIEWED"
+  | "PENDING"
+  | "REJECTED"
+  | "REVIEW_REQUIRED";
+
+export type ClaimLifecycleStatus = "ACTIVE" | "SUPERSEDED" | "REJECTED";
+
+export interface SourceSnapshot {
+  sourceId: string;
+  contentHash: string;
+  retrievedAt: string;
+  sourceUrl: string;
+  /** Normalized factual sentences extracted from the source. */
+  normalizedText?: string;
+  factIndex?: string[];
+}
+
 export interface SourceEvidence {
   id: string;
   sourceId: string;
   normalizedFact: string;
   evidenceType: SourceEvidenceType;
+  sourceSnapshotHash?: string;
   sourceLocator?: string;
   sourceSection?: string;
   shortExcerpt?: string;
+  excerptHash?: string;
   contentHash?: string;
   retrievedAt?: string;
   continuity?: Continuity;
+  reviewStatus?: EvidenceReviewStatus;
+  reviewedAt?: string;
+  reviewMethod?: string;
   /** Optional predicate scope for this evidence record. */
   supportsPredicate?: string;
 }
@@ -550,6 +574,9 @@ export interface Claim {
   evidenceNote?: string;
   reviewed: boolean;
   needsReview: boolean;
+  claimStatus?: ClaimLifecycleStatus;
+  supersededBy?: string;
+  supersedes?: string[];
   createdAt?: string;
   updatedAt?: string;
 }

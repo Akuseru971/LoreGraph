@@ -6,6 +6,7 @@ import { beatImportance, isCoreTimelineBeat } from "@/lib/timeline/importance";
 import type { Character, TimelineBeat } from "@/types";
 import { claims } from "@/data/knowledge/claims";
 import { isClaimEvidenceTrusted, isTrustedClaim } from "./claim-evidence";
+import { claimsForSubject } from "./claim-supersession";
 import { canonConfidenceFromClaims, trustedClaimsFromList } from "./claim-metrics";
 import {
   hasGameplayPollution,
@@ -127,7 +128,7 @@ export function evaluateTierAGate(
   },
 ): TierAGateResult {
   const blockers: string[] = [];
-  const charClaims = claims.filter((c) => c.subjectId === character.id);
+  const charClaims = claimsForSubject(claims, character.id);
   const canonConfidence = canonConfidenceFromClaims(charClaims);
   const trustedTimeline = trustedTimelineCoveragePercent(character);
   const directRel = directRelationshipReviewCoverage(character);

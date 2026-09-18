@@ -1,8 +1,11 @@
 import { claims } from "@/data/knowledge/claims";
+import { getSourceSnapshot } from "@/data/knowledge/source-snapshots";
 import { sourceById } from "@/data/sources";
 import type { Claim, SourceEvidence } from "@/types";
+import { isActiveClaim } from "./claim-supersession";
 import { validateClaimEvidenceChain } from "./claim-circular";
 import { resolveClaimEvidenceRefs } from "./evidence-registry";
+import { isEvidenceRecordVerified } from "./source-snapshot";
 import {
   claimSupportsPropositionStrict,
   CLAIM_PROPOSITION_PATTERNS,
@@ -150,6 +153,41 @@ function evidenceAuthoritySufficient(
   return tier === "PRIMARY_EXPLICIT" || tier === "PRIMARY_COMBINED";
 }
 
+function evidenceSnapshotVerified(evidence: SourceEvidence): boolean {
+  const snapshot = getSourceSnapshot(evidence.sourceId);
+  return isEvidenceRecordVerified(evidence, snapshot);
+}
+
+function evidenceMeetsTrustBar(claim: Claim, evidence: SourceEvidence): boolean {
+  if (!evidenceAuthoritySufficient(claim, evidence)) return false;
+  if (!evidenceSupportsClaimProposition(claim, evidence)) return false;
+
+  if (STRONG_PREDICATES.has(claim.predicate)) {
+    if (evidence.reviewStatus !== "VERIFIED") return false;
+    if (!evidenceSnapshotVerified(evidence)) return false;
+    return true;
+  }
+
+  // Weak predicates — lighter path: verified excerpt OR reviewed locator.
+  if (evidence.reviewStatus === "VERIFIED") return true;
+  if (
+    evidence.reviewStatus === "REVIEWED" &&
+    evidence.sourceLocator &&
+    evidenceSnapshotVerified(evidence)
+  ) {
+    return true;
+  }
+  if (
+    (evidence.evidenceType === "CONTEXT_ONLY" ||
+      evidence.evidenceType === "OFFICIAL_REFERENCE") &&
+    evidence.reviewStatus !== "REJECTED"
+  ) {
+    const snapshot = getSourceSnapshot(evidence.sourceId);
+    return Boolean(snapshot);
+  }
+  return false;
+}
+
 /** Distinguish registry presence from semantic support via source evidence records. */
 export function evaluateSourceSupport(claim: Claim): SourceSupportResult {
   const evidenceRecords = resolveClaimEvidenceRefs(claim);
@@ -190,11 +228,7 @@ export function evaluateSourceSupport(claim: Claim): SourceSupportResult {
     }
   }
 
-  const supporting = evidenceRecords.filter(
-    (e) =>
-      evidenceSupportsClaimProposition(claim, e) &&
-      evidenceAuthoritySufficient(claim, e),
-  );
+  const supporting = evidenceRecords.filter((e) => evidenceMeetsTrustBar(claim, e));
 
   if (!supporting.length) {
     const patterns = CLAIM_PROPOSITION_PATTERNS[claim.id];
@@ -230,6 +264,7 @@ export function sourceSupportsClaim(claim: Claim): boolean {
  * Requires evidenceRefs pointing to source facts, not evidenceNote alone.
  */
 export function isClaimEvidenceTrusted(claim: Claim): boolean {
+  if (!isActiveClaim(claim)) return false;
   if (!claim.reviewed || claim.needsReview) return false;
   if (
     claim.canonStatus === "UNKNOWN" ||
@@ -255,6 +290,7 @@ export function trustedParticipationClaims(
 ): Claim[] {
   return claims.filter(
     (c) =>
+      isActiveClaim(c) &&
       c.subjectId === characterId &&
       c.objectId === eventId &&
       c.predicate === "PARTICIPATED_IN" &&

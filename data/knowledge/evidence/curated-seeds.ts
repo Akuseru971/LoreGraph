@@ -12,14 +12,14 @@ export const curatedEvidenceSeeds: EvidenceSeed[] = [
   {
     claimId: "claim:ahri-struggles-consuming-essence",
     sourceId: "source:bio-ahri",
-    normalizedFact: "Ahri drains life essence and struggles with the memories she inherits.",
-    shortExcerpt: "drain the life essence of others, and with it their memories",
+    normalizedFact: "Ahri drains essence from others and inherits what each taking carries.",
+    shortExcerpt: "drain essence from others to learn who she is",
   },
   {
     claimId: "claim:ahri-seeks-origins",
     sourceId: "source:bio-ahri",
     normalizedFact: "Ahri seeks understanding of her origins among the vastaya.",
-    shortExcerpt: "looks for her origins among the vastaya",
+    shortExcerpt: "seeks understanding of her origins among the vastaya",
   },
 
   // Skarner (post-VGU)
@@ -28,7 +28,7 @@ export const curatedEvidenceSeeds: EvidenceSeed[] = [
     sourceId: "source:bio-skarner",
     normalizedFact:
       "Skarner is revered in Ixtal as a founding member of the Yun Tal ruling caste.",
-    shortExcerpt: "founding members of its ruling caste, the Yun Tal",
+    shortExcerpt: "founding member of the Yun Tal",
   },
   {
     claimId: "claim:skarner-guardian-ixaocan",
@@ -40,7 +40,7 @@ export const curatedEvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:skarner-isolationist-protector",
     sourceId: "source:bio-skarner",
     normalizedFact: "Skarner is devoted to keeping Ixtal safe from the rest of the world.",
-    shortExcerpt: "keeping his nation safe from the rest of the world",
+    shortExcerpt: "keeping Ixtal safe from the rest of the world",
   },
   {
     claimId: "claim:pack:00126",

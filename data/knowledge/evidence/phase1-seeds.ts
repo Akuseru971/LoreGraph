@@ -31,13 +31,13 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     sourceId: "source:bio-aatrox",
     normalizedFact:
       "Aatrox became Darkin as corruption spread among surviving Ascended after centuries of war.",
-    shortExcerpt: "corruption spread among surviving Ascended",
+    shortExcerpt: "heroes who had saved Shurima became the reason it needed saving again",
   },
   {
     claimId: "claim:aatrox-participated-darkin-war",
     sourceId: "source:bio-aatrox",
     normalizedFact: "Aatrox fought among the corrupted Ascended during the Darkin War.",
-    shortExcerpt: "fought among the corrupted Ascended during the Darkin War",
+    shortExcerpt: "sealed inside his own weapon after the Darkin War",
   },
   {
     claimId: "claim:aatrox-sealed-in-blade",
@@ -54,13 +54,6 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
   },
   {
     claimId: "claim:aatrox-fought-pantheon",
-    sourceId: "source:bio-aatrox",
-    normalizedFact:
-      "Aatrox destroyed the celestial Aspect of War within Atreus during their confrontation.",
-    shortExcerpt: "destroyed the celestial Aspect of War within Atreus",
-  },
-  {
-    claimId: "claim:aatrox-fought-pantheon",
     sourceId: "source:bio-pantheon",
     normalizedFact: "Aatrox destroyed the celestial Aspect of War within Atreus; the mortal survived.",
     shortExcerpt: "Aatrox destroyed the celestial Aspect of War within Atreus",
@@ -68,21 +61,21 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
   },
   {
     claimId: "claim:aatrox-aspect-war-destroyed",
-    sourceId: "source:bio-aatrox",
+    sourceId: "source:bio-pantheon",
     normalizedFact: "Aatrox destroyed the celestial Aspect of War within Atreus.",
-    shortExcerpt: "destroyed the celestial Aspect of War within Atreus",
+    shortExcerpt: "Aatrox destroyed the celestial Aspect of War within Atreus",
   },
   {
     claimId: "claim:pack:00174",
-    sourceId: "source:bio-aatrox",
+    sourceId: "source:bio-pantheon",
     normalizedFact: "Aatrox and Pantheon are enemies after Aatrox destroyed the Aspect of War within Atreus.",
-    shortExcerpt: "destroyed the celestial Aspect of War within Atreus",
+    shortExcerpt: "Aatrox destroyed the celestial Aspect of War within Atreus",
   },
   {
     claimId: "claim:pack:00204",
     sourceId: "source:bio-aatrox",
     normalizedFact: "Aatrox is a Darkin, a corrupted former Ascended.",
-    shortExcerpt: "corrupted Ascended",
+    shortExcerpt: "heroes who had saved Shurima became the reason it needed saving again",
     evidenceType: "CONTEXT_ONLY",
   },
   {
@@ -116,7 +109,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:pantheon-rakkor-origin",
     sourceId: "source:bio-pantheon",
     normalizedFact: "Atreus is a Rakkor from Mount Targon.",
-    shortExcerpt: "Rakkor boy climbs Mount Targon",
+    shortExcerpt: "Atreus climbed Mount Targon",
     evidenceType: "CONTEXT_ONLY",
   },
   {
@@ -152,25 +145,25 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:varus-was-ascended",
     sourceId: "source:bio-varus",
     normalizedFact: "Varus was elevated through Shurima's Sun Disc into an Ascended.",
-    shortExcerpt: "Ascended through Shurima's sun disc",
+    shortExcerpt: "one of Shurima's Ascended",
   },
   {
     claimId: "claim:varus-became-darkin",
     sourceId: "source:bio-varus",
     normalizedFact: "Varus became a Darkin as corruption spread among surviving Ascended.",
-    shortExcerpt: "corruption into a Darkin",
+    shortExcerpt: "later became Darkin",
   },
   {
     claimId: "claim:varus-sealed-in-bow",
     sourceId: "source:bio-varus",
     normalizedFact: "Varus was bound into his bow after the Darkin War.",
-    shortExcerpt: "bound into his bow after the Darkin War",
+    shortExcerpt: "bound into his bow and hidden away",
   },
   {
     claimId: "claim:varus-possesses-valmar-kai",
     sourceId: "source:bio-varus",
     normalizedFact: "Valmar and Kai share one body with Varus inside the bow.",
-    shortExcerpt: "Valmar and Kai share one body",
+    shortExcerpt: "one body with three sets of memories",
   },
   {
     claimId: "claim:pack:00146",
@@ -203,13 +196,13 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:nasus-opposed-xerath",
     sourceId: "source:bio-nasus",
     normalizedFact: "Nasus opposed Xerath during the fall of Shurima.",
-    shortExcerpt: "seals Xerath away",
+    shortExcerpt: "helped seal Xerath within the Tomb of the Emperors",
   },
   {
     claimId: "claim:nasus-participated-fall",
     sourceId: "source:bio-nasus",
     normalizedFact: "During the fall of Shurima, Nasus sealed Xerath away in the Tomb of the Emperors.",
-    shortExcerpt: "seals Xerath away",
+    shortExcerpt: "helped seal Xerath within the Tomb of the Emperors",
   },
   {
     claimId: "claim:nasus-guards-shuriman-knowledge",
@@ -234,7 +227,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:pack:00182",
     sourceId: "source:bio-nasus",
     normalizedFact: "Nasus and Xerath are enemies after Xerath's betrayal.",
-    shortExcerpt: "seals Xerath away",
+    shortExcerpt: "helped seal Xerath within the Tomb of the Emperors",
   },
   {
     claimId: "claim:pack:00325",
@@ -261,7 +254,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:renekton-imprisoned-with-xerath",
     sourceId: "source:bio-renekton",
     normalizedFact: "Renekton followed Nasus into the Tomb to imprison Xerath beneath the ruins.",
-    shortExcerpt: "follows Nasus into the Tomb of the Emperors",
+    shortExcerpt: "followed Nasus into the Tomb of the Emperors",
   },
   {
     claimId: "claim:renekton-returned-shurima-risen",
@@ -295,7 +288,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:azir-emperor-shurima",
     sourceId: "source:bio-azir",
     normalizedFact: "Azir was the last emperor of Shurima who inherited an empire at its height.",
-    shortExcerpt: "last emperor of Shurima, inherited an empire at its height",
+    shortExcerpt: "inherited an empire at its height",
   },
   {
     claimId: "claim:azir-betrayed-by-xerath",
@@ -348,7 +341,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:xerath-served-azir",
     sourceId: "source:bio-xerath",
     normalizedFact: "Xerath was Azir's closest advisor, a slave-born magus who earned proximity.",
-    shortExcerpt: "closest confidant was Xerath, a slave-born magus",
+    shortExcerpt: "emperor's closest advisor",
   },
   {
     claimId: "claim:xerath-betrayed-azir",
@@ -388,25 +381,25 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:kaisa-survived-void",
     sourceId: "source:bio-kaisa",
     normalizedFact: "Kai'Sa survived a Void incursion that consumed her village.",
-    shortExcerpt: "survived what killed everyone else",
+    shortExcerpt: "She should have died in the dark like everybody else",
   },
   {
     claimId: "claim:kaisa-survived-void-breach",
     sourceId: "source:bio-kaisa",
     normalizedFact: "Kai'Sa was taken by a Void breach beneath modern Shurima.",
-    shortExcerpt: "Void incursion consumed her village",
+    shortExcerpt: "the ground opened and took her village",
   },
   {
     claimId: "claim:kaisa-daughter-of-kassadin",
-    sourceId: "source:bio-kaisa",
+    sourceId: "source:bio-kassadin",
     normalizedFact: "Kai'Sa is Kassadin's daughter.",
-    shortExcerpt: "his daughter Kaisa",
+    shortExcerpt: "his daughter Kaisa was among those taken",
   },
   {
     claimId: "claim:kaisa-void-symbiote",
     sourceId: "source:bio-kaisa",
     normalizedFact: "A Void symbiote fused to Kai'Sa as a second skin keeping her alive.",
-    shortExcerpt: "Void symbiote fused to her",
+    shortExcerpt: "symbiotic second skin grew over her",
   },
   {
     claimId: "claim:kaisa-hunts-void",
@@ -418,7 +411,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:kaisa-bonded-carapace",
     sourceId: "source:bio-kaisa",
     normalizedFact: "Kai'Sa bonded with a Voidborn carapace fused to her as a second skin.",
-    shortExcerpt: "Voidborn carapace fused to her as a second skin",
+    shortExcerpt: "symbiotic second skin grew over her",
   },
 
   // ── Kassadin ────────────────────────────────────────────────────────────
@@ -453,7 +446,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:malzahar-void-prophet",
     sourceId: "source:bio-malzahar",
     normalizedFact: "Malzahar is a prophet who heard the Void's whispers and preaches its doctrine.",
-    shortExcerpt: "prophet of the Void",
+    shortExcerpt: "mortal prophet who chose corruption",
   },
   {
     claimId: "claim:malzahar-spreads-void-doctrine",
@@ -480,7 +473,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:belveth-confronted-kaisa",
     sourceId: "source:bio-belveth",
     normalizedFact: "Bel'Veth confronted Kai'Sa among survivors who resist the Void.",
-    shortExcerpt: "faced her directly — confrontation with survivors",
+    shortExcerpt: "faced her directly",
   },
   {
     claimId: "claim:pack:00016",
@@ -565,13 +558,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     shortExcerpt: "Lunari",
     evidenceType: "CONTEXT_ONLY",
   },
-  {
-    claimId: "claim:pack:00301",
-    sourceId: "source:bio-diana",
-    normalizedFact: "Diana's involvement in the Ruined King return is uncertain without explicit primary evidence.",
-    shortExcerpt: "Ruined King",
-    evidenceType: "OFFICIAL_REFERENCE",
-  },
+  // claim:pack:00301 — Ruination participation rejected; no positive evidence seed.
 
   // ── Zoe ─────────────────────────────────────────────────────────────────
   {
@@ -607,7 +594,7 @@ export const phase1EvidenceSeeds: EvidenceSeed[] = [
     claimId: "claim:shurima-sun-disc-ascension",
     sourceId: "source:bio-aatrox",
     normalizedFact: "Shurima's Sun Disc elevated mortals into Ascended god-warriors.",
-    shortExcerpt: "Sun Disc elevated mortals into Ascended",
+    shortExcerpt: "raised by Shurima's Sun Disc into an Ascended god-warrior",
   },
   {
     claimId: "claim:rite-elevates-ascended",

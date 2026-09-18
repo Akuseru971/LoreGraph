@@ -8,6 +8,7 @@ import type {
   ReviewStatus,
 } from "@/types";
 import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
+import { claimsForSubject } from "@/lib/knowledge/claim-supersession";
 import { isCoreTimelineBeat } from "@/lib/timeline/importance";
 import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
 import { canonConfidenceFromClaims } from "./claim-metrics";
@@ -85,7 +86,7 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
   if (character.roles.length > 0 && !hasGameplayPollution(character)) contentScore += 5;
   if (character.timeline.length >= 4) contentScore += 10;
 
-  const charClaims = claims.filter((c) => c.subjectId === character.id);
+  const charClaims = claimsForSubject(claims, character.id);
   const reviewedClaims = charClaims.filter((c) => c.reviewed && !c.needsReview);
   const trustedSourcedClaims = reviewedClaims.filter(
     (c) => c.sourceIds.length > 0 && isTrustedClaim(c),

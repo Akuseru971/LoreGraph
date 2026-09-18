@@ -8,8 +8,18 @@ import { untrustedCoreTimelineBeats } from "@/lib/knowledge/tier-a-gate";
 import { absoluteUrl, findForbiddenOrigins, getSiteUrl } from "@/lib/seo";
 import { loreEntityById } from "@/data/lore-entities";
 import { findDuplicateRelationships } from "@/lib/relationships/dedupe";
-import { claimById } from "@/data/knowledge/claims";
-import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
+import { claimById, claims } from "@/data/knowledge/claims";
+import { sourceEvidence } from "@/data/knowledge/evidence";
+import { getSourceSnapshot } from "@/data/knowledge/source-snapshots";
+import { isTrustedClaim, STRONG_PREDICATES } from "@/lib/knowledge/claim-evidence";
+import { isActiveClaim, isSupersededClaim } from "@/lib/knowledge/claim-supersession";
+import { resolveClaimEvidenceRefs } from "@/lib/knowledge/evidence-registry";
+import {
+  excerptFoundInSnapshot,
+  hashContent,
+  verifyEvidenceAgainstSnapshot,
+} from "@/lib/knowledge/source-snapshot";
+import { storyPaths } from "@/data/story-paths";
 import { trustedBioParagraphs } from "@/lib/bio/blocks";
 import { claimSourceAuthority } from "@/lib/knowledge/claim-trust";
 import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
@@ -329,5 +339,133 @@ describe("Canon hardening regression", () => {
           (s.from.id === "char:pantheon" && s.to.id === "char:varus")),
     );
     expect(directCharEdge).toBe(false);
+  });
+
+  it("rejects fake shortExcerpt not found in source snapshot", () => {
+    const snapshot = getSourceSnapshot("source:bio-aatrox");
+    expect(snapshot).toBeDefined();
+    expect(excerptFoundInSnapshot(snapshot!, "this text never appeared in any riot source")).toBe(
+      false,
+    );
+    const result = verifyEvidenceAgainstSnapshot(
+      {
+        id: "test-fake",
+        sourceId: "source:bio-aatrox",
+        normalizedFact: "fake",
+        evidenceType: "DIRECT_STATEMENT",
+        shortExcerpt: "this text never appeared in any riot source",
+        sourceSnapshotHash: snapshot!.contentHash,
+      },
+      snapshot,
+    );
+    expect(result.reviewStatus).toBe("REJECTED");
+  });
+
+  it("accepts shortExcerpt found in source snapshot", () => {
+    const snapshot = getSourceSnapshot("source:bio-aatrox");
+    const result = verifyEvidenceAgainstSnapshot(
+      {
+        id: "test-real",
+        sourceId: "source:bio-aatrox",
+        normalizedFact: "Aatrox was Ascended",
+        evidenceType: "DIRECT_STATEMENT",
+        shortExcerpt: "raised by Shurima's Sun Disc into an Ascended god-warrior",
+        sourceSnapshotHash: snapshot!.contentHash,
+      },
+      snapshot,
+    );
+    expect(result.reviewStatus).toBe("VERIFIED");
+    expect(result.excerptVerified).toBe(true);
+  });
+
+  it("snapshot hash mismatch marks evidence REVIEW_REQUIRED", () => {
+    const snapshot = getSourceSnapshot("source:bio-aatrox");
+    const result = verifyEvidenceAgainstSnapshot(
+      {
+        id: "test-stale",
+        sourceId: "source:bio-aatrox",
+        normalizedFact: "Aatrox was Ascended",
+        evidenceType: "DIRECT_STATEMENT",
+        shortExcerpt: "raised by Shurima's Sun Disc into an Ascended god-warrior",
+        sourceSnapshotHash: "deadbeef",
+      },
+      snapshot,
+    );
+    expect(result.reviewStatus).toBe("REVIEW_REQUIRED");
+  });
+
+  it("strong reviewed claims require VERIFIED evidence", () => {
+    const strongReviewed = claims.filter(
+      (c) =>
+        isActiveClaim(c) &&
+        c.reviewed &&
+        !c.needsReview &&
+        STRONG_PREDICATES.has(c.predicate),
+    );
+    for (const claim of strongReviewed) {
+      const evidence = resolveClaimEvidenceRefs(claim);
+      expect(evidence.some((e) => e.reviewStatus === "VERIFIED")).toBe(true);
+    }
+  });
+
+  it("weak region claims may use lighter evidence path", () => {
+    const regionClaim = claimById.get("claim:pack:00100");
+    expect(regionClaim?.predicate).toBe("ASSOCIATED_WITH_REGION");
+    expect(isTrustedClaim(regionClaim!)).toBe(true);
+  });
+
+  it("superseded pack claims are excluded from champion metrics", () => {
+    const superseded = claims.filter((c) => c.claimStatus === "SUPERSEDED");
+    expect(superseded.length).toBeGreaterThan(0);
+    for (const claim of superseded) {
+      expect(isTrustedClaim(claim)).toBe(false);
+      expect(claim.subjectId).not.toBe("char:superseded-pack");
+    }
+  });
+
+  it("superseded claims cannot feed Story Path blocks", () => {
+    const supersededIds = new Set(
+      claims.filter(isSupersededClaim).map((c) => c.id),
+    );
+    for (const path of storyPaths) {
+      for (const chapter of path.chapters) {
+        for (const block of chapter.blocks) {
+          for (const cid of block.claimIds ?? []) {
+            expect(supersededIds.has(cid)).toBe(false);
+          }
+        }
+      }
+    }
+  });
+
+  it("char:superseded-pack is fully removed", () => {
+    expect(claims.some((c) => c.subjectId === "char:superseded-pack")).toBe(false);
+    resetLoreGraphCache();
+    const graph = buildLoreGraph();
+    expect(graph.nodes.has("char:superseded-pack")).toBe(false);
+  });
+
+  it("Ahri has no artificial Vastaya rebellion participation", () => {
+    const ahri = characters.find((c) => c.slug === "ahri");
+    expect(ahri?.eventIds).not.toContain("event:vastaya-rebellion");
+    const rebellionClaim = claims.find(
+      (c) =>
+        c.subjectId === "char:ahri" &&
+        c.objectId === "event:vastaya-rebellion" &&
+        isTrustedClaim(c),
+    );
+    expect(rebellionClaim).toBeUndefined();
+  });
+
+  it("verified source evidence records have snapshot hashes", () => {
+    const verified = sourceEvidence.filter((e) => e.reviewStatus === "VERIFIED");
+    expect(verified.length).toBeGreaterThan(0);
+    for (const record of verified) {
+      expect(record.sourceSnapshotHash).toBeTruthy();
+      expect(record.excerptHash).toBeTruthy();
+      const snapshot = getSourceSnapshot(record.sourceId);
+      expect(record.sourceSnapshotHash).toBe(snapshot?.contentHash);
+      expect(record.excerptHash).toBe(hashContent(record.shortExcerpt!));
+    }
   });
 });

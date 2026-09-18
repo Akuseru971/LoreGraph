@@ -5,7 +5,7 @@
     "region": "shurima",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "B",
+    "tierAfter": "A",
     "bioReviewed": true,
     "atomicClaims": 14,
     "primarySources": 2,
@@ -14,10 +14,10 @@
     "eventsReviewed": 6,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 2,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 79 < 85"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "ahri",
@@ -25,19 +25,19 @@
     "region": "ionia",
     "auditState": "CURATED_PROVENANCE_GAP",
     "tierBefore": "B",
-    "tierAfter": "C",
+    "tierAfter": "B",
     "bioReviewed": true,
-    "atomicClaims": 1,
-    "primarySources": 1,
-    "trustedTimelinePct": 0,
-    "directRelReviewedPct": 0,
-    "eventsReviewed": 2,
-    "continuity": "MISSING",
+    "atomicClaims": 4,
+    "primarySources": 2,
+    "trustedTimelinePct": 100,
+    "directRelReviewedPct": 100,
+    "eventsReviewed": 0,
+    "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 10,
+    "p1Issues": 1,
     "researchTasks": 1,
     "tierAEligible": false,
-    "remainingBlocker": "contentCompleteness 75 < 85"
+    "remainingBlocker": "contentCompleteness 80 < 85"
   },
   {
     "slug": "akali",
@@ -114,10 +114,10 @@
     "eventsReviewed": 2,
     "continuity": "MISSING",
     "p0Issues": 0,
-    "p1Issues": 7,
+    "p1Issues": 6,
     "researchTasks": 1,
     "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 33 < 85"
+    "remainingBlocker": "reviewCoverage 33 < 90"
   },
   {
     "slug": "amumu",
@@ -265,7 +265,7 @@
     "region": "shurima",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "B",
+    "tierAfter": "A",
     "bioReviewed": true,
     "atomicClaims": 10,
     "primarySources": 2,
@@ -274,10 +274,10 @@
     "eventsReviewed": 3,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 2,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 80 < 85"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "bard",
@@ -305,7 +305,7 @@
     "region": "void",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "B",
+    "tierAfter": "A",
     "bioReviewed": true,
     "atomicClaims": 4,
     "primarySources": 2,
@@ -314,10 +314,10 @@
     "eventsReviewed": 1,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 2,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 75 < 85"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "blitzcrank",
@@ -525,7 +525,7 @@
     "region": "targon",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "A",
+    "tierAfter": "B",
     "bioReviewed": true,
     "atomicClaims": 4,
     "primarySources": 1,
@@ -534,10 +534,10 @@
     "eventsReviewed": 1,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 0,
-    "researchTasks": 0,
-    "tierAEligible": true,
-    "remainingBlocker": "—"
+    "p1Issues": 1,
+    "researchTasks": 1,
+    "tierAEligible": false,
+    "remainingBlocker": "reviewCoverage 75 < 90"
   },
   {
     "slug": "dr-mundo",
@@ -1125,7 +1125,7 @@
     "region": "void",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "B",
+    "tierAfter": "A",
     "bioReviewed": true,
     "atomicClaims": 7,
     "primarySources": 1,
@@ -1134,10 +1134,10 @@
     "eventsReviewed": 1,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 1,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "reviewCoverage 86 < 90"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "kalista",
@@ -1785,7 +1785,7 @@
     "region": "shurima",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "B",
+    "tierAfter": "A",
     "bioReviewed": true,
     "atomicClaims": 14,
     "primarySources": 1,
@@ -1794,10 +1794,10 @@
     "eventsReviewed": 3,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 2,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 71 < 85"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "nautilus",
@@ -1985,7 +1985,7 @@
     "region": "targon",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "B",
+    "tierAfter": "A",
     "bioReviewed": true,
     "atomicClaims": 8,
     "primarySources": 2,
@@ -1994,10 +1994,10 @@
     "eventsReviewed": 2,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 1,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "reviewCoverage 88 < 90"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "poppy",
@@ -2194,10 +2194,10 @@
     "eventsReviewed": 3,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 2,
+    "p1Issues": 1,
     "researchTasks": 1,
     "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 70 < 85"
+    "remainingBlocker": "reviewCoverage 88 < 90"
   },
   {
     "slug": "rengar",
@@ -2505,19 +2505,19 @@
     "region": "shurima",
     "auditState": "FULL_TIER_A_BUILD",
     "tierBefore": "C",
-    "tierAfter": "C",
+    "tierAfter": "A",
     "bioReviewed": true,
-    "atomicClaims": 1,
-    "primarySources": 1,
-    "trustedTimelinePct": 0,
+    "atomicClaims": 4,
+    "primarySources": 2,
+    "trustedTimelinePct": 100,
     "directRelReviewedPct": 100,
-    "eventsReviewed": 0,
-    "continuity": "MISSING",
+    "eventsReviewed": 1,
+    "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 15,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "contentCompleteness 20 < 85"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "smolder",
@@ -2905,7 +2905,7 @@
     "region": "ionia",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "B",
+    "tierAfter": "A",
     "bioReviewed": true,
     "atomicClaims": 6,
     "primarySources": 2,
@@ -2914,10 +2914,10 @@
     "eventsReviewed": 2,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 2,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 83 < 85"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "vayne",
@@ -3165,7 +3165,7 @@
     "region": "shurima",
     "auditState": "PHASE1_REVALIDATE",
     "tierBefore": "A*",
-    "tierAfter": "B",
+    "tierAfter": "A",
     "bioReviewed": true,
     "atomicClaims": 8,
     "primarySources": 3,
@@ -3174,10 +3174,10 @@
     "eventsReviewed": 2,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 2,
-    "researchTasks": 1,
-    "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 75 < 85"
+    "p1Issues": 0,
+    "researchTasks": 0,
+    "tierAEligible": true,
+    "remainingBlocker": "—"
   },
   {
     "slug": "xin-zhao",
@@ -3274,10 +3274,10 @@
     "eventsReviewed": 0,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 3,
+    "p1Issues": 2,
     "researchTasks": 1,
     "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 33 < 85"
+    "remainingBlocker": "reviewCoverage 33 < 90"
   },
   {
     "slug": "yuumi",
@@ -3434,10 +3434,10 @@
     "eventsReviewed": 1,
     "continuity": "MAIN_RUNETERRA",
     "p0Issues": 0,
-    "p1Issues": 2,
+    "p1Issues": 1,
     "researchTasks": 1,
     "tierAEligible": false,
-    "remainingBlocker": "canonConfidence 75 < 85"
+    "remainingBlocker": "reviewCoverage 75 < 90"
   },
   {
     "slug": "zyra",

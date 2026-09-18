@@ -1,6 +1,6 @@
 # 173 Champion Tier A Progress
 
-Generated: 2026-09-18T02:51:32.614Z
+Generated: 2026-09-18T04:33:01.713Z
 Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 
 ## Queue summary
@@ -11,17 +11,17 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 
 ## Tier distribution (current gates)
 
-- Tier A: 5
-- Tier B: 12
-- Tier C: 156
-- Tier A eligible: 5
+- Tier A: 13
+- Tier B: 6
+- Tier C: 154
+- Tier A eligible: 13
 
 ## Integrity metrics (Tier A evidence pass)
 
-- Trusted CORE timeline beats: 41
-- Provisional CORE timeline beats: 113
+- Trusted CORE timeline beats: 47
+- Provisional CORE timeline beats: 112
 - Trusted SUPPORTING timeline beats: 7
-- Provisional SUPPORTING timeline beats: 157
+- Provisional SUPPORTING timeline beats: 154
 - Claim evidence failures (reviewed but unsupported): 0
 - Participant evidence failures: 0
 - Core claims failing source exactness: 0
@@ -31,12 +31,12 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 
 | Champion | Region | Audit State | Tier Before | Tier After | Claims | Trusted TL % | Direct Rel % | Continuity | Tier A Eligible | Remaining Blocker |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Aatrox | shurima | PHASE1_REVALIDATE | A* | B | 14 | 100 | 100 | MAIN_RUNETERRA | no | canonConfidence 79 < 85 |
-| Ahri | ionia | CURATED_PROVENANCE_GAP | B | C | 1 | 0 | 0 | MISSING | no | contentCompleteness 75 < 85 |
+| Aatrox | shurima | PHASE1_REVALIDATE | A* | A | 14 | 100 | 100 | MAIN_RUNETERRA | yes | — |
+| Ahri | ionia | CURATED_PROVENANCE_GAP | B | B | 4 | 100 | 100 | MAIN_RUNETERRA | no | contentCompleteness 80 < 85 |
 | Akali | ionia | CURATED_PROVENANCE_GAP | B | C | 3 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Akshan | shurima | CURATED_PROVENANCE_GAP | B | C | 1 | 0 | 100 | MISSING | no | sourceCoverage 0 < 80 |
 | Alistar | runeterra | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 10 < 85 |
-| Ambessa | noxus | CURATED_PROVENANCE_GAP | B | B | 6 | 0 | 0 | MISSING | no | canonConfidence 33 < 85 |
+| Ambessa | noxus | CURATED_PROVENANCE_GAP | B | B | 6 | 0 | 0 | MISSING | no | reviewCoverage 33 < 90 |
 | Amumu | shurima | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Anivia | freljord | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Annie | noxus | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -44,9 +44,9 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Ashe | freljord | CURATED_PROVENANCE_GAP | B | C | 4 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Aurelion Sol | targon | PHASE1_REVALIDATE | A* | A | 4 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Aurora | freljord | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
-| Azir | shurima | PHASE1_REVALIDATE | A* | B | 10 | 100 | 100 | MAIN_RUNETERRA | no | canonConfidence 80 < 85 |
+| Azir | shurima | PHASE1_REVALIDATE | A* | A | 10 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Bard | runeterra | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 10 < 85 |
-| Bel'Veth | void | PHASE1_REVALIDATE | A* | B | 4 | 100 | 100 | MAIN_RUNETERRA | no | canonConfidence 75 < 85 |
+| Bel'Veth | void | PHASE1_REVALIDATE | A* | A | 4 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Blitzcrank | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Brand | runeterra | FULL_TIER_A_BUILD | C | C | 2 | 0 | 0 | MISSING | no | contentCompleteness 10 < 85 |
 | Braum | freljord | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -57,7 +57,7 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Cho'Gath | void | FULL_TIER_A_BUILD | C | C | 0 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Corki | bandle-city | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Darius | noxus | CURATED_PROVENANCE_GAP | B | C | 3 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
-| Diana | targon | PHASE1_REVALIDATE | A* | A | 4 | 100 | 100 | MAIN_RUNETERRA | yes | — |
+| Diana | targon | PHASE1_REVALIDATE | A* | B | 4 | 100 | 100 | MAIN_RUNETERRA | no | reviewCoverage 75 < 90 |
 | Dr. Mundo | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Draven | noxus | CURATED_PROVENANCE_GAP | B | C | 1 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Ekko | zaun | CURATED_PROVENANCE_GAP | B | C | 2 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
@@ -87,7 +87,7 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Jhin | ionia | CURATED_PROVENANCE_GAP | B | C | 3 | 0 | 0 | MISSING | no | contentCompleteness 75 < 85 |
 | Jinx | zaun | CURATED_PROVENANCE_GAP | B | C | 4 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | K'Sante | shurima | FULL_TIER_A_BUILD | C | C | 0 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
-| Kai'Sa | void | PHASE1_REVALIDATE | A* | B | 7 | 100 | 100 | MAIN_RUNETERRA | no | reviewCoverage 86 < 90 |
+| Kai'Sa | void | PHASE1_REVALIDATE | A* | A | 7 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Kalista | shadow-isles | CURATED_PROVENANCE_GAP | B | C | 4 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Karma | ionia | CURATED_PROVENANCE_GAP | B | C | 2 | 0 | 0 | MISSING | no | contentCompleteness 75 < 85 |
 | Karthus | shadow-isles | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -120,7 +120,7 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Morgana | demacia | CURATED_PROVENANCE_GAP | B | C | 3 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Naafiri | shurima | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Nami | bilgewater | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
-| Nasus | shurima | PHASE1_REVALIDATE | A* | B | 14 | 100 | 100 | MAIN_RUNETERRA | no | canonConfidence 71 < 85 |
+| Nasus | shurima | PHASE1_REVALIDATE | A* | A | 14 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Nautilus | bilgewater | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Neeko | ixtal | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Nidalee | ixtal | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -130,7 +130,7 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Olaf | freljord | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Orianna | piltover | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Ornn | freljord | FULL_TIER_A_BUILD | C | C | 3 | 0 | 0 | MISSING | no | contentCompleteness 20 < 85 |
-| Pantheon | targon | PHASE1_REVALIDATE | A* | B | 8 | 100 | 100 | MAIN_RUNETERRA | no | reviewCoverage 88 < 90 |
+| Pantheon | targon | PHASE1_REVALIDATE | A* | A | 8 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Poppy | demacia | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Pyke | bilgewater | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Qiyana | ixtal | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -140,7 +140,7 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Rek'Sai | shurima | FULL_TIER_A_BUILD | C | C | 0 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Rell | noxus | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Renata Glasc | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
-| Renekton | shurima | PHASE1_REVALIDATE | A* | B | 10 | 100 | 100 | MAIN_RUNETERRA | no | canonConfidence 70 < 85 |
+| Renekton | shurima | PHASE1_REVALIDATE | A* | B | 10 | 100 | 100 | MAIN_RUNETERRA | no | reviewCoverage 88 < 90 |
 | Rengar | runeterra | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 10 < 85 |
 | Riven | noxus | CURATED_PROVENANCE_GAP | B | C | 4 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Rumble | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -156,7 +156,7 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Singed | zaun | CURATED_PROVENANCE_GAP | B | C | 2 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Sion | noxus | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Sivir | shurima | FULL_TIER_A_BUILD | C | C | 4 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
-| Skarner | shurima | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
+| Skarner | shurima | FULL_TIER_A_BUILD | C | A | 4 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Smolder | noxus | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Sona | demacia | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Soraka | targon | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -176,7 +176,7 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Twitch | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Udyr | freljord | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Urgot | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
-| Varus | ionia | PHASE1_REVALIDATE | A* | B | 6 | 100 | 100 | MAIN_RUNETERRA | no | canonConfidence 83 < 85 |
+| Varus | ionia | PHASE1_REVALIDATE | A* | A | 6 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Vayne | demacia | FULL_TIER_A_BUILD | C | C | 3 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Veigar | bandle-city | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Vel'Koz | void | FULL_TIER_A_BUILD | C | C | 0 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -189,12 +189,12 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Warwick | zaun | FULL_TIER_A_BUILD | C | C | 3 | 0 | 0 | MISSING | no | contentCompleteness 20 < 85 |
 | Wukong | ionia | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Xayah | ionia | CURATED_PROVENANCE_GAP | B | C | 2 | 0 | 0 | MISSING | no | contentCompleteness 80 < 85 |
-| Xerath | shurima | PHASE1_REVALIDATE | A* | B | 8 | 100 | 100 | MAIN_RUNETERRA | no | canonConfidence 75 < 85 |
+| Xerath | shurima | PHASE1_REVALIDATE | A* | A | 8 | 100 | 100 | MAIN_RUNETERRA | yes | — |
 | Xin Zhao | demacia | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Yasuo | ionia | CURATED_PROVENANCE_GAP | B | C | 4 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Yone | ionia | CURATED_PROVENANCE_GAP | B | C | 2 | 0 | 0 | MISSING | no | sourceCoverage 0 < 80 |
 | Yorick | shadow-isles | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
-| Yunara | ionia | CURATED_PROVENANCE_GAP | B | B | 3 | 0 | 100 | MAIN_RUNETERRA | no | canonConfidence 33 < 85 |
+| Yunara | ionia | CURATED_PROVENANCE_GAP | B | B | 3 | 0 | 100 | MAIN_RUNETERRA | no | reviewCoverage 33 < 90 |
 | Yuumi | bandle-city | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Zaahen | shurima | CURATED_PROVENANCE_GAP | B | C | 2 | 0 | 100 | MISSING | no | sourceCoverage 0 < 80 |
 | Zac | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
@@ -202,5 +202,5 @@ Audit baseline commit: 17c8b42f6e5eda324b547df86cee3b8c5e290cbf
 | Zeri | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 0 | MISSING | no | contentCompleteness 20 < 85 |
 | Ziggs | zaun | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 20 < 85 |
 | Zilean | runeterra | FULL_TIER_A_BUILD | C | C | 2 | 0 | 100 | MISSING | no | contentCompleteness 10 < 85 |
-| Zoe | targon | PHASE1_REVALIDATE | A* | B | 4 | 100 | 100 | MAIN_RUNETERRA | no | canonConfidence 75 < 85 |
+| Zoe | targon | PHASE1_REVALIDATE | A* | B | 4 | 100 | 100 | MAIN_RUNETERRA | no | reviewCoverage 75 < 90 |
 | Zyra | runeterra | FULL_TIER_A_BUILD | C | C | 1 | 0 | 100 | MISSING | no | contentCompleteness 10 < 85 |

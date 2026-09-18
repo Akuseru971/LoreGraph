@@ -161,14 +161,14 @@ export const ioniaSeeds: CharacterSeed[] = [
     importance: 70,
     popularity: 92,
     verified: true,
-    events: ["vastaya-rebellion"],
+    events: [],
     tags: ["ionia", "vastaya", "memory", "identity", "spirit-magic"],
     sources: ["source:bio-ahri"],
     short:
       "A vastayan mage who consumes memories to find her own, and keeps learning things she would rather not have.",
     long: [
       "Ahri is a vastaya whose magic is tied to life essence and the memories carried within it.",
-      "She can drain essence from others to learn who she is, but each taking also carries grief, cruelty, and last moments she cannot unread.",
+      "She can drain essence from others to learn who she is; what she inherits from each taking is not always easy to carry.",
       "She seeks understanding of her origins among the vastaya rather than through endless consumption.",
       "Direct relationships and story beats are limited to what Riot stories explicitly establish — she is not formally allied to every Ionian figure she encounters.",
     ],

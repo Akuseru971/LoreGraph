@@ -359,6 +359,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
       "Shurima's greatest scholar, Ascended into a war he did not want and left to curate the ruins of everything he tried to protect.",
     long: [
       "Nasus was a strategist and archivist before he was a god-warrior, and he never entirely stopped being the former. Ascension gave him the strength to defend the empire and the lifespan to watch it fail anyway.",
+      "During the fall of Shurima, Nasus helped seal Xerath within the Tomb of the Emperors.",
       "After the fall he stayed. Where other Ascended went mad, went missing, or went to war, Nasus took on the job of remembering — guarding what was left of Shurima's knowledge from looters, from the desert, and from the empire's own worst impulses.",
       "His grief is specific: his brother Renekton went into the Tomb of the Emperors with him and did not come out the same. That one decision shapes most of what Nasus has done since.",
     ],

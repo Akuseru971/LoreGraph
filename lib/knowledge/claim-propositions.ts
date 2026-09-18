@@ -311,7 +311,8 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
   "claim:kaisa-survived-void-breach": [
     /\bvoid incursion\b/i,
     /\bvillage is taken\b/i,
-    /\bground opens\b/i,
+    /\bground open(ed)?\b/i,
+    /\btook her village\b/i,
     /\bdoes not stop moving\b/i,
   ],
   "claim:kaisa-void-symbiote": [
@@ -339,11 +340,13 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
   ],
   "claim:malzahar-void-prophet": [
     /\bprophet of the void\b/i,
+    /\bmortal prophet\b/i,
     /\bvoices in the desert\b/i,
     /\bwhispers to ancient icathia\b/i,
     /\bzealous seer\b/i,
     /\bvoid is runeterra'?s salvation\b/i,
     /\bbelieves the void\b/i,
+    /\bvoid began speaking\b/i,
   ],
   "claim:malzahar-spreads-void-doctrine": [
     /\bspreads void doctrine\b/i,
