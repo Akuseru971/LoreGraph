@@ -3,7 +3,8 @@ import { eventAssetByEventId } from "@/data/knowledge/event-assets";
 import { claimById } from "@/data/knowledge/claims";
 import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
 import type { CinematicJourney, CinematicScene } from "@/types";
-import { flagshipAssetBySceneId } from "@/data/cinematic/flagship-assets";
+import { flagshipAssetBySceneId, FLAGSHIP_JOURNEY_IDS } from "@/data/cinematic/flagship-assets";
+import { constellationById } from "@/data/cinematic/constellation-anchors";
 import { compositionForScene } from "./composition";
 import { eventSlugFromId } from "./resolve-scene-asset";
 
@@ -349,6 +350,32 @@ export function validateCinematicJourney(journey: CinematicJourney): CinematicVa
       kind: "invalid_primary_character",
       message: `Invalid primaryCharacterId: ${journey.primaryCharacterId}`,
     });
+  }
+
+  const isFlagship = FLAGSHIP_JOURNEY_IDS.includes(
+    journey.id as (typeof FLAGSHIP_JOURNEY_IDS)[number],
+  );
+  if (isFlagship && journey.kind === "CHARACTER") {
+    if (!journey.introSequence) {
+      issues.push({
+        level: "WARNING",
+        kind: "missing_intro_sequence",
+        message: "Flagship CHARACTER journey missing introSequence",
+      });
+    } else if (!constellationById.has(journey.introSequence.constellationId)) {
+      issues.push({
+        level: "ERROR",
+        kind: "invalid_intro_constellation",
+        message: `Unknown constellation: ${journey.introSequence.constellationId}`,
+      });
+    }
+    if (!journey.outroSequence) {
+      issues.push({
+        level: "WARNING",
+        kind: "missing_outro_sequence",
+        message: "Flagship CHARACTER journey missing outroSequence",
+      });
+    }
   }
 
   return issues;

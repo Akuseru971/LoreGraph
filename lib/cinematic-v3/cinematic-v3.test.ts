@@ -10,6 +10,13 @@ import {
 } from "./readiness";
 import { validateCinematicJourney } from "./validate-cinematic";
 import { resolveCinematicSceneAsset } from "./resolve-scene-asset";
+import {
+  computeIntroPhaseState,
+  computeOutroPhaseState,
+  totalIntroMs,
+  totalOutroMs,
+} from "./intro-outro";
+import { constellationByCharacterId } from "@/data/cinematic/constellation-anchors";
 
 beforeEach(() => {
   resetLoreGraphCache();
@@ -128,5 +135,42 @@ describe("Cinematic Journey V3", () => {
       expect(journey).not.toBeNull();
       expect(validateCinematicJourney(journey!).filter((i) => i.level === "ERROR")).toHaveLength(0);
     }
+  });
+
+  it("flagship champion journeys include signature intro and outro sequences", () => {
+    const flagshipSlugs = ["aatrox", "yasuo", "yone", "viego", "skarner"];
+    for (const slug of flagshipSlugs) {
+      const journey = buildChampionJourneyV3(char(slug));
+      expect(journey.introSequence?.type).toBe("SPLASH_TO_CONSTELLATION");
+      expect(journey.outroSequence?.type).toBe("CONSTELLATION_REFORM");
+      expect(journey.introSequence?.splashAsset.url).toBeTruthy();
+      expect(journey.introSequence?.heroStarId).toBeTruthy();
+      const constellation = constellationByCharacterId.get(`char:${slug}`);
+      expect(constellation?.anchors.length).toBeGreaterThanOrEqual(6);
+    }
+  });
+
+  it("intro phase state progresses through splash to zoom handoff", () => {
+    const journey = buildChampionJourneyV3(char("yasuo"));
+    const intro = journey.introSequence!;
+    const anchorCount = constellationByCharacterId.get("char:yasuo")!.anchors.length;
+    const early = computeIntroPhaseState(intro, 500, anchorCount);
+    expect(early.phase).toBe("splash_hold");
+    expect(early.splashOpacity).toBeGreaterThan(0.9);
+    const mid = computeIntroPhaseState(intro, 6000, anchorCount);
+    expect(["darken", "stars_emerge", "lines_form"]).toContain(mid.phase);
+    const late = computeIntroPhaseState(intro, totalIntroMs(intro.timing) - 100, anchorCount);
+    expect(["zoom_star", "handoff"]).toContain(late.phase);
+    expect(late.zoomProgress).toBeGreaterThan(0);
+  });
+
+  it("outro phase state reforms constellation silhouette", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const outro = journey.outroSequence!;
+    const early = computeOutroPhaseState(outro, 400);
+    expect(early.phase).toBe("pullback");
+    const late = computeOutroPhaseState(outro, totalOutroMs(outro.timing) - 200);
+    expect(late.phase).toBe("hold");
+    expect(late.constellationOpacity).toBeGreaterThan(0.8);
   });
 });

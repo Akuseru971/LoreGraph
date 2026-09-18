@@ -11,6 +11,7 @@ import type {
 import { defaultMotifsForAtmosphere } from "./environmental-motifs";
 import { inferShotType } from "./shot-types";
 import { inferWorldNodeArchetype } from "./world-node-archetypes";
+import { attachIntroOutroSequences } from "./intro-outro";
 import { evaluateJourneyReadiness } from "./visual-readiness";
 
 /** Curated staging overrides — flagship journeys only. */
@@ -191,9 +192,10 @@ export function applyFlagshipCurations(journey: CinematicJourney): CinematicJour
     scenes,
     cinematicReady: journey.cinematicReady,
   };
-  const readiness = evaluateJourneyReadiness(curated);
+  const withSequences = attachIntroOutroSequences(curated);
+  const readiness = evaluateJourneyReadiness(withSequences);
   return {
-    ...curated,
+    ...withSequences,
     loreReady: journey.cinematicReady,
     visualReady: readiness.visualReady,
     recordReady: readiness.recordReady,

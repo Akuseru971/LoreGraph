@@ -495,6 +495,86 @@ export interface CinematicScene {
   curated?: boolean;
 }
 
+export type ChampionConstellationAnchorImportance = "PRIMARY" | "SECONDARY";
+
+export interface ChampionConstellationAnchor {
+  id: string;
+  x: number;
+  y: number;
+  importance: ChampionConstellationAnchorImportance;
+  connectsTo?: string[];
+}
+
+export interface ChampionConstellation {
+  id: string;
+  characterId: string;
+  anchors: ChampionConstellationAnchor[];
+  heroStarId: string;
+}
+
+export interface CinematicIntroTiming {
+  splashHoldMs: number;
+  splashDriftMs: number;
+  darkenMs: number;
+  starsEmergeMs: number;
+  linesFormMs: number;
+  heroSelectMs: number;
+  zoomStarMs: number;
+  handoffMs: number;
+}
+
+export interface CinematicOutroTiming {
+  pullbackMs: number;
+  pathRevealMs: number;
+  nodesConnectMs: number;
+  constellationReformMs: number;
+  splashEchoMs: number;
+  holdMs: number;
+}
+
+export interface CinematicIntro {
+  type: "SPLASH_TO_CONSTELLATION";
+  splashAsset: CinematicSceneAsset;
+  constellationId: string;
+  heroStarId: string;
+  timing: CinematicIntroTiming;
+  atmosphere?: AtmospherePreset;
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  showText?: boolean;
+  splashFocal?: { x: number; y: number };
+}
+
+export interface CinematicOutro {
+  type: "CONSTELLATION_REFORM";
+  constellationId: string;
+  optionalSplashEcho?: CinematicSceneAsset;
+  timing: CinematicOutroTiming;
+  title?: string;
+  subtitle?: string;
+  showText?: boolean;
+  showSplashEcho?: boolean;
+}
+
+export interface CinematicIntroOverride {
+  constellationId?: string;
+  heroStarId?: string;
+  timing?: Partial<CinematicIntroTiming>;
+  atmosphere?: AtmospherePreset;
+  splashFocal?: { x: number; y: number };
+  showText?: boolean;
+}
+
+export interface CinematicOutroOverride {
+  constellationId?: string;
+  timing?: Partial<CinematicOutroTiming>;
+  showSplashEcho?: boolean;
+  showText?: boolean;
+}
+
+export type CinematicJourneyPhase = "intro" | "playing" | "outro";
+
 export interface CinematicJourney {
   id: string;
   kind: CinematicJourneyKind;
@@ -512,6 +592,8 @@ export interface CinematicJourney {
   readiness?: CinematicJourneyReadiness;
   generatedAt: string;
   graphNodeIds: string[];
+  introSequence?: CinematicIntro;
+  outroSequence?: CinematicOutro;
 }
 
 export interface CinematicPlayerOptions {

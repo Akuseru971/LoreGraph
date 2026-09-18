@@ -84,6 +84,12 @@ export function evaluateJourneyReadiness(
     if (missingCurated.length) {
       blockers.push(`${missingCurated.length} flagship scenes MISSING assets`);
     }
+    if (journey.kind === "CHARACTER" && !journey.introSequence) {
+      blockers.push("flagship CHARACTER journey missing introSequence");
+    }
+    if (journey.kind === "CHARACTER" && !journey.outroSequence) {
+      blockers.push("flagship CHARACTER journey missing outroSequence");
+    }
   }
 
   const visualReady =

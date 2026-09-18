@@ -61,6 +61,17 @@ export { inferShotType, shotCameraHints } from "./shot-types";
 export { evaluateJourneyReadiness } from "./visual-readiness";
 export { applyFlagshipCurations } from "./apply-flagship";
 export {
+  attachIntroOutroSequences,
+  buildIntroSequence,
+  buildOutroSequence,
+  computeIntroPhaseState,
+  computeOutroPhaseState,
+  totalIntroMs,
+  totalOutroMs,
+  DEFAULT_INTRO_TIMING,
+  DEFAULT_OUTRO_TIMING,
+} from "./intro-outro";
+export {
   generateAssetCoverageReport,
   generateVisualQaReport,
 } from "./generate-reports";
