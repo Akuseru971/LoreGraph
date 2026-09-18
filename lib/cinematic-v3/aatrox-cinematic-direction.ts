@@ -1,4 +1,4 @@
-import { AATROX_PATH_TO_ANCHOR } from "@/data/cinematic/aatrox-constellation";
+import { AATROX_PATH_TO_ANCHOR } from "@/data/cinematic/constellations/aatrox";
 import type {
   CinematicIntroTiming,
   CinematicJourney,

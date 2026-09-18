@@ -12,6 +12,13 @@ import {
 } from "@/lib/cinematic-v3";
 import { AATROX_RECORD_INTRO_TIMING, AATROX_RECORD_OUTRO_TIMING } from "@/lib/cinematic-v3/aatrox-cinematic-direction";
 import { totalIntroMs, totalOutroMs } from "@/lib/cinematic-v3/intro-outro";
+import {
+  ConstellationQaView,
+  constellationStats,
+  type ConstellationQaMode,
+} from "@/components/cinematic-v3/constellation-qa-view";
+import { constellationById } from "@/data/cinematic/constellations";
+import { validateFlagshipConstellation } from "@/lib/cinematic-v3/validate-constellation";
 import type { CinematicAspectMode, CinematicDirectorPreview, CinematicPlayerOptions } from "@/types";
 
 const AATROX_SCENES = [
@@ -38,6 +45,9 @@ export default function CinematicDevPage() {
   const [environmentOnly, setEnvironmentOnly] = React.useState(false);
   const [directorPreview, setDirectorPreview] = React.useState<CinematicDirectorPreview>("full");
   const [directorSceneIndex, setDirectorSceneIndex] = React.useState(0);
+  const [constellationQaMode, setConstellationQaMode] =
+    React.useState<ConstellationQaMode>("constellation-only");
+  const [morphProgress, setMorphProgress] = React.useState(0.65);
 
   const playerOptions = React.useMemo<CinematicPlayerOptions>(
     () => ({
@@ -130,6 +140,73 @@ export default function CinematicDevPage() {
           ENV ONLY
         </button>
       </div>
+
+      {mode === "character" && journey?.introSequence ? (
+        <section className="mt-10 rounded border border-line p-4">
+          <h2 className="text-eyebrow text-parchment tracking-[0.2em] uppercase">
+            Constellation QA — {selected}
+          </h2>
+          {(() => {
+            const constellation = constellationById.get(
+              journey.introSequence!.constellationId,
+            );
+            if (!constellation) return null;
+            const stats = constellationStats(constellation);
+            const validation = validateFlagshipConstellation(constellation);
+            const errors = validation.filter((v) => v.level === "ERROR");
+            const warnings = validation.filter((v) => v.level === "WARNING");
+            return (
+              <p className="text-muted mt-2 text-xs">
+                {stats.total} anchors · {stats.contour} contour · {stats.iconic} iconic ·{" "}
+                {stats.structural} structural · {stats.detail} detail · {stats.lines} lines ·{" "}
+                {stats.groups} groups
+                {errors.length ? ` · ${errors.length} validation errors` : ""}
+                {warnings.length ? ` · ${warnings.length} warnings` : ""}
+              </p>
+            );
+          })()}
+          <div className="mt-3 flex flex-wrap gap-2">
+            {(
+              [
+                "constellation-only",
+                "splash-only",
+                "splash-anchors",
+                "contour-only",
+                "iconic-lines",
+                "full",
+                "morph-progress",
+              ] as ConstellationQaMode[]
+            ).map((m) => (
+              <button
+                key={m}
+                type="button"
+                className={`rounded-full border px-3 py-1 text-xs ${constellationQaMode === m ? "border-gold text-gold" : "border-line text-muted"}`}
+                onClick={() => setConstellationQaMode(m)}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+          {constellationQaMode === "morph-progress" ? (
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={morphProgress * 100}
+              onChange={(e) => setMorphProgress(Number(e.target.value) / 100)}
+              className="mt-3 w-full"
+            />
+          ) : null}
+          <div className="mt-4">
+            <ConstellationQaView
+              constellationId={journey.introSequence!.constellationId}
+              intro={journey.introSequence}
+              mode={constellationQaMode}
+              morphProgress={morphProgress}
+            />
+          </div>
+        </section>
+      ) : null}
 
       {selected === "aatrox" && mode === "character" && aatroxJourney ? (
         <section className="mt-10 rounded border border-gold/30 bg-gold/5 p-4">

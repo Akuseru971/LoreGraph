@@ -6,10 +6,7 @@ import { constellationById } from "@/data/cinematic/constellation-anchors";
 import { getAtmosphereConfig } from "@/lib/cinematic-v3/atmosphere";
 import { computeOutroPhaseState } from "@/lib/cinematic-v3/intro-outro";
 import type { CinematicCoordinates, CinematicOutro, CinematicScene } from "@/types";
-import {
-  ConstellationSilhouette,
-  orderedAnchorsForReveal,
-} from "./constellation-silhouette";
+import { ConstellationSilhouette } from "./constellation-silhouette";
 
 function easeInOutCubic(t: number): number {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -96,14 +93,12 @@ export function SignatureOutroSequence({
     }>;
   }, [scenes, constellation, mapping, visitedIndices, pathPoints, anchorMap, state.pathMorphProgress, state.pathOpacity]);
 
-  const ordered = constellation ? orderedAnchorsForReveal(constellation) : [];
-  const primaryCount = ordered.filter((a) => a.importance === "PRIMARY").length;
-  const secondaryCount = ordered.filter((a) => a.importance === "SECONDARY").length;
-  const starReveal =
-    state.pathMorphProgress * primaryCount +
-    state.secondaryStarProgress * secondaryCount +
-    state.microStarProgress * (ordered.length - primaryCount - secondaryCount);
-  const revealProgress = Math.min(1, starReveal / ordered.length);
+  const revealProgress = Math.min(
+    1,
+    state.pathMorphProgress * 0.35 +
+      state.secondaryStarProgress * 0.4 +
+      state.microStarProgress * 0.25,
+  );
 
   const showOutroTitle =
     recordMode

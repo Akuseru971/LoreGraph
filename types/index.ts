@@ -495,17 +495,48 @@ export interface CinematicScene {
   curated?: boolean;
 }
 
+/** @deprecated Use ConstellationAnchorCategory */
 export type ChampionConstellationAnchorImportance =
   | "PRIMARY"
   | "SECONDARY"
   | "MICRO";
 
+export type ConstellationAnchorCategory =
+  | "STRUCTURAL"
+  | "CONTOUR"
+  | "ICONIC"
+  | "DETAIL"
+  | "ATMOSPHERIC";
+
+export type ConstellationVisualWeight = "LOW" | "MEDIUM" | "HIGH" | "HERO";
+
+export type ConstellationLineWeight = "SUBTLE" | "NORMAL" | "EMPHATIC" | "ICONIC";
+
+export interface ConstellationContourGroup {
+  id: string;
+  label: string;
+  revealPhase: number;
+}
+
+export interface ConstellationLine {
+  from: string;
+  to: string;
+  weight: ConstellationLineWeight;
+  category?: ConstellationAnchorCategory;
+}
+
 export interface ChampionConstellationAnchor {
   id: string;
   x: number;
   y: number;
-  importance: ChampionConstellationAnchorImportance;
+  category: ConstellationAnchorCategory;
+  visualWeight?: ConstellationVisualWeight;
+  revealPhase?: number;
+  contourGroup?: string;
   connectsTo?: string[];
+  lineWeight?: ConstellationLineWeight;
+  /** @deprecated Use category */
+  importance?: ChampionConstellationAnchorImportance;
 }
 
 export interface ChampionConstellation {
@@ -513,6 +544,9 @@ export interface ChampionConstellation {
   characterId: string;
   anchors: ChampionConstellationAnchor[];
   heroStarId: string;
+  lines?: ConstellationLine[];
+  contourGroups?: ConstellationContourGroup[];
+  splashFocal?: { x: number; y: number };
 }
 
 export interface CinematicIntroTiming {

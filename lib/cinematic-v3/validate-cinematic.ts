@@ -5,6 +5,7 @@ import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
 import type { CinematicJourney, CinematicScene } from "@/types";
 import { flagshipAssetBySceneId, FLAGSHIP_JOURNEY_IDS } from "@/data/cinematic/flagship-assets";
 import { constellationById } from "@/data/cinematic/constellation-anchors";
+import { validateFlagshipConstellation } from "./validate-constellation";
 import { compositionForScene } from "./composition";
 import { eventSlugFromId } from "./resolve-scene-asset";
 
@@ -368,6 +369,15 @@ export function validateCinematicJourney(journey: CinematicJourney): CinematicVa
         kind: "invalid_intro_constellation",
         message: `Unknown constellation: ${journey.introSequence.constellationId}`,
       });
+    } else {
+      const constellation = constellationById.get(journey.introSequence.constellationId)!;
+      for (const issue of validateFlagshipConstellation(constellation)) {
+        issues.push({
+          level: issue.level,
+          kind: issue.kind,
+          message: `${constellation.id}: ${issue.message}`,
+        });
+      }
     }
     if (!journey.outroSequence) {
       issues.push({

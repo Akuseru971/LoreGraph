@@ -9,6 +9,7 @@ import {
 } from "@/data/cinematic/intro-outro-overrides";
 import { FLAGSHIP_JOURNEY_IDS } from "@/data/cinematic/flagship-assets";
 import { getChampionAssetUrl } from "@/lib/assets";
+import { orderedAnchorsByReveal } from "./constellation-builder";
 import type {
   ChampionConstellation,
   ChampionConstellationAnchor,
@@ -261,19 +262,19 @@ export function computeIntroPhaseState(
     constellationOpacity = t * 0.2;
     textOpacity = 0.45 * (1 - t);
   } else if (phase === "stars_emerge") {
-    backgroundFade = 0.65 + t * 0.3;
-    splashDarken = 0.35 + t * 0.4;
-    colorDrain = 0.25 + t * 0.45;
-    subjectOpacity = 1 - t * 0.75;
-    starRevealProgress = 0.12 + t * 0.55;
+    backgroundFade = 0.65 + t * 0.25;
+    splashDarken = 0.35 + t * 0.35;
+    colorDrain = 0.25 + t * 0.4;
+    subjectOpacity = 1 - t * 0.45;
+    starRevealProgress = 0.08 + t * 0.42;
     visibleStarCount = Math.max(2, Math.ceil(anchorCount * starRevealProgress));
     constellationOpacity = 0.2 + t * 0.65;
     textOpacity = 0;
   } else if (phase === "lines_form") {
-    backgroundFade = 0.95;
-    subjectOpacity = 0.25 * (1 - t);
-    splashOpacity = 0.35 * (1 - t);
-    starRevealProgress = 0.67 + t * 0.28;
+    backgroundFade = 0.9;
+    subjectOpacity = 0.55 * (1 - t * 0.85);
+    splashOpacity = 0.5 * (1 - t * 0.9);
+    starRevealProgress = 0.5 + t * 0.35;
     visibleStarCount = anchorCount;
     lineProgress = easeOut(phaseProgress);
     constellationOpacity = 0.85 + t * 0.12;
@@ -449,9 +450,7 @@ export function getHeroAnchor(
 export function orderedAnchorsForReveal(
   constellation: ChampionConstellation,
 ): ChampionConstellationAnchor[] {
-  const primary = constellation.anchors.filter((a) => a.importance === "PRIMARY");
-  const secondary = constellation.anchors.filter((a) => a.importance === "SECONDARY");
-  return [...primary, ...secondary];
+  return orderedAnchorsByReveal(constellation);
 }
 
 export function buildIntroSequence(

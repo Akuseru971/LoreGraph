@@ -17,6 +17,7 @@ import {
   totalOutroMs,
 } from "./intro-outro";
 import { constellationByCharacterId } from "@/data/cinematic/constellation-anchors";
+import { validateFlagshipConstellation } from "./validate-constellation";
 
 beforeEach(() => {
   resetLoreGraphCache();
@@ -150,11 +151,18 @@ describe("Cinematic Journey V3", () => {
     }
   });
 
-  it("Aatrox constellation has high-fidelity anchor count and path mapping", () => {
+  it("Aatrox constellation has splash-traced silhouette fidelity and path mapping", () => {
     const journey = buildChampionJourneyV3(char("aatrox"));
     const constellation = constellationByCharacterId.get("char:aatrox")!;
-    expect(constellation.anchors.length).toBeGreaterThanOrEqual(40);
-    expect(constellation.anchors.filter((a) => a.importance === "MICRO").length).toBeGreaterThan(10);
+    expect(constellation.anchors.length).toBeGreaterThanOrEqual(150);
+    expect(constellation.anchors.filter((a) => a.category === "CONTOUR").length).toBeGreaterThanOrEqual(
+      100,
+    );
+    expect(constellation.contourGroups?.length).toBeGreaterThanOrEqual(6);
+    expect(constellation.lines?.length).toBeGreaterThan(50);
+    expect(validateFlagshipConstellation(constellation).filter((i) => i.level === "ERROR")).toHaveLength(
+      0,
+    );
     expect(journey.introSequence?.recordShowIntroTitle).toBe(true);
     expect(journey.outroSequence?.pathToAnchorMapping?.["cscene:aatrox:beat:aatrox-5"]).toBe(
       "blade-core",
@@ -165,6 +173,21 @@ describe("Cinematic Journey V3", () => {
     const blade = journey.scenes.find((s) => s.id === "cscene:aatrox:beat:aatrox-5");
     expect(blade?.image?.url).toBeTruthy();
     expect(blade?.composition).not.toBe("NO_IMAGE");
+  });
+
+  it("flagship constellations pass structural silhouette validation", () => {
+    const flagshipSlugs = ["aatrox", "yasuo", "yone", "viego", "skarner"];
+    for (const slug of flagshipSlugs) {
+      const constellation = constellationByCharacterId.get(`char:${slug}`)!;
+      expect(constellation.anchors.length).toBeGreaterThanOrEqual(60);
+      expect(constellation.anchors.filter((a) => a.category === "CONTOUR").length).toBeGreaterThanOrEqual(
+        30,
+      );
+      expect(constellation.contourGroups?.length).toBeGreaterThanOrEqual(4);
+      expect(validateFlagshipConstellation(constellation).filter((i) => i.level === "ERROR")).toHaveLength(
+        0,
+      );
+    }
   });
 
   it("intro phase state progresses through splash to zoom handoff", () => {
