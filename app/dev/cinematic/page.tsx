@@ -33,7 +33,10 @@ export default function CinematicDevPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="text-monument text-parchment text-4xl">Cinematic Journey V3</h1>
-      <p className="text-muted mt-2 text-sm">Development showcase — not indexed.</p>
+      <p className="text-muted mt-2 text-sm">
+        Development showcase — not indexed. Open a journey, then use the debug panel scene
+        buttons to jump between beats.
+      </p>
 
       <div className="mt-8 flex gap-2">
         <button

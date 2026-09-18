@@ -30,3 +30,19 @@ export {
   validateCinematicJourney,
   type CinematicValidationIssue,
 } from "./validate-cinematic";
+export {
+  resolveCinematicSceneAsset,
+  applySceneAssetAndComposition,
+  eventSlugFromId,
+} from "./resolve-scene-asset";
+export {
+  compositionForScene,
+  narrativePlacementForComposition,
+  imageOffsetForComposition,
+} from "./composition";
+export {
+  interpolateStarPosition,
+  cameraFollowPosition,
+  trailLengthForPreset,
+  easeStarTravel,
+} from "./star-path";

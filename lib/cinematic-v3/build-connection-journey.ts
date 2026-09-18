@@ -1,5 +1,4 @@
 import { characterById, eventById } from "@/data";
-import { getChampionAssetUrl } from "@/lib/assets";
 import { findNarrativePath } from "@/lib/graph";
 import { buildLoreGraph } from "@/lib/graph/build";
 import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
@@ -12,6 +11,7 @@ import type {
 } from "@/types";
 import { atmosphereForRegion } from "./atmosphere";
 import { layoutScenes } from "./layout";
+import { applySceneAssetAndComposition } from "./resolve-scene-asset";
 import { choreographyForRelationship } from "./scene-typing";
 
 function truncateNarrative(text: string, maxWords = 55): string {
@@ -170,11 +170,6 @@ function buildYasuoYoneJourney(
       ),
       primaryCharacterId: yone.id,
       secondaryCharacterIds: [yasuo.id],
-      image: {
-        assetKey: yone.assetKey,
-        url: getChampionAssetUrl(yone.assetKey, "cinematic"),
-        variant: "cinematic",
-      },
       atmosphere: atmosphereForRegion("ionia"),
       cameraPreset: "ORBIT",
       importance: "CORE",
@@ -208,7 +203,13 @@ function buildYasuoYoneJourney(
     },
   ];
 
-  const laid = layoutScenes(scenes, "cinematic:connection:yasuo:yone");
+  const enriched = scenes.map((s) =>
+    applySceneAssetAndComposition(s, {
+      character: yasuo,
+      secondaryCharacters: [yasuo, yone],
+    }),
+  );
+  const laid = layoutScenes(enriched, "cinematic:connection:yasuo:yone");
 
   return {
     id: "cinematic:connection:yasuo:yone",
@@ -352,7 +353,12 @@ export function buildConnectionJourneyV3(
     path ?? findNarrativePath(source.id, target.id, graph) ?? undefined;
   if (!resolvedPath) return null;
 
-  const sceneDrafts = pathToScenes(source, target, resolvedPath);
+  const sceneDrafts = pathToScenes(source, target, resolvedPath).map((s) =>
+    applySceneAssetAndComposition(s, {
+      character: source,
+      secondaryCharacters: [source, target],
+    }),
+  );
   if (sceneDrafts.length < 3) return null;
 
   const scenes = layoutScenes(

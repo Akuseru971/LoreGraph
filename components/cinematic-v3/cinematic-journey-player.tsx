@@ -33,7 +33,8 @@ export function CinematicJourneyPlayer({
   const [transitionProgress, setTransitionProgress] = React.useState(1);
   const [graphRevealProgress, setGraphRevealProgress] = React.useState(0);
   const [playing, setPlaying] = React.useState(false);
-  const [arrived, setArrived] = React.useState(false);
+  const [arrived, setArrived] = React.useState(true);
+  const [visitedSceneIndices, setVisitedSceneIndices] = React.useState<number[]>([0]);
   const [controlsVisible, setControlsVisible] = React.useState(true);
   const [soundEnabled, setSoundEnabled] = React.useState(false);
   const startedRef = React.useRef(false);
@@ -67,6 +68,12 @@ export function CinematicJourneyPlayer({
   }, []);
 
   React.useEffect(() => {
+    if (sceneIndex === 0) {
+      setTransitionProgress(1);
+      setArrived(true);
+      setVisitedSceneIndices([0]);
+      return;
+    }
     setTransitionProgress(0);
     setArrived(false);
     const duration = scene?.transitionDurationMs ?? 2600;
@@ -80,6 +87,9 @@ export function CinematicJourneyPlayer({
         requestAnimationFrame(frame);
       } else {
         setArrived(true);
+        setVisitedSceneIndices((prev) =>
+          prev.includes(sceneIndex) ? prev : [...prev, sceneIndex],
+        );
         track({
           name: "journey_scene_viewed",
           journeyId: journey.id,
@@ -130,8 +140,23 @@ export function CinematicJourneyPlayer({
   const restart = () => {
     setSceneIndex(0);
     setGraphRevealProgress(0);
+    setVisitedSceneIndices([0]);
+    setArrived(true);
+    setTransitionProgress(1);
     track({ name: "journey_replayed", journeyId: journey.id });
   };
+
+  const jumpToScene = React.useCallback(
+    (index: number) => {
+      if (index < 0 || index >= journey.scenes.length) return;
+      setSceneIndex(index);
+      setGraphRevealProgress(0);
+      setVisitedSceneIndices(
+        Array.from({ length: index + 1 }, (_, i) => i),
+      );
+    },
+    [journey.scenes.length],
+  );
 
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -185,6 +210,8 @@ export function CinematicJourneyPlayer({
           transitionProgress={transitionProgress}
           graphRevealProgress={graphRevealProgress}
           quality={quality}
+          arrived={arrived}
+          visitedSceneIndices={visitedSceneIndices}
         />
       ) : (
         <ReducedMotionJourney journey={journey} sceneIndex={sceneIndex} />
@@ -240,7 +267,13 @@ export function CinematicJourneyPlayer({
       />
 
       {process.env.NODE_ENV !== "production" ? (
-        <CinematicDebugPanel journey={journey} sceneIndex={sceneIndex} />
+        <CinematicDebugPanel
+          journey={journey}
+          sceneIndex={sceneIndex}
+          transitionProgress={transitionProgress}
+          arrived={arrived}
+          onJumpToScene={jumpToScene}
+        />
       ) : null}
     </div>
   );

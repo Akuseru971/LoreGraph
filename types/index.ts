@@ -407,12 +407,46 @@ export type RelationshipChoreography =
   | "TRANSFORM"
   | "LEAD";
 
-export interface CinematicAsset {
+export type CinematicSceneAssetRelevance =
+  | "EXACT_EVENT"
+  | "EXACT_STORY"
+  | "EXACT_LOCATION"
+  | "EXACT_ARTIFACT"
+  | "CHARACTER_CONTEXT"
+  | "REGION_CONTEXT"
+  | "FALLBACK";
+
+export type CinematicSceneAssetConfidence = "HIGH" | "MEDIUM" | "LOW";
+
+export type CinematicComposition =
+  | "FULL_BLEED"
+  | "LEFT_SUBJECT"
+  | "RIGHT_SUBJECT"
+  | "CENTER_REVEAL"
+  | "DISTANT_WORLD"
+  | "BACKGROUND_MEMORY"
+  | "DUAL_SUBJECT"
+  | "NO_IMAGE";
+
+export interface CinematicSceneAsset {
+  url: string;
+  assetKey?: string;
+  sourceEntityId?: string;
+  relevance: CinematicSceneAssetRelevance;
+  confidence: CinematicSceneAssetConfidence;
+  focalPoint?: { x: number; y: number };
+  aspectRatio?: number;
+  compositionHint?: CinematicComposition;
+  variant?: "splash" | "cinematic" | "hero" | "event";
+}
+
+/** @deprecated Use CinematicSceneAsset — kept for gradual migration. */
+export type CinematicAsset = Partial<CinematicSceneAsset> & {
   url?: string;
   assetKey?: string;
   focalPoint?: { x: number; y: number };
   variant?: "splash" | "cinematic" | "hero" | "event";
-}
+};
 
 export interface CinematicCoordinates {
   x: number;
@@ -434,7 +468,8 @@ export interface CinematicScene {
   locationId?: string;
   artifactId?: string;
   factionId?: string;
-  image?: CinematicAsset;
+  image?: CinematicSceneAsset;
+  composition?: CinematicComposition;
   atmosphere?: AtmospherePreset;
   cameraPreset?: CinematicCameraPreset;
   coordinates: CinematicCoordinates;

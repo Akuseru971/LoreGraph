@@ -1,7 +1,10 @@
 import { characterById, eventById, sourceById } from "@/data";
+import { eventAssetByEventId } from "@/data/knowledge/event-assets";
 import { claimById } from "@/data/knowledge/claims";
 import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
 import type { CinematicJourney, CinematicScene } from "@/types";
+import { compositionForScene } from "./composition";
+import { eventSlugFromId } from "./resolve-scene-asset";
 
 export interface CinematicValidationIssue {
   level: "ERROR" | "WARNING";
@@ -10,7 +13,96 @@ export interface CinematicValidationIssue {
   message: string;
 }
 
-function validateScene(scene: CinematicScene): CinematicValidationIssue[] {
+function validateSceneAssets(
+  scene: CinematicScene,
+  journey: CinematicJourney,
+): CinematicValidationIssue[] {
+  const issues: CinematicValidationIssue[] = [];
+  const composition = compositionForScene(scene, scene.image);
+
+  if (scene.image?.confidence === "LOW" && composition !== "NO_IMAGE") {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "low_confidence_image",
+      message: "LOW-confidence image shown in cinematic mode",
+    });
+  }
+
+  if (
+    scene.type === "EVENT" &&
+    scene.image?.relevance === "CHARACTER_CONTEXT" &&
+    scene.eventId &&
+    eventAssetByEventId.has(scene.eventId)
+  ) {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "event_champion_fallback",
+      message: "EVENT scene uses champion fallback when event art exists",
+    });
+  }
+
+  if (scene.image?.url && !scene.image.aspectRatio && !scene.image.focalPoint) {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "missing_focal_point",
+      message: "Image lacks focal point metadata",
+    });
+  }
+
+  if (
+    scene.entityId &&
+    scene.image?.sourceEntityId &&
+    scene.entityId !== scene.primaryCharacterId &&
+    scene.image.sourceEntityId !== scene.entityId &&
+    scene.image.relevance === "CHARACTER_CONTEXT" &&
+    (scene.type === "EVENT" || scene.type === "CONFLICT")
+  ) {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "unrelated_image_entity",
+      message: `Image source ${scene.image.sourceEntityId} unrelated to entity ${scene.entityId}`,
+    });
+  }
+
+  if (scene.eventId && !scene.image?.url) {
+    const slug = eventSlugFromId(scene.eventId);
+    if (slug && eventAssetByEventId.has(scene.eventId)) {
+      issues.push({
+        level: "WARNING",
+        sceneId: scene.id,
+        kind: "missing_event_visual",
+        message: "High-confidence event art exists but scene has no image",
+      });
+    }
+  }
+
+  const sameUrlScenes = journey.scenes.filter((s) => s.image?.url === scene.image?.url);
+  if (scene.image?.url && sameUrlScenes.length > 2 && scene.type !== "ORIGIN") {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "reused_champion_image",
+      message: `Same image reused across ${sameUrlScenes.length} scenes`,
+    });
+  }
+
+  if (scene.image?.focalPoint && composition === "LEFT_SUBJECT" && scene.image.focalPoint.x > 0.6) {
+    issues.push({
+      level: "WARNING",
+      sceneId: scene.id,
+      kind: "composition_focal_conflict",
+      message: "LEFT_SUBJECT composition conflicts with right-side focal point",
+    });
+  }
+
+  return issues;
+}
+
+function validateScene(scene: CinematicScene, journey: CinematicJourney): CinematicValidationIssue[] {
   const issues: CinematicValidationIssue[] = [];
 
   if (!scene.narrative.trim()) {
@@ -117,6 +209,8 @@ function validateScene(scene: CinematicScene): CinematicValidationIssue[] {
     });
   }
 
+  issues.push(...validateSceneAssets(scene, journey));
+
   return issues;
 }
 
@@ -179,7 +273,7 @@ export function validateCinematicJourney(journey: CinematicJourney): CinematicVa
       });
     }
     seen.add(scene.id);
-    issues.push(...validateScene(scene));
+    issues.push(...validateScene(scene, journey));
   }
 
   if (journey.primaryCharacterId && !characterById.has(journey.primaryCharacterId)) {

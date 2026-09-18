@@ -1,5 +1,4 @@
 import { eventById, regionBySlug } from "@/data";
-import { getChampionAssetUrl } from "@/lib/assets";
 import { isCoreTimelineBeat } from "@/lib/timeline/importance";
 import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
 import type {
@@ -12,6 +11,7 @@ import type {
 import { atmosphereForRegion } from "./atmosphere";
 import { layoutScenes } from "./layout";
 import { evaluateCinematicReadiness } from "./readiness";
+import { applySceneAssetAndComposition } from "./resolve-scene-asset";
 import {
   cameraForSceneType,
   evidenceClassForBeat,
@@ -37,7 +37,7 @@ function beatToScene(
     event?.regionSlugs?.[0] ?? character.region,
   );
 
-  return {
+  const draft: Omit<CinematicScene, "coordinates" | "graphTarget"> = {
     id: `cscene:${character.slug}:${beat.id}`,
     type: sceneType,
     title: beat.title,
@@ -47,11 +47,6 @@ function beatToScene(
     era: beat.era,
     primaryCharacterId: character.id,
     eventId: beat.eventId,
-    image: {
-      assetKey: character.assetKey,
-      url: getChampionAssetUrl(character.assetKey, "cinematic"),
-      variant: "cinematic",
-    },
     atmosphere,
     cameraPreset: cameraForSceneType(sceneType),
     importance: isCoreTimelineBeat(beat) ? "CORE" : "SUPPORTING",
@@ -63,33 +58,30 @@ function beatToScene(
     holdDurationMs: 6000,
     transitionDurationMs: 2600,
   };
+  return applySceneAssetAndComposition(draft, { character });
 }
 
 function originScene(character: Character): Omit<CinematicScene, "coordinates" | "graphTarget"> {
   const region = regionBySlug.get(character.region);
-  return {
+  const draft = {
     id: `cscene:${character.slug}:origin`,
-    type: "ORIGIN",
+    type: "ORIGIN" as const,
     title: character.name,
     eyebrow: region?.name ?? character.region,
     narrative: truncateNarrative(character.shortDescription),
     entityId: character.id,
     primaryCharacterId: character.id,
-    image: {
-      assetKey: character.assetKey,
-      url: getChampionAssetUrl(character.assetKey, "cinematic"),
-      variant: "cinematic",
-    },
     atmosphere: atmosphereForRegion(character.region),
-    cameraPreset: "SLOW_APPROACH",
-    importance: "CORE",
+    cameraPreset: "SLOW_APPROACH" as const,
+    importance: "CORE" as const,
     claimIds: [],
     sourceIds: character.sourceIds,
-    evidenceClass: "SUPPORTED_SYNTHESIS",
+    evidenceClass: "SUPPORTED_SYNTHESIS" as const,
     continuity: character.continuity ?? "MAIN_RUNETERRA",
     holdDurationMs: 7000,
     transitionDurationMs: 3000,
   };
+  return applySceneAssetAndComposition(draft, { character });
 }
 
 function endingScene(

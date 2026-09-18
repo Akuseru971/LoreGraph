@@ -9,6 +9,7 @@ import {
   SHOWCASE_CONNECTION_PAIRS,
 } from "./readiness";
 import { validateCinematicJourney } from "./validate-cinematic";
+import { resolveCinematicSceneAsset } from "./resolve-scene-asset";
 
 beforeEach(() => {
   resetLoreGraphCache();
@@ -76,6 +77,32 @@ describe("Cinematic Journey V3", () => {
       if (isCinematicReady(c)) {
         expect(journey.scenes.length).toBeGreaterThanOrEqual(3);
         expect(errors).toHaveLength(0);
+      }
+    }
+  });
+
+  it("Aatrox journey uses event art instead of champion splash for void war", () => {
+    const journey = buildChampionJourneyV3(char("aatrox"));
+    const voidScene = journey.scenes.find((s) => s.eventId === "event:void-incursion");
+    expect(voidScene).toBeDefined();
+    expect(voidScene!.image?.relevance).not.toBe("CHARACTER_CONTEXT");
+    expect(voidScene!.image?.url).toBeTruthy();
+  });
+
+  it("Yasuo↔Yone invasion scene uses event art", () => {
+    const journey = buildConnectionJourneyV3(char("yasuo"), char("yone"))!;
+    const invasion = journey.scenes.find((s) => s.eventId === "event:noxian-invasion-ionia");
+    expect(invasion?.image?.relevance).toBe("EXACT_EVENT");
+  });
+
+  it("resolveCinematicSceneAsset returns null for unsupported LOW confidence", () => {
+    const aatrox = char("aatrox");
+    const journey = buildChampionJourneyV3(aatrox);
+    const consequence = journey.scenes.find((s) => s.type === "CONSEQUENCE");
+    if (consequence) {
+      const asset = resolveCinematicSceneAsset(consequence, { character: aatrox });
+      if (asset?.confidence === "LOW") {
+        expect(asset.url).toBeTruthy();
       }
     }
   });

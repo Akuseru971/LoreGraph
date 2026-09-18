@@ -3,51 +3,69 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import * as React from "react";
 import * as THREE from "three";
-import { ease, getCameraConfig } from "@/lib/cinematic-v3/camera";
-import type { CinematicCameraPreset, CinematicCoordinates } from "@/types";
+import { cameraFollowPosition } from "@/lib/cinematic-v3/star-path";
+import type { CinematicCameraPreset } from "@/types";
 
 export function CinematicCameraRig({
-  target,
+  starPosition,
   preset,
   transitionProgress,
   graphRevealProgress = 0,
   graphCenter,
+  arrived,
 }: {
-  target: CinematicCoordinates;
+  starPosition: THREE.Vector3;
   preset: CinematicCameraPreset;
   transitionProgress: number;
   graphRevealProgress?: number;
-  graphCenter?: CinematicCoordinates;
+  graphCenter?: THREE.Vector3;
+  arrived: boolean;
 }) {
   const { camera } = useThree();
   const current = React.useRef(new THREE.Vector3(0, 1.5, 8));
   const lookAt = React.useRef(new THREE.Vector3(0, 0, 0));
+  const velocity = React.useRef(new THREE.Vector3());
+  const star = React.useRef(new THREE.Vector3());
 
-  useFrame(() => {
-    const config = getCameraConfig(preset);
-    const t = ease(transitionProgress, config.easing);
-    const offset = config.offset;
+  useFrame((_, delta) => {
+    star.current.copy(starPosition);
+    const t = arrived ? 1 : transitionProgress;
 
-    const pullZ = graphRevealProgress * 12;
-    const pullY = graphRevealProgress * 5;
-
-    const desired = new THREE.Vector3(
-      target.x + offset.x * (1 - t * 0.5),
-      target.y + offset.y * (1 - t * 0.5) + pullY,
-      target.z + offset.z * (1 - t * 0.3) + pullZ,
+    const desired = cameraFollowPosition(
+      { x: star.current.x, y: star.current.y, z: star.current.z },
+      preset,
+      t,
+      graphRevealProgress,
     );
 
-    current.current.lerp(desired, 0.06);
+    const damping = graphRevealProgress > 0 ? 2.5 : 4.5;
+    const smooth = 1 - Math.exp(-damping * delta);
+    current.current.lerp(new THREE.Vector3(desired.x, desired.y, desired.z), smooth);
 
-    const center = graphCenter ?? target;
-    lookAt.current.set(center.x, center.y, center.z);
-    lookAt.current.lerp(
-      new THREE.Vector3(target.x, target.y, target.z),
-      1 - graphRevealProgress * 0.3,
-    );
+    const ahead = star.current.clone();
+    if (!arrived && transitionProgress < 0.95) {
+      const predict = 0.35 * (1 - transitionProgress);
+      ahead.z -= predict;
+      ahead.y += predict * 0.2;
+    }
+
+    const center = graphCenter ?? ahead;
+    lookAt.current.lerp(center, smooth * 1.2);
+    if (graphRevealProgress > 0.1) {
+      lookAt.current.lerp(
+        new THREE.Vector3(
+          (graphCenter?.x ?? 0) * graphRevealProgress,
+          (graphCenter?.y ?? 0) * graphRevealProgress,
+          star.current.z * (1 - graphRevealProgress * 0.5),
+        ),
+        graphRevealProgress * 0.04,
+      );
+    }
 
     camera.position.copy(current.current);
     camera.lookAt(lookAt.current);
+
+    velocity.current.subVectors(current.current, desired);
   });
 
   return null;

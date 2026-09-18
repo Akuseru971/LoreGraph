@@ -14,9 +14,9 @@ export function GraphRevealOverlay({
   onContinueExploring: () => void;
 }) {
   const reduceMotion = useReducedMotion();
-  if (progress < 0.85) return null;
+  if (progress < 0.7) return null;
 
-  const opacity = Math.min(1, (progress - 0.85) / 0.15);
+  const opacity = Math.min(1, (progress - 0.7) / 0.3);
 
   return (
     <motion.div
@@ -33,8 +33,8 @@ export function GraphRevealOverlay({
           {journey.title}
         </h2>
         <p className="text-parchment/75 mx-auto mt-4 max-w-md text-sm leading-relaxed">
-          You followed one thread through Runeterra. Every node you visited belongs to a
-          much larger network of verified lore.
+          The LoreLight pulls back. Your path glows brighter than the surrounding
+          constellation — one thread through Runeterra, now visible in the larger graph.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <button
