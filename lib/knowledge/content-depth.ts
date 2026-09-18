@@ -4,7 +4,7 @@ import { computeQuality } from "./quality-matrix";
 import { isActiveClaim } from "./claim-supersession";
 import { isTrustedClaim } from "./claim-evidence";
 import { claimsForSubject } from "./claim-supersession";
-import type { Character, LoreEvent, Faction, Region } from "@/types";
+import type { LoreEvent } from "@/types";
 
 export const MAJOR_EVENT_SLUGS = [
   "void-incursion",
