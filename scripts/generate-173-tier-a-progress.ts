@@ -6,9 +6,17 @@ import { join } from "node:path";
 import { characters } from "../data/characters";
 import { claims } from "../data/knowledge/claims";
 import { breakdownClaims } from "../lib/knowledge/claim-metrics";
+import { evaluateSourceSupport } from "../lib/knowledge/claim-evidence";
 import { computeQuality } from "../lib/knowledge/quality-matrix";
+import { coreClaimEvidenceFailures } from "../lib/knowledge/tier-a-gate";
+import { isTrustedParticipantLink } from "../lib/events/participant-evidence";
+import {
+  isCoreTimelineBeat,
+  isSupportingTimelineBeat,
+} from "../lib/timeline/importance";
 import { isTrustedTimelineBeat } from "../lib/timeline/trust";
 import { relationships } from "../data/relationships";
+import { events } from "../data/events";
 
 interface AuditChampion {
   slug: string;
@@ -58,6 +66,50 @@ type Row = {
 };
 
 const rows: Row[] = [];
+
+let trustedCoreBeats = 0;
+let provisionalCoreBeats = 0;
+let trustedSupportingBeats = 0;
+let provisionalSupportingBeats = 0;
+let claimEvidenceFailures = 0;
+let participantEvidenceFailures = 0;
+let coreSourceExactnessFailures = 0;
+let participantLinksAudited = 0;
+let participantLinksPassed = 0;
+let participantLinksDowngraded = 0;
+
+for (const event of events) {
+  for (const link of event.characterLinks ?? []) {
+    if (link.role !== "PARTICIPANT") continue;
+    participantLinksAudited++;
+    if (isTrustedParticipantLink(link, event.id)) {
+      participantLinksPassed++;
+    } else {
+      participantEvidenceFailures++;
+      participantLinksDowngraded++;
+    }
+  }
+}
+
+for (const claim of claims) {
+  if (!claim.reviewed || claim.needsReview) continue;
+  const support = evaluateSourceSupport(claim);
+  if (!support.supported) claimEvidenceFailures++;
+}
+
+for (const c of characters) {
+  for (const beat of c.timeline) {
+    const trusted = isTrustedTimelineBeat(beat);
+    if (isCoreTimelineBeat(beat)) {
+      if (trusted) trustedCoreBeats++;
+      else provisionalCoreBeats++;
+    } else if (isSupportingTimelineBeat(beat)) {
+      if (trusted) trustedSupportingBeats++;
+      else provisionalSupportingBeats++;
+    }
+  }
+  coreSourceExactnessFailures += coreClaimEvidenceFailures(c).length;
+}
 
 for (const entry of audit.champions) {
   const c = characters.find((ch) => ch.slug === entry.slug);
@@ -129,6 +181,19 @@ const md = [
   `- Tier B: ${rows.filter((r) => r.tierAfter === "B").length}`,
   `- Tier C: ${rows.filter((r) => r.tierAfter === "C").length}`,
   `- Tier A eligible: ${rows.filter((r) => r.tierAEligible).length}`,
+  "",
+  "## Integrity metrics (Tier A evidence pass)",
+  "",
+  `- Trusted CORE timeline beats: ${trustedCoreBeats}`,
+  `- Provisional CORE timeline beats: ${provisionalCoreBeats}`,
+  `- Trusted SUPPORTING timeline beats: ${trustedSupportingBeats}`,
+  `- Provisional SUPPORTING timeline beats: ${provisionalSupportingBeats}`,
+  `- Claim evidence failures (reviewed but unsupported): ${claimEvidenceFailures}`,
+  `- Participant evidence failures: ${participantEvidenceFailures}`,
+  `- Core claims failing source exactness: ${coreSourceExactnessFailures}`,
+  `- PARTICIPANT links audited: ${participantLinksAudited}`,
+  `- PARTICIPANT links with trusted evidence: ${participantLinksPassed}`,
+  `- PARTICIPANT links downgraded / untrusted: ${participantLinksDowngraded}`,
   "",
   "| Champion | Region | Audit State | Tier Before | Tier After | Claims | Trusted TL % | Direct Rel % | Continuity | Tier A Eligible | Remaining Blocker |",
   "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",

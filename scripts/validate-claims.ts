@@ -8,6 +8,7 @@ import {
   detectCircularClaimChains,
   validateClaimEvidenceChain,
 } from "../lib/knowledge/claim-circular";
+import { evaluateSourceSupport, isTrustedClaim } from "../lib/knowledge/claim-evidence";
 import { isWikiOnlyClaim } from "../lib/knowledge/claim-trust";
 
 const errors: string[] = [];
@@ -31,6 +32,15 @@ for (const claim of auditedClaims) {
 
   for (const issue of validateClaimEvidenceChain(claim)) {
     errors.push(`${claim.id}: ${issue.kind} — ${issue.detail}`);
+  }
+
+  if (claim.reviewed && !claim.needsReview && !isTrustedClaim(claim)) {
+    const support = evaluateSourceSupport(claim);
+    const detail =
+      !support.supported && "reason" in support
+        ? support.reason
+        : "reviewed claim is not evidence-trusted";
+    errors.push(`${claim.id}: ${detail}`);
   }
 
   if (

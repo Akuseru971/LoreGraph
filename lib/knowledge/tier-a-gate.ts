@@ -1,14 +1,17 @@
 import { events } from "@/data/events";
 import { relationships } from "@/data/relationships";
+import { isTrustedParticipantLink } from "@/lib/events/participant-evidence";
+import { isTrustedTimelineBeat, provisionalTimelineBeats } from "@/lib/timeline/trust";
+import { beatImportance, isCoreTimelineBeat } from "@/lib/timeline/importance";
 import type { Character, TimelineBeat } from "@/types";
 import { claims } from "@/data/knowledge/claims";
-import { canonConfidenceFromClaims } from "./claim-metrics";
+import { isClaimEvidenceTrusted, isTrustedClaim } from "./claim-evidence";
+import { canonConfidenceFromClaims, trustedClaimsFromList } from "./claim-metrics";
 import {
   hasGameplayPollution,
   hasMeaningfulTimeline,
   hasQualityBio,
 } from "./completeness-helpers";
-import { isTrustedTimelineBeat, provisionalTimelineBeats } from "@/lib/timeline/trust";
 
 export const TIER_A_THRESHOLDS = {
   contentCompleteness: 85,
@@ -26,24 +29,40 @@ export function isPlaceholderTimelineBeat(beat: TimelineBeat): boolean {
   return PLACEHOLDER_TIMELINE_TITLE.test(beat.title.trim());
 }
 
-export function isCoreTimelineBeat(beat: TimelineBeat): boolean {
-  if (isPlaceholderTimelineBeat(beat)) return true;
-  if (beat.eventId) return true;
-  if (beat.claimIds?.length) return true;
-  if (beat.sourceIds?.length) return true;
-  return beat.evidenceClass !== "TRANSITION" && beat.evidenceClass !== "EDITORIAL_FRAMING";
-}
-
 export function trustedTimelineCoveragePercent(character: Character): number {
   if (character.timeline.length === 0) return 0;
   const trusted = character.timeline.filter(isTrustedTimelineBeat).length;
   return Math.round((trusted / character.timeline.length) * 100);
 }
 
-export function hasProvisionalCoreTimelineBeat(character: Character): boolean {
-  return character.timeline.some(
+export function untrustedCoreTimelineBeats(character: Character): TimelineBeat[] {
+  return character.timeline.filter(
     (beat) => isCoreTimelineBeat(beat) && !isTrustedTimelineBeat(beat),
   );
+}
+
+export function hasProvisionalCoreTimelineBeat(character: Character): boolean {
+  return untrustedCoreTimelineBeats(character).length > 0;
+}
+
+export function coreClaimEvidenceFailures(character: Character): string[] {
+  const failures: string[] = [];
+
+  for (const beat of character.timeline) {
+    if (!isCoreTimelineBeat(beat)) continue;
+    for (const cid of beat.claimIds ?? []) {
+      const claim = claims.find((c) => c.id === cid);
+      if (!claim) {
+        failures.push(`${beat.title}: missing claim ${cid}`);
+        continue;
+      }
+      if (!isTrustedClaim(claim)) {
+        failures.push(`${beat.title}: untrusted core claim ${cid}`);
+      }
+    }
+  }
+
+  return failures;
 }
 
 export function directRelationshipReviewCoverage(character: Character): {
@@ -82,8 +101,10 @@ export function unsupportedParticipantEventLinks(character: Character): string[]
     for (const link of event.characterLinks ?? []) {
       if (link.characterId !== character.id) continue;
       if (link.role !== "PARTICIPANT") continue;
-      if (!link.sourceIds?.length && !link.claimIds?.length) {
-        issues.push(`${event.slug}: PARTICIPANT without source/claim evidence`);
+      if (!isTrustedParticipantLink(link, event.id)) {
+        issues.push(
+          `${event.slug}: PARTICIPANT without trusted PARTICIPATED_IN claim evidence`,
+        );
       }
     }
   }
@@ -111,6 +132,8 @@ export function evaluateTierAGate(
   const trustedTimeline = trustedTimelineCoveragePercent(character);
   const directRel = directRelationshipReviewCoverage(character);
   const participantIssues = unsupportedParticipantEventLinks(character);
+  const coreEvidenceFailures = coreClaimEvidenceFailures(character);
+  const untrustedCore = untrustedCoreTimelineBeats(character);
 
   if (dimensions.contentCompleteness < TIER_A_THRESHOLDS.contentCompleteness) {
     blockers.push(
@@ -158,10 +181,9 @@ export function evaluateTierAGate(
   if (!character.verified) {
     blockers.push("champion not verified");
   }
-  if (hasProvisionalCoreTimelineBeat(character)) {
-    const provisional = provisionalTimelineBeats(character.timeline).filter(isCoreTimelineBeat);
+  if (untrustedCore.length) {
     blockers.push(
-      `provisional core timeline beat(s): ${provisional.map((b) => b.title).join(", ")}`,
+      `provisional CORE timeline beat(s): ${untrustedCore.map((b) => b.title).join(", ")}`,
     );
   }
   if (directRel.applicable && directRel.coverage < TIER_A_THRESHOLDS.directRelationshipReviewCoverage) {
@@ -171,6 +193,14 @@ export function evaluateTierAGate(
   }
   if (participantIssues.length) {
     blockers.push(...participantIssues.map((i) => `unsupported event: ${i}`));
+  }
+  if (coreEvidenceFailures.length) {
+    blockers.push(
+      ...coreEvidenceFailures.slice(0, 3).map((f) => `core claim evidence: ${f}`),
+    );
+    if (coreEvidenceFailures.length > 3) {
+      blockers.push(`core claim evidence: +${coreEvidenceFailures.length - 3} more`);
+    }
   }
 
   for (const missing of dimensions.criticalMissing) {
@@ -193,4 +223,21 @@ export function evaluateTierAGate(
   }
 
   return { eligible: blockers.length === 0, blockers };
+}
+
+export function timelineBeatStats(character: Character) {
+  const core = character.timeline.filter((b) => beatImportance(b) === "CORE");
+  const supporting = character.timeline.filter((b) => beatImportance(b) === "SUPPORTING");
+  const contextual = character.timeline.filter((b) => beatImportance(b) === "CONTEXTUAL");
+
+  return {
+    coreTotal: core.length,
+    coreTrusted: core.filter(isTrustedTimelineBeat).length,
+    coreProvisional: core.filter((b) => !isTrustedTimelineBeat(b)).length,
+    supportingTotal: supporting.length,
+    supportingTrusted: supporting.filter(isTrustedTimelineBeat).length,
+    supportingProvisional: supporting.filter((b) => !isTrustedTimelineBeat(b)).length,
+    contextualTotal: contextual.length,
+    provisionalAll: provisionalTimelineBeats(character.timeline).length,
+  };
 }

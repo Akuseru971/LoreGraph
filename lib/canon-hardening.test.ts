@@ -4,6 +4,7 @@ import { isDailyEligibleEdge } from "@/lib/canon/model";
 import { validateEvents } from "@/lib/events/validate";
 import { buildLoreGraph, findNarrativePath, resetLoreGraphCache } from "@/lib/graph";
 import { computeQuality } from "@/lib/knowledge/quality-matrix";
+import { untrustedCoreTimelineBeats } from "@/lib/knowledge/tier-a-gate";
 import { absoluteUrl, findForbiddenOrigins, getSiteUrl } from "@/lib/seo";
 import { loreEntityById } from "@/data/lore-entities";
 import { findDuplicateRelationships } from "@/lib/relationships/dedupe";
@@ -62,7 +63,7 @@ describe("Canon hardening regression", () => {
     expect(weakOnly).toBe(false);
   });
 
-  it("Phase 1 cluster earns Tier A only with trusted timeline evidence chains", () => {
+  it("Phase 1 Tier A champions require zero provisional CORE timeline beats", () => {
     const phase1 = [
       "aatrox",
       "pantheon",
@@ -84,10 +85,25 @@ describe("Canon hardening regression", () => {
       const c = characters.find((ch) => ch.slug === slug);
       expect(c).toBeDefined();
       const q = computeQuality(c!);
-      expect(q.tierAEligible).toBe(true);
+      if (!q.tierAEligible) continue;
       expect(q.tier).toBe("A");
       expect(q.dimensions.trustedTimelineCoverage).toBeGreaterThanOrEqual(70);
+      expect(untrustedCoreTimelineBeats(c!).length).toBe(0);
     }
+  });
+
+  it("Nasus Void War participation is not evidence-trusted", () => {
+    const claim = claimById.get("claim:nasus-participated-void-war");
+    expect(claim).toBeDefined();
+    expect(claim!.reviewed).toBe(false);
+    expect(claim!.needsReview).toBe(true);
+  });
+
+  it("Renekton Void War participation remains pending without exact evidence", () => {
+    const claim = claimById.get("claim:pack:00259");
+    expect(claim).toBeDefined();
+    expect(claim!.reviewed).toBe(false);
+    expect(claim!.needsReview).toBe(true);
   });
 
   it("Trusted timeline beats require claimIds and proposition support", () => {

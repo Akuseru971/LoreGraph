@@ -6,6 +6,7 @@ import {
   regions,
   relationships,
 } from "@/data";
+import { isTrustedParticipantLink } from "@/lib/events/participant-evidence";
 import { EVENT_ROLE_PATH_WEIGHT } from "@/lib/events/roles";
 import {
   characterConceptExplanation,
@@ -227,16 +228,26 @@ export function buildLoreGraph(): LoreGraph {
       const { characterId, role } = link;
       if (!nodes.has(characterId)) continue;
       const roleWeight = EVENT_ROLE_PATH_WEIGHT[role] ?? 6;
+      const participantTrusted =
+        role !== "PARTICIPANT" || isTrustedParticipantLink(link, event.id);
       const edgeVerified =
-        event.verified && !link.needsReview && role !== "EDITORIAL_CONTEXT";
+        event.verified &&
+        !link.needsReview &&
+        role !== "EDITORIAL_CONTEXT" &&
+        participantTrusted;
       pushEdge({
         id: `edge:event-${event.slug}-${characterId}`,
         source: characterId,
         target: event.id,
         relationship: "related",
         connectionCategory: "SHARED_EVENT",
-        confidence: role === "PARTICIPANT" || role === "CAUSE" ? "STRONG" : "DERIVED",
-        weight: CATEGORY_PATH_COST.SHARED_EVENT * roleWeight,
+        confidence:
+          (role === "PARTICIPANT" && participantTrusted) || role === "CAUSE"
+            ? "STRONG"
+            : "DERIVED",
+        weight:
+          CATEGORY_PATH_COST.SHARED_EVENT *
+          (role === "PARTICIPANT" && !participantTrusted ? 25 : roleWeight),
         importance: Math.round(event.importance * 0.7),
         description: characterEventExplanation(
           characterId,

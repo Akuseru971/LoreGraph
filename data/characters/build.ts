@@ -19,6 +19,7 @@ import type {
   RegionSlug,
   ReviewStatus,
   TimelineBeat,
+  TimelineBeatImportance,
 } from "@/types";
 import { regionBySlug } from "../regions";
 import { bioSourceId } from "../sources";
@@ -38,6 +39,7 @@ export interface TimelineSeed {
   canonStatus?: string;
   evidenceClass?: NarrativeEvidenceClass;
   confidence?: FactConfidence;
+  importance?: TimelineBeatImportance;
 }
 
 export interface CharacterSeed {
@@ -122,6 +124,7 @@ export function buildCharacter(seed: CharacterSeed): Character {
         }),
     };
     if (beat.claimIds?.length) built.claimIds = beat.claimIds;
+    if (beat.importance) built.importance = beat.importance;
     return built;
   });
 

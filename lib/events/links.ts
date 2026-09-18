@@ -1,4 +1,6 @@
 import { claims } from "@/data/knowledge/claims";
+import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
+import { evaluateClaimTrust } from "@/lib/knowledge/claim-trust";
 import type {
   EventCharacterLink,
   EventRelationRole,
@@ -24,19 +26,25 @@ function findParticipationClaim(
     (c) =>
       c.subjectId === characterId &&
       c.objectId === eventId &&
-      (c.claimType === "PARTICIPATION" || c.predicate.includes("PARTICIPATED")),
+      c.predicate === "PARTICIPATED_IN",
   );
 
   if (!matching.length) return null;
 
-  const reviewed = matching.filter((c) => c.reviewed && !c.needsReview);
-  const claimIds = reviewed.map((c) => c.id);
-  const sourceIds = [...new Set(reviewed.flatMap((c) => c.sourceIds))];
+  const trusted = matching.filter((c) => {
+    if (!isTrustedClaim(c)) return false;
+    return evaluateClaimTrust(c.id).reviewStatus === "VERIFIED_CANON";
+  });
+
+  if (!trusted.length) return null;
+
+  const claimIds = trusted.map((c) => c.id);
+  const sourceIds = [...new Set(trusted.flatMap((c) => c.sourceIds))];
 
   return {
     claimIds,
     sourceIds,
-    reviewStatus: reviewed.length ? "VERIFIED_CANON" : "PENDING",
+    reviewStatus: "VERIFIED_CANON",
   };
 }
 

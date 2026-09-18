@@ -84,10 +84,9 @@ export function eventRoleExplanation(
 export const EVENT_ROLE_OVERRIDES: Record<string, Record<string, EventRelationRole>> = {
   "void-incursion": {
     aatrox: "PARTICIPANT",
-    nasus: "PARTICIPANT",
-    varus: "PARTICIPANT",
-    renekton: "PARTICIPANT",
-    jax: "PARTICIPANT",
+    nasus: "ACTIVE_DURING",
+    renekton: "ACTIVE_DURING",
+    jax: "ASSOCIATED_WITH",
     zilean: "ASSOCIATED_WITH",
   },
   "ascension-ritual": {
@@ -103,7 +102,7 @@ export const EVENT_ROLE_OVERRIDES: Record<string, Record<string, EventRelationRo
   "darkin-war": {
     aatrox: "PARTICIPANT",
     varus: "PARTICIPANT",
-    nasus: "PARTICIPANT",
+    nasus: "ACTIVE_DURING",
     naafiri: "ASSOCIATED_WITH",
     zaahen: "ASSOCIATED_WITH",
   },

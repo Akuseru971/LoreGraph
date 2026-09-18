@@ -360,6 +360,8 @@ export interface Location extends Entity {
   shortDescription: string;
 }
 
+export type TimelineBeatImportance = "CORE" | "SUPPORTING" | "CONTEXTUAL";
+
 export interface TimelineBeat {
   id: string;
   era: string;
@@ -371,6 +373,8 @@ export interface TimelineBeat {
   eventId?: string;
   sourceIds?: string[];
   claimIds?: string[];
+  /** Explicit lore importance — CORE beats must be trusted for Tier A. */
+  importance?: TimelineBeatImportance;
   canonStatus?: CanonStatus;
   continuity?: Continuity;
   reviewStatus?: ReviewStatus;

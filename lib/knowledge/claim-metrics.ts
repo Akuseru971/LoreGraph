@@ -1,4 +1,5 @@
 import type { Claim } from "@/types";
+import { isTrustedClaim } from "./claim-evidence";
 import {
   claimSourceAuthority,
   evaluateClaimTrust,
@@ -8,6 +9,7 @@ import {
 export interface ClaimMetricBreakdown {
   total: number;
   reviewedClaims: number;
+  trustedClaims: number;
   verifiedCanonClaims: number;
   primaryExplicitClaims: number;
   primaryCombinedClaims: number;
@@ -15,6 +17,10 @@ export interface ClaimMetricBreakdown {
   pendingClaims: number;
   editorialClaims: number;
   derivedClaims: number;
+}
+
+export function trustedClaimsFromList(charClaims: Claim[]): number {
+  return charClaims.filter(isTrustedClaim).length;
 }
 
 function isEditorialClaim(claim: Claim): boolean {
@@ -29,6 +35,7 @@ export function breakdownClaims(charClaims: Claim[]): ClaimMetricBreakdown {
   const breakdown: ClaimMetricBreakdown = {
     total: charClaims.length,
     reviewedClaims: 0,
+    trustedClaims: 0,
     verifiedCanonClaims: 0,
     primaryExplicitClaims: 0,
     primaryCombinedClaims: 0,
@@ -45,6 +52,10 @@ export function breakdownClaims(charClaims: Claim[]): ClaimMetricBreakdown {
     }
 
     breakdown.reviewedClaims++;
+
+    if (isTrustedClaim(claim)) {
+      breakdown.trustedClaims++;
+    }
 
     if (isEditorialClaim(claim)) {
       breakdown.editorialClaims++;
@@ -81,8 +92,8 @@ export function breakdownClaims(charClaims: Claim[]): ClaimMetricBreakdown {
 
 export function canonConfidenceFromClaims(charClaims: Claim[]): number {
   if (charClaims.length === 0) return 0;
-  const { verifiedCanonClaims } = breakdownClaims(charClaims);
-  return Math.round((verifiedCanonClaims / charClaims.length) * 100);
+  const { trustedClaims } = breakdownClaims(charClaims);
+  return Math.round((trustedClaims / charClaims.length) * 100);
 }
 
 export function aggregateClaimAuthority(

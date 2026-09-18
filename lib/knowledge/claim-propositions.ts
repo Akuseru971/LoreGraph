@@ -15,6 +15,16 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
     /\bdefenders against the void\b/i,
     /\bwar against the void\b/i,
     /\bvoid incursion\b/i,
+    /\bfought the void\b/i,
+    /\bicathia'?s breach\b/i,
+  ],
+  "claim:aatrox-participated-darkin-war": [
+    /\bdarkin war\b/i,
+    /\bdefeated darkin\b/i,
+    /\bsealed after the war\b/i,
+    /\bcorrupted ascended\b/i,
+    /\bwarred among themselves\b/i,
+    /\bfought among the corrupted ascended\b/i,
   ],
   "claim:aatrox-became-darkin": [
     /\bbecame darkin\b/i,
@@ -45,13 +55,6 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
     /\blifts the blade\b/i,
     /\bpicks up\b/i,
     /\bwielder\b/i,
-  ],
-  "claim:aatrox-participated-darkin-war": [
-    /\bdarkin war\b/i,
-    /\bwarred among themselves\b/i,
-    /\bcorrupted ascended\b/i,
-    /\bdefeated darkin\b/i,
-    /\bfought among the corrupted ascended\b/i,
   ],
   "claim:aatrox-aspect-war-destroyed": [
     /\bdestroyed\b.*\baspect of war\b/i,
@@ -93,6 +96,13 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
     /\bnasus\b.*\bascended\b/i,
     /\balready ascended\b/i,
     /\bgod-warriors\b/i,
+    /\bAscension\b/i,
+    /\bgod-warrior\b/i,
+  ],
+  "claim:nasus-opposed-xerath": [
+    /\bimprison xerath\b/i,
+    /\bopposed xerath\b/i,
+    /\bhelped imprison\b/i,
   ],
   "claim:nasus-scholar-archivist": [
     /\bscholar\b/i,
@@ -199,14 +209,41 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
   ],
   "claim:azir-returned-ascended": [
     /\breturns ascended\b/i,
+    /\breturned ascended\b/i,
     /\bhe returns ascended\b/i,
     /\bshurima rises\b/i,
+    /\bshurima rose again\b/i,
     /\brisen city\b/i,
+  ],
+  "claim:xerath-freed-shurima-risen": [
+    /\bfreed from the tomb\b/i,
+    /\bfreed when shurima rises\b/i,
+    /\bshurima rises again\b/i,
+    /\brise of shurima\b/i,
+    /\bwalks runeterra again\b/i,
+    /\bbreaks his ancient prison\b/i,
   ],
   "claim:renekton-was-ascended": [
     /\bascended\b/i,
+    /\bAscension\b/i,
     /\bgod-warriors\b/i,
+    /\bgod-warrior\b/i,
     /\braised alongside nasus\b/i,
+  ],
+  "claim:renekton-brother-nasus": [
+    /\bbrothers\b/i,
+    /\bbrother\b/i,
+    /\bnasus\b/i,
+  ],
+  "claim:renekton-returned-shurima-risen": [
+    /\bfreed when shurima rises\b/i,
+    /\bfreed when shurima rose\b/i,
+    /\bwas freed when shurima rose again\b/i,
+    /\bshurima rises again\b/i,
+    /\bshurima risen\b/i,
+    /\bshurima rises\b/i,
+    /\bbutcher returns\b/i,
+    /\bstill consumed by rage\b/i,
   ],
   "claim:renekton-imprisoned-with-xerath": [
     /\bimprison xerath\b/i,
@@ -214,12 +251,6 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
     /\bentombed\b/i,
     /\bfollows nasus\b/i,
     /\bbeneath the ruins\b/i,
-  ],
-  "claim:renekton-returned-shurima-risen": [
-    /\bfreed when shurima rises\b/i,
-    /\bshurima rises\b/i,
-    /\bbutcher returns\b/i,
-    /\bstill consumed by rage\b/i,
   ],
   "claim:xerath-served-azir": [
     /\btrusted confidant\b/i,
@@ -229,15 +260,11 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
   ],
   "claim:xerath-betrayed-azir": [
     /\bsabotages\b.*\bascension\b/i,
+    /\bsabotaged\b/i,
     /\bbetrayal\b/i,
+    /\bcaused shurima\b/i,
     /\btriggers the collapse\b/i,
     /\bcollapse of shurima\b/i,
-  ],
-  "claim:xerath-freed-shurima-risen": [
-    /\bfreed from the tomb\b/i,
-    /\brise of shurima\b/i,
-    /\bwalks runeterra again\b/i,
-    /\bbreaks his ancient prison\b/i,
   ],
   "claim:kaisa-survived-void-breach": [
     /\bvoid incursion\b/i,
@@ -273,6 +300,8 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
     /\bvoices in the desert\b/i,
     /\bwhispers to ancient icathia\b/i,
     /\bzealous seer\b/i,
+    /\bvoid is runeterra'?s salvation\b/i,
+    /\bbelieves the void\b/i,
   ],
   "claim:malzahar-spreads-void-doctrine": [
     /\bspreads void doctrine\b/i,
@@ -294,9 +323,16 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
   ],
   "claim:aurelion-sol-star-forger": [
     /\bshapes stars\b/i,
+    /\bshaped stars\b/i,
     /\bforging stars\b/i,
     /\bstar forger\b/i,
     /\bacross the void\b/i,
+    /\bacross the cosmos\b/i,
+  ],
+  "claim:kaisa-daughter-of-kassadin": [
+    /\bdaughter\b/i,
+    /\bkassadin\b/i,
+    /\bparent\b/i,
   ],
   "claim:aurelion-sol-bound-by-targon": [
     /\baspects of targon\b/i,

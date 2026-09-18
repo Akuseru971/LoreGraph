@@ -1,6 +1,7 @@
 import { claimById } from "@/data/knowledge/claims";
 import { sourceById } from "@/data/sources";
 import type { Claim, CanonStatus, Continuity, ReviewStatus } from "@/types";
+import { isClaimEvidenceTrusted } from "./claim-evidence";
 
 /** How directly a claim's sources establish the proposition. */
 export type ClaimSourceAuthority =
@@ -52,16 +53,7 @@ function combineAuthorities(authorities: ClaimSourceAuthority[]): ClaimSourceAut
 }
 
 export function isClaimTrusted(claim: Claim): boolean {
-  if (!claim.reviewed || claim.needsReview) return false;
-  if (
-    claim.canonStatus === "UNKNOWN" ||
-    claim.canonStatus === "THEMATIC_ONLY" ||
-    claim.canonStatus === "LEGACY_LORE"
-  ) {
-    return false;
-  }
-  if (!claim.sourceIds.length) return false;
-  return claim.sourceIds.every((sid) => sourceById.has(sid));
+  return isClaimEvidenceTrusted(claim);
 }
 
 export function claimSourceAuthority(claim: Claim): ClaimSourceAuthority {
@@ -81,7 +73,7 @@ export function evaluateClaimTrust(claimId: string): ClaimTrustResult {
     return { trusted: false, authority: "DERIVED", reviewStatus: "PENDING" };
   }
   const authority = claimSourceAuthority(claim);
-  if (!isClaimTrusted(claim)) {
+  if (!isClaimEvidenceTrusted(claim)) {
     return { trusted: false, authority, reviewStatus: "PENDING" };
   }
   if (authority === "OFFICIAL_REFERENCE" || authority === "DERIVED") {

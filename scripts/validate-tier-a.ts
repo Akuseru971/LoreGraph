@@ -3,7 +3,11 @@
  */
 import { characters } from "../data/characters";
 import { computeQuality } from "../lib/knowledge/quality-matrix";
-import { TIER_A_THRESHOLDS } from "../lib/knowledge/tier-a-gate";
+import {
+  coreClaimEvidenceFailures,
+  TIER_A_THRESHOLDS,
+  untrustedCoreTimelineBeats,
+} from "../lib/knowledge/tier-a-gate";
 import { isTrustedTimelineBeat } from "../lib/timeline/trust";
 
 const errors: string[] = [];
@@ -29,12 +33,17 @@ for (const character of characters) {
     );
   }
 
-  const provisionalCore = character.timeline.filter(
-    (b) => b.sourceIds?.length && !isTrustedTimelineBeat(b),
-  );
+  const provisionalCore = untrustedCoreTimelineBeats(character);
   if (provisionalCore.length) {
     errors.push(
-      `${character.slug}: Tier A with provisional core beats: ${provisionalCore.map((b) => b.title).join(", ")}`,
+      `${character.slug}: Tier A with provisional CORE beats: ${provisionalCore.map((b) => b.title).join(", ")}`,
+    );
+  }
+
+  const coreEvidence = coreClaimEvidenceFailures(character);
+  if (coreEvidence.length) {
+    errors.push(
+      `${character.slug}: Tier A with core claim evidence failures: ${coreEvidence.join("; ")}`,
     );
   }
 

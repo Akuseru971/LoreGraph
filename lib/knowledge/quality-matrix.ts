@@ -7,6 +7,8 @@ import type {
   CompletenessTier,
   ReviewStatus,
 } from "@/types";
+import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
+import { isCoreTimelineBeat } from "@/lib/timeline/importance";
 import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
 import { canonConfidenceFromClaims } from "./claim-metrics";
 import {
@@ -85,14 +87,18 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
 
   const charClaims = claims.filter((c) => c.subjectId === character.id);
   const reviewedClaims = charClaims.filter((c) => c.reviewed && !c.needsReview);
-  const sourcedClaims = reviewedClaims.filter((c) => c.sourceIds.length > 0);
+  const trustedSourcedClaims = reviewedClaims.filter(
+    (c) => c.sourceIds.length > 0 && isTrustedClaim(c),
+  );
 
   const sourceCoverage =
     charClaims.length === 0
       ? character.sourceIds.length > 0
         ? 40
         : 0
-      : Math.round((sourcedClaims.length / charClaims.length) * 100);
+      : reviewedClaims.length === 0
+        ? 0
+        : Math.round((trustedSourcedClaims.length / reviewedClaims.length) * 100);
 
   const canonConfidence = canonConfidenceFromClaims(charClaims);
 
@@ -153,7 +159,7 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
   if (unresolvedCore.length > 0) criticalMissing.push("unresolved_core_relationship");
 
   const provisionalCore = character.timeline.filter(
-    (b) => b.sourceIds?.length && !isTrustedTimelineBeat(b),
+    (b) => isCoreTimelineBeat(b) && !isTrustedTimelineBeat(b),
   );
   if (provisionalCore.length > 0) criticalMissing.push("provisional_core_timeline");
 

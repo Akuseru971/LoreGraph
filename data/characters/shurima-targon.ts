@@ -50,6 +50,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "ascension-ritual",
         sourceIds: ["source:bio-aatrox"],
         claimIds: ["claim:aatrox-was-ascended"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -60,6 +61,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "void-incursion",
         sourceIds: ["source:bio-aatrox"],
         claimIds: ["claim:aatrox-participated-void-war"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -71,6 +73,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["varus"],
         sourceIds: ["source:bio-aatrox"],
         claimIds: ["claim:aatrox-became-darkin"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -82,6 +85,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["varus"],
         sourceIds: ["source:bio-aatrox"],
         claimIds: ["claim:aatrox-participated-darkin-war"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -92,6 +96,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "darkin-war",
         sourceIds: ["source:bio-aatrox"],
         claimIds: ["claim:aatrox-sealed-in-blade"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -102,6 +107,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "aatrox-return",
         sourceIds: ["source:bio-aatrox"],
         claimIds: ["claim:aatrox-possesses-host"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -117,6 +123,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "claim:aatrox-aspect-war-destroyed",
           "claim:pantheon-aspect-destroyed",
         ],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -162,6 +169,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "A Rakkor boy climbs Mount Targon, survives the summit, and is chosen by the Aspect of War.",
         sourceIds: ["source:bio-pantheon"],
         claimIds: ["claim:pantheon-hosted-aspect-of-war"],
+        importance: "SUPPORTING",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -171,6 +179,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "Atreus becomes the mortal vessel for the Aspect of War.",
         sourceIds: ["source:bio-pantheon"],
         claimIds: ["claim:pantheon-hosted-aspect-of-war"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -186,6 +195,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "claim:aatrox-fought-pantheon",
           "claim:aatrox-aspect-war-destroyed",
         ],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -196,6 +206,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "pantheon-reborn",
         sourceIds: ["source:bio-pantheon"],
         claimIds: ["claim:pantheon-aspect-destroyed"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -237,6 +248,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "celestial-age",
         sourceIds: ["source:bio-aurelion-sol"],
         claimIds: ["claim:aurelion-sol-star-forger"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -247,6 +259,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "star-forger-bound",
         sourceIds: ["source:bio-aurelion-sol"],
         claimIds: ["claim:aurelion-sol-bound-by-targon"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -256,6 +269,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "Aurelion Sol remains bound by the Targon crown in the modern era.",
         sourceIds: ["source:bio-aurelion-sol"],
         claimIds: ["claim:aurelion-sol-still-bound"],
+        importance: "SUPPORTING",
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -294,6 +308,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "Raised to rule the largest empire Runeterra has produced, and quietly intent on reforming it.",
         sourceIds: ["source:bio-azir", "source:rise"],
         claimIds: ["claim:azir-emperor-shurima"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -305,6 +320,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["xerath"],
         sourceIds: ["source:bio-azir", "source:bio-xerath"],
         claimIds: ["claim:azir-betrayed-by-xerath", "claim:azir-participated-fall"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -316,6 +332,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["nasus"],
         sourceIds: ["source:bio-azir", "source:rise"],
         claimIds: ["claim:azir-returned-ascended"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -336,7 +353,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
     importance: 76,
     popularity: 52,
     verified: true,
-    events: ["ascension-ritual", "void-incursion", "fall-of-shurima", "shurima-risen"],
+    events: ["ascension-ritual", "fall-of-shurima", "shurima-risen"],
     tags: ["shurima", "ascended", "scholar", "archive", "grief"],
     short:
       "Shurima's greatest scholar, Ascended into a war he did not want and left to curate the ruins of everything he tried to protect.",
@@ -353,16 +370,18 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "Shurima's finest strategist and archivist, valued for his mind long before his strength.",
         sourceIds: ["source:bio-nasus"],
         claimIds: ["claim:nasus-scholar-archivist"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
         era: "Ancient Shurima",
-        title: "Ascended against the Void",
+        title: "Ascended scholar",
         description:
-          "Nasus was already Ascended when Shurima deployed god-warriors against the Void.",
-        event: "void-incursion",
+          "Nasus was already Ascended as Shurima's scholar-strategist before the empire's fall.",
+        event: "ascension-ritual",
         sourceIds: ["source:bio-nasus"],
-        claimIds: ["claim:nasus-was-ascended", "claim:nasus-participated-void-war"],
+        claimIds: ["claim:nasus-was-ascended", "claim:nasus-scholar-archivist"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -374,6 +393,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["renekton", "xerath"],
         sourceIds: ["source:bio-nasus"],
         claimIds: ["claim:nasus-participated-fall", "claim:nasus-brother-renekton"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -385,6 +405,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["azir"],
         sourceIds: ["source:bio-nasus"],
         claimIds: ["claim:nasus-guards-shuriman-knowledge"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -424,8 +445,9 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         title: "Ascended defender",
         description:
           "Ascended through Shurima's Sun Disc as one of the empire's god-warriors.",
-        sourceIds: ["source:twilight-of-the-gods", "source:wiki-varus"],
+        sourceIds: ["source:twilight-of-the-gods", "source:bio-varus"],
         claimIds: ["claim:varus-was-ascended"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -436,6 +458,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["aatrox"],
         sourceIds: ["source:bio-varus", "source:twilight-of-the-gods"],
         claimIds: ["claim:varus-became-darkin"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -446,6 +469,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["aatrox"],
         sourceIds: ["source:bio-varus"],
         claimIds: ["claim:varus-sealed-in-bow"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -455,6 +479,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "Valmar and Kai lift the bow to save each other. Varus takes the offer, and both of them with it.",
         sourceIds: ["source:bio-varus"],
         claimIds: ["claim:varus-possesses-valmar-kai"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -539,6 +564,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         event: "void-breach-icathia",
         sourceIds: ["source:bio-kaisa"],
         claimIds: ["claim:kaisa-survived-void-breach"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -548,6 +574,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "A Void symbiote fuses to Kai'Sa, keeping her alive in the dark.",
         sourceIds: ["source:bio-kaisa"],
         claimIds: ["claim:kaisa-void-symbiote"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -557,6 +584,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "Kai'Sa hunts Void creatures on the surface.",
         sourceIds: ["source:bio-kaisa"],
         claimIds: ["claim:kaisa-hunts-void"],
+        importance: "SUPPORTING",
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -594,6 +622,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["diana"],
         sourceIds: ["source:bio-leona"],
         claimIds: ["claim:leona-childhood-friend-diana"],
+        importance: "SUPPORTING",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -603,6 +632,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "She climbs, survives, and returns bearing the Aspect of the Sun — and an authority the priesthood cannot overrule.",
         sourceIds: ["source:bio-leona"],
         claimIds: ["claim:leona-hosted-aspect-of-sun"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -613,6 +643,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["diana"],
         sourceIds: ["source:bio-leona", "source:bio-diana"],
         claimIds: ["claim:leona-childhood-friend-diana"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -651,6 +682,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["leona"],
         sourceIds: ["source:bio-diana"],
         claimIds: ["claim:leona-childhood-friend-diana"],
+        importance: "SUPPORTING",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -660,6 +692,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
           "She climbs Targon and returns carrying the Aspect the Solari insist does not exist.",
         sourceIds: ["source:bio-diana"],
         claimIds: ["claim:diana-hosted-aspect-of-moon"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -670,6 +703,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         with: ["leona"],
         sourceIds: ["source:bio-diana", "source:bio-leona"],
         claimIds: ["claim:leona-childhood-friend-diana"],
+        importance: "CORE",
         canonStatus: "CURRENT_CANON",
       },
     ],

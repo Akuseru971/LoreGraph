@@ -5,7 +5,26 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   "claim:yunara-aion-erna": {
     objectId: "artifact:aion-erna",
     predicate: "WIELDS",
-    evidenceNote: "Riot bio establishes Yunara wields the legendary Kinkou relic Aion Er'na.",
+    reviewed: false,
+    needsReview: true,
+    evidenceNote: "Pending proposition patterns — Riot bio establishes Yunara wields Aion Er'na.",
+  },
+  "claim:yunara-kinkou-affiliation": {
+    reviewed: false,
+    needsReview: true,
+    certainty: "UNCERTAIN",
+    evidenceNote:
+      "Pending proposition patterns — Kinkou affiliation requires explicit bio support beyond wiki reference.",
+  },
+
+  /* Phase 1 — Aatrox core claims */
+  "claim:aatrox-became-darkin": {
+    evidenceNote:
+      "Aatrox became Darkin as corruption spread among surviving Ascended per source:bio-aatrox.",
+  },
+  "claim:aatrox-fought-pantheon": {
+    evidenceNote:
+      "Aatrox destroyed the celestial Aspect of War within Atreus during their duel per bios.",
   },
 
   /* Phase 1 — Aatrox */
@@ -25,28 +44,28 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Structural Darkin category link — no documented personal alliance.",
   },
   "claim:pack:00257": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-aatrox"],
-    evidenceNote: "Aatrox bio establishes he fought as a Shuriman defender against the Void.",
+    evidenceNote: "Duplicate of claim:aatrox-participated-void-war — use extension claim for trust.",
   },
   "claim:pack:00267": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-aatrox", "source:twilight-of-the-gods"],
-    evidenceNote: "Aatrox bio and Twilight of the Gods establish Darkin War participation.",
+    evidenceNote: "Duplicate of claim:aatrox-participated-darkin-war — use extension claim for trust.",
   },
   "claim:pack:00315": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-aatrox", "source:bio-pantheon"],
-    evidenceNote: "Bios establish Aatrox destroyed the Aspect of War within Atreus.",
+    evidenceNote: "Duplicate of claim:aatrox-fought-pantheon — use core relationship claim for trust.",
   },
 
   /* Phase 1 — Pantheon */
@@ -63,12 +82,12 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Structural Targonian celestial link — not a direct personal relationship.",
   },
   "claim:pack:00316": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-pantheon", "source:bio-aatrox"],
-    evidenceNote: "Pantheon bio establishes Atreus fought Aatrox; the Aspect was destroyed.",
+    evidenceNote: "Duplicate of claim:pantheon-participated-aatrox-duel — use extension claim for trust.",
   },
 
   /* Phase 1 — Varus */
@@ -79,12 +98,12 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Ancient Shurima origin; modern activity in Ionia per source:bio-varus.",
   },
   "claim:pack:00268": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-varus"],
-    evidenceNote: "Varus bio establishes imprisonment in his bow after the Darkin War.",
+    evidenceNote: "Duplicate of claim:varus-sealed-in-bow — imprisonment is not participation.",
   },
 
   /* Phase 1 — Nasus */
@@ -107,30 +126,32 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Nasus bio establishes he helped imprison Xerath after the fall.",
   },
   "claim:pack:00258": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     predicate: "PARTICIPATED_IN",
-    certainty: "STRONG",
+    certainty: "UNCERTAIN",
+    canonStatus: "AMBIGUOUS",
     sourceIds: ["source:bio-nasus"],
-    evidenceNote: "Nasus bio establishes he was Ascended when Shurima fought the Void.",
+    evidenceNote:
+      "No exact primary source for Nasus Void incursion participation — Ascended status during the era is insufficient.",
   },
   "claim:pack:00264": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     objectId: "event:fall-of-shurima",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-nasus"],
-    evidenceNote: "Nasus bio establishes he sealed Xerath during the fall of Shurima.",
+    evidenceNote: "Use claim:nasus-participated-fall for trusted fall participation.",
   },
   "claim:pack:00289": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     objectId: "event:shurima-risen",
-    predicate: "PARTICIPATED_IN",
-    certainty: "DOCUMENTED",
+    predicate: "ACTIVE_DURING",
+    certainty: "STRONG",
     sourceIds: ["source:bio-nasus"],
-    evidenceNote: "Nasus present when Shurima rose again per source:bio-nasus.",
+    evidenceNote: "Nasus present when Shurima rose — ACTIVE_DURING unless explicit participation is sourced.",
   },
   "claim:pack:00325": {
     reviewed: true,
@@ -164,22 +185,22 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
       "Renekton was Ascended during ancient Shurima; Void War participation not explicitly documented in primary sources.",
   },
   "claim:pack:00265": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     objectId: "event:fall-of-shurima",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-renekton"],
-    evidenceNote: "Renekton entered the tomb during the fall per source:bio-renekton.",
+    evidenceNote: "Use claim:renekton-imprisoned-with-xerath for trusted fall-of-shurima link.",
   },
   "claim:pack:00290": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     objectId: "event:shurima-risen",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-renekton"],
-    evidenceNote: "Renekton freed when Shurima rose again per source:bio-renekton.",
+    evidenceNote: "Use claim:renekton-returned-shurima-risen for trusted shurima-risen participation.",
   },
   "claim:pack:00326": {
     reviewed: true,
@@ -210,22 +231,22 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Sivir's bloodline enables Azir's return per source:bio-azir.",
   },
   "claim:pack:00262": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     objectId: "event:fall-of-shurima",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-azir", "source:rise"],
-    evidenceNote: "Azir was killed during his Ascension when Xerath betrayed him.",
+    evidenceNote: "Use claim:azir-participated-fall for trusted fall participation.",
   },
   "claim:pack:00287": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     objectId: "event:shurima-risen",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-azir", "source:rise"],
-    evidenceNote: "Azir returned Ascended when Shurima rose again.",
+    evidenceNote: "Use claim:azir-returned-ascended for trusted shurima-risen participation.",
   },
   "claim:pack:00324": {
     reviewed: true,
@@ -250,22 +271,22 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Xerath bio establishes his betrayal of Azir at Ascension.",
   },
   "claim:pack:00263": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     objectId: "event:fall-of-shurima",
-    predicate: "PARTICIPATED_IN",
+    predicate: "INSTIGATOR",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-xerath", "source:bio-azir"],
-    evidenceNote: "Xerath caused the fall during Azir's Ascension.",
+    evidenceNote: "Use claim:xerath-betrayed-azir — Xerath instigated the fall, not a generic participant.",
   },
   "claim:pack:00291": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     objectId: "event:shurima-risen",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
     sourceIds: ["source:bio-xerath"],
-    evidenceNote: "Xerath freed when Shurima rose again per source:bio-xerath.",
+    evidenceNote: "Use claim:xerath-freed-shurima-risen for trusted shurima-risen participation.",
   },
   "claim:pack:00327": {
     reviewed: true,
@@ -278,10 +299,10 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
 
   /* Phase 1 — Kai'Sa */
   "claim:pack:00208": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     sourceIds: ["source:bio-kaisa", "source:bio-kassadin"],
-    evidenceNote: "Kai'Sa and Kassadin bios establish their parent-child relationship.",
+    evidenceNote: "Use claim:kaisa-daughter-of-kassadin for trusted parent-child link.",
   },
 
   /* Phase 1 — Kassadin */
@@ -316,10 +337,10 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   },
   "claim:pack:00209": {
     subjectId: "char:belveth",
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     sourceIds: ["source:bio-belveth", "source:bio-kaisa"],
-    evidenceNote: "Bel'Veth bio establishes direct confrontation with Kai'Sa.",
+    evidenceNote: "Use claim:belveth-confronted-kaisa for trusted confrontation link.",
   },
 
   /* Phase 1 — Aurelion Sol */
@@ -373,10 +394,10 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Region confirmed by source:bio-zoe.",
   },
   "claim:pack:00255": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     sourceIds: ["source:bio-zoe", "source:bio-aurelion-sol"],
-    evidenceNote: "Zoe bio establishes interaction with Aurelion Sol as a celestial figure.",
+    evidenceNote: "Use claim:zoe-knows-aurelion-sol for trusted celestial interaction.",
   },
 };
 

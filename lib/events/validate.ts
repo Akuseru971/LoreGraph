@@ -1,4 +1,5 @@
 import { events } from "@/data/events";
+import { isTrustedParticipantLink } from "@/lib/events/participant-evidence";
 import { DAILY_INELIGIBLE_EVENT_ROLES } from "./roles";
 import { isEraNode } from "./links";
 
@@ -40,8 +41,10 @@ export function validateEvents(): EventValidationResult {
         errors.push(`ERA ${event.slug} has PARTICIPANT edge for ${link.characterId}`);
       }
 
-      if (link.role === "PARTICIPANT" && !link.sourceIds?.length && !link.claimIds?.length) {
-        warnings.push(`PARTICIPANT without evidence: ${event.slug}/${link.characterId}`);
+      if (link.role === "PARTICIPANT" && !isTrustedParticipantLink(link, event.id)) {
+        errors.push(
+          `PARTICIPANT without trusted PARTICIPATED_IN claim: ${event.slug}/${link.characterId}`,
+        );
       }
 
       if (link.role === "ASSOCIATED_WITH") {
