@@ -4,8 +4,14 @@ import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import { useProgress } from "@/components/providers";
 import { CinematicPlayer } from "@/components/cinematic/cinematic-player";
+import { CinematicJourneyLazy } from "@/components/cinematic-v3/cinematic-journey-lazy";
 import { RelationshipDrawer, type RelationshipSelection } from "@/components/graph/relationship-drawer";
 import { StoryPathPlayer } from "@/components/story/story-path-player";
+import {
+  buildChampionJourneyV3,
+  isCinematicReady,
+  isJourneyCinematicReady,
+} from "@/lib/cinematic-v3";
 import { buildChampionJourney } from "@/lib/journey";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { track } from "@/lib/analytics";
@@ -45,12 +51,29 @@ export function ChampionScreen({
   const { recordCharacterView, recordTimelineViewed } = useProgress();
   const [tab, setTab] = React.useState<TabId>("overview");
   const [story, setStory] = React.useState<StoryPath | null>(null);
+  const cinematicReady = React.useMemo(() => isCinematicReady(character), [character]);
+  const championJourneyV3 = React.useMemo(
+    () => (cinematicReady ? buildChampionJourneyV3(character) : null),
+    [character, cinematicReady],
+  );
   const championJourney = React.useMemo(
-    () => (character.timeline.length > 0 ? buildChampionJourney(character) : null),
-    [character],
+    () =>
+      character.timeline.length > 0 && !cinematicReady
+        ? buildChampionJourney(character)
+        : null,
+    [character, cinematicReady],
+  );
+  const [cinematicV3Open, setCinematicV3Open] = React.useState(
+    () =>
+      searchParams.get("cinematic") === "1" &&
+      championJourneyV3 !== null &&
+      isJourneyCinematicReady(championJourneyV3),
   );
   const [cinematicOpen, setCinematicOpen] = React.useState(
-    () => searchParams.get("cinematic") === "1" && championJourney !== null,
+    () =>
+      searchParams.get("cinematic") === "1" &&
+      championJourney !== null &&
+      !cinematicReady,
   );
   const [overviewSelection, setOverviewSelection] =
     React.useState<RelationshipSelection | null>(null);
@@ -93,8 +116,10 @@ export function ChampionScreen({
         onExploreConnections={() => goToTab("connections")}
         onStartStory={() => setStory(stories[0] ?? null)}
         onPlayStory={() => setCinematicOpen(true)}
+        onPlayCinematic={() => setCinematicV3Open(true)}
         hasStory={stories.length > 0}
         hasTimeline={character.timeline.length > 0}
+        cinematicReady={cinematicReady}
       />
 
       <div ref={tabsRef} className="scroll-mt-16">
@@ -159,6 +184,13 @@ export function ChampionScreen({
       />
 
       <StoryPathPlayer path={story} onClose={() => setStory(null)} />
+
+      <CinematicJourneyLazy
+        journey={championJourneyV3}
+        open={cinematicV3Open}
+        onClose={() => setCinematicV3Open(false)}
+        onExploreNode={() => goToTab("connections")}
+      />
 
       <CinematicPlayer
         journey={championJourney}

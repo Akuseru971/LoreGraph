@@ -28,8 +28,10 @@ export function CharacterHero({
   onExploreConnections,
   onStartStory,
   onPlayStory,
+  onPlayCinematic,
   hasStory,
   hasTimeline,
+  cinematicReady,
 }: {
   character: Character;
   connections: number;
@@ -37,8 +39,10 @@ export function CharacterHero({
   onExploreConnections: () => void;
   onStartStory: () => void;
   onPlayStory: () => void;
+  onPlayCinematic?: () => void;
   hasStory: boolean;
   hasTimeline: boolean;
+  cinematicReady?: boolean;
 }) {
   const { progress, toggleCollected } = useProgress();
   const knowledge = characterKnowledge(character.id, progress);
@@ -132,7 +136,21 @@ export function CharacterHero({
                   Connect to another champion
                 </Link>
               </Button>
-              {hasTimeline ? (
+              {cinematicReady && onPlayCinematic ? (
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  onClick={onPlayCinematic}
+                  onMouseEnter={() => {
+                    void import("@/components/cinematic-v3/cinematic-journey-lazy");
+                  }}
+                  onFocus={() => {
+                    void import("@/components/cinematic-v3/cinematic-journey-lazy");
+                  }}
+                >
+                  ✦ Follow their story
+                </Button>
+              ) : hasTimeline ? (
                 <Button variant="secondary" size="lg" onClick={onPlayStory}>
                   <Play aria-hidden />
                   Watch their story

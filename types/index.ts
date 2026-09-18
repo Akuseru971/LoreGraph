@@ -341,6 +341,133 @@ export interface Journey {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Cinematic Journey V3 — spatial constellation narrative engine              */
+/* -------------------------------------------------------------------------- */
+
+export type CinematicJourneyKind =
+  | "CHARACTER"
+  | "CONNECTION"
+  | "STORY_PATH"
+  | "EVENT";
+
+export type CinematicSceneType =
+  | "ORIGIN"
+  | "EVENT"
+  | "RELATIONSHIP"
+  | "TRANSFORMATION"
+  | "CONFLICT"
+  | "LOCATION"
+  | "ARTIFACT"
+  | "FACTION"
+  | "CONSEQUENCE"
+  | "ENDING";
+
+export type CinematicCameraPreset =
+  | "SLOW_APPROACH"
+  | "FAST_APPROACH"
+  | "ORBIT"
+  | "DESCEND"
+  | "ASCEND"
+  | "CURVE_LEFT"
+  | "CURVE_RIGHT"
+  | "PASS_THROUGH"
+  | "PULL_BACK"
+  | "HOLD";
+
+export type AtmospherePreset =
+  | "CELESTIAL"
+  | "SHURIMA"
+  | "VOID"
+  | "DARKIN"
+  | "IONIA"
+  | "NOXUS"
+  | "DEMACIA"
+  | "FRELJORD"
+  | "SHADOW_ISLES"
+  | "BILGEWATER"
+  | "PILTOVER"
+  | "ZAUN"
+  | "IXTAL"
+  | "BANDLE"
+  | "NEUTRAL";
+
+export type CinematicSceneImportance = "CORE" | "SUPPORTING" | "CONTEXTUAL";
+
+export type CinematicEvidenceClass =
+  | "FACT"
+  | "SUPPORTED_SYNTHESIS"
+  | "EDITORIAL_TRANSITION";
+
+export type RelationshipChoreography =
+  | "PARALLEL"
+  | "ORBIT"
+  | "CONVERGE"
+  | "DIVERGE"
+  | "FADE"
+  | "TRANSFORM"
+  | "LEAD";
+
+export interface CinematicAsset {
+  url?: string;
+  assetKey?: string;
+  focalPoint?: { x: number; y: number };
+  variant?: "splash" | "cinematic" | "hero" | "event";
+}
+
+export interface CinematicCoordinates {
+  x: number;
+  y: number;
+  z: number;
+}
+
+export interface CinematicScene {
+  id: string;
+  type: CinematicSceneType;
+  title: string;
+  eyebrow?: string;
+  narrative: string;
+  entityId?: string;
+  era?: string;
+  primaryCharacterId?: string;
+  secondaryCharacterIds?: string[];
+  eventId?: string;
+  locationId?: string;
+  artifactId?: string;
+  factionId?: string;
+  image?: CinematicAsset;
+  atmosphere?: AtmospherePreset;
+  cameraPreset?: CinematicCameraPreset;
+  coordinates: CinematicCoordinates;
+  graphTarget?: CinematicCoordinates;
+  importance: CinematicSceneImportance;
+  claimIds: string[];
+  sourceIds: string[];
+  evidenceClass: CinematicEvidenceClass;
+  continuity: Continuity;
+  relationshipChoreography?: RelationshipChoreography;
+  worldScale?: number;
+  holdDurationMs?: number;
+  transitionDurationMs?: number;
+}
+
+export interface CinematicJourney {
+  id: string;
+  kind: CinematicJourneyKind;
+  title: string;
+  subtitle?: string;
+  primaryCharacterId?: string;
+  secondaryCharacterId?: string;
+  scenes: CinematicScene[];
+  sourceClaimIds: string[];
+  continuity: Continuity;
+  cinematicReady: boolean;
+  generatedAt: string;
+  graphNodeIds: string[];
+}
+
+export type CinematicQualityLevel = "high" | "medium" | "low";
+
+/* -------------------------------------------------------------------------- */
 /* Lore content                                                               */
 /* -------------------------------------------------------------------------- */
 

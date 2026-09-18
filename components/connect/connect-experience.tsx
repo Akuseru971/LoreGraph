@@ -13,6 +13,11 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import { CinematicPlayer } from "@/components/cinematic/cinematic-player";
+import { CinematicJourneyLazy } from "@/components/cinematic-v3/cinematic-journey-lazy";
+import {
+  buildConnectionJourneyV3,
+  isJourneyCinematicReady,
+} from "@/lib/cinematic-v3";
 import { characterBySlug, characters, regionBySlug } from "@/data";
 import { useProgress } from "@/components/providers";
 import { Button } from "@/components/ui/button";
@@ -66,6 +71,7 @@ export function ConnectExperience({
     useProgress();
   const reduceMotion = useReducedMotion();
   const [cinematicOpen, setCinematicOpen] = React.useState(false);
+  const [cinematicV3Open, setCinematicV3Open] = React.useState(false);
 
   const [a, setA] = React.useState<Character | null>(
     () => (initialA ? characterBySlug.get(initialA) : null) ?? null,
@@ -200,6 +206,15 @@ export function ConnectExperience({
     if (!a || !b || !active) return null;
     return buildConnectionJourney(a, b, active);
   }, [a, b, active]);
+
+  const connectionJourneyV3 = React.useMemo(() => {
+    if (!a || !b || !active) return null;
+    return buildConnectionJourneyV3(a, b, active);
+  }, [a, b, active]);
+
+  const connectionV3Ready = Boolean(
+    connectionJourneyV3 && isJourneyCinematicReady(connectionJourneyV3),
+  );
 
   const cinematicReady =
     Boolean(connectionJourney) &&
@@ -417,14 +432,27 @@ export function ConnectExperience({
                   </p>
                 </div>
                 <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto sm:flex-row">
-                  <Button
-                    variant="primary"
-                    onClick={() => setCinematicOpen(true)}
-                    className="w-full sm:w-auto"
-                  >
-                    <Play aria-hidden />
-                    Play connection
-                  </Button>
+                  {connectionV3Ready ? (
+                    <Button
+                      variant="primary"
+                      onClick={() => setCinematicV3Open(true)}
+                      className="w-full sm:w-auto"
+                      onMouseEnter={() => {
+                        void import("@/components/cinematic-v3/cinematic-journey-lazy");
+                      }}
+                    >
+                      ✦ Experience connection
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      onClick={() => setCinematicOpen(true)}
+                      className="w-full sm:w-auto"
+                    >
+                      <Play aria-hidden />
+                      Play connection
+                    </Button>
+                  )}
                   <Button variant="secondary" onClick={tryAnother} className="w-full sm:w-auto">
                     <Shuffle aria-hidden />
                     Try another
@@ -509,6 +537,12 @@ export function ConnectExperience({
           accentTo={active.nodes[active.nodes.length - 1].metadata.accentColor}
         />
       ) : null}
+
+      <CinematicJourneyLazy
+        journey={connectionJourneyV3}
+        open={cinematicV3Open}
+        onClose={() => setCinematicV3Open(false)}
+      />
 
       <CinematicPlayer
         journey={connectionJourney}

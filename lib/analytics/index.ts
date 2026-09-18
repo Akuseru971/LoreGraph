@@ -104,6 +104,24 @@ export type AnalyticsEvent =
       targetChampion: string;
       sceneCount: number;
       completionPercent: number;
+    }
+  | { name: "journey_started"; journeyId: string; journeyKind: string; sceneCount: number }
+  | {
+      name: "journey_scene_viewed";
+      journeyId: string;
+      sceneIndex: number;
+      sceneType: string;
+    }
+  | { name: "journey_completed"; journeyId: string; sceneCount: number }
+  | { name: "journey_exited"; journeyId: string; sceneIndex: number }
+  | { name: "journey_node_explored"; journeyId: string; entityId: string }
+  | { name: "journey_replayed"; journeyId: string }
+  | { name: "journey_sound_enabled"; journeyId: string }
+  | {
+      name: "connection_journey_started";
+      journeyId: string;
+      from: string;
+      to: string;
     };
 
 export type AnalyticsSink = (event: AnalyticsEvent, context: EventContext) => void;
