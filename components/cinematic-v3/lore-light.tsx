@@ -63,6 +63,7 @@ export function LoreLight({
 }) {
   const coreRef = React.useRef<THREE.Mesh>(null);
   const innerRef = React.useRef<THREE.Mesh>(null);
+  const contrastHaloRef = React.useRef<THREE.Mesh>(null);
   const coronaRef = React.useRef<THREE.Mesh>(null);
   const hFlareRef = React.useRef<THREE.Sprite>(null);
   const vFlareRef = React.useRef<THREE.Sprite>(null);
@@ -116,6 +117,7 @@ export function LoreLight({
     const minCore = 0.038;
     coreRef.current?.scale.setScalar(minCore * pulse * scale * flicker);
     innerRef.current?.scale.setScalar(0.12 * breathe * scale);
+    contrastHaloRef.current?.scale.setScalar(0.2 * breathe * scale);
     coronaRef.current?.scale.setScalar((0.26 + Math.sin(t.current * 2.7) * 0.03) * breathe * scale);
 
     if (hFlareRef.current) {
@@ -151,6 +153,10 @@ export function LoreLight({
       <mesh ref={innerRef}>
         <sphereGeometry args={[1, 12, 12]} />
         <meshBasicMaterial color={warmColor} transparent opacity={0.45} blending={THREE.AdditiveBlending} />
+      </mesh>
+      <mesh ref={contrastHaloRef}>
+        <sphereGeometry args={[1, 10, 10]} />
+        <meshBasicMaterial color="#0a0a12" transparent opacity={0.35} depthWrite={false} />
       </mesh>
       <mesh ref={coronaRef}>
         <sphereGeometry args={[1, 10, 10]} />

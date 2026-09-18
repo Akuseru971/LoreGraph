@@ -33,12 +33,12 @@ export const AATROX_INTERACTIVE_INTRO_TIMING: CinematicIntroTiming = {
 };
 
 export const AATROX_RECORD_OUTRO_TIMING: CinematicOutroTiming = {
-  pullbackMs: 900,
-  pathRevealMs: 700,
-  nodesConnectMs: 700,
-  constellationReformMs: 1200,
-  splashEchoMs: 600,
-  holdMs: 800,
+  pullbackMs: 700,
+  pathRevealMs: 500,
+  nodesConnectMs: 500,
+  constellationReformMs: 900,
+  splashEchoMs: 450,
+  holdMs: 1200,
 };
 
 export const AATROX_SCENE_OVERRIDES: Record<string, CinematicSceneOverride> = {

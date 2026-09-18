@@ -1,13 +1,13 @@
 import type { CinematicRecordTiming, CinematicScene } from "@/types";
 
 export const DEFAULT_RECORD_TIMING: CinematicRecordTiming = {
-  travelMs: 1500,
-  arrivalSettleMs: 400,
-  eyebrowRevealMs: 300,
-  titleRevealMs: 450,
-  narrativeRevealMs: 500,
-  readingHoldMs: 2800,
-  departurePrepMs: 350,
+  travelMs: 1300,
+  arrivalSettleMs: 300,
+  eyebrowRevealMs: 250,
+  titleRevealMs: 400,
+  narrativeRevealMs: 450,
+  readingHoldMs: 2200,
+  departurePrepMs: 300,
 };
 
 export function recordTimingForScene(scene: CinematicScene): CinematicRecordTiming {
@@ -22,30 +22,30 @@ export function recordTimingForScene(scene: CinematicScene): CinematicRecordTimi
   if (isEnding) {
     return {
       ...base,
-      travelMs: 1500,
-      readingHoldMs: 3000,
-      arrivalSettleMs: 450,
-      narrativeRevealMs: 450,
+      travelMs: 1300,
+      readingHoldMs: 2800,
+      arrivalSettleMs: 350,
+      narrativeRevealMs: 400,
     };
   }
 
   if (scene.shotType === "AFTERMATH") {
     return {
       ...base,
-      travelMs: 1400,
-      readingHoldMs: 2700,
-      arrivalSettleMs: 400,
-      departurePrepMs: 350,
-      narrativeRevealMs: 450,
+      travelMs: 1200,
+      readingHoldMs: 2600,
+      arrivalSettleMs: 300,
+      departurePrepMs: 300,
+      narrativeRevealMs: 400,
     };
   }
 
   if (isMajorEvent) {
     return {
       ...base,
-      travelMs: 1600,
-      readingHoldMs: 2400,
-      arrivalSettleMs: 400,
+      travelMs: 1500,
+      readingHoldMs: 3000,
+      arrivalSettleMs: 350,
       narrativeRevealMs: 400,
     };
   }
@@ -53,9 +53,9 @@ export function recordTimingForScene(scene: CinematicScene): CinematicRecordTimi
   if (scene.shotType === "IMPACT" || scene.type === "CONFLICT") {
     return {
       ...base,
-      travelMs: 1300,
-      arrivalSettleMs: 350,
-      readingHoldMs: 2600,
+      travelMs: 1200,
+      arrivalSettleMs: 300,
+      readingHoldMs: 2500,
       narrativeRevealMs: 400,
     };
   }
@@ -63,8 +63,8 @@ export function recordTimingForScene(scene: CinematicScene): CinematicRecordTimi
   if (!isCore) {
     return {
       ...base,
-      travelMs: 1300,
-      readingHoldMs: 2400,
+      travelMs: 1200,
+      readingHoldMs: 2200,
     };
   }
 

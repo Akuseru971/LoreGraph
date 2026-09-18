@@ -83,10 +83,10 @@ async function main() {
     simplifiedPointCount += simplified.length;
 
     const sampled = adaptiveSampleContour(simplified, true, width, height, {
-      minSpacing: width * 0.0035,
-      maxSpacing: width * 0.013,
-      curvatureBoost: 0.92,
-      highCurvatureThreshold: 0.75,
+      minSpacing: width * 0.0026,
+      maxSpacing: width * 0.011,
+      curvatureBoost: 1.08,
+      highCurvatureThreshold: 0.62,
     });
 
     // Extra stars at sharpest curvature peaks (horns, blade, wing tips)
@@ -272,7 +272,7 @@ function boostHighCurvatureStars(
   const n = contour.length;
   for (let i = 0; i < n; i++) {
     const curv = curvatureAt(contour, i, closed);
-    if (curv < 1.0) continue;
+    if (curv < 0.82) continue;
     const p = contour[i];
     const nx = p.x / width;
     const ny = p.y / height;

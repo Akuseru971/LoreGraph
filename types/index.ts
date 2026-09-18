@@ -739,10 +739,21 @@ export type EnvironmentalMotifType =
   | "BILGEWATER_MIST";
 
 export type CinematicAssetQualityStatus =
+  | "CURATED_PREMIUM"
+  | "CURATED_ACCEPTABLE"
   | "CURATED"
+  | "FALLBACK"
+  | "REPLACE"
   | "ACCEPTABLE"
   | "ABSTRACT_REQUIRED"
   | "MISSING";
+
+/** Quality tiers that count as officially curated for record readiness. */
+export const CURATED_QUALITY_STATUSES: ReadonlySet<CinematicAssetQualityStatus> = new Set([
+  "CURATED_PREMIUM",
+  "CURATED_ACCEPTABLE",
+  "CURATED",
+]);
 
 export interface CinematicRecordTiming {
   travelMs: number;

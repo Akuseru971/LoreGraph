@@ -234,15 +234,15 @@ export function lineStrokeForWeight(weight: ConstellationLineWeight): {
 } {
   switch (weight) {
     case "ICONIC":
-      return { width: 0.22, opacity: 0.72 };
+      return { width: 0.26, opacity: 0.85 };
     case "EMPHATIC":
-      return { width: 0.18, opacity: 0.58 };
+      return { width: 0.2, opacity: 0.68 };
     case "NORMAL":
-      return { width: 0.12, opacity: 0.38 };
+      return { width: 0.11, opacity: 0.32 };
     case "SUBTLE":
-      return { width: 0.08, opacity: 0.22 };
+      return { width: 0.07, opacity: 0.16 };
     default:
-      return { width: 0.12, opacity: 0.38 };
+      return { width: 0.11, opacity: 0.32 };
   }
 }
 

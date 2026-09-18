@@ -113,7 +113,11 @@ function validateSceneAssets(
     });
   }
 
-  if (manifest?.qualityStatus === "CURATED" && scene.image?.confidence === "LOW") {
+  if (
+    manifest?.qualityStatus &&
+    ["CURATED", "CURATED_PREMIUM", "CURATED_ACCEPTABLE"].includes(manifest.qualityStatus) &&
+    scene.image?.confidence === "LOW"
+  ) {
     issues.push({
       level: "ERROR",
       sceneId: scene.id,

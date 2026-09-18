@@ -18,6 +18,9 @@ import {
 } from "./intro-outro";
 import { constellationByCharacterId } from "@/data/cinematic/constellation-anchors";
 import { validateFlagshipConstellation } from "./validate-constellation";
+import { computeContourConnectivity } from "./constellation-connectivity";
+import { computeFlagshipPremiumMetrics } from "./flagship-premium-metrics";
+import { totalSceneRecordMs } from "./record-mode";
 
 beforeEach(() => {
   resetLoreGraphCache();
@@ -233,6 +236,31 @@ describe("Cinematic Journey V3", () => {
     const conn = buildConnectionJourneyV3(char("yasuo"), char("yone"))!;
     const connWithout = conn.scenes.filter((s) => !s.image?.url);
     expect(connWithout).toHaveLength(0);
+  });
+
+  it("Aatrox constellation has high iconic and primary connectivity", () => {
+    const constellation = constellationByCharacterId.get("char:aatrox")!;
+    const metrics = computeContourConnectivity(constellation);
+    expect(metrics.iconicConnectivityPct).toBeGreaterThanOrEqual(95);
+    expect(metrics.primaryConnectivityPct).toBeGreaterThanOrEqual(90);
+    expect(constellation.anchors.length).toBeGreaterThanOrEqual(500);
+  });
+
+  it("record mode standard scenes pace within 5.5s target", () => {
+    const journey = buildChampionJourneyV3(char("yasuo"));
+    const standardScenes = journey.scenes.filter(
+      (s) => s.type !== "ENDING" && (s.worldScale ?? 1) < 2,
+    );
+    for (const scene of standardScenes) {
+      expect(totalSceneRecordMs(scene)).toBeLessThanOrEqual(5500);
+    }
+  });
+
+  it("flagship premium metrics meet horizontal and 9:16 targets", () => {
+    const metrics = computeFlagshipPremiumMetrics();
+    expect(metrics.horizontalAssetPct).toBeGreaterThanOrEqual(90);
+    expect(metrics.nineSixteenFallbackCount).toBe(0);
+    expect(metrics.aatroxLineSkipDefault).toBeLessThanOrEqual(0.1);
   });
 
   it("outro phase state reforms constellation silhouette", () => {

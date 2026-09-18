@@ -50,7 +50,19 @@ export const AATROX_CONSTELLATION: ChampionConstellation = buildConstellationFro
     characterId: "char:aatrox",
     heroStarId: "blade-core",
     splashFocal: { x: 0.52, y: 0.3 },
-    lineSkipProbability: 0.25,
+    lineSkipProbability: 0.08,
+    contourGroupSettings: {
+      "contour-0": { lineSkipProbability: 0.06 },
+    },
+    iconicRegionSettings: [
+      { id: "horns", x0: 0.42, y0: 0, x1: 0.62, y1: 0.18, lineSkipProbability: 0 },
+      { id: "blade", x0: 0.58, y0: 0, x1: 0.82, y1: 0.35, lineSkipProbability: 0 },
+      { id: "leftWing", x0: 0, y0: 0.12, x1: 0.3, y1: 0.5, lineSkipProbability: 0.03 },
+      { id: "rightWing", x0: 0.7, y0: 0.12, x1: 1, y1: 0.5, lineSkipProbability: 0.03 },
+      { id: "claw", x0: 0.1, y0: 0.35, x1: 0.32, y1: 0.58, lineSkipProbability: 0.05 },
+      { id: "torso", x0: 0.35, y0: 0.25, x1: 0.55, y1: 0.55, lineSkipProbability: 0.1 },
+      { id: "legs", x0: 0.35, y0: 0.52, x1: 0.58, y1: 0.85, lineSkipProbability: 0.12 },
+    ],
     iconicAnchors: [
       {
         id: "blade-core",
@@ -77,9 +89,7 @@ export const AATROX_CONSTELLATION: ChampionConstellation = buildConstellationFro
         lineWeight: "SUBTLE",
       },
     ],
-    extraLines: [
-      { from: HORN_PEAK_ID, to: LEFT_WING_ID, weight: "NORMAL", category: "STRUCTURAL" },
-    ],
+    extraLines: [],
   },
 );
 

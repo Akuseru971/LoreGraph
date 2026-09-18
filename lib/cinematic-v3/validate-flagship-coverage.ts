@@ -8,6 +8,7 @@ import {
   AATROX_RECORD_INTRO_TIMING,
   AATROX_RECORD_OUTRO_TIMING,
 } from "./aatrox-cinematic-direction";
+import { computeContourConnectivity } from "./constellation-connectivity";
 import { compositionForScene } from "./composition";
 import { DEFAULT_INTRO_TIMING } from "./intro-outro";
 import { DEFAULT_RECORD_TIMING, recordTimingForScene, totalSceneRecordMs } from "./record-mode";
@@ -16,8 +17,11 @@ import type { CinematicValidationIssue } from "./validate-cinematic";
 import { totalIntroMs } from "./intro-outro";
 
 const MAX_RECORD_INTRO_MS = 7000;
-const MAX_SCENE_RECORD_MS = 6500;
+const MAX_STANDARD_SCENE_MS = 5500;
+const MAX_MAJOR_SCENE_MS = 6500;
 const MIN_AATROX_SILHOUETTE_ANCHORS = 350;
+const MIN_ICONIC_CONNECTIVITY = 95;
+const MIN_PRIMARY_CONNECTIVITY = 90;
 
 export function validateFlagshipCoverage(journey: CinematicJourney): CinematicValidationIssue[] {
   const issues: CinematicValidationIssue[] = [];
@@ -57,12 +61,25 @@ export function validateFlagshipCoverage(journey: CinematicJourney): CinematicVa
     }
 
     const sceneMs = totalSceneRecordMs(scene);
-    if (sceneMs > MAX_SCENE_RECORD_MS && scene.importance === "CORE") {
+    const isMajor =
+      (scene.worldScale ?? 1) >= 2 || scene.worldNodeArchetype === "INVASION";
+    const maxMs = isMajor ? MAX_MAJOR_SCENE_MS : MAX_STANDARD_SCENE_MS;
+    if (sceneMs > maxMs && scene.importance === "CORE" && scene.type !== "ENDING") {
       issues.push({
         level: "WARNING",
         sceneId: scene.id,
         kind: "scene_timing_too_slow",
-        message: `Record scene ${sceneMs}ms exceeds ${MAX_SCENE_RECORD_MS}ms target`,
+        message: `Record scene ${sceneMs}ms exceeds ${maxMs}ms target`,
+      });
+    }
+
+    const assetUrl = scene.image?.url ?? manifest?.officialAsset?.url ?? "";
+    if (assetUrl.includes("9x16")) {
+      issues.push({
+        level: "WARNING",
+        sceneId: scene.id,
+        kind: "vertical_asset_fallback",
+        message: "Flagship scene still uses 9:16 asset in record mode",
       });
     }
   }
@@ -86,6 +103,23 @@ export function validateFlagshipCoverage(journey: CinematicJourney): CinematicVa
         kind: "low_constellation_density",
         message: `Aatrox has ${constellation.anchors.length} anchors — need ≥${MIN_AATROX_SILHOUETTE_ANCHORS} for recognition`,
       });
+    }
+    if (constellation) {
+      const connectivity = computeContourConnectivity(constellation);
+      if (connectivity.iconicConnectivityPct < MIN_ICONIC_CONNECTIVITY) {
+        issues.push({
+          level: "WARNING",
+          kind: "low_iconic_connectivity",
+          message: `Aatrox iconic connectivity ${connectivity.iconicConnectivityPct}% — target ≥${MIN_ICONIC_CONNECTIVITY}%`,
+        });
+      }
+      if (connectivity.primaryConnectivityPct < MIN_PRIMARY_CONNECTIVITY) {
+        issues.push({
+          level: "WARNING",
+          kind: "low_primary_connectivity",
+          message: `Aatrox primary connectivity ${connectivity.primaryConnectivityPct}% — target ≥${MIN_PRIMARY_CONNECTIVITY}%`,
+        });
+      }
     }
   }
 

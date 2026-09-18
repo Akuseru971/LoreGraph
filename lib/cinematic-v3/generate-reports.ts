@@ -7,6 +7,9 @@ import { compositionForScene } from "./composition";
 import { inferShotType } from "./shot-types";
 import { inferWorldNodeArchetype } from "./world-node-archetypes";
 import { evaluateJourneyReadiness } from "./visual-readiness";
+import { computeContourConnectivity } from "./constellation-connectivity";
+import { computeFlagshipPremiumMetrics } from "./flagship-premium-metrics";
+import { constellationByCharacterId } from "@/data/cinematic/constellation-anchors";
 import { flagshipTimingSummary } from "./validate-flagship-coverage";
 import { recordTimingForScene, totalSceneRecordMs } from "./record-mode";
 import { totalIntroMs, totalIntroMsForMode } from "./intro-outro";
@@ -108,10 +111,31 @@ export function generateVisualQaReport(): string {
 
 export function generateFlagshipSceneCoverageReport(): string {
   const timing = flagshipTimingSummary();
+  const premium = computeFlagshipPremiumMetrics();
+  const aatroxConnectivity = constellationByCharacterId.get("char:aatrox")
+    ? computeContourConnectivity(constellationByCharacterId.get("char:aatrox")!)
+    : null;
+
   const lines: string[] = [
     "# Cinematic Flagship Scene Coverage",
     "",
     `Generated: ${new Date().toISOString()}`,
+    "",
+    "## Premium QA metrics",
+    "",
+    `- Aatrox anchor count: **${premium.aatroxAnchorCount}**`,
+    `- Aatrox iconic contour connectivity: **${premium.aatroxIconicConnectivityPct}%** (target ≥95%)`,
+    `- Aatrox primary silhouette connectivity: **${premium.aatroxPrimaryConnectivityPct}%** (target ≥90%)`,
+    `- Aatrox lineSkipProbability default: **${premium.aatroxLineSkipDefault}**`,
+    `- Horizontal asset coverage: **${premium.horizontalAssetPct}%** (target ≥90%)`,
+    `- 9:16 fallback count: **${premium.nineSixteenFallbackCount}**`,
+    `- Generic region fallback count: **${premium.genericRegionFallbackCount}**`,
+    `- Exact event/story coverage: **${premium.exactAssetPct}%**`,
+    `- Contextual coverage: **${premium.contextualAssetPct}%**`,
+    `- Thematic coverage: **${premium.thematicAssetPct}%**`,
+    `- Standard scene avg: **${premium.standardSceneAvgMs}ms** (target 4300–5200ms)`,
+    `- Major event avg: **${premium.majorEventAvgMs}ms** (target 5200–6200ms)`,
+    `- Quality breakdown: ${Object.entries(premium.qualityBreakdown).map(([k, v]) => `${k}=${v}`).join(", ")}`,
     "",
     "## Timing summary",
     "",
@@ -119,8 +143,19 @@ export function generateFlagshipSceneCoverageReport(): string {
     `- Aatrox record intro: **${timing.aatroxRecordIntroMs}ms**`,
     `- Aatrox record outro: **${timing.aatroxRecordOutroMs}ms**`,
     `- Default scene (record): **${timing.defaultSceneMs}ms**`,
+    `- Record intro target: **${premium.introTimingMs}ms**`,
+    `- Record outro target: **${premium.outroTimingMs}ms**`,
     "",
   ];
+
+  if (aatroxConnectivity) {
+    lines.push("## Aatrox constellation connectivity");
+    lines.push("");
+    lines.push(`- Total contour connectivity: **${aatroxConnectivity.totalContourConnectivityPct}%**`);
+    lines.push(`- Iconic segments: **${aatroxConnectivity.iconicActual}/${aatroxConnectivity.iconicExpected}**`);
+    lines.push(`- Primary segments: **${aatroxConnectivity.primaryActual}/${aatroxConnectivity.primaryExpected}**`);
+    lines.push("");
+  }
 
   const journeys = [
     ...FLAGSHIP_SLUGS.map((s) => ({ slug: s, journey: buildFlagshipJourney(s) })),

@@ -41,6 +41,8 @@ function SceneImageMesh({
   composition,
   arrivalProgress,
   traveling,
+  fadeOut = 0,
+  crossfade = false,
 }: {
   texture: THREE.Texture;
   position: [number, number, number];
@@ -51,6 +53,8 @@ function SceneImageMesh({
   composition: CinematicComposition;
   arrivalProgress: number;
   traveling: boolean;
+  fadeOut?: number;
+  crossfade?: boolean;
 }) {
   const meshRef = React.useRef<THREE.Mesh>(null);
   const matRef = React.useRef<THREE.ShaderMaterial>(null);
@@ -68,22 +72,33 @@ function SceneImageMesh({
   const fp = focalPoint ?? { x: 0.5, y: 0.5 };
   const offsetX = (0.5 - fp.x) * width * 0.35;
   const offsetY = (0.5 - fp.y) * height * 0.25;
-  const reveal = traveling ? Math.max(0, arrivalProgress * 0.35) : Math.min(1, arrivalProgress);
-  const memoryOpacity = composition === "BACKGROUND_MEMORY" ? opacity * 0.75 : opacity;
+  const travelReveal = crossfade
+    ? Math.max(0, (arrivalProgress - 0.15) / 0.85)
+    : Math.max(0, arrivalProgress * 0.55);
+  const reveal = traveling ? travelReveal : Math.min(1, arrivalProgress);
+  const memoryOpacity =
+    composition === "BACKGROUND_MEMORY" ? opacity * 0.82 : opacity;
+  const exitFade = fadeOut > 0 ? Math.max(0, 1 - fadeOut * 1.15) : 1;
 
   useFrame(({ clock }) => {
     if (!meshRef.current || !matRef.current) return;
-    matRef.current.uniforms.uOpacity.value = memoryOpacity * reveal;
+    const holdDrift = Math.sin(clock.elapsedTime * 0.12) * 0.004;
+    matRef.current.uniforms.uOpacity.value = memoryOpacity * reveal * exitFade;
     matRef.current.uniforms.uTime.value = clock.elapsedTime;
-    const depth = traveling ? -0.5 * (1 - arrivalProgress) : -0.1;
+    const depth = traveling
+      ? crossfade
+        ? -0.3 + arrivalProgress * 0.2
+        : -0.5 * (1 - arrivalProgress)
+      : -0.1;
+    const panX = holdDrift + (traveling ? (1 - arrivalProgress) * 0.08 : holdDrift);
     meshRef.current.position.set(
-      position[0] + offsetX,
-      position[1] + offsetY,
+      position[0] + offsetX + panX,
+      position[1] + offsetY + holdDrift * 0.5,
       position[2] + depth,
     );
-    const s = 0.9 + reveal * 0.1;
+    const s = composition === "FULL_BLEED" ? 0.94 + reveal * 0.08 : 0.9 + reveal * 0.1;
     meshRef.current.scale.set(s, s, 1);
-    meshRef.current.rotation.y = Math.sin(clock.elapsedTime * 0.15) * 0.02;
+    meshRef.current.rotation.y = Math.sin(clock.elapsedTime * 0.15) * 0.015;
   });
 
   return (
@@ -115,6 +130,8 @@ export function SceneImagePlane({
   composition = "BACKGROUND_MEMORY",
   arrivalProgress = 1,
   traveling = false,
+  fadeOut = 0,
+  crossfade = false,
 }: {
   url: string;
   position: [number, number, number];
@@ -125,6 +142,8 @@ export function SceneImagePlane({
   composition?: CinematicComposition;
   arrivalProgress?: number;
   traveling?: boolean;
+  fadeOut?: number;
+  crossfade?: boolean;
 }) {
   const texture = useTexture(url);
   return (
@@ -138,6 +157,8 @@ export function SceneImagePlane({
       composition={composition}
       arrivalProgress={arrivalProgress}
       traveling={traveling}
+      fadeOut={fadeOut}
+      crossfade={crossfade}
     />
   );
 }

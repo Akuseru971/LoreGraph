@@ -43,6 +43,20 @@ export interface ExtractedSilhouetteData {
   }>;
 }
 
+export interface ContourGroupLineSettings {
+  lineSkipProbability?: number;
+}
+
+/** Position-based iconic region — overrides skip probability for stars in bbox. */
+export interface IconicRegionLineSettings {
+  id: string;
+  x0: number;
+  y0: number;
+  x1: number;
+  y1: number;
+  lineSkipProbability: number;
+}
+
 export interface BuildFromExtractedOptions {
   id: string;
   characterId: string;
@@ -51,8 +65,36 @@ export interface BuildFromExtractedOptions {
   iconicAnchors?: ChampionConstellationAnchor[];
   detailAnchors?: ChampionConstellationAnchor[];
   extraLines?: ConstellationLine[];
-  /** Skip connecting some contour segments for constellation aesthetic (0–1). */
+  /** Default skip probability for low-weight contour segments (0–1). */
   lineSkipProbability?: number;
+  /** Per-contour-group skip overrides (e.g. contour-0). */
+  contourGroupSettings?: Record<string, ContourGroupLineSettings>;
+  /** Position-based iconic regions with tighter skip control. */
+  iconicRegionSettings?: IconicRegionLineSettings[];
+}
+
+function skipProbabilityForSegment(
+  starA: { id: string; x: number; y: number; contourId: string; visualWeight: string },
+  starB: { id: string; x: number; y: number; contourId: string; visualWeight: string },
+  opts: BuildFromExtractedOptions,
+): number {
+  if (starA.visualWeight !== "LOW" || starB.visualWeight !== "LOW") return 0;
+
+  const midX = (starA.x + starB.x) / 2;
+  const midY = (starA.y + starB.y) / 2;
+
+  for (const region of opts.iconicRegionSettings ?? []) {
+    if (midX >= region.x0 && midX <= region.x1 && midY >= region.y0 && midY <= region.y1) {
+      return region.lineSkipProbability;
+    }
+  }
+
+  const groupSetting = opts.contourGroupSettings?.[starA.contourId];
+  if (groupSetting?.lineSkipProbability !== undefined) {
+    return groupSetting.lineSkipProbability;
+  }
+
+  return opts.lineSkipProbability ?? 0.35;
 }
 
 /** Build a runtime constellation from precomputed extracted silhouette data. */
@@ -162,8 +204,6 @@ export function buildConstellationFromExtractedDeterministic(
     byContour.set(s.contourId, list);
   }
 
-  const skipProb = opts.lineSkipProbability ?? 0.35;
-
   for (const [, stars] of byContour) {
     stars.sort((a, b) => a.index - b.index);
     for (let i = 0; i < stars.length; i++) {
@@ -175,10 +215,12 @@ export function buildConstellationFromExtractedDeterministic(
 
       const nextIdx = (i + 1) % stars.length;
       const next = stars[nextIdx];
+      const skipProb = skipProbabilityForSegment(stars[i], stars[nextIdx], opts);
       const shouldSkip =
         stars[i].visualWeight === "LOW" &&
         stars[nextIdx]?.visualWeight === "LOW" &&
-        hash01(stars[i].id) < skipProb;
+        skipProb > 0 &&
+        hash01(`${stars[i].id}:${next.id}`) < skipProb;
       if (shouldSkip) continue;
 
       anchor.connectsTo = [...(anchor.connectsTo ?? []), next.id];

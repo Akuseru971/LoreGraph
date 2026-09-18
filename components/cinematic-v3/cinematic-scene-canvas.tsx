@@ -74,7 +74,25 @@ function SceneWorld({
   const composition = scene.composition ?? scene.image?.compositionHint ?? "NO_IMAGE";
   const imageOffset = imageOffsetForComposition(composition, scene.image?.focalPoint);
   const imageOpacity =
-    composition === "BACKGROUND_MEMORY" ? 0.42 : composition === "DISTANT_WORLD" ? 0.5 : 0.58;
+    composition === "BACKGROUND_MEMORY"
+      ? 0.48
+      : composition === "DISTANT_WORLD"
+        ? 0.52
+        : composition === "FULL_BLEED"
+          ? 0.72
+          : 0.58;
+  const prevComposition =
+    prevScene?.composition ?? prevScene?.image?.compositionHint ?? "BACKGROUND_MEMORY";
+  const prevImageOffset = imageOffsetForComposition(
+    prevComposition,
+    prevScene?.image?.focalPoint,
+  );
+  const prevImageOpacity =
+    prevComposition === "BACKGROUND_MEMORY"
+      ? 0.48
+      : prevComposition === "FULL_BLEED"
+        ? 0.72
+        : 0.58;
   const motifs = scene.environmentalMotifs ?? [];
 
   const bg = lerpHex(prevAtmosphere.background, atmosphere.background, blend);
@@ -135,6 +153,26 @@ function SceneWorld({
           archetype={scene.worldNodeArchetype}
         />
       ) : null}
+      {showImages && !environmentOnly && traveling && prevScene?.image?.url ? (
+        <Suspense fallback={null}>
+          <SceneImagePlane
+            url={prevScene.image.url}
+            position={[
+              from.x + prevImageOffset.x,
+              from.y + prevImageOffset.y,
+              from.z + prevImageOffset.z - 0.4,
+            ]}
+            scale={3.2}
+            opacity={prevImageOpacity}
+            focalPoint={prevScene.image.focalPoint}
+            aspectRatio={prevScene.image.aspectRatio}
+            composition={prevComposition}
+            arrivalProgress={1}
+            traveling={true}
+            fadeOut={transitionProgress}
+          />
+        </Suspense>
+      ) : null}
       {showImages && !environmentOnly && scene.image?.url && composition !== "NO_IMAGE" ? (
         <Suspense fallback={null}>
           <SceneImagePlane
@@ -144,13 +182,18 @@ function SceneWorld({
               scene.coordinates.y + imageOffset.y,
               scene.coordinates.z + imageOffset.z,
             ]}
-            scale={3.2 * (composition === "DISTANT_WORLD" ? worldScale * 0.9 : 1)}
+            scale={
+              3.4 *
+              (composition === "FULL_BLEED" ? 1.05 : 1) *
+              (composition === "DISTANT_WORLD" ? worldScale * 0.9 : 1)
+            }
             opacity={imageOpacity}
             focalPoint={scene.image.focalPoint}
             aspectRatio={scene.image.aspectRatio}
             composition={composition}
             arrivalProgress={arrived ? 1 : transitionProgress}
             traveling={traveling}
+            crossfade={traveling}
           />
         </Suspense>
       ) : null}
