@@ -1,5 +1,16 @@
+import { resolveSeedCanonStatus } from "@/lib/canon/model";
+import {
+  buildEventCharacterLinks,
+  characterIdsFromLinks,
+  isEraNode,
+} from "@/lib/events/links";
 import type { LoreEvent, RegionSlug } from "@/types";
+import { eventAssetByEventId } from "./knowledge/event-assets";
+import eventParticipantsPack from "./knowledge/generated/event-participants.json";
+import { packEvents } from "./knowledge/generated/events-pack";
 import { RUNETERRA_ID } from "./universes";
+
+const packParticipantMap = eventParticipantsPack as Record<string, string[]>;
 
 export const charId = (slug: string) => `char:${slug}`;
 export const eventId = (slug: string) => `event:${slug}`;
@@ -15,6 +26,7 @@ interface EventSeed {
   regions: RegionSlug[];
   canonStatus?: LoreEvent["canonStatus"];
   verified?: boolean;
+  connectEligible?: boolean;
 }
 
 /**
@@ -32,6 +44,7 @@ const seeds: EventSeed[] = [
     importance: 70,
     characters: ["aurelion-sol", "kayle", "morgana"],
     regions: ["targon", "runeterra"],
+    connectEligible: false,
   },
   {
     slug: "star-forger-bound",
@@ -52,7 +65,7 @@ const seeds: EventSeed[] = [
     era: "Ancient Shurima",
     order: 30,
     importance: 88,
-    characters: ["aatrox", "nasus", "azir", "varus", "kaisa"],
+    characters: ["aatrox", "nasus"],
     regions: ["shurima", "void"],
   },
   {
@@ -63,7 +76,7 @@ const seeds: EventSeed[] = [
     era: "Ancient Shurima",
     order: 40,
     importance: 90,
-    characters: ["aatrox", "nasus", "azir", "renekton"],
+    characters: ["aatrox", "nasus", "renekton"],
     regions: ["shurima"],
   },
   {
@@ -81,11 +94,11 @@ const seeds: EventSeed[] = [
     slug: "darkin-war",
     title: "The Darkin War",
     description:
-      "The empire turns on its own gods. Targon intervenes, and the surviving Darkin are not killed but sealed inside the weapons they fought with.",
+      "After Shurima's fall, surviving corrupted Ascended war among themselves. Targon intervenes, and the surviving Darkin are sealed inside the weapons they fought with.",
     era: "Ancient Shurima",
     order: 60,
     importance: 95,
-    characters: ["aatrox", "pantheon", "varus", "leona", "diana"],
+    characters: ["aatrox", "varus"],
     regions: ["shurima", "targon"],
   },
   {
@@ -413,7 +426,7 @@ const seeds: EventSeed[] = [
     slug: "aatrox-pantheon-duel",
     title: "The Aspect Who Died Standing",
     description:
-      "The Darkin Blade hunts down the Aspect of War who helped seal him and kills the mortal host — which turns out to be a different thing from killing the Aspect.",
+      "The Darkin Blade hunts down the Aspect of War who helped seal him and destroys the celestial power within Atreus — while the mortal host survives on the ground.",
     era: "Modern Runeterra",
     order: 350,
     importance: 90,
@@ -424,7 +437,7 @@ const seeds: EventSeed[] = [
     slug: "pantheon-reborn",
     title: "A Mortal Keeps the Spear",
     description:
-      "The host survives what the Aspect did not, and the fragment left behind belongs to the man rather than the star.",
+      "The host survives what the Aspect did not, and Atreus keeps the spear through mortal will rather than celestial possession.",
     era: "Modern Runeterra",
     order: 360,
     importance: 86,
@@ -505,27 +518,71 @@ const seeds: EventSeed[] = [
     era: "Modern Runeterra",
     order: 430,
     importance: 74,
-    characters: ["aurelion-sol", "leona", "diana", "pantheon"],
+    characters: ["aurelion-sol"],
     regions: ["targon", "runeterra"],
   },
 ];
 
-export const events: LoreEvent[] = seeds.map((s) => ({
-  id: eventId(s.slug),
-  universeId: RUNETERRA_ID,
-  type: "event",
-  slug: s.slug,
-  name: s.title,
-  title: s.title,
-  description: s.description,
-  era: s.era,
-  order: s.order,
-  importance: s.importance,
-  characterIds: s.characters.map(charId),
-  regionSlugs: s.regions,
-  canonStatus: s.canonStatus ?? "CANON",
-  verified: s.verified ?? true,
-}));
+function finalizeEvent(
+  e: Omit<LoreEvent, "characterLinks" | "characterIds" | "isEra"> & {
+    characterIds: string[];
+  },
+): LoreEvent {
+  const era = isEraNode({ slug: e.slug, title: e.title });
+  const characterLinks = buildEventCharacterLinks(e, e.characterIds);
+  const characterIds = characterIdsFromLinks(characterLinks);
+  const connectEligible =
+    Boolean(e.connectEligible && e.verified) &&
+    !era &&
+    characterLinks.some((l) => l.role === "PARTICIPANT" || l.role === "CAUSE");
+
+  return {
+    ...e,
+    isEra: era,
+    characterLinks,
+    characterIds,
+    connectEligible,
+  };
+}
+
+const coreEvents: LoreEvent[] = seeds.map((s) => {
+  const id = eventId(s.slug);
+  const asset = eventAssetByEventId.get(id);
+  const base = {
+    id,
+    universeId: RUNETERRA_ID,
+    type: "event" as const,
+    slug: s.slug,
+    name: s.title,
+    title: s.title,
+    description: s.description,
+    era: s.era,
+    order: s.order,
+    importance: s.importance,
+    characterIds: s.characters.map(charId),
+    regionSlugs: s.regions,
+    canonStatus: resolveSeedCanonStatus(s.canonStatus, s.verified ?? true),
+    verified: s.verified ?? true,
+    connectEligible:
+      (s.connectEligible ?? s.slug !== "celestial-age") &&
+      (s.verified ?? true),
+    asset,
+  };
+  return finalizeEvent(base);
+});
+
+const packBySlug = new Map(packEvents.map((e) => [e.slug, e]));
+
+export const events: LoreEvent[] = [
+  ...coreEvents,
+  ...packEvents
+    .filter((p) => !coreEvents.some((c) => c.slug === p.slug))
+    .map((p) => {
+      const fromPack = packParticipantMap[p.slug] ?? [];
+      const mergedIds = [...new Set([...p.characterIds, ...fromPack])];
+      return finalizeEvent({ ...p, characterIds: mergedIds });
+    }),
+];
 
 export const eventById = new Map(events.map((e) => [e.id, e]));
 export const eventBySlug = new Map(events.map((e) => [e.slug, e]));

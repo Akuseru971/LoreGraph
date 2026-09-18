@@ -8,63 +8,55 @@ import { GraphLegend } from "@/components/graph/graph-legend";
 import { RelationshipDrawer, type RelationshipSelection } from "@/components/graph/relationship-drawer";
 import { RelationshipList } from "@/components/graph/relationship-list";
 import { characterById } from "@/data";
+import { OnboardingHint } from "@/components/onboarding-hint";
 import { EmptyState } from "@/components/ui/empty-state";
-import { Skeleton } from "@/components/ui/skeleton";
+import { GraphSkeleton } from "@/components/ui/screen-skeletons";
 import { track } from "@/lib/analytics";
-import { RELATIONSHIP_GROUPS } from "@/lib/graph/style";
+import { edgeCategory } from "@/lib/truth/layer";
 import type { Neighbor } from "@/lib/graph";
 import { cn } from "@/lib/utils";
-import type { Character, GraphEdge, GraphNode, RelationshipType } from "@/types";
+import type { Character, ConnectionCategory, GraphEdge, GraphNode } from "@/types";
 
 // The graph is the heaviest thing on the page and never needed above the fold.
 const KnowledgeGraph = dynamic(
   () => import("@/components/graph/knowledge-graph").then((m) => m.KnowledgeGraph),
   {
     ssr: false,
-    loading: () => <Skeleton className="size-full rounded-none" />,
+    loading: () => <GraphSkeleton className="rounded-none border-0" />,
   },
 );
 
-type FilterId =
-  | "all"
-  | "direct"
-  | "indirect"
-  | "hostile"
-  | "allied"
-  | "family"
-  | "faction"
-  | "events";
+type FilterId = "all" | "direct" | "events" | "factions" | "lore";
 
 const FILTERS: Array<{ id: FilterId; label: string }> = [
   { id: "all", label: "All" },
   { id: "direct", label: "Direct" },
-  { id: "indirect", label: "Indirect" },
-  { id: "hostile", label: "Enemies" },
-  { id: "allied", label: "Allies" },
-  { id: "family", label: "Family" },
-  { id: "faction", label: "Faction" },
   { id: "events", label: "Events" },
+  { id: "factions", label: "Factions" },
+  { id: "lore", label: "Lore" },
 ];
+
+const LORE_CATEGORIES = new Set<ConnectionCategory>([
+  "STRUCTURAL_LORE",
+  "THEMATIC_PARALLEL",
+  "AMBIGUOUS",
+  "LEGACY_CONNECTION",
+]);
 
 function matches(filter: FilterId, neighbor: Neighbor): boolean {
   const { edge, node } = neighbor;
+  const category = edgeCategory(edge);
   switch (filter) {
     case "all":
       return true;
     case "direct":
-      return edge.connectionKind === "direct";
-    case "indirect":
-      return edge.connectionKind === "indirect";
+      return category === "DIRECT_CANON" && edge.connectionKind === "direct";
     case "events":
-      return node.type === "event";
-    case "faction":
-      return node.type === "faction" || edge.relationship === "faction";
-    case "hostile":
-    case "allied":
-    case "family":
-      return (
-        RELATIONSHIP_GROUPS[filter] as readonly RelationshipType[]
-      ).includes(edge.relationship);
+      return node.type === "event" || category === "SHARED_EVENT";
+    case "factions":
+      return node.type === "faction" || category === "SHARED_FACTION";
+    case "lore":
+      return node.type === "concept" || LORE_CATEGORIES.has(category);
     default:
       return true;
   }
@@ -84,6 +76,10 @@ export function ConnectionsPanel({
   const router = useRouter();
   const [filter, setFilter] = React.useState<FilterId>("all");
   const [selection, setSelection] = React.useState<RelationshipSelection | null>(null);
+
+  React.useEffect(() => {
+    track({ name: "graph_open", characterSlug: character.slug });
+  }, [character.slug]);
 
   const visible = React.useMemo(
     () => neighbors.filter((neighbor) => matches(filter, neighbor)),
@@ -165,6 +161,13 @@ export function ConnectionsPanel({
           )}
         </div>
       </div>
+
+      <OnboardingHint
+        id="graphExplore"
+        className="mt-6"
+        title="Follow the threads"
+        body="Select any connected character to follow their story through the graph."
+      />
 
       {visible.length === 0 ? (
         <div className="panel mt-6">

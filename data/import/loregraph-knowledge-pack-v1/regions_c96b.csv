@@ -1,0 +1,17 @@
+﻿region_id,name,realm,description,canon_status,wiki_url,primary_riot_url,image_status,image_url,needs_review
+region:bandle-city,Bandle City,Spirit Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ABandle_City,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:bilgewater,Bilgewater,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ABilgewater,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:demacia,Demacia,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ADemacia,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:freljord,Freljord,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AFreljord,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:ionia,Ionia,Physical / Spirit-linked,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AIonia,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:ixtal,Ixtal,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AIxtal,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:noxus,Noxus,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ANoxus,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:piltover,Piltover,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3APiltover,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:shadow-isles,Shadow Isles,Physical / Spirit-corrupted,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AShadow_Isles,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:shurima,Shurima,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AShurima,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:targon,Targon,Physical / Celestial-linked,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ATargon,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:void,The Void,Outside existence,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AThe_Void,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:zaun,Zaun,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AZaun,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:camavor,Camavor,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3ACamavor,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:icathia,Icathia,Physical Realm / Void breach history,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AIcathia,,NEEDS_OFFICIAL_ASSET,,TRUE
+region:kathkan,Kathkan,Physical Realm,,CURRENT_OR_REVIEW,https://wiki.leagueoflegends.com/en-us/Universe%3AKathkan,,NEEDS_OFFICIAL_ASSET,,TRUE

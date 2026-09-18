@@ -1,52 +1,66 @@
 import { hashString, hexToRgba } from "./utils";
+import {
+  getChampionAsset,
+  getChampionAssetUrl,
+  getChampionAssets,
+  championArtPosition,
+  getEntityAsset,
+  getEventAsset,
+  getRegionAsset,
+  getFactionAsset,
+  getManifestIndex,
+  hasLocalChampionAssets,
+  type ChampionAssetType,
+} from "./assets/registry";
 
-/**
- * Asset abstraction.
- *
- * LoreGraph ships with no third-party artwork. Every visual is generated from
- * the champion's accent colour and slug, which means the product looks
- * finished without hotlinking anyone's images.
- *
- * When you have permission to use official assets (Data Dragon,
- * CommunityDragon, or your own uploads), set NEXT_PUBLIC_ASSET_BASE_URL and the
- * UI switches over without any component changes. Expected layout:
- *
- *   {base}/portrait/{assetKey}.jpg
- *   {base}/splash/{assetKey}.jpg
- *   {base}/story/{assetKey}.jpg
- */
+export {
+  getChampionAsset,
+  getChampionAssetUrl,
+  getChampionAssets,
+  championArtPosition,
+  getEntityAsset,
+  getEventAsset,
+  getRegionAsset,
+  getFactionAsset,
+  getManifestIndex,
+  hasLocalChampionAssets,
+  type ChampionAssetType,
+};
 
-const base = process.env.NEXT_PUBLIC_ASSET_BASE_URL?.replace(/\/$/, "") ?? "";
+/** @deprecated Use getChampionAssetUrl — local + CDN assets are always available. */
+export const hasRemoteAssets = true;
 
-export const hasRemoteAssets = base.length > 0;
-
-export type AssetVariant = "portrait" | "splash" | "story";
+export type AssetVariant = "portrait" | "splash" | "story" | "card" | "cinematic";
 
 export function assetUrl(key: string, variant: AssetVariant): string | null {
-  if (!hasRemoteAssets) return null;
-  return `${base}/${variant}/${key}.jpg`;
+  if (variant === "cinematic") return getChampionAssetUrl(key, "cinematic");
+  if (variant === "card") return getChampionAssetUrl(key, "card");
+  if (variant === "splash" || variant === "story") return getChampionAssetUrl(key, "splash");
+  return getChampionAssetUrl(key, "portrait");
 }
 
-export function portraitUrl(key: string): string | null {
-  return assetUrl(key, "portrait");
+export function portraitUrl(key: string): string {
+  return getChampionAssetUrl(key, "portrait");
 }
 
-export function splashUrl(key: string): string | null {
-  return assetUrl(key, "splash");
+export function splashUrl(key: string): string {
+  return getChampionAssetUrl(key, "splash");
+}
+
+export function cardUrl(key: string): string {
+  return getChampionAssetUrl(key, "card");
+}
+
+export function cinematicUrl(key: string): string {
+  return getChampionAssetUrl(key, "cinematic");
 }
 
 export interface GeneratedArtwork {
-  /** CSS background value, ready to drop into a style prop. */
   background: string;
-  /** A second layer that adds depth without extra DOM noise. */
   overlay: string;
   angle: number;
 }
 
-/**
- * Deterministic "cinematic" gradient per entity. Two entities never look the
- * same, and the same entity always looks identical across renders.
- */
 export function generateArtwork(
   key: string,
   accentColor: string,
@@ -74,7 +88,6 @@ export function generateArtwork(
   };
 }
 
-/** Region crest-ish gradient for region and faction cards. */
 export function generateRegionArtwork(
   slug: string,
   accentColor: string,

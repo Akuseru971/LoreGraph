@@ -6,6 +6,10 @@ import * as React from "react";
 import { characterById } from "@/data";
 import { EntityPortrait } from "@/components/entity-portrait";
 import { hexToRgba } from "@/lib/utils";
+import {
+  provisionalTimelineBeats,
+  trustedTimelineBeats,
+} from "@/lib/timeline/trust";
 import type { Character, TimelineBeat } from "@/types";
 
 /** Vertical timeline for a champion. One beat per row, era rail on the left. */
@@ -16,13 +20,53 @@ export function Timeline({
   character: Character;
   beats: TimelineBeat[];
 }) {
+  const trusted = trustedTimelineBeats(beats);
+  const pending = provisionalTimelineBeats(beats);
+
+  return (
+    <div className="relative space-y-10">
+      {trusted.length > 0 ? (
+        <TimelineSection
+          character={character}
+          beats={trusted}
+          startIndex={0}
+        />
+      ) : null}
+      {pending.length > 0 ? (
+        <section aria-label="Research pending timeline beats">
+          <p className="text-eyebrow text-muted-dim mb-5">
+            Research pending
+          </p>
+          <TimelineSection
+            character={character}
+            beats={pending}
+            startIndex={trusted.length}
+            muted
+          />
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
+function TimelineSection({
+  character,
+  beats,
+  startIndex,
+  muted = false,
+}: {
+  character: Character;
+  beats: TimelineBeat[];
+  startIndex: number;
+  muted?: boolean;
+}) {
   return (
     <div className="relative">
       <span
         aria-hidden
         className="absolute top-2 bottom-2 left-[7px] w-px sm:left-[9px]"
         style={{
-          background: `linear-gradient(180deg, ${hexToRgba(character.accentColor, 0.55)}, ${hexToRgba(character.accentColor, 0.08)})`,
+          background: `linear-gradient(180deg, ${hexToRgba(character.accentColor, muted ? 0.25 : 0.55)}, ${hexToRgba(character.accentColor, 0.08)})`,
         }}
       />
       <ol className="space-y-7 sm:space-y-9">
@@ -30,9 +74,10 @@ export function Timeline({
           <TimelineEvent
             key={beat.id}
             beat={beat}
-            index={index}
+            index={startIndex + index}
             accentColor={character.accentColor}
             selfId={character.id}
+            muted={muted}
           />
         ))}
       </ol>
@@ -45,11 +90,13 @@ export function TimelineEvent({
   index,
   accentColor,
   selfId,
+  muted = false,
 }: {
   beat: TimelineBeat;
   index: number;
   accentColor: string;
   selfId: string;
+  muted?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
   const others = beat.characterIds
@@ -85,10 +132,19 @@ export function TimelineEvent({
         {beat.era}
       </p>
 
-      <h3 className="font-display text-parchment mt-2 text-xl sm:text-2xl">
+      <h3
+        className={`font-display mt-2 text-xl sm:text-2xl ${muted ? "text-muted" : "text-parchment"}`}
+      >
         {beat.title}
+        {muted ? (
+          <span className="text-eyebrow text-muted-dim ml-2 text-xs font-sans normal-case">
+            provisional
+          </span>
+        ) : null}
       </h3>
-      <p className="text-muted mt-2 max-w-2xl text-sm leading-relaxed">
+      <p
+        className={`mt-2 max-w-2xl text-sm leading-relaxed ${muted ? "text-muted-dim" : "text-muted"}`}
+      >
         {beat.description}
       </p>
 

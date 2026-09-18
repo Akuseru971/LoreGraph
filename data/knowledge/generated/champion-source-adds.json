@@ -1,0 +1,486 @@
+{
+  "alistar": [
+    "source:wiki-alistar",
+    "source:bio-alistar"
+  ],
+  "amumu": [
+    "source:wiki-amumu",
+    "source:bio-amumu"
+  ],
+  "anivia": [
+    "source:wiki-anivia",
+    "source:bio-anivia"
+  ],
+  "annie": [
+    "source:wiki-annie",
+    "source:bio-annie"
+  ],
+  "aphelios": [
+    "source:wiki-aphelios",
+    "source:bio-aphelios"
+  ],
+  "aurora": [
+    "source:wiki-aurora",
+    "source:bio-aurora"
+  ],
+  "bard": [
+    "source:wiki-bard",
+    "source:bio-bard"
+  ],
+  "belveth": [
+    "source:wiki-belveth",
+    "source:bio-belveth"
+  ],
+  "blitzcrank": [
+    "source:wiki-blitzcrank",
+    "source:bio-blitzcrank"
+  ],
+  "brand": [
+    "source:wiki-brand",
+    "source:bio-brand"
+  ],
+  "braum": [
+    "source:wiki-braum",
+    "source:bio-braum"
+  ],
+  "briar": [
+    "source:wiki-briar",
+    "source:bio-briar"
+  ],
+  "cassiopeia": [
+    "source:wiki-cassiopeia",
+    "source:bio-cassiopeia"
+  ],
+  "cho-gath": [
+    "source:wiki-cho-gath",
+    "source:bio-cho-gath"
+  ],
+  "corki": [
+    "source:wiki-corki",
+    "source:bio-corki"
+  ],
+  "dr-mundo": [
+    "source:wiki-dr-mundo",
+    "source:bio-dr-mundo"
+  ],
+  "draven": [
+    "source:wiki-draven",
+    "source:bio-draven"
+  ],
+  "elise": [
+    "source:wiki-elise",
+    "source:bio-elise"
+  ],
+  "evelynn": [
+    "source:wiki-evelynn",
+    "source:bio-evelynn"
+  ],
+  "ezreal": [
+    "source:wiki-ezreal",
+    "source:bio-ezreal"
+  ],
+  "fiddlesticks": [
+    "source:wiki-fiddlesticks",
+    "source:bio-fiddlesticks"
+  ],
+  "fiora": [
+    "source:wiki-fiora",
+    "source:bio-fiora"
+  ],
+  "fizz": [
+    "source:wiki-fizz",
+    "source:bio-fizz"
+  ],
+  "galio": [
+    "source:wiki-galio",
+    "source:bio-galio"
+  ],
+  "gangplank": [
+    "source:wiki-gangplank",
+    "source:bio-gangplank"
+  ],
+  "gnar": [
+    "source:wiki-gnar",
+    "source:bio-gnar"
+  ],
+  "gragas": [
+    "source:wiki-gragas",
+    "source:bio-gragas"
+  ],
+  "graves": [
+    "source:wiki-graves",
+    "source:bio-graves"
+  ],
+  "gwen": [
+    "source:wiki-gwen",
+    "source:bio-gwen"
+  ],
+  "hecarim": [
+    "source:wiki-hecarim",
+    "source:bio-hecarim"
+  ],
+  "heimerdinger": [
+    "source:wiki-heimerdinger",
+    "source:bio-heimerdinger"
+  ],
+  "hwei": [
+    "source:wiki-hwei",
+    "source:bio-hwei"
+  ],
+  "illaoi": [
+    "source:wiki-illaoi",
+    "source:bio-illaoi"
+  ],
+  "ivern": [
+    "source:wiki-ivern",
+    "source:bio-ivern"
+  ],
+  "janna": [
+    "source:wiki-janna",
+    "source:bio-janna"
+  ],
+  "jax": [
+    "source:wiki-jax",
+    "source:bio-jax"
+  ],
+  "jayce": [
+    "source:wiki-jayce",
+    "source:bio-jayce"
+  ],
+  "k-sante": [
+    "source:wiki-k-sante",
+    "source:bio-k-sante"
+  ],
+  "karthus": [
+    "source:wiki-karthus",
+    "source:bio-karthus"
+  ],
+  "kassadin": [
+    "source:wiki-kassadin",
+    "source:bio-kassadin"
+  ],
+  "kayn": [
+    "source:wiki-kayn",
+    "source:bio-kayn"
+  ],
+  "kennen": [
+    "source:wiki-kennen",
+    "source:bio-kennen"
+  ],
+  "khazix": [
+    "source:wiki-khazix",
+    "source:bio-khazix"
+  ],
+  "kindred": [
+    "source:wiki-kindred",
+    "source:bio-kindred"
+  ],
+  "kled": [
+    "source:wiki-kled",
+    "source:bio-kled"
+  ],
+  "kog-maw": [
+    "source:wiki-kog-maw",
+    "source:bio-kog-maw"
+  ],
+  "lillia": [
+    "source:wiki-lillia",
+    "source:bio-lillia"
+  ],
+  "lucian": [
+    "source:wiki-lucian",
+    "source:bio-lucian"
+  ],
+  "lulu": [
+    "source:wiki-lulu",
+    "source:bio-lulu"
+  ],
+  "malphite": [
+    "source:wiki-malphite",
+    "source:bio-malphite"
+  ],
+  "malzahar": [
+    "source:wiki-malzahar",
+    "source:bio-malzahar"
+  ],
+  "maokai": [
+    "source:wiki-maokai",
+    "source:bio-maokai"
+  ],
+  "master-yi": [
+    "source:wiki-master-yi",
+    "source:bio-master-yi"
+  ],
+  "milio": [
+    "source:wiki-milio",
+    "source:bio-milio"
+  ],
+  "miss-fortune": [
+    "source:wiki-miss-fortune",
+    "source:bio-miss-fortune"
+  ],
+  "naafiri": [
+    "source:wiki-naafiri",
+    "source:bio-naafiri"
+  ],
+  "nami": [
+    "source:wiki-nami",
+    "source:bio-nami"
+  ],
+  "nautilus": [
+    "source:wiki-nautilus",
+    "source:bio-nautilus"
+  ],
+  "neeko": [
+    "source:wiki-neeko",
+    "source:bio-neeko"
+  ],
+  "nidalee": [
+    "source:wiki-nidalee",
+    "source:bio-nidalee"
+  ],
+  "nilah": [
+    "source:wiki-nilah",
+    "source:bio-nilah"
+  ],
+  "nocturne": [
+    "source:wiki-nocturne",
+    "source:bio-nocturne"
+  ],
+  "nunu-willump": [
+    "source:wiki-nunu-willump",
+    "source:bio-nunu-willump"
+  ],
+  "olaf": [
+    "source:wiki-olaf",
+    "source:bio-olaf"
+  ],
+  "orianna": [
+    "source:wiki-orianna",
+    "source:bio-orianna"
+  ],
+  "ornn": [
+    "source:wiki-ornn",
+    "source:bio-ornn"
+  ],
+  "poppy": [
+    "source:wiki-poppy",
+    "source:bio-poppy"
+  ],
+  "pyke": [
+    "source:wiki-pyke",
+    "source:bio-pyke"
+  ],
+  "qiyana": [
+    "source:wiki-qiyana",
+    "source:bio-qiyana"
+  ],
+  "quinn": [
+    "source:wiki-quinn",
+    "source:bio-quinn"
+  ],
+  "rakan": [
+    "source:wiki-rakan",
+    "source:bio-rakan"
+  ],
+  "rammus": [
+    "source:wiki-rammus",
+    "source:bio-rammus"
+  ],
+  "rek-sai": [
+    "source:wiki-rek-sai",
+    "source:bio-rek-sai"
+  ],
+  "rell": [
+    "source:wiki-rell",
+    "source:bio-rell"
+  ],
+  "renata-glasc": [
+    "source:wiki-renata-glasc",
+    "source:bio-renata-glasc"
+  ],
+  "renekton": [
+    "source:wiki-renekton",
+    "source:bio-renekton"
+  ],
+  "rengar": [
+    "source:wiki-rengar",
+    "source:bio-rengar"
+  ],
+  "rumble": [
+    "source:wiki-rumble",
+    "source:bio-rumble"
+  ],
+  "samira": [
+    "source:wiki-samira",
+    "source:bio-samira"
+  ],
+  "sejuani": [
+    "source:wiki-sejuani",
+    "source:bio-sejuani"
+  ],
+  "seraphine": [
+    "source:wiki-seraphine",
+    "source:bio-seraphine"
+  ],
+  "sett": [
+    "source:wiki-sett",
+    "source:bio-sett"
+  ],
+  "shaco": [
+    "source:wiki-shaco",
+    "source:bio-shaco"
+  ],
+  "shyvana": [
+    "source:wiki-shyvana",
+    "source:bio-shyvana"
+  ],
+  "sion": [
+    "source:wiki-sion",
+    "source:bio-sion"
+  ],
+  "sivir": [
+    "source:wiki-sivir",
+    "source:bio-sivir"
+  ],
+  "skarner": [
+    "source:wiki-skarner",
+    "source:bio-skarner"
+  ],
+  "smolder": [
+    "source:wiki-smolder",
+    "source:bio-smolder"
+  ],
+  "sona": [
+    "source:wiki-sona",
+    "source:bio-sona"
+  ],
+  "soraka": [
+    "source:wiki-soraka",
+    "source:bio-soraka"
+  ],
+  "tahm-kench": [
+    "source:wiki-tahm-kench",
+    "source:bio-tahm-kench"
+  ],
+  "taliyah": [
+    "source:wiki-taliyah",
+    "source:bio-taliyah"
+  ],
+  "talon": [
+    "source:wiki-talon",
+    "source:bio-talon"
+  ],
+  "taric": [
+    "source:wiki-taric",
+    "source:bio-taric"
+  ],
+  "teemo": [
+    "source:wiki-teemo",
+    "source:bio-teemo"
+  ],
+  "tristana": [
+    "source:wiki-tristana",
+    "source:bio-tristana"
+  ],
+  "trundle": [
+    "source:wiki-trundle",
+    "source:bio-trundle"
+  ],
+  "tryndamere": [
+    "source:wiki-tryndamere",
+    "source:bio-tryndamere"
+  ],
+  "twisted-fate": [
+    "source:wiki-twisted-fate",
+    "source:bio-twisted-fate"
+  ],
+  "twitch": [
+    "source:wiki-twitch",
+    "source:bio-twitch"
+  ],
+  "udyr": [
+    "source:wiki-udyr",
+    "source:bio-udyr"
+  ],
+  "urgot": [
+    "source:wiki-urgot",
+    "source:bio-urgot"
+  ],
+  "vayne": [
+    "source:wiki-vayne",
+    "source:bio-vayne"
+  ],
+  "veigar": [
+    "source:wiki-veigar",
+    "source:bio-veigar"
+  ],
+  "vel-koz": [
+    "source:wiki-vel-koz",
+    "source:bio-vel-koz"
+  ],
+  "vex": [
+    "source:wiki-vex",
+    "source:bio-vex"
+  ],
+  "vladimir": [
+    "source:wiki-vladimir",
+    "source:bio-vladimir"
+  ],
+  "volibear": [
+    "source:wiki-volibear",
+    "source:bio-volibear"
+  ],
+  "warwick": [
+    "source:wiki-warwick",
+    "source:bio-warwick"
+  ],
+  "wukong": [
+    "source:wiki-wukong",
+    "source:bio-wukong"
+  ],
+  "xerath": [
+    "source:wiki-xerath",
+    "source:bio-xerath"
+  ],
+  "xin-zhao": [
+    "source:wiki-xin-zhao",
+    "source:bio-xin-zhao"
+  ],
+  "yorick": [
+    "source:wiki-yorick",
+    "source:bio-yorick"
+  ],
+  "yuumi": [
+    "source:wiki-yuumi",
+    "source:bio-yuumi"
+  ],
+  "zac": [
+    "source:wiki-zac",
+    "source:bio-zac"
+  ],
+  "zed": [
+    "source:wiki-zed",
+    "source:bio-zed"
+  ],
+  "zeri": [
+    "source:wiki-zeri",
+    "source:bio-zeri"
+  ],
+  "ziggs": [
+    "source:wiki-ziggs",
+    "source:bio-ziggs"
+  ],
+  "zilean": [
+    "source:wiki-zilean",
+    "source:bio-zilean"
+  ],
+  "zoe": [
+    "source:wiki-zoe",
+    "source:bio-zoe"
+  ],
+  "zyra": [
+    "source:wiki-zyra",
+    "source:bio-zyra"
+  ]
+}
