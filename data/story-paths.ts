@@ -44,7 +44,7 @@ const seeds: PathSeed[] = [
         subtitle: "Mortals made into god-warriors",
         body: [
           "Shurima's Sun Disc could elevate mortals into Ascended god-warriors.",
-          "The Rite of Ascension was a formal Shuriman institution — a public ceremony that raised champions into defenders of the empire.",
+          "Shurima used the Rite of Ascension to raise mortals into Ascended.",
           "Aatrox was among Shurima's greatest Ascended, raised through the Sun Disc long before the empire's fall.",
         ],
         chars: ["aatrox", "nasus", "azir"],

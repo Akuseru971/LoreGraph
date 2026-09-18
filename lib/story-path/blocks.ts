@@ -11,10 +11,11 @@ import {
   downgradeIfUnsupported,
   type ClassifyContext,
 } from "./classify";
+import { canPromoteToVerifiedCanon } from "@/lib/knowledge/claim-trust";
+import { propositionFullySupported } from "@/lib/knowledge/claim-propositions";
 import {
   downgradeUnsupportedFact,
   resolveSupportingClaims,
-  reviewedClaims,
   sourcesFromClaims,
 } from "./support";
 
@@ -69,21 +70,41 @@ export function buildNarrativeBlocks(
       index,
     );
     const sourceIds = sourcesFromClaims(claimIds);
-    const reviewed = reviewedClaims(claimIds);
-    const reviewStatus: ReviewStatus | undefined =
-      reviewed.length === claimIds.length && claimIds.length > 0
-        ? "VERIFIED_CANON"
-        : claimIds.length > 0
-          ? "PENDING"
-          : undefined;
+    const propositionSupported = propositionFullySupported(text, claimIds);
 
     evidenceClass = downgradeUnsupportedFact(evidenceClass, text, claimIds);
     evidenceClass = downgradeIfUnsupported(
       evidenceClass,
       claimIds,
       sourceIds,
-      reviewStatus,
+      canPromoteToVerifiedCanon({
+        text,
+        claimIds,
+        sourceIds,
+        propositionSupported,
+      })
+        ? "VERIFIED_CANON"
+        : claimIds.length
+          ? "REVIEWED"
+          : undefined,
     );
+
+    let reviewStatus: ReviewStatus | undefined;
+    if (evidenceClass === "EDITORIAL_FRAMING" || evidenceClass === "INTERPRETATION") {
+      reviewStatus = "APPROVED_EDITORIAL";
+    } else if (
+      evidenceClass === "FACT" &&
+      canPromoteToVerifiedCanon({
+        text,
+        claimIds,
+        sourceIds,
+        propositionSupported,
+      })
+    ) {
+      reviewStatus = "VERIFIED_CANON";
+    } else if (claimIds.length > 0) {
+      reviewStatus = "REVIEWED";
+    }
 
     const block: StoryNarrativeBlock = {
       text,
@@ -93,7 +114,9 @@ export function buildNarrativeBlocks(
     if (claimIds.length) block.claimIds = claimIds;
     if (sourceIds.length) block.sourceIds = sourceIds;
     if (reviewStatus) block.reviewStatus = reviewStatus;
-    if (evidenceClass === "FACT") block.canonStatus = "CURRENT_CANON";
+    if (evidenceClass === "FACT" && reviewStatus === "VERIFIED_CANON") {
+      block.canonStatus = "CURRENT_CANON";
+    }
     if (evidenceClass === "UNRESOLVED") block.canonStatus = "UNKNOWN";
 
     return block;

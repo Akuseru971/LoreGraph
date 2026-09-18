@@ -2,13 +2,15 @@ import { claimById } from "@/data/knowledge/claims";
 import { sourceById } from "@/data/sources";
 import { storyPaths } from "@/data/story-paths";
 import type { NarrativeEvidenceClass, StoryNarrativeBlock } from "@/types";
-import { supportsNarrativeBlock, validateFactPropositionSupport } from "./support";
+import type { ClaimSourceAuthority } from "@/lib/knowledge/claim-trust";
+import { factEvidenceMetrics, supportsNarrativeBlock, validateFactPropositionSupport } from "./support";
 
 export interface StoryPathValidationResult {
   errors: string[];
   warnings: string[];
   blockCounts: Record<NarrativeEvidenceClass, number>;
   factsWithoutEvidence: number;
+  factEvidence: Record<ClaimSourceAuthority, number>;
 }
 
 function validateBlock(
@@ -66,6 +68,13 @@ export function validateStoryPaths(): StoryPathValidationResult {
     UNRESOLVED: 0,
   };
   let factsWithoutEvidence = 0;
+  const factEvidence: Record<ClaimSourceAuthority, number> = {
+    PRIMARY_EXPLICIT: 0,
+    PRIMARY_COMBINED: 0,
+    OFFICIAL_REFERENCE: 0,
+    DERIVED: 0,
+    EDITORIAL: 0,
+  };
 
   for (const path of storyPaths) {
     const allBlocks = path.chapters.flatMap((c) => c.blocks ?? []);
@@ -74,6 +83,14 @@ export function validateStoryPaths(): StoryPathValidationResult {
       blockCounts[block.evidenceClass]++;
       if (block.evidenceClass === "FACT" && (!block.claimIds?.length || !block.sourceIds?.length)) {
         factsWithoutEvidence++;
+      }
+      if (block.evidenceClass === "FACT" && block.claimIds?.length) {
+        const { authority, wikiOnly } = factEvidenceMetrics(block.claimIds);
+        if (wikiOnly) {
+          factEvidence.OFFICIAL_REFERENCE++;
+        } else {
+          factEvidence[authority]++;
+        }
       }
     }
 
@@ -90,5 +107,5 @@ export function validateStoryPaths(): StoryPathValidationResult {
     }
   }
 
-  return { errors, warnings, blockCounts, factsWithoutEvidence };
+  return { errors, warnings, blockCounts, factsWithoutEvidence, factEvidence };
 }

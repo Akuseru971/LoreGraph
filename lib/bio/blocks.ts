@@ -1,28 +1,39 @@
 import { claimById, claims } from "@/data/knowledge/claims";
+import {
+  canPromoteToVerifiedCanon,
+  evaluateClaimsTrust,
+} from "@/lib/knowledge/claim-trust";
+import {
+  EDITORIAL_PROPOSITION_MARKERS,
+  propositionFullySupported,
+} from "@/lib/knowledge/claim-propositions";
 import { bioSourceId } from "@/data/sources";
 import type {
   BioNarrativeBlock,
-  CanonStatus,
   NarrativeEvidenceClass,
   ReviewStatus,
 } from "@/types";
 import { classifyParagraph } from "@/lib/story-path/classify";
 import {
-  downgradeUnsupportedFact,
   resolveSupportingClaims,
-  reviewedClaims,
   sourcesFromClaims,
 } from "@/lib/story-path/support";
 
 /** Per-champion editorial markers beyond the shared classifier. */
 const BIO_EDITORIAL_PATTERNS: Record<string, RegExp[]> = {
   aatrox: [
-    /\bstatues were carved\b/i,
-    /\bsongs were written\b/i,
+    /\bsomething in the ascended broke\b/i,
     /\bcurdled into appetite\b/i,
+    /\bheroes who had saved shurima became the reason\b/i,
+    /\bmortals who had built them fought back\b/i,
+    /\btargon intervened\b/i,
+    /\bcould not be killed\b/i,
     /\bmost reliable exit\b/i,
+    /\bworld ending\b/i,
     /\bconsequence with a grudge\b/i,
     /\bbuilt the cage\b/i,
+    /\bstatues were carved\b/i,
+    /\bsongs were written\b/i,
   ],
   varus: [
     /\bdefender turned into something\b/i,
@@ -34,6 +45,9 @@ const BIO_EDITORIAL_PATTERNS: Record<string, RegExp[]> = {
     /\binteresting is what happened next\b/i,
     /\bneither of them is owed\b/i,
     /\brare figure\b/i,
+    /\bfor years the arrangement worked\b/i,
+    /\binherited its memory\b/i,
+    /\bproperly, in a way that celestial beings\b/i,
   ],
   nasus: [
     /\bgrief is specific\b/i,
@@ -65,11 +79,43 @@ function classifyBioParagraph(
   text: string,
   index: number,
 ): NarrativeEvidenceClass {
+  if (EDITORIAL_PROPOSITION_MARKERS.some((p) => p.test(text))) {
+    return "EDITORIAL_FRAMING";
+  }
   const editorial = BIO_EDITORIAL_PATTERNS[slug];
   if (editorial?.some((p) => p.test(text))) {
     return "EDITORIAL_FRAMING";
   }
   return classifyParagraph(text, { isFirstParagraph: index === 0 });
+}
+
+function resolveBioReviewStatus(
+  text: string,
+  claimIds: string[],
+  sourceIds: string[],
+  evidenceClass: NarrativeEvidenceClass,
+): ReviewStatus | undefined {
+  if (evidenceClass === "EDITORIAL_FRAMING" || evidenceClass === "INTERPRETATION") {
+    return "APPROVED_EDITORIAL";
+  }
+  if (!claimIds.length) return undefined;
+
+  const propositionSupported = propositionFullySupported(text, claimIds);
+  if (
+    canPromoteToVerifiedCanon({
+      text,
+      claimIds,
+      sourceIds,
+      propositionSupported,
+    })
+  ) {
+    return "VERIFIED_CANON";
+  }
+
+  const trust = evaluateClaimsTrust(claimIds);
+  if (trust.canBeFact && propositionSupported) return trust.reviewStatus;
+  if (claimIds.length > 0) return "PENDING";
+  return undefined;
 }
 
 export function buildBioBlocks(
@@ -78,40 +124,36 @@ export function buildBioBlocks(
 ): BioNarrativeBlock[] {
   const characterId = `char:${slug}`;
   const candidates = findCandidateClaims(characterId);
-  const fallbackSource = bioSourceId(slug);
 
   return paragraphs.map((text, index) => {
     let evidenceClass = classifyBioParagraph(slug, text, index);
     const claimIds = resolveSupportingClaims(text, candidates);
-    const sourceIds =
-      sourcesFromClaims(claimIds).length > 0
-        ? sourcesFromClaims(claimIds)
-        : fallbackSource
-          ? [fallbackSource]
-          : [];
-    const reviewed = reviewedClaims(claimIds);
-    let reviewStatus: ReviewStatus | undefined;
-    if (reviewed.length === claimIds.length && claimIds.length > 0) {
-      reviewStatus = "VERIFIED_CANON";
-    } else if (evidenceClass === "EDITORIAL_FRAMING" || evidenceClass === "INTERPRETATION") {
-      reviewStatus = "APPROVED_EDITORIAL";
-    } else if (claimIds.length > 0) {
-      reviewStatus = "PENDING";
-    }
+    const sourceIds = sourcesFromClaims(claimIds);
+    const reviewStatus = resolveBioReviewStatus(
+      text,
+      claimIds,
+      sourceIds,
+      evidenceClass,
+    );
 
-    evidenceClass = downgradeUnsupportedFact(evidenceClass, text, claimIds);
-    if (
-      evidenceClass === "FACT" &&
-      (!claimIds.length || reviewStatus === "PENDING")
-    ) {
-      evidenceClass = claimIds.length ? "SUPPORTED_SYNTHESIS" : "UNRESOLVED";
+    if (evidenceClass === "FACT") {
+      const propositionSupported = propositionFullySupported(text, claimIds);
+      if (
+        !propositionSupported ||
+        reviewStatus !== "VERIFIED_CANON" ||
+        !claimIds.length
+      ) {
+        evidenceClass = claimIds.length ? "SUPPORTED_SYNTHESIS" : "UNRESOLVED";
+      }
     }
 
     const block: BioNarrativeBlock = { text, evidenceClass };
     if (claimIds.length) block.claimIds = claimIds;
     if (sourceIds.length) block.sourceIds = sourceIds;
     if (reviewStatus) block.reviewStatus = reviewStatus;
-    if (evidenceClass === "FACT") block.canonStatus = "CURRENT_CANON";
+    if (evidenceClass === "FACT" && reviewStatus === "VERIFIED_CANON") {
+      block.canonStatus = "CURRENT_CANON";
+    }
     if (evidenceClass === "UNRESOLVED") block.canonStatus = "UNKNOWN";
     return block;
   });
@@ -122,8 +164,8 @@ export function trustedBioParagraphs(blocks: BioNarrativeBlock[]): string[] {
   return blocks
     .filter(
       (b) =>
-        (b.evidenceClass === "FACT" || b.evidenceClass === "SUPPORTED_SYNTHESIS") &&
-        b.reviewStatus !== "PENDING" &&
+        b.evidenceClass === "FACT" &&
+        b.reviewStatus === "VERIFIED_CANON" &&
         b.canonStatus !== "UNKNOWN",
     )
     .map((b) => b.text);

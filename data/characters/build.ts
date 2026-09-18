@@ -6,6 +6,7 @@ import {
 } from "@/lib/canon/model";
 import {
   deriveTimelineConfidence,
+  deriveTimelineEvidenceClass,
   deriveTimelineReviewStatus,
 } from "@/lib/timeline/trust";
 import type {
@@ -83,13 +84,13 @@ export function buildCharacter(seed: CharacterSeed): Character {
       (beat.event ? undefined : seed.sources) ??
       (seed.sources?.length ? seed.sources : [bioSourceId(seed.slug)]);
     const canonStatus = normalizeCanonStatus(beat.canonStatus ?? seed.canonStatus);
-    const reviewStatus =
-      beat.reviewStatus ??
-      deriveTimelineReviewStatus({
-        sourceIds,
-        claimIds: beat.claimIds,
-        canonStatus,
-      });
+    const reviewStatus = deriveTimelineReviewStatus({
+      description: beat.description,
+      sourceIds,
+      claimIds: beat.claimIds,
+      canonStatus,
+      continuity: seed.continuity,
+    });
     const built: TimelineBeat = {
       id: `beat:${seed.slug}-${index + 1}`,
       era: beat.era,
@@ -104,14 +105,23 @@ export function buildCharacter(seed: CharacterSeed): Character {
       reviewStatus,
       confidence:
         beat.confidence ??
-        deriveTimelineConfidence({ claimIds: beat.claimIds, reviewStatus }),
-      evidenceClass: beat.evidenceClass,
+        deriveTimelineConfidence({
+          claimIds: beat.claimIds,
+          reviewStatus,
+          description: beat.description,
+        }),
+      evidenceClass:
+        beat.evidenceClass ??
+        deriveTimelineEvidenceClass({
+          description: beat.description,
+          sourceIds,
+          claimIds: beat.claimIds,
+          canonStatus,
+          continuity: seed.continuity,
+          reviewStatus,
+        }),
     };
     if (beat.claimIds?.length) built.claimIds = beat.claimIds;
-    if (!built.evidenceClass) {
-      built.evidenceClass =
-        reviewStatus === "VERIFIED_CANON" ? "FACT" : "UNRESOLVED";
-    }
     return built;
   });
 

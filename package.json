@@ -27,6 +27,7 @@
     "validate:relationships": "tsx scripts/validate-relationships.ts",
     "validate:timelines": "tsx scripts/validate-timelines.ts",
     "validate:canon": "tsx scripts/validate-canon.ts",
+    "validate:claims": "tsx scripts/validate-claims.ts",
     "report:quality": "tsx scripts/report-quality.ts",
     "report:canon": "tsx scripts/generate-canon-reports.ts",
     "report:phase1": "tsx scripts/generate-phase1-reports.ts",

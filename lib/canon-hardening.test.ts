@@ -7,9 +7,14 @@ import { computeQuality } from "@/lib/knowledge/quality-matrix";
 import { absoluteUrl, findForbiddenOrigins, getSiteUrl } from "@/lib/seo";
 import { loreEntityById } from "@/data/lore-entities";
 import { findDuplicateRelationships } from "@/lib/relationships/dedupe";
+import { claimById } from "@/data/knowledge/claims";
 import { trustedBioParagraphs } from "@/lib/bio/blocks";
+import { claimSourceAuthority } from "@/lib/knowledge/claim-trust";
 import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
-import { supportsNarrativeBlock, validateFactPropositionSupport } from "@/lib/story-path/support";
+import {
+  supportsNarrativeBlock,
+  validateFactPropositionSupport,
+} from "@/lib/story-path/support";
 import { validateStoryPaths } from "@/lib/story-path/validate";
 import type { GraphEdge } from "@/types";
 
@@ -173,15 +178,69 @@ describe("Canon hardening regression", () => {
       "The Rite of Ascension was a public imperial institution.",
       ["claim:aatrox-was-ascended"],
     );
-    expect(issues.some((i) => i.kind === "scope_mismatch")).toBe(true);
+    expect(issues.some((i) => i.kind === "scope_mismatch" || i.kind === "incomplete_coverage")).toBe(true);
   });
 
-  it("Aatrox bio SEO shell excludes unresolved editorial paragraphs", () => {
+  it("Aatrox became-Darkin claim cannot support 'needed the war to continue'", () => {
+    expect(
+      supportsNarrativeBlock(
+        "The hero curdles into something that needs the war to continue.",
+        ["claim:aatrox-became-darkin"],
+      ),
+    ).toBe(false);
+  });
+
+  it("Aatrox Ascended claim cannot support public Rite of Ascension ceremony", () => {
+    expect(
+      supportsNarrativeBlock(
+        "The Rite of Ascension was a public ceremony.",
+        ["claim:aatrox-was-ascended"],
+      ),
+    ).toBe(false);
+  });
+
+  it("Shurima Rite claim cannot automatically support public ceremony without matching claim", () => {
+    expect(
+      supportsNarrativeBlock(
+        "The Rite of Ascension was a public ceremony.",
+        ["claim:rite-elevates-ascended"],
+      ),
+    ).toBe(false);
+  });
+
+  it("Varus Ascended claim uses twilight/wiki sources not bio alone", () => {
+    const claim = claimById.get("claim:varus-was-ascended");
+    expect(claim?.sourceIds).toContain("source:twilight-of-the-gods");
+    expect(claim?.sourceIds).toContain("source:wiki-varus");
+    expect(claimSourceAuthority(claim!)).not.toBe("PRIMARY_EXPLICIT");
+  });
+
+  it("VERIFIED timeline beats require reviewed trusted claims", () => {
+    const aatrox = characters.find((c) => c.slug === "aatrox");
+    const verified = aatrox?.timeline.filter((b) => b.reviewStatus === "VERIFIED_CANON");
+    for (const beat of verified ?? []) {
+      expect(beat.claimIds?.length).toBeGreaterThan(0);
+      expect(isTrustedTimelineBeat(beat)).toBe(true);
+    }
+  });
+
+  it("Editorial bio blocks do not enter SEO factual shell", () => {
+    const aatrox = characters.find((c) => c.slug === "aatrox");
+    const trusted = trustedBioParagraphs(aatrox!.bioBlocks!);
+    expect(trusted.join(" ")).not.toMatch(/curdled into appetite/i);
+    expect(trusted.join(" ")).not.toMatch(/world ending/i);
+  });
+
+  it("Aatrox bio SEO shell only includes VERIFIED_CANON FACT blocks", () => {
     const aatrox = characters.find((c) => c.slug === "aatrox");
     expect(aatrox?.bioBlocks?.length).toBeGreaterThan(0);
     const trusted = trustedBioParagraphs(aatrox!.bioBlocks!);
-    expect(trusted.join(" ")).not.toMatch(/most reliable exit/i);
+    expect(trusted.length).toBeGreaterThan(0);
     expect(trusted.join(" ")).toMatch(/Ascended/i);
+    for (const block of aatrox!.bioBlocks!.filter((b) => trusted.includes(b.text))) {
+      expect(block.evidenceClass).toBe("FACT");
+      expect(block.reviewStatus).toBe("VERIFIED_CANON");
+    }
   });
 
   it("Connect Varus to Pantheon routes without direct character edge", () => {
