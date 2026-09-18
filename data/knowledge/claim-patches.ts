@@ -12,7 +12,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   "claim:pack:00174": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Duplicate of claim:aatrox-fought-pantheon — reviewed.",
+    evidenceNote: "Duplicate participation edge; primary evidence in claim:aatrox-fought-pantheon per source:bio-aatrox.",
   },
   "claim:pack:00204": {
     reviewed: true,
@@ -29,27 +29,31 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     needsReview: false,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Confirmed by claim:aatrox-participated-void-war.",
+    sourceIds: ["source:bio-aatrox"],
+    evidenceNote: "Aatrox bio establishes he fought as a Shuriman defender against the Void.",
   },
   "claim:pack:00267": {
     reviewed: true,
     needsReview: false,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Confirmed by claim:aatrox-participated-darkin-war.",
+    sourceIds: ["source:bio-aatrox", "source:twilight-of-the-gods"],
+    evidenceNote: "Aatrox bio and Twilight of the Gods establish Darkin War participation.",
   },
   "claim:pack:00315": {
     reviewed: true,
     needsReview: false,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Confirmed by claim:aatrox-fought-pantheon and event:aatrox-pantheon-duel.",
+    sourceIds: ["source:bio-aatrox", "source:bio-pantheon"],
+    evidenceNote: "Bios establish Aatrox destroyed the Aspect of War within Atreus.",
   },
 
   /* Phase 1 — Pantheon */
   "claim:pack:00100": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-pantheon"],
     evidenceNote: "Region confirmed by source:bio-pantheon.",
   },
   "claim:pack:00256": {
@@ -63,45 +67,52 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     needsReview: false,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Confirmed by claim:pantheon-participated-aatrox-duel.",
+    sourceIds: ["source:bio-pantheon", "source:bio-aatrox"],
+    evidenceNote: "Pantheon bio establishes Atreus fought Aatrox; the Aspect was destroyed.",
   },
 
   /* Phase 1 — Varus */
   "claim:pack:00146": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Ancient Shurima origin; modern activity in Ionia per bio-varus.",
+    sourceIds: ["source:bio-varus"],
+    evidenceNote: "Ancient Shurima origin; modern activity in Ionia per source:bio-varus.",
   },
   "claim:pack:00268": {
     reviewed: true,
     needsReview: false,
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Confirmed by claim:varus-sealed-in-bow and Darkin War timeline.",
+    sourceIds: ["source:bio-varus"],
+    evidenceNote: "Varus bio establishes imprisonment in his bow after the Darkin War.",
   },
 
   /* Phase 1 — Nasus */
   "claim:pack:00090": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-nasus"],
     evidenceNote: "Region confirmed by source:bio-nasus.",
   },
   "claim:pack:00181": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:nasus-brother-renekton.",
+    sourceIds: ["source:bio-nasus", "source:bio-renekton"],
+    evidenceNote: "Nasus and Renekton bios establish they are brothers.",
   },
   "claim:pack:00182": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:nasus-opposed-xerath.",
+    sourceIds: ["source:bio-nasus", "source:bio-xerath"],
+    evidenceNote: "Nasus bio establishes he helped imprison Xerath after the fall.",
   },
   "claim:pack:00258": {
     reviewed: true,
     needsReview: false,
     predicate: "PARTICIPATED_IN",
     certainty: "STRONG",
-    evidenceNote: "Confirmed by claim:nasus-participated-void-war.",
+    sourceIds: ["source:bio-nasus"],
+    evidenceNote: "Nasus bio establishes he was Ascended when Shurima fought the Void.",
   },
   "claim:pack:00264": {
     reviewed: true,
@@ -109,7 +120,8 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     objectId: "event:fall-of-shurima",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Confirmed by claim:nasus-participated-fall.",
+    sourceIds: ["source:bio-nasus"],
+    evidenceNote: "Nasus bio establishes he sealed Xerath during the fall of Shurima.",
   },
   "claim:pack:00289": {
     reviewed: true,
@@ -117,13 +129,15 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     objectId: "event:shurima-risen",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Nasus present when Shurima rose again per bio-nasus.",
+    sourceIds: ["source:bio-nasus"],
+    evidenceNote: "Nasus present when Shurima rose again per source:bio-nasus.",
   },
   "claim:pack:00325": {
     reviewed: true,
     needsReview: false,
     predicate: "ACTIVE_DURING",
     certainty: "STRONG",
+    sourceIds: ["source:bio-nasus"],
     evidenceNote: "Nasus served during Shurima's golden age as scholar and Ascended.",
   },
 
@@ -131,19 +145,23 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   "claim:pack:00110": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-renekton"],
     evidenceNote: "Region confirmed by source:bio-renekton.",
   },
   "claim:pack:00183": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:renekton-imprisoned-with-xerath.",
+    sourceIds: ["source:bio-renekton", "source:bio-xerath"],
+    evidenceNote: "Renekton bio establishes he was entombed guarding Xerath.",
   },
   "claim:pack:00259": {
-    reviewed: true,
-    needsReview: false,
+    reviewed: false,
+    needsReview: true,
     predicate: "PARTICIPATED_IN",
     certainty: "STRONG",
-    evidenceNote: "Renekton was Ascended during ancient Shurima's Void conflict.",
+    sourceIds: ["source:bio-renekton"],
+    evidenceNote:
+      "Renekton was Ascended during ancient Shurima; Void War participation not explicitly documented in primary sources.",
   },
   "claim:pack:00265": {
     reviewed: true,
@@ -151,7 +169,8 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     objectId: "event:fall-of-shurima",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Renekton entered the tomb during the fall per bio-renekton.",
+    sourceIds: ["source:bio-renekton"],
+    evidenceNote: "Renekton entered the tomb during the fall per source:bio-renekton.",
   },
   "claim:pack:00290": {
     reviewed: true,
@@ -159,13 +178,15 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     objectId: "event:shurima-risen",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Renekton freed when Shurima rose again.",
+    sourceIds: ["source:bio-renekton"],
+    evidenceNote: "Renekton freed when Shurima rose again per source:bio-renekton.",
   },
   "claim:pack:00326": {
     reviewed: true,
     needsReview: false,
     predicate: "ACTIVE_DURING",
     certainty: "STRONG",
+    sourceIds: ["source:bio-renekton"],
     evidenceNote: "Renekton was Shurima's foremost warrior during the empire's height.",
   },
 
@@ -173,17 +194,20 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   "claim:pack:00014": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-azir"],
     evidenceNote: "Region confirmed by source:bio-azir.",
   },
   "claim:pack:00179": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:azir-betrayed-by-xerath.",
+    sourceIds: ["source:bio-azir", "source:bio-xerath"],
+    evidenceNote: "Azir and Xerath bios establish Xerath's betrayal at Ascension.",
   },
   "claim:pack:00180": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Sivir's bloodline enables Azir's return per bio-azir.",
+    sourceIds: ["source:bio-azir"],
+    evidenceNote: "Sivir's bloodline enables Azir's return per source:bio-azir.",
   },
   "claim:pack:00262": {
     reviewed: true,
@@ -191,7 +215,8 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     objectId: "event:fall-of-shurima",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Confirmed by claim:azir-participated-fall.",
+    sourceIds: ["source:bio-azir", "source:rise"],
+    evidenceNote: "Azir was killed during his Ascension when Xerath betrayed him.",
   },
   "claim:pack:00287": {
     reviewed: true,
@@ -199,13 +224,15 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     objectId: "event:shurima-risen",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Confirmed by claim:azir-returned-ascended.",
+    sourceIds: ["source:bio-azir", "source:rise"],
+    evidenceNote: "Azir returned Ascended when Shurima rose again.",
   },
   "claim:pack:00324": {
     reviewed: true,
     needsReview: false,
     predicate: "ACTIVE_DURING",
     certainty: "DOCUMENTED",
+    sourceIds: ["source:bio-azir"],
     evidenceNote: "Azir ruled during Shurima's late imperial golden age.",
   },
 
@@ -213,12 +240,14 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   "claim:pack:00159": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-xerath"],
     evidenceNote: "Region confirmed by source:bio-xerath.",
   },
   "claim:pack:00243": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:xerath-betrayed-azir.",
+    sourceIds: ["source:bio-xerath", "source:bio-azir"],
+    evidenceNote: "Xerath bio establishes his betrayal of Azir at Ascension.",
   },
   "claim:pack:00263": {
     reviewed: true,
@@ -226,6 +255,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     objectId: "event:fall-of-shurima",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
+    sourceIds: ["source:bio-xerath", "source:bio-azir"],
     evidenceNote: "Xerath caused the fall during Azir's Ascension.",
   },
   "claim:pack:00291": {
@@ -234,13 +264,15 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     objectId: "event:shurima-risen",
     predicate: "PARTICIPATED_IN",
     certainty: "DOCUMENTED",
-    evidenceNote: "Xerath freed when Shurima rose again.",
+    sourceIds: ["source:bio-xerath"],
+    evidenceNote: "Xerath freed when Shurima rose again per source:bio-xerath.",
   },
   "claim:pack:00327": {
     reviewed: true,
     needsReview: false,
     predicate: "ACTIVE_DURING",
     certainty: "STRONG",
+    sourceIds: ["source:bio-xerath", "source:bio-azir"],
     evidenceNote: "Xerath served Azir during Shurima's late imperial period.",
   },
 
@@ -248,18 +280,21 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   "claim:pack:00208": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:kaisa-daughter-of-kassadin.",
+    sourceIds: ["source:bio-kaisa", "source:bio-kassadin"],
+    evidenceNote: "Kai'Sa and Kassadin bios establish their parent-child relationship.",
   },
 
   /* Phase 1 — Kassadin */
   "claim:pack:00061": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Shuriman origin; Void hunter per bio-kassadin.",
+    sourceIds: ["source:bio-kassadin"],
+    evidenceNote: "Shuriman origin; Void hunter per source:bio-kassadin.",
   },
   "claim:pack:00242": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-kassadin", "source:bio-malzahar"],
     evidenceNote: "Kassadin opposes Malzahar's Void prophecy per bios.",
   },
 
@@ -267,7 +302,8 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   "claim:pack:00080": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Shuriman origin; Void prophet per bio-malzahar.",
+    sourceIds: ["source:bio-malzahar"],
+    evidenceNote: "Shuriman origin; Void prophet per source:bio-malzahar.",
   },
 
   /* Phase 1 — Bel'Veth (pack uses bel-veth slug) */
@@ -275,38 +311,44 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     subjectId: "char:belveth",
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Void region association confirmed; slug normalized to belveth.",
+    sourceIds: ["source:bio-belveth"],
+    evidenceNote: "Void region association confirmed per source:bio-belveth.",
   },
   "claim:pack:00209": {
     subjectId: "char:belveth",
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:belveth-confronted-kaisa.",
+    sourceIds: ["source:bio-belveth", "source:bio-kaisa"],
+    evidenceNote: "Bel'Veth bio establishes direct confrontation with Kai'Sa.",
   },
 
   /* Phase 1 — Aurelion Sol */
   "claim:pack:00012": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Bound to Targon per bio-aurelion-sol.",
+    sourceIds: ["source:bio-aurelion-sol"],
+    evidenceNote: "Bound to Targon per source:bio-aurelion-sol.",
   },
 
   /* Phase 1 — Leona */
   "claim:pack:00072": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-leona"],
     evidenceNote: "Region confirmed by source:bio-leona.",
   },
   "claim:pack:00210": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:leona-childhood-friend-diana.",
+    sourceIds: ["source:bio-leona", "source:bio-diana"],
+    evidenceNote: "Leona and Diana bios establish they grew up together.",
   },
 
   /* Phase 1 — Diana */
   "claim:pack:00027": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-diana"],
     evidenceNote: "Region confirmed by source:bio-diana.",
   },
   "claim:pack:00226": {
@@ -327,12 +369,14 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
   "claim:pack:00172": {
     reviewed: true,
     needsReview: false,
+    sourceIds: ["source:bio-zoe"],
     evidenceNote: "Region confirmed by source:bio-zoe.",
   },
   "claim:pack:00255": {
     reviewed: true,
     needsReview: false,
-    evidenceNote: "Confirmed by claim:zoe-knows-aurelion-sol.",
+    sourceIds: ["source:bio-zoe", "source:bio-aurelion-sol"],
+    evidenceNote: "Zoe bio establishes interaction with Aurelion Sol as a celestial figure.",
   },
 };
 

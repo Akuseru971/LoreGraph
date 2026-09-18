@@ -7,10 +7,18 @@ import type {
   CompletenessTier,
   ReviewStatus,
 } from "@/types";
+import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
+import { canonConfidenceFromClaims } from "./claim-metrics";
+import {
+  directRelationshipReviewCoverage,
+  evaluateTierAGate,
+  trustedTimelineCoveragePercent,
+} from "./tier-a-gate";
 import {
   hasGameplayPollution,
   hasMeaningfulTimeline,
   hasQualityBio,
+  isPlaceholderTimelineTitle,
 } from "./completeness-helpers";
 
 export interface QualityResult {
@@ -20,6 +28,8 @@ export interface QualityResult {
   missingFields: string[];
   needsResearch: boolean;
   tierReasons: string[];
+  tierAEligible: boolean;
+  tierABlockers: string[];
 }
 
 const CONSERVATIVE_DISCLAIMER =
@@ -50,19 +60,6 @@ const PRIORITY_SLUGS = new Set([
   "thresh",
 ]);
 
-function claimWeight(canonStatus: CanonStatus): number {
-  switch (canonStatus) {
-    case "CURRENT_CANON":
-      return 1;
-    case "AMBIGUOUS":
-      return 0.5;
-    case "RECONCILIATION_PENDING":
-      return 0.3;
-    default:
-      return 0;
-  }
-}
-
 function reviewWeight(status: ReviewStatus | undefined, reviewed: boolean): number {
   if (status === "VERIFIED_CANON" || (reviewed && status !== "PENDING")) return 1;
   if (status === "APPROVED_EDITORIAL") return 0.7;
@@ -82,6 +79,7 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
   if (character.factions.length > 0) contentScore += 10;
   if (character.sourceIds.length > 0) contentScore += 10;
   if (character.species !== "Unknown") contentScore += 5;
+  else criticalMissing.push("species_unknown");
   if (character.roles.length > 0 && !hasGameplayPollution(character)) contentScore += 5;
   if (character.timeline.length >= 4) contentScore += 10;
 
@@ -96,16 +94,7 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
         : 0
       : Math.round((sourcedClaims.length / charClaims.length) * 100);
 
-  const canonConfidence =
-    charClaims.length === 0
-      ? character.verified
-        ? 50
-        : 20
-      : Math.round(
-          (reviewedClaims.reduce((sum, c) => sum + claimWeight(c.canonStatus), 0) /
-            charClaims.length) *
-            100,
-        );
+  const canonConfidence = canonConfidenceFromClaims(charClaims);
 
   const reviewCoverage =
     charClaims.length === 0
@@ -123,6 +112,8 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
             100,
         );
 
+  const trustedTimelineCoverage = trustedTimelineCoveragePercent(character);
+
   const charRels = relationships.filter(
     (r) => r.sourceCharacterId === character.id || r.targetCharacterId === character.id,
   );
@@ -133,6 +124,8 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
     charRels.length === 0
       ? 0
       : Math.round((reviewedRels.length / charRels.length) * 100);
+
+  const directRel = directRelationshipReviewCoverage(character);
 
   const eventCoverage =
     character.eventIds.length === 0
@@ -146,6 +139,9 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
     criticalMissing.push("conservative_bio");
   }
   if (TRUNCATED_END.test(character.shortDescription)) criticalMissing.push("truncated_bio");
+  if (character.timeline.some((b) => isPlaceholderTimelineTitle(b.title))) {
+    criticalMissing.push("placeholder_timeline");
+  }
   if (character.releaseYear === 2010 && character.slug !== "singed") {
     criticalMissing.push("releaseYear");
   }
@@ -156,13 +152,20 @@ export function computeQualityDimensions(character: Character): ChampionQualityD
   );
   if (unresolvedCore.length > 0) criticalMissing.push("unresolved_core_relationship");
 
+  const provisionalCore = character.timeline.filter(
+    (b) => b.sourceIds?.length && !isTrustedTimelineBeat(b),
+  );
+  if (provisionalCore.length > 0) criticalMissing.push("provisional_core_timeline");
+
   return {
     contentCompleteness: Math.min(100, contentScore),
     sourceCoverage,
     canonConfidence,
     reviewCoverage,
     timelineCoverage,
+    trustedTimelineCoverage,
     relationshipCoverage,
+    directRelationshipReviewCoverage: directRel.coverage,
     eventCoverage,
     continuityClassified,
     criticalMissing,
@@ -174,38 +177,21 @@ export function computeQuality(
   explicitTier?: CompletenessTier,
 ): QualityResult {
   const dimensions = computeQualityDimensions(character);
-  const tierReasons: string[] = [];
+  const tierGate = evaluateTierAGate(character, dimensions);
+  const tierReasons: string[] = [...tierGate.blockers];
   const missingFields = [...dimensions.criticalMissing];
 
-  const meetsTierA =
-    dimensions.contentCompleteness >= 80 &&
-    dimensions.sourceCoverage >= 70 &&
-    dimensions.canonConfidence >= 75 &&
-    dimensions.reviewCoverage >= 80 &&
-    dimensions.continuityClassified &&
-    hasQualityBio(character) &&
-    hasMeaningfulTimeline(character) &&
-    !dimensions.criticalMissing.includes("unresolved_core_relationship") &&
-    !dimensions.criticalMissing.includes("conservative_bio") &&
-    !dimensions.criticalMissing.includes("truncated_bio") &&
-    character.verified;
+  const meetsTierA = tierGate.eligible;
 
   let tier: CompletenessTier;
 
   if (explicitTier === "A" && !meetsTierA) {
     tier = "B";
-    tierReasons.push("Manual Tier A override blocked — integrity thresholds not met");
-    if (dimensions.reviewCoverage < 80) tierReasons.push("Review coverage below 80%");
-    if (dimensions.canonConfidence < 75) tierReasons.push("Canon confidence below 75%");
-    if (dimensions.criticalMissing.includes("unresolved_core_relationship")) {
-      tierReasons.push("Unresolved core DIRECT_CANON relationship");
-    }
+    tierReasons.unshift("Manual Tier A override blocked — integrity thresholds not met");
   } else if (meetsTierA) {
     tier = "A";
   } else if (dimensions.contentCompleteness >= 50 && dimensions.sourceCoverage >= 40) {
     tier = "B";
-    if (dimensions.reviewCoverage < 80) tierReasons.push("Review coverage insufficient for Tier A");
-    if (dimensions.canonConfidence < 75) tierReasons.push("Canon confidence insufficient for Tier A");
   } else {
     tier = "C";
   }
@@ -218,14 +204,16 @@ export function computeQuality(
   const needsResearch =
     missingFields.length >= 2 ||
     dimensions.reviewCoverage < 50 ||
+    dimensions.trustedTimelineCoverage < 50 ||
     CONSERVATIVE_DISCLAIMER.test(character.longDescription.join(" "));
 
   const score = Math.round(
     (dimensions.contentCompleteness +
       dimensions.sourceCoverage +
       dimensions.canonConfidence +
-      dimensions.reviewCoverage) /
-      4,
+      dimensions.reviewCoverage +
+      dimensions.trustedTimelineCoverage) /
+      5,
   );
 
   return {
@@ -235,6 +223,8 @@ export function computeQuality(
     missingFields,
     needsResearch,
     tierReasons,
+    tierAEligible: meetsTierA,
+    tierABlockers: tierGate.blockers,
   };
 }
 

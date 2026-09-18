@@ -77,7 +77,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Ancient Shurima",
         title: "The Darkin War",
         description:
-          "After Shurima's fall, surviving corrupted Ascended warred among themselves.",
+          "Aatrox fought among the corrupted Ascended during the Darkin War.",
         event: "darkin-war",
         with: ["varus"],
         sourceIds: ["source:bio-aatrox"],
@@ -108,7 +108,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Modern Runeterra",
         title: "The duel with the Aspect of War",
         description:
-          "Aatrox destroyed the celestial Aspect of War within Atreus. The mortal host survived.",
+          "Aatrox destroyed the celestial Aspect of War within Atreus. Atreus survived.",
         event: "aatrox-pantheon-duel",
         with: ["pantheon"],
         sourceIds: ["source:bio-aatrox", "source:bio-pantheon"],
@@ -177,11 +177,15 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Modern Runeterra",
         title: "The Aspect is killed",
         description:
-          "Aatrox destroys the celestial Aspect of War within Atreus. The mortal host survives.",
+          "Aatrox destroys the celestial Aspect of War within Atreus. Atreus survives.",
         event: "aatrox-pantheon-duel",
         with: ["aatrox"],
         sourceIds: ["source:bio-pantheon", "source:bio-aatrox"],
-        claimIds: ["claim:pantheon-aspect-destroyed", "claim:aatrox-fought-pantheon"],
+        claimIds: [
+          "claim:pantheon-aspect-destroyed",
+          "claim:aatrox-fought-pantheon",
+          "claim:aatrox-aspect-war-destroyed",
+        ],
         canonStatus: "CURRENT_CANON",
       },
       {
@@ -247,13 +251,12 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
       },
       {
         era: "Modern Runeterra",
-        title: "Working the leash",
+        title: "Still bound",
         description:
-          "Bound but not obedient, he spends the modern era testing exactly how much of his cage is real.",
+          "Aurelion Sol remains bound by the Targon crown in the modern era.",
         sourceIds: ["source:bio-aurelion-sol"],
-        reviewStatus: "REVIEWED",
+        claimIds: ["claim:aurelion-sol-still-bound"],
         canonStatus: "CURRENT_CANON",
-        evidenceClass: "SUPPORTED_SYNTHESIS",
       },
     ],
   },
@@ -366,7 +369,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Fall of Shurima",
         title: "The tomb",
         description:
-          "In the chaos of the fall he seals a catastrophe away, and loses his brother to it in the process.",
+          "During the fall Nasus seals Xerath away. Renekton is lost in the process.",
         event: "fall-of-shurima",
         with: ["renekton", "xerath"],
         sourceIds: ["source:bio-nasus"],
@@ -377,10 +380,11 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Modern Shurima",
         title: "Curator of the sands",
         description:
-          "He guards what remains of Shuriman knowledge while his emperor returns to rebuild the rest.",
+          "Nasus guards what remains of Shuriman knowledge after the fall.",
         event: "shurima-risen",
         with: ["azir"],
         sourceIds: ["source:bio-nasus"],
+        claimIds: ["claim:nasus-guards-shuriman-knowledge"],
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -541,16 +545,18 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
         era: "Modern Shurima",
         title: "The second skin",
         description:
-          "A Void symbiote fuses to her, keeping her alive in the dark and marking her forever on the surface.",
+          "A Void symbiote fuses to Kai'Sa, keeping her alive in the dark.",
         sourceIds: ["source:bio-kaisa"],
+        claimIds: ["claim:kaisa-void-symbiote"],
         canonStatus: "CURRENT_CANON",
       },
       {
         era: "Modern Runeterra",
         title: "Hunting her own reflection",
         description:
-          "She kills Void creatures for a world that cannot tell the difference between her and them.",
+          "Kai'Sa hunts Void creatures on the surface.",
         sourceIds: ["source:bio-kaisa"],
+        claimIds: ["claim:kaisa-hunts-void"],
         canonStatus: "CURRENT_CANON",
       },
     ],
@@ -584,7 +590,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
       {
         era: "Old Targon",
         title: "Raised Solari",
-        description: "Trained as a warrior of the sun faith, and its most convincing believer.",
+        description: "Leona grew up in the Solari alongside her childhood friend Diana.",
         with: ["diana"],
         sourceIds: ["source:bio-leona"],
         claimIds: ["claim:leona-childhood-friend-diana"],
@@ -641,7 +647,7 @@ export const shurimaTargonSeeds: CharacterSeed[] = [
       {
         era: "Old Targon",
         title: "The wrong questions",
-        description: "A Solari initiate finds records the order had buried, and refuses to stop reading.",
+        description: "Diana grew up in the Solari with Leona and found buried records she refused to stop reading.",
         with: ["leona"],
         sourceIds: ["source:bio-diana"],
         claimIds: ["claim:leona-childhood-friend-diana"],

@@ -10,9 +10,11 @@ import type { FactConfidence, ReviewStatus, TimelineBeat } from "@/types";
 /** Whether a beat is safe for default public timeline / Daily / cinematic fact narration. */
 export function isTrustedTimelineBeat(beat: TimelineBeat): boolean {
   if (!beat.sourceIds?.length) return false;
+  if (!beat.claimIds?.length) return false;
   if (beat.canonStatus === "UNKNOWN") return false;
   if (beat.reviewStatus !== "VERIFIED_CANON") return false;
   if (beat.evidenceClass !== "FACT") return false;
+  if (!propositionFullySupported(beat.description, beat.claimIds)) return false;
   return true;
 }
 

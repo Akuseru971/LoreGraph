@@ -12,10 +12,18 @@ export function hasQualityBio(character: Character): boolean {
   return true;
 }
 
+const PLACEHOLDER_TIMELINE_TITLE = /^current era$/i;
+
+export function isPlaceholderTimelineTitle(title: string): boolean {
+  return PLACEHOLDER_TIMELINE_TITLE.test(title.trim());
+}
+
 export function hasMeaningfulTimeline(character: Character): boolean {
   if (character.timeline.length < 2) return false;
   const genericOnly = character.timeline.every(
-    (b) => b.era === "Modern Runeterra" && b.title === character.name,
+    (b) =>
+      (b.era === "Modern Runeterra" && b.title === character.name) ||
+      isPlaceholderTimelineTitle(b.title),
   );
   return !genericOnly;
 }

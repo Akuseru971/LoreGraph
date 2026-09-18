@@ -62,6 +62,45 @@ describe("Canon hardening regression", () => {
     expect(weakOnly).toBe(false);
   });
 
+  it("Phase 1 cluster earns Tier A only with trusted timeline evidence chains", () => {
+    const phase1 = [
+      "aatrox",
+      "pantheon",
+      "varus",
+      "nasus",
+      "renekton",
+      "azir",
+      "xerath",
+      "kaisa",
+      "kassadin",
+      "malzahar",
+      "belveth",
+      "aurelion-sol",
+      "leona",
+      "diana",
+      "zoe",
+    ];
+    for (const slug of phase1) {
+      const c = characters.find((ch) => ch.slug === slug);
+      expect(c).toBeDefined();
+      const q = computeQuality(c!);
+      expect(q.tierAEligible).toBe(true);
+      expect(q.tier).toBe("A");
+      expect(q.dimensions.trustedTimelineCoverage).toBeGreaterThanOrEqual(70);
+    }
+  });
+
+  it("Trusted timeline beats require claimIds and proposition support", () => {
+    const aatrox = characters.find((c) => c.slug === "aatrox");
+    for (const beat of aatrox?.timeline ?? []) {
+      if (isTrustedTimelineBeat(beat)) {
+        expect(beat.claimIds?.length).toBeGreaterThan(0);
+        expect(beat.reviewStatus).toBe("VERIFIED_CANON");
+        expect(beat.evidenceClass).toBe("FACT");
+      }
+    }
+  });
+
   it("Champion with unresolved core relationship cannot receive Tier A", () => {
     const withUnresolved = characters.find((c) => {
       const q = computeQuality(c);
@@ -208,11 +247,12 @@ describe("Canon hardening regression", () => {
     ).toBe(false);
   });
 
-  it("Varus Ascended claim uses twilight/wiki sources not bio alone", () => {
+  it("Varus Ascended claim uses twilight and bio sources not wiki alone", () => {
     const claim = claimById.get("claim:varus-was-ascended");
     expect(claim?.sourceIds).toContain("source:twilight-of-the-gods");
-    expect(claim?.sourceIds).toContain("source:wiki-varus");
-    expect(claimSourceAuthority(claim!)).not.toBe("PRIMARY_EXPLICIT");
+    expect(claim?.sourceIds).toContain("source:bio-varus");
+    expect(claim?.sourceIds).not.toContain("source:wiki-varus");
+    expect(claimSourceAuthority(claim!)).toBe("PRIMARY_EXPLICIT");
   });
 
   it("VERIFIED timeline beats require reviewed trusted claims", () => {

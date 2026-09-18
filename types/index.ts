@@ -220,7 +220,9 @@ export interface ChampionQualityDimensions {
   canonConfidence: number;
   reviewCoverage: number;
   timelineCoverage: number;
+  trustedTimelineCoverage: number;
   relationshipCoverage: number;
+  directRelationshipReviewCoverage: number;
   eventCoverage: number;
   continuityClassified: boolean;
   criticalMissing: string[];
