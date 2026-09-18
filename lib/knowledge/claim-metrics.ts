@@ -91,9 +91,10 @@ export function breakdownClaims(charClaims: Claim[]): ClaimMetricBreakdown {
 }
 
 export function canonConfidenceFromClaims(charClaims: Claim[]): number {
-  if (charClaims.length === 0) return 0;
-  const { trustedClaims } = breakdownClaims(charClaims);
-  return Math.round((trustedClaims / charClaims.length) * 100);
+  const reviewed = charClaims.filter((c) => c.reviewed && !c.needsReview);
+  if (reviewed.length === 0) return 0;
+  const trusted = reviewed.filter(isTrustedClaim).length;
+  return Math.round((trusted / reviewed.length) * 100);
 }
 
 export function aggregateClaimAuthority(

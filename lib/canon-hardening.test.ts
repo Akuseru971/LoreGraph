@@ -9,6 +9,7 @@ import { absoluteUrl, findForbiddenOrigins, getSiteUrl } from "@/lib/seo";
 import { loreEntityById } from "@/data/lore-entities";
 import { findDuplicateRelationships } from "@/lib/relationships/dedupe";
 import { claimById } from "@/data/knowledge/claims";
+import { isTrustedClaim } from "@/lib/knowledge/claim-evidence";
 import { trustedBioParagraphs } from "@/lib/bio/blocks";
 import { claimSourceAuthority } from "@/lib/knowledge/claim-trust";
 import { isTrustedTimelineBeat } from "@/lib/timeline/trust";
@@ -104,6 +105,23 @@ describe("Canon hardening regression", () => {
     expect(claim).toBeDefined();
     expect(claim!.reviewed).toBe(false);
     expect(claim!.needsReview).toBe(true);
+  });
+
+  it("Trusted claims require evidenceRefs with source evidence support", () => {
+    const trusted = [...claimById.values()].filter((c) => isTrustedClaim(c));
+    expect(trusted.length).toBeGreaterThan(0);
+    for (const claim of trusted) {
+      expect(claim.evidenceRefs?.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("Skarner uses post-VGU Ixtal canon not legacy Crystal Scar framing", () => {
+    const skarner = characters.find((c) => c.slug === "skarner");
+    const bio = skarner?.longDescription.join(" ").toLowerCase() ?? "";
+    expect(skarner?.region).toBe("ixtal");
+    expect(skarner?.species).toBe("Brackern");
+    expect(bio).toMatch(/yun tal|ixaocan|brackern/);
+    expect(bio).not.toMatch(/powers hextech|crystal scar guardian|brackern crystals power/);
   });
 
   it("Trusted timeline beats require claimIds and proposition support", () => {

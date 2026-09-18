@@ -2,16 +2,30 @@
  * Claim-level knowledge layer.
  * Core reviewed claims are preserved; pack v1 claims merged via import pipeline.
  */
+import { claimEvidenceBindings } from "./evidence";
 import { mergedClaims } from "./generated/claims-merged";
 import { applyClaimPatches } from "./claim-patches";
 import { claimExtensions } from "./claim-extensions";
 import type { Claim } from "@/types";
 
+function attachEvidenceRefs(claim: Claim): Claim {
+  const refs = claim.evidenceRefs ?? claimEvidenceBindings[claim.id];
+  if (!refs?.length) return claim;
+  const sourceIds = claim.sourceIds.length
+    ? claim.sourceIds
+    : [...new Set(refs.map((r) => r.split("--")[1]).filter(Boolean))];
+  return {
+    ...claim,
+    evidenceRefs: refs,
+    sourceIds: claim.sourceIds.length ? claim.sourceIds : sourceIds,
+  };
+}
+
 const mergedById = new Map(
-  applyClaimPatches(mergedClaims).map((c) => [c.id, c]),
+  applyClaimPatches(mergedClaims).map((c) => [c.id, attachEvidenceRefs(c)]),
 );
 for (const ext of claimExtensions) {
-  mergedById.set(ext.id, ext);
+  mergedById.set(ext.id, attachEvidenceRefs(ext));
 }
 export const claims: Claim[] = [...mergedById.values()];
 export const claimById = new Map(claims.map((c) => [c.id, c]));

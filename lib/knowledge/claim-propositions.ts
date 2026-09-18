@@ -166,6 +166,48 @@ export const CLAIM_PROPOSITION_PATTERNS: Record<string, RegExp[]> = {
     /\bkaisa\b.*\bvoid\b/i,
     /\bsurvived\b.*\bvoid\b/i,
   ],
+  "claim:kaisa-bonded-carapace": [
+    /\bvoidborn carapace\b/i,
+    /\bcarapace\b.*\bfused\b/i,
+    /\bsecond skin\b/i,
+    /\bbonded\b.*\bcarapace\b/i,
+  ],
+  "claim:ahri-vastaya-essence-magic": [
+    /\bvastaya\b/i,
+    /\blife essence\b/i,
+    /\bmemories\b/i,
+    /\bspirit magic\b/i,
+  ],
+  "claim:ahri-struggles-consuming-essence": [
+    /\bdrain\b.*\bessence\b/i,
+    /\bconsuming\b/i,
+    /\bmemories\b/i,
+    /\binherits\b/i,
+  ],
+  "claim:ahri-seeks-origins": [
+    /\bseeks\b.*\borigin/i,
+    /\bvastaya\b/i,
+    /\bunderstanding\b/i,
+    /\bwhere she came from\b/i,
+  ],
+  "claim:skarner-yun-tal-founder": [
+    /\bfounding member\b/i,
+    /\byun tal\b/i,
+    /\bruling caste\b/i,
+    /\bfounding members\b/i,
+  ],
+  "claim:skarner-guardian-ixaocan": [
+    /\bbeneath ixaocan\b/i,
+    /\bchamber beneath\b/i,
+    /\bhear\b.*\bearth\b/i,
+    /\bsensing\b.*\bearth\b/i,
+  ],
+  "claim:skarner-isolationist-protector": [
+    /\bkeeping\b.*\bnation safe\b/i,
+    /\bisolationist\b/i,
+    /\bsafe from the rest of the world\b/i,
+    /\bprotector\b/i,
+  ],
   "claim:nasus-brother-renekton": [
     /\bbrother\b/i,
     /\brenekton\b/i,

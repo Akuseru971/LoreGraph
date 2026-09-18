@@ -169,13 +169,36 @@ export type NarrativeEvidenceClass =
   | "TRANSITION"
   | "UNRESOLVED";
 
+export type SourceEvidenceType =
+  | "DIRECT_STATEMENT"
+  | "COMBINED_PRIMARY"
+  | "OFFICIAL_REFERENCE"
+  | "CONTEXT_ONLY";
+
+export interface SourceEvidence {
+  id: string;
+  sourceId: string;
+  normalizedFact: string;
+  evidenceType: SourceEvidenceType;
+  sourceLocator?: string;
+  sourceSection?: string;
+  shortExcerpt?: string;
+  contentHash?: string;
+  retrievedAt?: string;
+  continuity?: Continuity;
+  /** Optional predicate scope for this evidence record. */
+  supportsPredicate?: string;
+}
+
 export interface StoryNarrativeBlock {
   text: string;
   evidenceClass: NarrativeEvidenceClass;
   claimIds?: string[];
   sourceIds?: string[];
+  evidenceRefs?: string[];
   canonStatus?: CanonStatus;
   reviewStatus?: ReviewStatus;
+  continuity?: Continuity;
 }
 
 export interface StoryPathQuality {
@@ -522,6 +545,8 @@ export interface Claim {
   canonStatus: CanonStatus;
   continuity: Continuity;
   sourceIds: string[];
+  /** Registry IDs of SourceEvidence records that prove this claim. */
+  evidenceRefs?: string[];
   evidenceNote?: string;
   reviewed: boolean;
   needsReview: boolean;

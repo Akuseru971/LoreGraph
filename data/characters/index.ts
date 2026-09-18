@@ -6,6 +6,7 @@ import { noxusDemaciaSeeds } from "./noxus-demacia";
 import { piltoverZaunSeeds } from "./piltover-zaun";
 import { knowledgePackEnrichedSeeds } from "./knowledge-pack-enriched";
 import { phase1CuratedSeeds } from "./phase1-curated";
+import { remediatedSeeds } from "./remediated";
 import { rosterExpansionSeeds } from "./roster-expansion";
 import { shurimaTargonSeeds } from "./shurima-targon";
 
@@ -17,6 +18,7 @@ const curatedSeeds: CharacterSeed[] = [
   ...piltoverZaunSeeds,
   ...frostIslesSeeds,
   ...knowledgePackEnrichedSeeds,
+  ...remediatedSeeds,
 ];
 
 const curatedSlugs = new Set(curatedSeeds.map((s) => s.slug));

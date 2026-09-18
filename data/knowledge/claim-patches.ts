@@ -44,6 +44,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Structural Darkin category link — no documented personal alliance.",
   },
   "claim:pack:00257": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     predicate: "PARTICIPATED_IN",
@@ -52,6 +53,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Duplicate of claim:aatrox-participated-void-war — use extension claim for trust.",
   },
   "claim:pack:00267": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     predicate: "PARTICIPATED_IN",
@@ -60,6 +62,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Duplicate of claim:aatrox-participated-darkin-war — use extension claim for trust.",
   },
   "claim:pack:00315": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     predicate: "PARTICIPATED_IN",
@@ -82,6 +85,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Structural Targonian celestial link — not a direct personal relationship.",
   },
   "claim:pack:00316": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     predicate: "PARTICIPATED_IN",
@@ -98,6 +102,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Ancient Shurima origin; modern activity in Ionia per source:bio-varus.",
   },
   "claim:pack:00268": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     predicate: "PARTICIPATED_IN",
@@ -126,6 +131,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Nasus bio establishes he helped imprison Xerath after the fall.",
   },
   "claim:pack:00258": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     predicate: "PARTICIPATED_IN",
@@ -136,6 +142,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
       "No exact primary source for Nasus Void incursion participation — Ascended status during the era is insufficient.",
   },
   "claim:pack:00264": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     objectId: "event:fall-of-shurima",
@@ -145,6 +152,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Use claim:nasus-participated-fall for trusted fall participation.",
   },
   "claim:pack:00289": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     objectId: "event:shurima-risen",
@@ -185,6 +193,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
       "Renekton was Ascended during ancient Shurima; Void War participation not explicitly documented in primary sources.",
   },
   "claim:pack:00265": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     objectId: "event:fall-of-shurima",
@@ -194,6 +203,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Use claim:renekton-imprisoned-with-xerath for trusted fall-of-shurima link.",
   },
   "claim:pack:00290": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     objectId: "event:shurima-risen",
@@ -231,6 +241,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Sivir's bloodline enables Azir's return per source:bio-azir.",
   },
   "claim:pack:00262": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     objectId: "event:fall-of-shurima",
@@ -240,6 +251,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Use claim:azir-participated-fall for trusted fall participation.",
   },
   "claim:pack:00287": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     objectId: "event:shurima-risen",
@@ -271,6 +283,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Xerath bio establishes his betrayal of Azir at Ascension.",
   },
   "claim:pack:00263": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     objectId: "event:fall-of-shurima",
@@ -280,6 +293,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Use claim:xerath-betrayed-azir — Xerath instigated the fall, not a generic participant.",
   },
   "claim:pack:00291": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     objectId: "event:shurima-risen",
@@ -299,6 +313,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
 
   /* Phase 1 — Kai'Sa */
   "claim:pack:00208": {
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     sourceIds: ["source:bio-kaisa", "source:bio-kassadin"],
@@ -336,7 +351,7 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     evidenceNote: "Void region association confirmed per source:bio-belveth.",
   },
   "claim:pack:00209": {
-    subjectId: "char:belveth",
+    subjectId: "char:superseded-pack",
     reviewed: false,
     needsReview: true,
     sourceIds: ["source:bio-belveth", "source:bio-kaisa"],
@@ -398,6 +413,16 @@ export const CLAIM_PATCHES: Record<string, Partial<Claim>> = {
     needsReview: true,
     sourceIds: ["source:bio-zoe", "source:bio-aurelion-sol"],
     evidenceNote: "Use claim:zoe-knows-aurelion-sol for trusted celestial interaction.",
+  },
+
+  /* Superseded duplicate pack claim — removed from champion metrics */
+  "claim:pack:00002": { subjectId: "char:superseded-pack" },
+  "claim:pack:00126": {
+    value: "Ixtal",
+    sourceIds: ["source:bio-skarner"],
+    reviewed: true,
+    needsReview: false,
+    evidenceNote: "Skarner is associated with Ixtal per post-VGU official biography.",
   },
 };
 
